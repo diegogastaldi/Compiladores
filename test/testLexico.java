@@ -70,4 +70,20 @@ public class testLexico {
         
     }
     
+    @Test
+    public void test3() throws FileNotFoundException {
+        Reader reader = new BufferedReader(new FileReader("E:\\Universidad\\Cuarto Año\\Compiladores\\Compiladores\\test\\test3.txt"));
+        Lexer lexer = new Lexer (reader);
+        Tokens t;
+        try { 
+            /* Must recognize a error */
+            t = lexer.yylex();
+            assertTrue(t.compareTo(Tokens.ERROR)==0);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(testLexico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+    }
 }
