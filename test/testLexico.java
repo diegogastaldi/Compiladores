@@ -86,4 +86,18 @@ public class testLexico {
 
         
     }
+    @Test
+    public void test4() throws FileNotFoundException {
+        Reader reader = new BufferedReader(new FileReader("E:\\Universidad\\Cuarto Año\\Compiladores\\Compiladores\\test\\test4.txt"));
+        Lexer lexer = new Lexer (reader);
+        Tokens t;
+ //       try { 
+            /*RECONOCER TODO LOS TOKENS DEL PROGRAMA*/
+ //       } catch (IOException ex) {
+ //           Logger.getLogger(testLexico.class.getName()).log(Level.SEVERE, null, ex);
+ //       }
+
+        
+    }
+    
 }
