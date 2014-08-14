@@ -20,10 +20,10 @@ COMMENT2="//"[^\n]*
 "("             {return LPAR;}
 ")"             {return RPAR;}
 ";"             {return END_EXP;}
-"["             {return L;}
-"]"             {return R;}
-"{"             {return L;}
-"}"             {return R;}
+"["             {return LC;}
+"]"             {return RC;}
+"{"             {return LLL;}
+"}"             {return RLL;}
 "=="            {return EQ;}
 "||"            {return OR;}
 "&&"            {return AND;}
