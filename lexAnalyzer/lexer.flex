@@ -79,17 +79,17 @@ COMMENT2="//"[^\n]*
 "class"         		{return new Symbol(sym.WCLASS, yyline, yycolumn, new String(yytext()));}
 "continue"      		{return new Symbol(sym.WCONTINUE, yyline, yycolumn, new String(yytext()));}
 "else"          		{return new Symbol(sym.WELSE, yyline, yycolumn, new String(yytext()));}
-"false" | "true"  		{return new Symbol(sym.BOOLEAN, yyline, yycolumn, new Boolean(yytext()));}
 "float"         		{return new Symbol(sym.WFLOAT, yyline, yycolumn, new String(yytext()));}
 "for"           		{return new Symbol(sym.WFOR, yyline, yycolumn, new String(yytext()));}
 "if"            		{return new Symbol(sym.WIF, yyline, yycolumn, new String(yytext()));}
 "int"           		{return new Symbol(sym.WINT, yyline, yycolumn, new String(yytext()));}
-{D}({D})*       		{return new Symbol(sym.INT, yyline, yycolumn, new Integer(yytext()));}
-{D}({D})* ("." {D}({D})*)?  	{return new Symbol(sym.FLOAT, yyline, yycolumn, new Float(yytext()));}
 "return"        		{return new Symbol(sym.WRETURN, yyline, yycolumn, new String(yytext()));}
 "void"          		{return new Symbol(sym.WVOID, yyline, yycolumn, new String(yytext()));}
 "while"         		{return new Symbol(sym.WWHILE, yyline, yycolumn, new String(yytext()));}
+"false" | "true"  		{return new Symbol(sym.BOOLEAN, yyline, yycolumn, new Boolean(yytext()));}
 {L}({L}|{D}|_)*   		{return new Symbol(sym.ID, yyline, yycolumn, new String(yytext()));}
+{D}({D})*       		{return new Symbol(sym.INT, yyline, yycolumn, new Integer(yytext()));}
+{D}({D})* ("." {D}({D})*)?  	{return new Symbol(sym.FLOAT, yyline, yycolumn, new Float(yytext()));}
 \"[^\"]*\"   			{return new Symbol(sym.STRING_LITERAL, yyline, yycolumn, yytext().substring(1,yytext().length()-1));}
 .               		{System.err.println("Illegal character: "+ yytext()+ " linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 }

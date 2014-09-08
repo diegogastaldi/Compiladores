@@ -9,12 +9,11 @@ public class symbolTable{
 	}
 	
 	public LinkedList<absSymbol> insertSymbolList(LinkedList<absSymbol> l) {
-        for (int i = 0 ; (i < l.size()) && insertSymbol(l.get(i))!=null ; i++) {
+        for (int i = 0 ; (i < l.size()) ; i++) {
+            if (insertSymbol(l.get(i)) == null)
+                return null;
         }
-        if (i < l.size())
-            return null;
-        else
-            return l;
+        return l;
 	}
 	
 	/*Si contiene el simbolo en el nivel retorna null,
@@ -30,13 +29,13 @@ public class symbolTable{
 
 	/*Empieza a buscar desde el nivel cero hasta el ultimo nivel, 
 	si lo encuentra, lo retorna, caso contrario retorna null*/
-	public absSymbol search(absSymbol s){
-	  for (int i=0; i<t.size(); i++){
-	    absSymbol aux_symbol = containsSymbol(s.name,i);
-	    if (aux_symbol != null)
-	      return aux_symbol;
-    }
-	  return null;
+	public absSymbol search(String name){
+	    for (int i=0; i<t.size(); i++){
+	        absSymbol aux_symbol = containsSymbol(name,i);
+	        if (aux_symbol != null)
+	            return aux_symbol;
+        }
+	    return null;
 	}
     
 	/*Crea un nuevo nivel*/
@@ -67,14 +66,14 @@ public class symbolTable{
 	}
 
 	private absSymbol containsSymbol(String name, Integer level){
-	  Iterator<absSymbol> levelIt = t.get(level).iterator();
-	  absSymbol s;
-	  while (levelIt.hasNext()){
-	    s = levelIt.next();
-      if (s.name.equals(name))
-        return s;	
-      }
+	    Iterator<absSymbol> levelIt = t.get(level).iterator();
+	    absSymbol s;
+	    while (levelIt.hasNext()){
+	        s = levelIt.next();
+            if (s.name.equals(name))
+                return s;	
+        }
 	    return null;
-	  }
+    }
 
 }
