@@ -1,0 +1,219 @@
+/* Taller de Diseño de Software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  analyzer.cup representa la gramatica 
+  del lenguaje a compilar, ademas informa
+  errores en ella.
+  
+*/
+
+package compiler2014;
+import java_cup.runtime.*;
+import java.io.*;
+import java.util.*;
+
+parser code {:
+
+  public static void main(String[] args){
+    try {
+      /* Loading the file*/
+      FileInputStream file = new FileInputStream(args[0]);/**/
+      /* Create lexer analizer with file*/
+      yylex lex = new yylex(file);
+      /* Create parser analyzer with lex*/  
+      parser par = new parser(lex);
+      /* Analize file */
+      par.setScanner(lex);
+      par.parse();
+    }catch(Exception x){
+      x.printStackTrace();
+      System.out.println("Error fatal.\n"); 
+    }
+  }
+  
+  public void report_error(String message, Object info) {
+    StringBuffer m = new StringBuffer("Error");
+    System.out.println("Mensaje: "+message);
+    System.out.println("info: "+info.toString());
+    if(info instanceof java_cup.runtime.Symbol) {
+        java_cup.runtime.Symbol s=((java_cup.runtime.Symbol)info);
+        /* Comprueba si el numero de línea es mayor o igual que cero */
+        if(s.left >= 0) {
+	        m.append(" en linea "+(s.left+1));
+	        /*Comprueba si el numero de columna es mayoro igual que cero */
+	        if (s.right >= 0)
+	            m.append(", y columna "+(s.right+1));
+	        }
+        }
+    m.append(" : "+message);
+    System.err.println(m);
+  }
+  public void report_fatal_error(String message, Object info) {
+    report_error(message, info);
+    System.exit(1);
+  }
+:}
+
+action code {:
+  static symbolTable table = new symbolTable();
+  
+  private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, String type) {
+    for (int i = 0 ; i < symbolList.size() ; i++) {
+        symbolList.get(i).type = type;
+    }
+    return symbolList;
+  }
+:}
+
+
+terminal  WBOOLEAN, WBREAK, WCLASS, WINT, WCONTINUE, WELSE, WFLOAT, WFOR, 
+          WIF, WRETURN, WWHILE, LESS_THAN, GREATER_THAN, LESS_EQ_THAN, 
+          GREATER_EQ_THAN, NOT_EQ, MODULE, NOT, LPAR, RPAR, LC, RC, EQ, 
+          OR, AND, ASSIGN_INC, ASSIGN_DEC, ASSIGN, PLUS, MULT, MINUS, LLL, 
+          RLL, COMMA, SEMICOLON, WEXTERNINVK, DIV;
+terminal String ID, WVOID;
+terminal Integer INT;
+terminal Float FLOAT;
+terminal Boolean BOOLEAN;
+terminal String STRING_LITERAL;
+
+non terminal PROGRAM, FIELD_DECL, BLOCK, STATEMENT, ASSIGN_OP, METHOD_CALL, LOCATION, EXPR, 
+             EXTERNINVK_ARG, SET_FIELD_DECL, SET_METHOD_DECL, SET_STATEMENT, 
+             EXPR_RETURN, ELSE_BLOCK, EXPR_PARAMETERS, ARG_INVOC, SET_EXTERNINVK_ARG, 
+             LITERAL, BIN_OP, ARITH_OP, REL_OP, EQ_OP, COND_OP, EXPR_, SET_EXTERNINVK_ARG_, 
+             EXPR_PARAMETERS_, SET_DECL;
+non terminal LinkedList<absSymbol> SET_COMPLETE_ID, PARAMETERS, SET_TYPE_ID;
+non terminal String TYPE;
+precedence left EQ, AND, NOT, NOT_EQ;
+precedence left OR;
+precedence left LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN;
+precedence left PLUS, MINUS;             
+precedence left MULT, DIV, MODULE;             
+
+
+start with PROGRAM;
+
+PROGRAM     	    ::= WCLASS {:table.insertLevel();:} ID:i {:table.insertSymbol(new simpleSymbol(i,"Class", null));:}
+                        LLL SET_DECL                         {:table.deleteLevel();:} 
+                        RLL;
+
+SET_DECL			::= FIELD_DECL SEMICOLON SET_DECL 
+                    |   SET_METHOD_DECL ;
+
+FIELD_DECL		    ::= TYPE:t ID:i LC INT:il RC    {:table.insertSymbol(new arraySymbol(i, t, il, null));:}     
+                        SET_COMPLETE_ID:s           {:table.insertSymbolList(setType(s, t));:}
+                    |   TYPE:t ID:i                 {:table.insertSymbol(new simpleSymbol(i, t, null));:} 
+                        SET_COMPLETE_ID:s {:table.insertSymbolList(setType(s, t));:};
+
+SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR {:table.insertSymbol(new functionSymbol(i, t, p));:} 
+                        BLOCK SET_METHOD_DECL
+                    |   WVOID:t ID:i LPAR PARAMETERS:p RPAR {:table.insertSymbol(new functionSymbol(i, t, p));:} 
+                        BLOCK SET_METHOD_DECL
+                    |   /*Lambda*/;
+
+SET_COMPLETE_ID 	::= COMMA ID:i {:RESULT.add(new simpleSymbol(i, null, null));:} 
+                        SET_COMPLETE_ID:s {:RESULT.addAll(s);:} 
+                    |   COMMA ID:i LC INT:il RC {:RESULT.add(new arraySymbol(i, null, il, null));:} 
+                        SET_COMPLETE_ID:s {:RESULT.addAll(s);:} 
+                    |   /* LAMBDA */ ;
+
+PARAMETERS 		    ::= TYPE:t ID:i {:/*if (*/table.insertSymbol(new simpleSymbol(i, t, null))/*==null)*/;
+                                        /*parser.report_fatal_error("ID ya difinido: ",i);*/:} 
+                        SET_TYPE_ID:s {:RESULT.addAll(s);:} 
+                    |   /*LAMBDA*/ ;
+
+SET_TYPE_ID 		::= COMMA TYPE:t ID:i {:/*if (*/table.insertSymbol(new simpleSymbol(i, t, null))/*==null)*/; 
+                                        /*parser.report_fatal_error("ID ya definido: ",i);*/:}  
+                        SET_TYPE_ID:s  {:RESULT.addAll(s);:} 
+                    |   /*LAMBDA*/ ;
+
+
+BLOCK       		::= LLL {:table.insertLevel();:} SET_FIELD_DECL SET_STATEMENT {:table.deleteLevel();:} RLL ;
+
+SET_FIELD_DECL		::= FIELD_DECL SEMICOLON SET_FIELD_DECL
+                    |   /*LAMBDA*/;
+
+SET_STATEMENT 		::= STATEMENT SET_STATEMENT | /* LAMBDA */ ;
+
+TYPE        		::= WFLOAT 
+                    |   WBOOLEAN 
+                    |   WINT ;
+
+STATEMENT   		::= ID:i LOCATION ASSIGN_OP EXPR SEMICOLON
+			        |   ID:i METHOD_CALL SEMICOLON 
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 			            			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 
+    			    |   WIF LPAR EXPR RPAR BLOCK ELSE_BLOCK
+	    		    |   WFOR ID:i {:/*if (table.search(i)==null)
+                                  parser.report_fatal_error("ID desconocido.",i);*/:} ASSIGN EXPR COMMA EXPR BLOCK
+	    		    |   WWHILE EXPR BLOCK
+	    		    |   WRETURN EXPR_RETURN SEMICOLON
+	    		    |   WBREAK SEMICOLON
+	    		    |   WCONTINUE SEMICOLON
+	    		    |   SEMICOLON
+	    		    |   BLOCK ;
+           
+EXPR_RETURN 		::= EXPR 
+                    |   /* LAMBDA */ ;
+
+ELSE_BLOCK 		    ::= WELSE BLOCK 
+                    |   /* LAMBDA */ ;
+
+ASSIGN_OP   		::= ASSIGN 
+    			    |   ASSIGN_INC 
+    			    |   ASSIGN_DEC ;
+
+METHOD_CALL 		::= LPAR EXPR_PARAMETERS RPAR ;
+           
+ARG_INVOC 		    ::= COMMA SET_EXTERNINVK_ARG 
+                    |   /* LAMBDA */ ;
+
+SET_EXTERNINVK_ARG 	::= EXTERNINVK_ARG SET_EXTERNINVK_ARG_ ;
+
+SET_EXTERNINVK_ARG_	::= COMMA SET_EXTERNINVK_ARG 
+                    |   /* LAMBDA */ ;
+
+EXPR_PARAMETERS 	::= EXPR EXPR_PARAMETERS_ 
+                    |   /* LAMBDA */;
+
+EXPR_PARAMETERS_	::= COMMA EXPR EXPR_PARAMETERS_ 
+                    |   /* LAMBDA */ ;
+
+LOCATION 		    ::= LC EXPR RC 
+                    |   /* LAMBDA */;
+
+EXPR        		::= ID:i LOCATION EXPR_
+                    |   ID METHOD_CALL EXPR_
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 			            
+			        |   LITERAL EXPR_
+			        |   MINUS EXPR EXPR_
+			        |   NOT EXPR EXPR_
+			        |   LPAR EXPR RPAR EXPR_;
+			
+EXPR_	    		::= BIN_OP EXPR 
+                    |   /* LAMBDA */;
+
+EXTERNINVK_ARG  	::= EXPR 
+                    |   STRING_LITERAL ;
+
+BIN_OP      		::= ARITH_OP | REL_OP | EQ_OP | COND_OP ;
+
+ARITH_OP    		::= PLUS | MINUS | MULT | DIV | MODULE  ;
+
+REL_OP      		::= LESS_THAN | GREATER_THAN | LESS_EQ_THAN | GREATER_EQ_THAN ;
+
+EQ_OP       		::= EQ | NOT_EQ ;
+
+COND_OP     		::= AND | OR ;
+
+LITERAL     		::= INT {:/*RESULT = Type.INT;*/:}
+                    |   FLOAT {:/*RESULT = Type.FLOAT;*/:}
+                    |   BOOLEAN {:/*RESULT = Type.BOOLEAN;*/:};
+

@@ -1,0 +1,10 @@
+class program {
+int a;
+int b;
+
+void method (int a) {}
+
+void method2 () {
+  return ;
+  }
+}  
