@@ -73,18 +73,18 @@ action code {:
 :}
 
 
-terminal  WBOOLEAN, WBREAK, WCLASS, WINT, WCONTINUE, WELSE, WFLOAT, WFOR, 
-          WIF, WRETURN, WWHILE, LESS_THAN, GREATER_THAN, LESS_EQ_THAN, 
-          GREATER_EQ_THAN, NOT_EQ, MODULE, NOT, LPAR, RPAR, LC, RC, EQ, 
-          OR, AND, ASSIGN_INC, ASSIGN_DEC, ASSIGN, PLUS, MULT, MINUS, LLL, 
-          RLL, COMMA, SEMICOLON, WEXTERNINVK, DIV;
-terminal String ID, WVOID;
-terminal Integer INT;
-terminal Float FLOAT;
-terminal Boolean BOOLEAN;
-terminal String STRING_LITERAL;
+terminal            LESS_THAN, GREATER_THAN, LESS_EQ_THAN, 
+                    GREATER_EQ_THAN, NOT_EQ, MODULE, NOT, LPAR, RPAR, LC, RC, EQ, 
+                    OR, AND, ASSIGN_INC, ASSIGN_DEC, ASSIGN, PLUS, MULT, MINUS, LLL, 
+                    RLL, COMMA, SEMICOLON, WEXTERNINVK, DIV;
+terminal String     ID, WVOID, WBOOLEAN, WBREAK, WCLASS, WINT, WCONTINUE, WELSE, WFLOAT, WFOR, 
+                    WIF, WRETURN, WWHILE;
+terminal Integer    INT;
+terminal Float      FLOAT;
+terminal Boolean    BOOLEAN;
+terminal String     STRING_LITERAL;
 
-non terminal PROGRAM, FIELD_DECL, BLOCK, STATEMENT, ASSIGN_OP, METHOD_CALL, LOCATION, EXPR, 
+non terminal PROGRAM, FIELD_DECL, BLOCK, STATEMENT, ASSIGN_OP, EXPR, 
              EXTERNINVK_ARG, SET_FIELD_DECL, SET_METHOD_DECL, SET_STATEMENT, 
              EXPR_RETURN, ELSE_BLOCK, EXPR_PARAMETERS, ARG_INVOC, SET_EXTERNINVK_ARG, 
              LITERAL, BIN_OP, ARITH_OP, REL_OP, EQ_OP, COND_OP, EXPR_, SET_EXTERNINVK_ARG_, 
@@ -118,20 +118,20 @@ SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR {:table.insertSymbol(new
                         BLOCK SET_METHOD_DECL
                     |   /*Lambda*/;
 
-SET_COMPLETE_ID 	::= COMMA ID:i {:RESULT.add(new simpleSymbol(i, null, null));:} 
-                        SET_COMPLETE_ID:s {:RESULT.addAll(s);:} 
+SET_COMPLETE_ID 	::= COMMA ID:i              {:RESULT.add(new simpleSymbol(i, null, null));:} 
+                        SET_COMPLETE_ID:s       {:RESULT.addAll(s);:} 
                     |   COMMA ID:i LC INT:il RC {:RESULT.add(new arraySymbol(i, null, il, null));:} 
-                        SET_COMPLETE_ID:s {:RESULT.addAll(s);:} 
+                        SET_COMPLETE_ID:s       {:RESULT.addAll(s);:} 
                     |   /* LAMBDA */ ;
 
-PARAMETERS 		    ::= TYPE:t ID:i {:/*if (*/table.insertSymbol(new simpleSymbol(i, t, null))/*==null)*/;
-                                        /*parser.report_fatal_error("ID ya difinido: ",i);*/:} 
-                        SET_TYPE_ID:s {:RESULT.addAll(s);:} 
+PARAMETERS 		    ::= TYPE:t ID:i         {:/*if (*/table.insertSymbol(new simpleSymbol(i, t, null))/*==null)*/;
+                                            /*parser.report_fatal_error("ID ya difinido: ",i);*/:} 
+                        SET_TYPE_ID:s       {:RESULT.addAll(s);:} 
                     |   /*LAMBDA*/ ;
 
-SET_TYPE_ID 		::= COMMA TYPE:t ID:i {:/*if (*/table.insertSymbol(new simpleSymbol(i, t, null))/*==null)*/; 
-                                        /*parser.report_fatal_error("ID ya definido: ",i);*/:}  
-                        SET_TYPE_ID:s  {:RESULT.addAll(s);:} 
+SET_TYPE_ID 		::= COMMA TYPE:t ID:i   {:/*if (*/table.insertSymbol(new simpleSymbol(i, t, null))/*==null)*/; 
+                                            /*parser.report_fatal_error("ID ya definido: ",i);*/:}  
+                        SET_TYPE_ID:s       {:RESULT.addAll(s);:} 
                     |   /*LAMBDA*/ ;
 
 
@@ -142,16 +142,21 @@ SET_FIELD_DECL		::= FIELD_DECL SEMICOLON SET_FIELD_DECL
 
 SET_STATEMENT 		::= STATEMENT SET_STATEMENT | /* LAMBDA */ ;
 
-TYPE        		::= WFLOAT 
-                    |   WBOOLEAN 
-                    |   WINT ;
+TYPE        		::= WFLOAT:w    {:RESULT = w;:}
+                    |   WBOOLEAN:w  {:RESULT = w;:}
+                    |   WINT:w      {:RESULT = w;:};
 
-STATEMENT   		::= ID:i LOCATION ASSIGN_OP EXPR SEMICOLON
-			        |   ID:i METHOD_CALL SEMICOLON 
+STATEMENT   		::= ID:i LC EXPR RC {::} 
+                        ASSIGN_OP EXPR SEMICOLON
+                    |   ID:i {::}
+                        ASSIGN_OP EXPR SEMICOLON
+			        |   ID:i LPAR EXPR_PARAMETERS RPAR {::}
+			            SEMICOLON 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 			            			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 
     			    |   WIF LPAR EXPR RPAR BLOCK ELSE_BLOCK
 	    		    |   WFOR ID:i {:/*if (table.search(i)==null)
-                                  parser.report_fatal_error("ID desconocido.",i);*/:} ASSIGN EXPR COMMA EXPR BLOCK
+                                  parser.report_fatal_error("ID desconocido.",i);*/:} 
+                        ASSIGN EXPR COMMA EXPR BLOCK
 	    		    |   WWHILE EXPR BLOCK
 	    		    |   WRETURN EXPR_RETURN SEMICOLON
 	    		    |   WBREAK SEMICOLON
@@ -168,8 +173,6 @@ ELSE_BLOCK 		    ::= WELSE BLOCK
 ASSIGN_OP   		::= ASSIGN 
     			    |   ASSIGN_INC 
     			    |   ASSIGN_DEC ;
-
-METHOD_CALL 		::= LPAR EXPR_PARAMETERS RPAR ;
            
 ARG_INVOC 		    ::= COMMA SET_EXTERNINVK_ARG 
                     |   /* LAMBDA */ ;
@@ -185,11 +188,9 @@ EXPR_PARAMETERS 	::= EXPR EXPR_PARAMETERS_
 EXPR_PARAMETERS_	::= COMMA EXPR EXPR_PARAMETERS_ 
                     |   /* LAMBDA */ ;
 
-LOCATION 		    ::= LC EXPR RC 
-                    |   /* LAMBDA */;
-
-EXPR        		::= ID:i LOCATION EXPR_
-                    |   ID METHOD_CALL EXPR_
+EXPR        		::= ID:i EXPR_
+                    |   ID:i LC EXPR RC EXPR_
+                    |   ID LPAR EXPR_PARAMETERS RPAR EXPR_
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 			            
 			        |   LITERAL EXPR_
