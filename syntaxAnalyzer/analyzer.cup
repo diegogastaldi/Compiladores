@@ -92,6 +92,7 @@ non terminal PROGRAM, FIELD_DECL, BLOCK, STATEMENT, ASSIGN_OP, EXPR,
              EXPR_PARAMETERS_, SET_DECL;
 non terminal LinkedList<absSymbol> SET_COMPLETE_ID, PARAMETERS, SET_TYPE_ID;
 non terminal String TYPE;
+
 precedence left EQ, AND, NOT, NOT_EQ;
 precedence left OR;
 precedence left LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN;
@@ -101,8 +102,8 @@ precedence left MULT, DIV, MODULE;
 
 start with PROGRAM;
 
-PROGRAM     	    ::= WCLASS {:table.insertLevel();:} ID:i {:if (table.insertSymbol(new simpleSymbol(i,"Class", null)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:}
+PROGRAM     	    ::= WCLASS {:table.insertLevel();:} ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, "Class")) == null)
+                                                                parser.report_error("ID ya difinido: ",i);:}
                         LLL SET_DECL                         {:table.deleteLevel();:} 
                         RLL;
 
@@ -110,19 +111,31 @@ SET_DECL			::= FIELD_DECL SEMICOLON SET_DECL
                     |   SET_METHOD_DECL ;
 
 FIELD_DECL		    ::= TYPE:t ID:i LC INT:il RC    {:if (table.insertSymbol(new arraySymbol(i, t, il, null)) == null)
-                                                        parser.report_fatal_error("ID ya difinido: ",i);:}     
+                                                        parser.report_error("ID ya difinido: ",i);:}     
                         SET_COMPLETE_ID:s           {:if (table.insertSymbolList(setType(s, t)) == null)
-                                                        parser.report_fatal_error("ID ya difinido: ",i);:}
-                    |   TYPE:t ID:i                 {:if (table.insertSymbol(new simpleSymbol(i, t, null)) == null)
-                                                        parser.report_fatal_error("ID ya difinido: ",i);:} 
+                                                        parser.report_error("ID ya difinido: ",i);:}
+                    |   TYPE:t ID:i                 {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null)
+                                                        parser.report_error("ID ya difinido: ",i);:} 
                         SET_COMPLETE_ID:s           {:if (table.insertSymbolList(setType(s, t)) == null)
-                                                        parser.report_fatal_error("ID ya difinido: ",i);:};
+                                                        parser.report_error("ID ya difinido: ",i);:};
              
-SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR  {:if (table.insertSymbol(new functionSymbol(i, t, p)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:} 
+SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR  {:functionSymbol f = new functionSymbol(i, t, p);
+                                                            if (table.insertSymbol(f) == null) {
+                                                                parser.report_error("ID ya difinido: ",i);
+                                                            } else {
+                                                                if (table.insertSymbolList(f.parameters)==null)
+                                                                    parser.report_error("ID ya difinido: ",f.parameters.toString());
+                                                                }
+                                                            :} 
                         BLOCK SET_METHOD_DECL
-                    |   WVOID:t ID:i LPAR PARAMETERS:p RPAR {:if (table.insertSymbol(new functionSymbol(i, t, p)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:} 
+                    |   WVOID:t ID:i LPAR PARAMETERS:p RPAR {:functionSymbol f = new functionSymbol(i, t, p);
+                                                            if (table.insertSymbol(f) == null) {
+                                                                parser.report_error("ID ya difinido: ",i);
+                                                            } else {
+                                                                if (table.insertSymbolList(f.parameters)==null)
+                                                                    parser.report_error("ID ya difinido: ",f.parameters.toString());
+                                                                }
+                                                            :} 
                         BLOCK SET_METHOD_DECL
                     |   /*Lambda*/;
 
@@ -130,26 +143,20 @@ SET_COMPLETE_ID 	::= COMMA ID:i              {:declList.add(new simpleSymbol(i, 
                         SET_COMPLETE_ID:s       {:RESULT = s;:} 
                     |   COMMA ID:i LC INT:il RC {:declList.add(new arraySymbol(i, null, il, null));:} 
                         SET_COMPLETE_ID:s       {:RESULT = s;:} 
-                    |   /* LAMBDA */            {:RESULT = declList;
+                    |   /* LAMBDA */            {:RESULT = (LinkedList<absSymbol>)declList.clone();
                                                 declList.clear();:};
 
-PARAMETERS 		    ::= TYPE:t ID:i         {:simpleSymbol ss = new simpleSymbol(i, t, null);
-                                            if (table.insertSymbol(ss) == null)
-                                                parser.report_fatal_error("ID ya difinido: ",i);
-                                            parList.add(ss);:} 
+PARAMETERS 		    ::= TYPE:t ID:i         {:parList.add(new simpleSymbol(i, null, t));:} 
                         SET_TYPE_ID:s       {:RESULT = s;:} 
-                    |   /*LAMBDA*/          {:RESULT = parList;
+                    |   /*LAMBDA*/          {:RESULT = (LinkedList<absSymbol>)parList.clone();
                                             parList.clear();:};
 
-SET_TYPE_ID 		::= COMMA TYPE:t ID:i   {:simpleSymbol ss = new simpleSymbol(i, t, null);
-                                            if (table.insertSymbol(ss) == null)
-                                                parser.report_fatal_error("ID ya definido: ",i);
-                                            parList.add(ss);:}  
+SET_TYPE_ID 		::= COMMA TYPE:t ID:i   {:parList.add(new simpleSymbol(i, null, t));:}  
                         SET_TYPE_ID:s       {:RESULT = s;:} 
-                    |   /*LAMBDA*/          {:RESULT = parList;
+                    |   /*LAMBDA*/          {:RESULT = (LinkedList<absSymbol>)parList.clone();
                                             parList.clear();:};
 
-BLOCK       		::= LLL SET_FIELD_DECL SET_STATEMENT {:table.deleteLevel();:} RLL ;
+BLOCK       		::= LLL {:table.insertLevel();:} SET_FIELD_DECL SET_STATEMENT {:table.deleteLevel();:} RLL ;
 
 SET_FIELD_DECL		::= FIELD_DECL SEMICOLON SET_FIELD_DECL
                     |   /*LAMBDA*/;
@@ -160,24 +167,38 @@ TYPE        		::= WFLOAT:w    {:RESULT = w;:}
                     |   WBOOLEAN:w  {:RESULT = w;:}
                     |   WINT:w      {:RESULT = w;:};
 
-STATEMENT   		::= ID:i LC EXPR RC {:absSymbol a = table.search(i);
+STATEMENT   		::= ID:i LC EXPR:e RC {:absSymbol a = table.search(i);
                                         if (a == null) 
-                                            parser.report_fatal_error("ID desconocido.",i);:}
+                                            parser.report_error("ID desconocido.",i);
+                                        else {
+                                            if (a instanceof arraySymbol) {
+                                                arraySymbol array = (arraySymbol)a;
+                                                if (e instanceof Integer) {
+                                                    Integer integer = (Integer) e;
+                                                    if (!(integer < array.size && integer >= 0))
+                                                        parser.report_error("Indice fuera de rango en arreglo "+array.name+": ",integer);
+                                                } else {
+                                                    parser.report_error("Argumento no valido en arreglo "+array.name+": ", e);
+                                                }
+                                            } else 
+                                                parser.report_error("Tipos no conpatibles, esperaba un arreglo y encontro un ",a.type);
+                                        }:}
                         ASSIGN_OP EXPR SEMICOLON
                     |   ID:i    {:absSymbol a = table.search(i);
                                 if (a == null) 
-                                    parser.report_fatal_error("ID desconocido.",i);:}  
+                                    parser.report_error("ID desconocido.",i);:}  
                         ASSIGN_OP EXPR SEMICOLON
 			        |   ID:i LPAR EXPR_PARAMETERS RPAR  {:absSymbol a = table.search(i);
                                     			        if (a == null) 
-                                                            parser.report_fatal_error("ID desconocido.",i);:} 
+                                                            parser.report_error("ID desconocido.",i);
+                                                        :} 
 			            SEMICOLON 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 			            			        
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 
     			    |   WIF LPAR EXPR RPAR BLOCK ELSE_BLOCK
 	    		    |   WFOR ID:i   {:absSymbol a = table.search(i);
 	    		                    if (a == null) 
-                                        parser.report_fatal_error("ID desconocido.",i);:} 
+                                        parser.report_error("ID desconocido.",i);:} 
                         ASSIGN EXPR COMMA EXPR BLOCK
 	    		    |   WWHILE EXPR BLOCK
 	    		    |   WRETURN EXPR_RETURN SEMICOLON
@@ -212,13 +233,13 @@ EXPR_PARAMETERS_	::= COMMA EXPR EXPR_PARAMETERS_
 
 EXPR        		::= ID:i EXPR_                              {:absSymbol a = table.search(i);
                                                                 if (a == null) 
-                                                                    parser.report_fatal_error("ID desconocido.",i);:} 
+                                                                    parser.report_error("ID desconocido.",i);:} 
                     |   ID:i LC EXPR RC EXPR_                   {:absSymbol a = table.search(i);
                                                                 if (a == null) 
-                                                                    parser.report_fatal_error("ID desconocido.",i);:}
+                                                                    parser.report_error("ID desconocido.",i);:}
                     |   ID:i LPAR EXPR_PARAMETERS RPAR EXPR_    {:absSymbol a = table.search(i);
                                                                  if (a == null) 
-                                                                    parser.report_fatal_error("ID desconocido.",i);:}
+                                                                    parser.report_error("ID desconocido.",i);:}
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 			            
 			        |   LITERAL EXPR_

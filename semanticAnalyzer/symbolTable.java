@@ -40,29 +40,29 @@ public class symbolTable{
     
 	/*Crea un nuevo nivel*/
 	public void insertLevel(){
-	  LinkedList<absSymbol> newLevel = new LinkedList<absSymbol>();
-	  t.addFirst(newLevel);
-  }
+	    LinkedList<absSymbol> newLevel = new LinkedList<absSymbol>();
+	    t.addFirst(newLevel);
+    }
 
-  /*Elimina un nivel*/
-  public void deleteLevel(){
-	  t.removeFirst();
+    /*Elimina un nivel*/
+    public void deleteLevel(){
+	    t.removeFirst();
 	}
 
 	public void print(){
-    Iterator<LinkedList<absSymbol>> levelIt = t.iterator();
-    Iterator<absSymbol> symbolIt;
-    absSymbol s;
-	  while (levelIt.hasNext()){
-	    symbolIt = levelIt.next().iterator();
-	    while(symbolIt.hasNext()){
-	      s = symbolIt.next();
-	      if (s.type == null) 
-	        System.out.print(s.name+"u: undefined; ");
-	      else 
-	        System.out.println(s.toString());
-	    }
-	  }	
+        Iterator<LinkedList<absSymbol>> levelIt = t.iterator();
+        Iterator<absSymbol> symbolIt;
+        absSymbol s;
+	    while (levelIt.hasNext()){
+	        symbolIt = levelIt.next().iterator();
+	        while(symbolIt.hasNext()){
+	            s = symbolIt.next();
+	            if (s.type == null) 
+	                System.out.print(s.name+"u: undefined; ");
+	            else 
+	            System.out.println(s.toString());
+	        }
+	    }	
 	}
 
 	private absSymbol containsSymbol(String name, Integer level){

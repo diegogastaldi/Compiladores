@@ -3,13 +3,4 @@ int a;
 int b;
 
 void method (int a) {}
-
-void method2 () {
-  return ;
-  }
- 
-
-int method3(int a) {
-for a = 2, 1 {}
-}
 }
