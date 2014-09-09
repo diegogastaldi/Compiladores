@@ -21,16 +21,22 @@ public enum Type {
 				return "undefined";
 			case INTARRAY:
 				return "int[]";
+		    case FLOAT:
+		        return "float";
+		    case FLOATARRAY:
+		        return "float[]";
+		    case BOOLEAN:
+		        return "boolean";
+		    case BOOLEANARRAY:
+		        return "boolean[]";
 		}
-		
 		return null;
 	}
 	
 	public boolean isArray() {
-		if (this == Type.INTARRAY) {
+		if ((this == Type.INTARRAY) && (this == Type.BOOLEANARRAY) && (this == Type.FLOATARRAY)) {
 			return true;
-		}
-		
+		}		
 		return false;
 	}
 }

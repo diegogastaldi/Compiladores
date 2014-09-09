@@ -2,22 +2,22 @@ package ir.ast;
 
 import ir.ASTVisitor;
 
-public class IntLiteral extends Literal {
+public class FloatLiteral extends Literal {
 	private String rawValue;
-	private Integer value;
+	private Float value;
 	
 	/*
-	 * Constructor for int literal that takes a string as an input
-	 * @param: String integer
+	 * Constructor for float literal that takes a string as an input
+	 * @param: String float
 	 */
-	public IntLiteral(String val){
-		rawValue = val; // Will convert to int value in semantic check
-		value = Integer.valueOf(val);
+	public FloatLiteral(String val){
+		rawValue = val; // Will convert to float value in semantic check
+		value = Float.valueOf(val);
 	}
 
 	@Override
 	public Type getType() {
-		return Type.INT;
+		return Type.FLOAT;
 	}
 
 	public String getStringValue() {
@@ -28,11 +28,11 @@ public class IntLiteral extends Literal {
 		this.rawValue = stringValue;
 	}
 
-	public Integer getValue() {
+	public Float getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(float value) {
 		this.value = value;
 	}
 
@@ -45,4 +45,4 @@ public class IntLiteral extends Literal {
 	public <T> T accept(ASTVisitor<T> v) {
 		return v.visit(this);
 	}
-}
+} 
