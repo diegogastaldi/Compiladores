@@ -167,38 +167,20 @@ TYPE        		::= WFLOAT:w    {:RESULT = w;:}
                     |   WBOOLEAN:w  {:RESULT = w;:}
                     |   WINT:w      {:RESULT = w;:};
 
-STATEMENT   		::= ID:i LC EXPR:e RC {:absSymbol a = table.search(i);
-                                        if (a == null) 
-                                            parser.report_error("ID desconocido.",i);
-                                        else {
-                                            if (a instanceof arraySymbol) {
-                                                arraySymbol array = (arraySymbol)a;
-                                                if (e instanceof Integer) {
-                                                    Integer integer = (Integer) e;
-                                                    if (!(integer < array.size && integer >= 0))
-                                                        parser.report_error("Indice fuera de rango en arreglo "+array.name+": ",integer);
-                                                } else {
-                                                    parser.report_error("Argumento no valido en arreglo "+array.name+": ", e);
-                                                }
-                                            } else 
-                                                parser.report_error("Tipos no conpatibles, esperaba un arreglo y encontro un ",a.type);
-                                        }:}
+STATEMENT   		::= ID:i LC EXPR:e RC               {:if (table.search(i) == null) 
+                                                            parser.report_error("ID desconocido.",i);:}
                         ASSIGN_OP EXPR SEMICOLON
-                    |   ID:i    {:absSymbol a = table.search(i);
-                                if (a == null) 
-                                    parser.report_error("ID desconocido.",i);:}  
+                    |   ID:i                            {:if (table.search(i) == null) 
+                                                            parser.report_error("ID desconocido.",i);:}  
                         ASSIGN_OP EXPR SEMICOLON
-			        |   ID:i LPAR EXPR_PARAMETERS RPAR  {:absSymbol a = table.search(i);
-                                    			        if (a == null) 
-                                                            parser.report_error("ID desconocido.",i);
-                                                        :} 
+			        |   ID:i LPAR EXPR_PARAMETERS RPAR  {:if (table.search(i) == null) 
+                                                            parser.report_error("ID desconocido.",i);:} 
 			            SEMICOLON 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 			            			        
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 
     			    |   WIF LPAR EXPR RPAR BLOCK ELSE_BLOCK
-	    		    |   WFOR ID:i   {:absSymbol a = table.search(i);
-	    		                    if (a == null) 
-                                        parser.report_error("ID desconocido.",i);:} 
+	    		    |   WFOR ID:i                       {:if (table.search(i) == null) 
+                                                            parser.report_error("ID desconocido.",i);:} 
                         ASSIGN EXPR COMMA EXPR BLOCK
 	    		    |   WWHILE EXPR BLOCK
 	    		    |   WRETURN EXPR_RETURN SEMICOLON
@@ -231,14 +213,11 @@ EXPR_PARAMETERS 	::= EXPR EXPR_PARAMETERS_
 EXPR_PARAMETERS_	::= COMMA EXPR EXPR_PARAMETERS_ 
                     |   /* LAMBDA */ ;
 
-EXPR        		::= ID:i EXPR_                              {:absSymbol a = table.search(i);
-                                                                if (a == null) 
+EXPR        		::= ID:i EXPR_                              {:if (table.search(i) == null) 
                                                                     parser.report_error("ID desconocido.",i);:} 
-                    |   ID:i LC EXPR RC EXPR_                   {:absSymbol a = table.search(i);
-                                                                if (a == null) 
+                    |   ID:i LC EXPR RC EXPR_                   {:if (table.search(i) == null) 
                                                                     parser.report_error("ID desconocido.",i);:}
-                    |   ID:i LPAR EXPR_PARAMETERS RPAR EXPR_    {:absSymbol a = table.search(i);
-                                                                 if (a == null) 
+                    |   ID:i LPAR EXPR_PARAMETERS RPAR EXPR_    {:if (table.search(i) == null) 
                                                                     parser.report_error("ID desconocido.",i);:}
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 			            
