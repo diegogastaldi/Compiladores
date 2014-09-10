@@ -1,4 +1,4 @@
-/* Taller de Diseño de Software 2014
+/* Taller de Diseño de software 2014
 
    Proyecto: Compilador
    
@@ -85,13 +85,13 @@ terminal Float      FLOAT;
 terminal Boolean    BOOLEAN;
 terminal String     STRING_LITERAL;
 
-non terminal PROGRAM, FIELD_DECL, BLOCK, STATEMENT, ASSIGN_OP, EXPR, 
-             EXTERNINVK_ARG, SET_FIELD_DECL, SET_METHOD_DECL, SET_STATEMENT, 
-             EXPR_RETURN, ELSE_BLOCK, EXPR_PARAMETERS, ARG_INVOC, SET_EXTERNINVK_ARG, 
-             LITERAL, BIN_OP, ARITH_OP, REL_OP, EQ_OP, COND_OP, EXPR_, SET_EXTERNINVK_ARG_, 
-             EXPR_PARAMETERS_, SET_DECL;
-non terminal LinkedList<absSymbol> SET_COMPLETE_ID, PARAMETERS, SET_TYPE_ID;
-non terminal String TYPE;
+non terminal program, field_decl, block, statement, assign_op, expr, 
+             externinvk_arg, set_field_decl, set_method_decl, set_statement, 
+             expr_return, else_block, expr_parameters, arg_invoc, set_externinvk_arg, 
+             literal, bin_op, arith_op, rel_op, eq_op, cond_op, expr_, set_externinvk_arg_, 
+             expr_parameters_, set_decl;
+non terminal LinkedList<absSymbol> set_complete_id, parameters, set_type_id;
+non terminal String type;
 
 precedence left EQ, AND, NOT, NOT_EQ;
 precedence left OR;
@@ -100,26 +100,26 @@ precedence left PLUS, MINUS;
 precedence left MULT, DIV, MODULE;             
 
 
-start with PROGRAM;
+start with program;
 
-PROGRAM     	    ::= WCLASS {:table.insertLevel();:} ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, "Class")) == null)
+program     	    ::= WCLASS {:table.insertLevel();:} ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, "Class")) == null)
                                                                 parser.report_error("ID ya difinido: ",i);:}
-                        LLL SET_DECL                         {:table.deleteLevel();:} 
+                        LLL set_decl                         {:table.deleteLevel();:} 
                         RLL;
 
-SET_DECL			::= FIELD_DECL SEMICOLON SET_DECL 
-                    |   SET_METHOD_DECL ;
+set_decl			::= field_decl SEMICOLON set_decl 
+                    |   set_method_decl ;
 
-FIELD_DECL		    ::= TYPE:t ID:i LC INT:il RC    {:if (table.insertSymbol(new arraySymbol(i, t, il, null)) == null)
+field_decl		    ::= type:t ID:i LC INT:il RC    {:if (table.insertSymbol(new arraySymbol(i, t, il, null)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:}     
-                        SET_COMPLETE_ID:s           {:if (table.insertSymbolList(setType(s, t)) == null)
+                        set_complete_id:s           {:if (table.insertSymbolList(setType(s, t)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:}
-                    |   TYPE:t ID:i                 {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null)
+                    |   type:t ID:i                 {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:} 
-                        SET_COMPLETE_ID:s           {:if (table.insertSymbolList(setType(s, t)) == null)
+                        set_complete_id:s           {:if (table.insertSymbolList(setType(s, t)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:};
              
-SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR  {:functionSymbol f = new functionSymbol(i, t, p);
+set_method_decl		::= type:t ID:i LPAR parameters:p RPAR  {:functionSymbol f = new functionSymbol(i, t, p);
                                                             if (table.insertSymbol(f) == null) {
                                                                 parser.report_error("ID ya difinido: ",i);
                                                             } else {
@@ -127,8 +127,8 @@ SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR  {:functionSymbol f = ne
                                                                     parser.report_error("ID ya difinido: ",f.parameters.toString());
                                                                 }
                                                             :} 
-                        BLOCK SET_METHOD_DECL
-                    |   WVOID:t ID:i LPAR PARAMETERS:p RPAR {:functionSymbol f = new functionSymbol(i, t, p);
+                        block set_method_decl
+                    |   WVOID:t ID:i LPAR parameters:p RPAR {:functionSymbol f = new functionSymbol(i, t, p);
                                                             if (table.insertSymbol(f) == null) {
                                                                 parser.report_error("ID ya difinido: ",i);
                                                             } else {
@@ -136,113 +136,113 @@ SET_METHOD_DECL		::= TYPE:t ID:i LPAR PARAMETERS:p RPAR  {:functionSymbol f = ne
                                                                     parser.report_error("ID ya difinido: ",f.parameters.toString());
                                                                 }
                                                             :} 
-                        BLOCK SET_METHOD_DECL
+                        block set_method_decl
                     |   /*Lambda*/;
 
-SET_COMPLETE_ID 	::= COMMA ID:i              {:declList.add(new simpleSymbol(i, null, null));:} 
-                        SET_COMPLETE_ID:s       {:RESULT = s;:} 
+set_complete_id 	::= COMMA ID:i              {:declList.add(new simpleSymbol(i, null, null));:} 
+                        set_complete_id:s       {:RESULT = s;:} 
                     |   COMMA ID:i LC INT:il RC {:declList.add(new arraySymbol(i, null, il, null));:} 
-                        SET_COMPLETE_ID:s       {:RESULT = s;:} 
+                        set_complete_id:s       {:RESULT = s;:} 
                     |   /* LAMBDA */            {:RESULT = (LinkedList<absSymbol>)declList.clone();
                                                 declList.clear();:};
 
-PARAMETERS 		    ::= TYPE:t ID:i         {:parList.add(new simpleSymbol(i, null, t));:} 
-                        SET_TYPE_ID:s       {:RESULT = s;:} 
+parameters 		    ::= type:t ID:i         {:parList.add(new simpleSymbol(i, null, t));:} 
+                        set_type_id:s       {:RESULT = s;:} 
                     |   /*LAMBDA*/          {:RESULT = (LinkedList<absSymbol>)parList.clone();
                                             parList.clear();:};
 
-SET_TYPE_ID 		::= COMMA TYPE:t ID:i   {:parList.add(new simpleSymbol(i, null, t));:}  
-                        SET_TYPE_ID:s       {:RESULT = s;:} 
+set_type_id 		::= COMMA type:t ID:i   {:parList.add(new simpleSymbol(i, null, t));:}  
+                        set_type_id:s       {:RESULT = s;:} 
                     |   /*LAMBDA*/          {:RESULT = (LinkedList<absSymbol>)parList.clone();
                                             parList.clear();:};
 
-BLOCK       		::= LLL {:table.insertLevel();:} SET_FIELD_DECL SET_STATEMENT {:table.deleteLevel();:} RLL ;
+block       		::= LLL {:table.insertLevel();:} set_field_decl set_statement {:table.deleteLevel();:} RLL ;
 
-SET_FIELD_DECL		::= FIELD_DECL SEMICOLON SET_FIELD_DECL
+set_field_decl		::= field_decl SEMICOLON set_field_decl
                     |   /*LAMBDA*/;
 
-SET_STATEMENT 		::= STATEMENT SET_STATEMENT | /* LAMBDA */ ;
+set_statement 		::= statement set_statement | /* LAMBDA */ ;
 
-TYPE        		::= WFLOAT:w    {:RESULT = w;:}
+type        		::= WFLOAT:w    {:RESULT = w;:}
                     |   WBOOLEAN:w  {:RESULT = w;:}
                     |   WINT:w      {:RESULT = w;:};
 
-STATEMENT   		::= ID:i LC EXPR:e RC               {:if (table.search(i) == null) 
+statement   		::= ID:i LC expr:e RC               {:if (table.search(i) == null) 
                                                             parser.report_error("ID desconocido.",i);:}
-                        ASSIGN_OP EXPR SEMICOLON
+                        assign_op expr SEMICOLON
                     |   ID:i                            {:if (table.search(i) == null) 
                                                             parser.report_error("ID desconocido.",i);:}  
-                        ASSIGN_OP EXPR SEMICOLON
-			        |   ID:i LPAR EXPR_PARAMETERS RPAR  {:if (table.search(i) == null) 
+                        assign_op expr SEMICOLON
+			        |   ID:i LPAR expr_parameters RPAR  {:if (table.search(i) == null) 
                                                             parser.report_error("ID desconocido.",i);:} 
 			            SEMICOLON 
-			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 			            			        
-			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 
-    			    |   WIF LPAR EXPR RPAR BLOCK ELSE_BLOCK
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA type arg_invoc RPAR 			            			        
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID arg_invoc RPAR 
+    			    |   WIF LPAR expr RPAR block else_block
 	    		    |   WFOR ID:i                       {:if (table.search(i) == null) 
                                                             parser.report_error("ID desconocido.",i);:} 
-                        ASSIGN EXPR COMMA EXPR BLOCK
-	    		    |   WWHILE EXPR BLOCK
-	    		    |   WRETURN EXPR_RETURN SEMICOLON
+                        ASSIGN expr COMMA expr block
+	    		    |   WWHILE expr block
+	    		    |   WRETURN expr_return SEMICOLON
 	    		    |   WBREAK SEMICOLON
 	    		    |   WCONTINUE SEMICOLON
 	    		    |   SEMICOLON
-	    		    |   BLOCK ;
+	    		    |   block ;
            
-EXPR_RETURN 		::= EXPR 
+expr_return 		::= expr 
                     |   /* LAMBDA */ ;
 
-ELSE_BLOCK 		    ::= WELSE BLOCK 
+else_block 		    ::= WELSE block 
                     |   /* LAMBDA */ ;
 
-ASSIGN_OP   		::= ASSIGN 
+assign_op   		::= ASSIGN 
     			    |   ASSIGN_INC 
     			    |   ASSIGN_DEC ;
            
-ARG_INVOC 		    ::= COMMA SET_EXTERNINVK_ARG 
+arg_invoc 		    ::= COMMA set_externinvk_arg 
                     |   /* LAMBDA */ ;
 
-SET_EXTERNINVK_ARG 	::= EXTERNINVK_ARG SET_EXTERNINVK_ARG_ ;
+set_externinvk_arg 	::= externinvk_arg set_externinvk_arg_ ;
 
-SET_EXTERNINVK_ARG_	::= COMMA SET_EXTERNINVK_ARG 
+set_externinvk_arg_	::= COMMA set_externinvk_arg 
                     |   /* LAMBDA */ ;
 
-EXPR_PARAMETERS 	::= EXPR EXPR_PARAMETERS_ 
+expr_parameters 	::= expr expr_parameters_ 
                     |   /* LAMBDA */;
 
-EXPR_PARAMETERS_	::= COMMA EXPR EXPR_PARAMETERS_ 
+expr_parameters_	::= COMMA expr expr_parameters_ 
                     |   /* LAMBDA */ ;
 
-EXPR        		::= ID:i EXPR_                              {:if (table.search(i) == null) 
+expr        		::= ID:i expr_                              {:if (table.search(i) == null) 
                                                                     parser.report_error("ID desconocido.",i);:} 
-                    |   ID:i LC EXPR RC EXPR_                   {:if (table.search(i) == null) 
+                    |   ID:i LC expr RC expr_                   {:if (table.search(i) == null) 
                                                                     parser.report_error("ID desconocido.",i);:}
-                    |   ID:i LPAR EXPR_PARAMETERS RPAR EXPR_    {:if (table.search(i) == null) 
+                    |   ID:i LPAR expr_parameters RPAR expr_    {:if (table.search(i) == null) 
                                                                     parser.report_error("ID desconocido.",i);:}
-			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA TYPE ARG_INVOC RPAR 
-			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID ARG_INVOC RPAR 			            
-			        |   LITERAL EXPR_
-			        |   MINUS EXPR EXPR_
-			        |   NOT EXPR EXPR_
-			        |   LPAR EXPR RPAR EXPR_;
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA type arg_invoc RPAR 
+			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID arg_invoc RPAR 			            
+			        |   literal expr_
+			        |   MINUS expr expr_
+			        |   NOT expr expr_
+			        |   LPAR expr RPAR expr_;
 			
-EXPR_	    		::= BIN_OP EXPR 
+expr_	    		::= bin_op expr 
                     |   /* LAMBDA */;
 
-EXTERNINVK_ARG  	::= EXPR 
+externinvk_arg  	::= expr 
                     |   STRING_LITERAL ;
 
-BIN_OP      		::= ARITH_OP | REL_OP | EQ_OP | COND_OP ;
+bin_op      		::= arith_op | rel_op | eq_op | cond_op ;
 
-ARITH_OP    		::= PLUS | MINUS | MULT | DIV | MODULE  ;
+arith_op    		::= PLUS | MINUS | MULT | DIV | MODULE  ;
 
-REL_OP      		::= LESS_THAN | GREATER_THAN | LESS_EQ_THAN | GREATER_EQ_THAN ;
+rel_op      		::= LESS_THAN | GREATER_THAN | LESS_EQ_THAN | GREATER_EQ_THAN ;
 
-EQ_OP       		::= EQ | NOT_EQ ;
+eq_op       		::= EQ | NOT_EQ ;
 
-COND_OP     		::= AND | OR ;
+cond_op     		::= AND | OR ;
 
-LITERAL     		::= INT:l     {:RESULT = l;:}
+literal     		::= INT:l     {:RESULT = l;:}
                     |   FLOAT:l   {:RESULT = l;:}
                     |   BOOLEAN:l {:RESULT = l;:};
 
