@@ -18,7 +18,7 @@ package compiler2014;
 import java_cup.runtime.*;
 import java.io.*;
 import java.util.*;
-
+import ir.ast.*;
 parser code {:
 
   public static void main(String[] args){
@@ -74,24 +74,34 @@ action code {:
 :}
 
 
-terminal            LESS_THAN, GREATER_THAN, LESS_EQ_THAN, 
-                    GREATER_EQ_THAN, NOT_EQ, MODULE, NOT, LPAR, RPAR, LC, RC, EQ, 
-                    OR, AND, ASSIGN_INC, ASSIGN_DEC, ASSIGN, PLUS, MULT, MINUS, LLL, 
-                    RLL, COMMA, SEMICOLON, WEXTERNINVK, DIV;
-terminal String     ID, WVOID, WBOOLEAN, WBREAK, WCLASS, WINT, WCONTINUE, WELSE, WFLOAT, WFOR, 
-                    WIF, WRETURN, WWHILE;
-terminal Integer    INT;
-terminal Float      FLOAT;
-terminal Boolean    BOOLEAN;
-terminal String     STRING_LITERAL;
+terminal                NOT, LPAR, RPAR, LC, RC, ASSIGN_INC, ASSIGN_DEC, ASSIGN, LLL, 
+                        RLL, COMMA, SEMICOLON, WEXTERNINVK;
+terminal String         ID, WVOID, WBOOLEAN, WBREAK, WCLASS, WINT, WCONTINUE, WELSE, WFLOAT, WFOR, 
+                        WIF, WRETURN, WWHILE;
+terminal BinOpType      LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN, PLUS, MULT, MINUS, 
+                        OR, AND, EQ, NOT_EQ, MODULE, DIV;
+terminal IntLiteral     INT;
+terminal FloatLiteral   FLOAT;
+terminal BoolLiteral    BOOLEAN;
+terminal String         STRING_LITERAL;
 
-non terminal program, field_decl, block, statement, assign_op, expr, 
-             externinvk_arg, set_field_decl, set_method_decl, set_statement, 
-             expr_return, else_block, expr_parameters, arg_invoc, set_externinvk_arg, 
-             literal, bin_op, arith_op, rel_op, eq_op, cond_op, expr_, set_externinvk_arg_, 
-             expr_parameters_, set_decl;
-non terminal LinkedList<absSymbol> set_complete_id, parameters, set_type_id;
-non terminal String type;
+non terminal            program, field_decl, block, externinvk_arg, set_field_decl, set_method_decl, 
+                        else_block, expr_parameters, arg_invoc, set_externinvk_arg, expr_, set_externinvk_arg_, 
+                        expr_parameters_, set_decl;
+non terminal            LinkedList<absSymbol> set_complete_id, parameters, set_type_id;
+non terminal            String type;
+non terminal            Expression expr;
+non terminal            AssignStmt assign_op;
+non terminal            Statement statement;
+non terminal            LinkedList<Statement> set_statement;
+non terminal            ReturnStmt expr_return;
+non terminal            Literal literal;
+non terminal            BinOpExpr bin_op;
+non terminal            ArithExpr arith_op;
+non terminal            RelExpr rel_op;
+non terminal            EqExpr eq_op;
+non terminal            CondExpr cond_op;
+
 
 precedence left EQ, AND, NOT, NOT_EQ;
 precedence left OR;
@@ -110,7 +120,7 @@ program     	    ::= WCLASS {:table.insertLevel();:} ID:i {:if (table.insertSymb
 set_decl			::= field_decl SEMICOLON set_decl 
                     |   set_method_decl ;
 
-field_decl		    ::= type:t ID:i LC INT:il RC    {:if (table.insertSymbol(new arraySymbol(i, t, il, null)) == null)
+field_decl		    ::= type:t ID:i LC INT:il RC    {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:}     
                         set_complete_id:s           {:if (table.insertSymbolList(setType(s, t)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:}
@@ -147,7 +157,7 @@ set_method_decl		::= type:t ID:i {:functionSymbol f = new functionSymbol(i, t, n
 
 set_complete_id 	::= COMMA ID:i              {:declList.add(new simpleSymbol(i, null, null));:} 
                         set_complete_id:s       {:RESULT = s;:} 
-                    |   COMMA ID:i LC INT:il RC {:declList.add(new arraySymbol(i, null, il, null));:} 
+                    |   COMMA ID:i LC INT:il RC {:declList.add(new arraySymbol(i, null, il.getValue(), null));:} 
                         set_complete_id:s       {:RESULT = s;:} 
                     |   /* LAMBDA */            {:RESULT = (LinkedList<absSymbol>)declList.clone();
                                                 declList.clear();:};

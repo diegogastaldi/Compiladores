@@ -17,6 +17,7 @@
 package compiler2014;
 import java_cup.runtime.Symbol;
 import java.io.*;
+import ir.ast.*;
 %%
 %class yylex
 %public
@@ -86,10 +87,10 @@ COMMENT2="//"[^\n]*
 "return"        		{return new Symbol(sym.WRETURN, yyline, yycolumn, new String(yytext()));}
 "void"          		{return new Symbol(sym.WVOID, yyline, yycolumn, new String(yytext()));}
 "while"         		{return new Symbol(sym.WWHILE, yyline, yycolumn, new String(yytext()));}
-"false" | "true"  		{return new Symbol(sym.BOOLEAN, yyline, yycolumn, new Boolean(yytext()));}
+"false" | "true"  		{return new Symbol(sym.BOOLEAN, yyline, yycolumn, new BoolLiteral(yytext()));}
 {L}({L}|{D}|_)*   		{return new Symbol(sym.ID, yyline, yycolumn, new String(yytext()));}
-{D}({D})*       		{return new Symbol(sym.INT, yyline, yycolumn, new Integer(yytext()));}
-{D}({D})* ("." {D}({D})*)?  	{return new Symbol(sym.FLOAT, yyline, yycolumn, new Float(yytext()));}
+{D}({D})*       		{return new Symbol(sym.INT, yyline, yycolumn, new IntLiteral(yytext()));}
+{D}({D})* ("." {D}({D})*)?  	{return new Symbol(sym.FLOAT, yyline, yycolumn, new FloatLiteral(yytext()));}
 \"[^\"]*\"   			{return new Symbol(sym.STRING_LITERAL, yyline, yycolumn, yytext().substring(1,yytext().length()-1));}
 .               		{System.err.println("Illegal character: "+ yytext()+ " linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 }
