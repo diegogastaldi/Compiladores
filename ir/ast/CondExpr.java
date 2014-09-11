@@ -3,6 +3,10 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class CondExpr extends BinOpExpr {
+    public CondExpr(){
+        super();
+    }
+
    	public CondExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);   	
 		if ((op == BinOpType.AND) || (op == BinOpType.OR)) 

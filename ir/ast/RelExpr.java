@@ -3,6 +3,10 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class RelExpr extends BinOpExpr {
+    public RelExpr() {
+        super();
+    }
+
 	public RelExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);
 		if ((op == BinOpType.LE) || (op == BinOpType.LEQ) || (op == BinOpType.GE) || (op == BinOpType.GEQ)) 

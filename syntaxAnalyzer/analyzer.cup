@@ -248,17 +248,29 @@ expr_	    		::= bin_op expr
 externinvk_arg  	::= expr 
                     |   STRING_LITERAL ;
 
-bin_op      		::= arith_op | rel_op | eq_op | cond_op ;
+bin_op      		::= arith_op:a          {:RESULT = a;:}
+                    |   rel_op:r            {:RESULT = r;:}
+                    |   eq_op:e             {:RESULT = e;:}
+                    |   cond_op:c           {:RESULT = c;:};
 
-arith_op    		::= PLUS | MINUS | MULT | DIV | MODULE  ;
+arith_op    		::= PLUS:p              {:ArithExpr ar = new ArithExpr(); ar.setOperator(p); RESULT = ar;:} 
+                    |   MINUS:m             {:ArithExpr ar = new ArithExpr(); ar.setOperator(m); RESULT = ar;:} 
+                    |   MULT:m              {:ArithExpr ar = new ArithExpr(); ar.setOperator(m); RESULT = ar;:} 
+                    |   DIV:d               {:ArithExpr ar = new ArithExpr(); ar.setOperator(d); RESULT = ar;:} 
+                    |   MODULE:m            {:ArithExpr ar = new ArithExpr(); ar.setOperator(m); RESULT = ar;:} ;
 
-rel_op      		::= LESS_THAN | GREATER_THAN | LESS_EQ_THAN | GREATER_EQ_THAN ;
+rel_op      		::= LESS_THAN:l         {:RelExpr rel = new RelExpr(); rel.setOperator(l); RESULT = rel;:} 
+                    |   GREATER_THAN:g      {:RelExpr rel = new RelExpr(); rel.setOperator(g); RESULT = rel;:} 
+                    |   LESS_EQ_THAN:le     {:RelExpr rel = new RelExpr(); rel.setOperator(le); RESULT = rel;:} 
+                    |   GREATER_EQ_THAN:ge  {:RelExpr rel = new RelExpr(); rel.setOperator(ge); RESULT = rel;:} ;
 
-eq_op       		::= EQ | NOT_EQ ;
+eq_op       		::= EQ:e                {:EqExpr eq = new EqExpr(); eq.setOperator(e); RESULT = eq;:} 
+                    |   NOT_EQ:n            {:EqExpr eq = new EqExpr(); eq.setOperator(n); RESULT = eq;:} ;
 
-cond_op     		::= AND | OR ;
+cond_op     		::= AND:a               {:CondExpr c = new CondExpr(); c.setOperator(a); RESULT = c;:}
+                    |   OR:o                {:CondExpr c = new CondExpr(); c.setOperator(o); RESULT = c;:} ;
 
-literal     		::= INT:l     {:RESULT = l;:}
-                    |   FLOAT:l   {:RESULT = l;:}
-                    |   BOOLEAN:l {:RESULT = l;:};
+literal     		::= INT:l               {:RESULT = l;:}
+                    |   FLOAT:l             {:RESULT = l;:}
+                    |   BOOLEAN:l           {:RESULT = l;:};
 

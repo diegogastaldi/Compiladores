@@ -3,6 +3,10 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class EqExpr extends BinOpExpr {
+    public EqExpr(){
+        super();
+    }
+
 	public EqExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);   	
 		if ((op == BinOpType.CEQ) || (op == BinOpType.NEQ)) 

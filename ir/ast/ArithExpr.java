@@ -3,6 +3,10 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class ArithExpr extends BinOpExpr {
+	public ArithExpr(){
+	    super();
+	}   
+
 	public ArithExpr(Expression l, BinOpType op, Expression r){
 		super(l, r);
 		if ((op == BinOpType.PLUS) || (op == BinOpType.MINUS) || (op == BinOpType.MULTIPLY) || (op == BinOpType.DIVIDE) || (op == BinOpType.MOD)) 
