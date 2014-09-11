@@ -5,9 +5,9 @@ import ir.ASTVisitor;
 public class VarLocation extends Location {
 	private int blockId;
 
-	public VarLocation(String id) {
+	public VarLocation(String id, int block) {
 		this.id = id;
-		this.blockId = -1;
+		this.blockId = block;
 	}
 	
 	public int getBlockId() {

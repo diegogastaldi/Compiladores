@@ -2,9 +2,8 @@ package ir.ast;
 
 import ir.ASTVisitor;
 
-public class WhileStmt extends Statement {
+public class WhileStmt extends CycleStmt {
 	private Expression condition;
-	private Block block;
 	
 	public WhileStmt(Expression cond, Block block) {
 		this.condition = cond;
@@ -17,14 +16,6 @@ public class WhileStmt extends Statement {
 
 	public void setCondition(Expression condition) {
 		this.condition = condition;
-	}
-
-	public Block getBlock() {
-		return block;
-	}
-
-	public void setBlock(Block block) {
-		this.block = block;
 	}
 	
 	@Override

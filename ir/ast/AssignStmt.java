@@ -2,15 +2,13 @@ package ir.ast;
 
 import ir.ASTVisitor;
 
-public class AssignStmt extends Statement {
-	private Location location;
-	private Expression expr;
-	private AssignOpType operator;
+public abstract class AssignStmt extends Statement {
+	protected Location location;
+	protected Expression expr;
 
-	public AssignStmt(Location loc, AssignOpType op, Expression e) {
+	public AssignStmt(Location loc, Expression e) {
 		this.location = loc;
 		this.expr = e;
-		this.operator = op;
 	}
 	
 	public void setLocation(Location loc) {
@@ -29,22 +27,4 @@ public class AssignStmt extends Statement {
 		return this.expr;
 	}
 	
-	public AssignOpType getOperator() {
-		return operator;
-	}
-
-	public void setOperator(AssignOpType operator) {
-		this.operator = operator;
-	}
-	
-	@Override
-	public String toString() {
-		return location + " " + operator + " " + expr;
-		
-	}
-
-	@Override
-	public <T> T accept(ASTVisitor<T> v) {
-		return v.visit(this);
-	}
 }
