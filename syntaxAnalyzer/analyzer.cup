@@ -119,24 +119,30 @@ field_decl		    ::= type:t ID:i LC INT:il RC    {:if (table.insertSymbol(new arr
                         set_complete_id:s           {:if (table.insertSymbolList(setType(s, t)) == null)
                                                         parser.report_error("ID ya difinido: ",i);:};
              
-set_method_decl		::= type:t ID:i LPAR parameters:p RPAR  {:functionSymbol f = new functionSymbol(i, t, p);
-                                                            if (table.insertSymbol(f) == null) {
-                                                                parser.report_error("ID ya difinido: ",i);
-                                                            } else {
-                                                                if (table.insertSymbolList(f.parameters)==null)
-                                                                    parser.report_error("ID ya difinido: ",f.parameters.toString());
-                                                                }
-                                                            :} 
-                        block set_method_decl
-                    |   WVOID:t ID:i LPAR parameters:p RPAR {:functionSymbol f = new functionSymbol(i, t, p);
-                                                            if (table.insertSymbol(f) == null) {
-                                                                parser.report_error("ID ya difinido: ",i);
-                                                            } else {
-                                                                if (table.insertSymbolList(f.parameters)==null)
-                                                                    parser.report_error("ID ya difinido: ",f.parameters.toString());
-                                                                }
-                                                            :} 
-                        block set_method_decl
+set_method_decl		::= type:t ID:i {:functionSymbol f = new functionSymbol(i, t, null);
+                                     if (table.insertSymbol(f) == null) {
+                                        parser.report_error("ID ya difinido: ",i);
+                                     }
+                                     table.insertLevel();:} 
+                        LPAR parameters:p RPAR  {:if (p != null) {
+                                                    ((functionSymbol)table.search(i)).parameters = p;
+                                                 }
+                                                 if (table.insertSymbolList(p)==null)
+                                                    parser.report_error("ID ya difinido: ",p.toString());
+                                                 :}
+                        block {:table.deleteLevel();:} set_method_decl
+                    |   WVOID:t ID:i {:functionSymbol f = new functionSymbol(i, t, null);
+                                        if (table.insertSymbol(f) == null) {
+                                                parser.report_error("ID ya difinido: ",i);
+                                        }
+                                        table.insertLevel();:} 
+                        LPAR parameters:p RPAR {:if (p != null) {
+                                                    ((functionSymbol)table.search(i)).parameters = p;
+                                                 }
+                                                 if (table.insertSymbolList(p)==null)
+                                                    parser.report_error("ID ya difinido: ",p.toString());
+                                                 :} 
+                        block {:table.deleteLevel();:} set_method_decl
                     |   /*Lambda*/;
 
 set_complete_id 	::= COMMA ID:i              {:declList.add(new simpleSymbol(i, null, null));:} 
