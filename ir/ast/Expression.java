@@ -1,7 +1,6 @@
 package ir.ast;
 
 public abstract class Expression extends AST {
-	protected Expression expr;
 	protected Type type;
 	
 	public Type getType() {

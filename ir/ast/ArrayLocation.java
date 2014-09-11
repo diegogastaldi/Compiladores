@@ -30,7 +30,7 @@ public class ArrayLocation extends Location {
 		return v.visit(this);
 	}
 
-	public int getExp() {
+	public Expression getExp() {
 	  return exp;
 	}
 

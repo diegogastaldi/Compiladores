@@ -1,5 +1,7 @@
 package ir.ast;
+import java.util.ArrayList;
 import java.util.List;
+import ir.ASTVisitor;
 public class MethodCall extends Expression {
 	protected String id;
 	protected List<Expression> parameters;
@@ -30,7 +32,7 @@ public class MethodCall extends Expression {
 		return parameters;
 	}
 	
-	public void addParamaters(Expresion e) {
+	public void addParamaters(Expression e) {
 	    parameters.add(e);
 	}
 	
