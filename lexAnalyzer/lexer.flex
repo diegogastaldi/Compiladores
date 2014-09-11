@@ -63,9 +63,6 @@ COMMENT2="//"[^\n]*
 "-"             		{return new Symbol(sym.MINUS, yyline, yycolumn);}
 "/"             		{return new Symbol(sym.DIV, yyline, yycolumn);}
 "!"             		{return new Symbol(sym.NOT, yyline, yycolumn);}
-"+="            		{return new Symbol(sym.ASSIGN_INC, yyline, yycolumn);}
-"-="            		{return new Symbol(sym.ASSIGN_DEC, yyline, yycolumn);}
-"="             		{return new Symbol(sym.ASSIGN, yyline, yycolumn);}
 ";"             		{return new Symbol(sym.SEMICOLON, yyline, yycolumn);}
 ","             		{return new Symbol(sym.COMMA, yyline, yycolumn);}
 "("             		{return new Symbol(sym.LPAR, yyline, yycolumn);}
@@ -74,6 +71,9 @@ COMMENT2="//"[^\n]*
 "]"             		{return new Symbol(sym.RC, yyline, yycolumn);}
 "{"             		{return new Symbol(sym.LLL, yyline, yycolumn);}
 "}"             		{return new Symbol(sym.RLL, yyline, yycolumn);}
+"+="            		{return new Symbol(sym.ASSIGN_INC, yyline, yycolumn);}
+"-="            		{return new Symbol(sym.ASSIGN_DEC, yyline, yycolumn);}
+"="             		{return new Symbol(sym.ASSIGN, yyline, yycolumn);}
 "boolean"       		{return new Symbol(sym.WBOOLEAN, yyline, yycolumn, new String(yytext()));}
 "externinvk"       		{return new Symbol(sym.WEXTERNINVK, yyline, yycolumn, new String(yytext()));}
 "break"         		{return new Symbol(sym.WBREAK, yyline, yycolumn, new String(yytext()));}

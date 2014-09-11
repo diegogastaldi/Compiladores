@@ -3,6 +3,9 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class IncrementAssign extends AssignStmt {
+    public IncrementAssign() {
+        super();
+    }
 
 	public IncrementAssign(Location loc, Expression e) {
         super(loc, e);

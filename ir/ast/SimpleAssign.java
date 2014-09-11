@@ -3,6 +3,9 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class SimpleAssign extends AssignStmt {
+    public SimpleAssign(){
+        super();
+    }
 
 	public SimpleAssign(Location loc, Expression e) {
         super(loc, e);

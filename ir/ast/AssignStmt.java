@@ -6,6 +6,9 @@ public abstract class AssignStmt extends Statement {
 	protected Location location;
 	protected Expression expr;
 
+    public AssignStmt() {
+    }
+
 	public AssignStmt(Location loc, Expression e) {
 		this.location = loc;
 		this.expr = e;

@@ -5,9 +5,9 @@ import ir.ASTVisitor;
 public class ForStmt extends CycleStmt {
 	private Expression assignExpr;
 	private Expression condition;
-	protected String id;
+	private String id;
 		
-	public ForStmt(Expression cond, Expression ass, Block block, String id) {
+	public ForStmt( String id, Expression cond, Expression ass, Block block) {
 		this.condition = cond;
 		this.block = block;
 		this.assignExpr = ass;
