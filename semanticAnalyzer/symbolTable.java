@@ -3,12 +3,14 @@ import java.util.*;
 
 public class symbolTable{
 	LinkedList<LinkedList<absSymbol>> t;
-	
+	int blockId;
 	public symbolTable(){
 		t = new LinkedList<LinkedList<absSymbol>>();
+	    blockId = 0;
 	}
 	
 	public LinkedList<absSymbol> insertSymbolList(LinkedList<absSymbol> l) {
+	    blockId = 0;
         for (int i = 0 ; (i < l.size()) ; i++) {
             if (insertSymbol(l.get(i)) == null)
                 return null;
@@ -16,6 +18,10 @@ public class symbolTable{
         return l;
 	}
 	
+	public int getBlockId() {
+	    return blockId;
+	}
+
 	/*Si contiene el simbolo en el nivel retorna null,
 	en caso contrario retortna el simbolo creado*/
 	public absSymbol insertSymbol(absSymbol s){
@@ -40,12 +46,14 @@ public class symbolTable{
     
 	/*Crea un nuevo nivel*/
 	public void insertLevel(){
+	    blockId++;
 	    LinkedList<absSymbol> newLevel = new LinkedList<absSymbol>();
 	    t.addFirst(newLevel);
     }
 
     /*Elimina un nivel*/
     public void deleteLevel(){
+        blockId--;
 	    t.removeFirst();
 	}
 

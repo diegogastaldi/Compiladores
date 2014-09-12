@@ -65,7 +65,7 @@ action code {:
   static symbolTable table = new symbolTable();
   static LinkedList<absSymbol>  declList = new LinkedList<absSymbol>();
   static LinkedList<absSymbol>  parList = new LinkedList<absSymbol>();
-  static int blockId = 0;
+
   private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, String type) {
     for (int i = 0 ; i < symbolList.size() ; i++) {
         symbolList.get(i).type = type;
@@ -87,7 +87,7 @@ terminal String         STRING_LITERAL;
 terminal AssignStmt     ASSIGN_INC, ASSIGN_DEC, ASSIGN;
 
 non terminal            program, field_decl, externinvk_arg, set_field_decl, set_method_decl,
-                        arg_invoc, set_externinvk_arg, set_externinvk_arg_, set_decl;
+                        arg_invoc, set_decl;
 non terminal            MethodCall method_call;                        
 non terminal            Location location;                        
 non terminal            LinkedList<Expression> expr_parameters, expr_parameters_;
@@ -192,17 +192,13 @@ stmt_return 		::= WRETURN expr:e SEMICOLON            {:RESULT = new ReturnStmt(
 stmt_if             ::= WIF LPAR expr:e RPAR block:b1 WELSE block:b2    {:RESULT = new IfStmt(e, b1, b2);:}
     			    |   WIF LPAR expr:e RPAR block:b        {:RESULT = new IfStmt(e, b);:} ;
 
-arg_invoc 		    ::= COMMA set_externinvk_arg 
-                    |   /* LAMBDA */ ;
-
-set_externinvk_arg 	::= externinvk_arg set_externinvk_arg_ ;
-
-set_externinvk_arg_	::= COMMA set_externinvk_arg 
-                    |   /* LAMBDA */ ;                    
-
-method_call         ::= ID:i LPAR expr_parameters RPAR          {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);:}
+method_call         ::= ID:i LPAR expr_parameters:p RPAR    {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
+                                                            RESULT = new MethodCall(i, p);:}
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA type arg_invoc RPAR 
 			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID arg_invoc RPAR;
+
+arg_invoc 		    ::= COMMA externinvk_arg arg_invoc
+                    |   /* LAMBDA */ ;
 
 externinvk_arg  	::= expr 
                     |   STRING_LITERAL ;
@@ -220,8 +216,8 @@ set_statement 		::= statement:s set_statement:ss            {:LinkedList<Stateme
                     |   /* LAMBDA */                            {:RESULT = new LinkedList<Statement>();:};
 
 block       		::= LLL                                     {:table.insertLevel();:} 
-                        set_field_decl set_statement:s          {:table.deleteLevel();:} 
-                        RLL                                     {:RESULT = new Block(blockId, s);:};
+                        set_field_decl:sf set_statement:ss      {:table.deleteLevel();:} 
+                        RLL                                     {:RESULT = new Block(table.getBlockId(), ss);:};
 
 type        		::= WFLOAT:w                                {:RESULT = w;:}
                     |   WBOOLEAN:w                              {:RESULT = w;:}
@@ -236,9 +232,9 @@ expr        		::= location:l                              {:RESULT = l;:}
 			        |   expr:e1 bin_op:b expr:e2                {:b.setLeftOperand(e1); b.setRightOperand(e2); RESULT = b;:};
 
 location            ::= ID:i                                    {:if (table.search(i) == null) parser.report_error("ID desconocido."+i,i);
-                                                                RESULT = new VarLocation(i, blockId);:}                               
+                                                                RESULT = new VarLocation(i,table.getBlockId());:}                               
                     |   ID:i LC expr:e RC                       {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
-                                                                RESULT = new ArrayLocation(i, blockId, e);:};      
+                                                                RESULT = new ArrayLocation(i, table.getBlockId(), e);:};      
 
 
 assign_op   		::= ASSIGN:a                                {:RESULT = new SimpleAssign();:}
