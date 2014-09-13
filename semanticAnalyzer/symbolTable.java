@@ -1,6 +1,6 @@
 package compiler2014;
 import java.util.*;
-
+import ir.ast.Type;
 public class symbolTable{
 	LinkedList<LinkedList<absSymbol>> t;
 	int blockId;
@@ -68,7 +68,7 @@ public class symbolTable{
 	            if (s.type == null) 
 	                System.out.print(s.name+"u: undefined; ");
 	            else 
-	            System.out.println(s.toString());
+	                System.out.println(s.toString());
 	        }
 	    }	
 	}

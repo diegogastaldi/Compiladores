@@ -16,7 +16,9 @@ public interface ASTVisitor<T> {
     T visit(ContinueStmt stmt);
     T visit(BreakStmt stmt);
     T visit(CycleStmt stmt);
-    T visit(ForStmt stmt);	
+    T visit(ForStmt stmt);
+	T visit(MethodCallStmt stmt);
+    T visit(SemiColon stmt);
     
 // visit expressions
 	T visit(BinOpExpr expr);
@@ -27,7 +29,7 @@ public interface ASTVisitor<T> {
 	T visit(CondExpr expr);	
 	T visit(EqExpr expr);
 	T visit(InParentExpr expr);
-	T visit(MethodCall expr);		
+	T visit(MethodCallExpr expr);		
 	
 // visit literals	
 	T visit(IntLiteral lit);

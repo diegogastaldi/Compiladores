@@ -66,7 +66,7 @@ action code {:
   static LinkedList<absSymbol>  declList = new LinkedList<absSymbol>();
   static LinkedList<absSymbol>  parList = new LinkedList<absSymbol>();
 
-  private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, String type) {
+  private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, Type type) {
     for (int i = 0 ; i < symbolList.size() ; i++) {
         symbolList.get(i).type = type;
     }
@@ -88,12 +88,13 @@ terminal AssignStmt     ASSIGN_INC, ASSIGN_DEC, ASSIGN;
 
 non terminal            program, field_decl, externinvk_arg, set_field_decl, set_method_decl,
                         arg_invoc, set_decl;
-non terminal            MethodCall method_call;                        
+non terminal            MethodCallExpr method_call_expr; 
+non terminal            MethodCallStmt method_call_stmt;                        
 non terminal            Location location;                        
 non terminal            LinkedList<Expression> expr_parameters, expr_parameters_;
 non terminal            Block block;
 non terminal            LinkedList<absSymbol> set_complete_id, parameters, set_type_id;
-non terminal            String type;
+non terminal            Type type;
 non terminal            Expression expr;
 non terminal            AssignStmt assign_op;
 non terminal            Statement statement;
@@ -118,7 +119,7 @@ precedence left MULT, DIV, MODULE;
 start with program;
 
 program     	    ::= WCLASS                              {:table.insertLevel();:} 
-                        ID:i                                {:if (table.insertSymbol(new simpleSymbol(i, null, "Class")) == null)
+                        ID:i                                {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED)) == null)
                                                                 parser.report_error("ID ya difinido: ",i);:}
                         LLL set_decl                        {:table.deleteLevel();:} 
                         RLL;
@@ -148,20 +149,20 @@ set_method_decl		::= type:t ID:i                         {:functionSymbol f = ne
                                                             if (table.insertSymbolList(p)==null)
                                                                 parser.report_error("ID ya difinido: ",p.toString());
                                                             :}
-                        block {:table.deleteLevel();:} set_method_decl
-                    |   WVOID:t ID:i                        {:functionSymbol f = new functionSymbol(i, t, null);
+                        block:b {:System.out.println(b.toString());table.deleteLevel();:} set_method_decl
+                    |   WVOID ID:i                          {:functionSymbol f = new functionSymbol(i, null, null);
                                                             if (table.insertSymbol(f) == null)
                                                                 parser.report_error("ID ya difinido: ",i);
                                                             table.insertLevel();:} 
                         LPAR parameters:p RPAR              {:if (p != null) ((functionSymbol)table.search(i)).parameters = p;
                                                             if (table.insertSymbolList(p)==null)
                                                                 parser.report_error("ID ya difinido: ",p.toString());:} 
-                        block {:table.deleteLevel();:} set_method_decl
+                        block:b {:System.out.println(b.toString());table.deleteLevel();:} set_method_decl
                     |   /*Lambda*/;
     
-set_complete_id 	::= COMMA ID:i                          {:declList.add(new simpleSymbol(i, null, null));:} 
+set_complete_id 	::= COMMA ID:i                          {:declList.add(new simpleSymbol(i, null, Type.UNDEFINED));:} 
                         set_complete_id:s                   {:RESULT = s;:} 
-                    |   COMMA ID:i LC INT:il RC             {:declList.add(new arraySymbol(i, null, il.getValue(), null));:} 
+                    |   COMMA ID:i LC INT:il RC             {:declList.add(new arraySymbol(i, Type.UNDEFINED, il.getValue(), null));:} 
                         set_complete_id:s                   {:RESULT = s;:} 
                     |   /* LAMBDA */                        {:RESULT = (LinkedList<absSymbol>)declList.clone(); declList.clear();:};
 
@@ -175,33 +176,34 @@ set_type_id 		::= COMMA type:t ID:i                   {:parList.add(new simpleSy
 
 
 statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.setExpression(e); RESULT = a;:}
-			        |   method_call:mc
+			        |   method_call_stmt:mc SEMICOLON       {:RESULT = mc;:}
     			    |   stmt_if:i 			                {:RESULT = i;:}
 	    		    |   WFOR ID:i                           {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);:} 
                         ASSIGN expr:e1 COMMA expr:e2 block:b{:RESULT = new ForStmt(i, e1, e2, b);:}
 	    		    |   WWHILE expr:e block:b               {:RESULT = new WhileStmt(e, b);:}
-	    		    |   stmt_return:r                       {:RESULT = r;:}
+	    		    |   stmt_return:r SEMICOLON             {:RESULT = r;:}
 	    		    |   WBREAK SEMICOLON                    {:RESULT = new BreakStmt();:}
 	    		    |   WCONTINUE SEMICOLON                 {:RESULT = new ContinueStmt();:}
-	    		    |   SEMICOLON                           {:RESULT = null;:}
+	    		    |   SEMICOLON                           {:RESULT = new SemiColon(table.getBlockId());:}
 	    		    |   block:b                             {:RESULT = b;:} ;
-                      
-stmt_return 		::= WRETURN expr:e SEMICOLON            {:RESULT = new ReturnStmt(e);:} 
-                    |   WRETURN SEMICOLON                   {:RESULT = new ReturnStmt();:} ;
-
-stmt_if             ::= WIF LPAR expr:e RPAR block:b1 WELSE block:b2    {:RESULT = new IfStmt(e, b1, b2);:}
-    			    |   WIF LPAR expr:e RPAR block:b        {:RESULT = new IfStmt(e, b);:} ;
-
-method_call         ::= ID:i LPAR expr_parameters:p RPAR    {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
-                                                            RESULT = new MethodCall(i, p);:}
-			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA type arg_invoc RPAR 
-			        |   WEXTERNINVK LPAR STRING_LITERAL COMMA WVOID arg_invoc RPAR;
 
 arg_invoc 		    ::= COMMA externinvk_arg arg_invoc
                     |   /* LAMBDA */ ;
 
 externinvk_arg  	::= expr 
                     |   STRING_LITERAL ;
+
+method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR    {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
+                                                            else RESULT = new MethodCallStmt(i, p);:}
+			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {::}
+			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA WVOID:t arg_invoc:a RPAR {::};
+
+                      
+stmt_return 		::= WRETURN expr:e                          {:RESULT = new ReturnStmt(e);:} 
+                    |   WRETURN                                 {:RESULT = new ReturnStmt();:} ;
+
+stmt_if             ::= WIF LPAR expr:e RPAR block:b1 WELSE block:b2{:RESULT = new IfStmt(e, b1, b2);:}
+    			    |   WIF LPAR expr:e RPAR block:b            {:RESULT = new IfStmt(e, b);:} ;
 
 expr_parameters 	::= expr:e expr_parameters_:es              {:LinkedList<Expression> l =new LinkedList<Expression>(es); l.add(e);
                                                                 RESULT = l;:}
@@ -212,30 +214,36 @@ expr_parameters_	::= COMMA expr:e expr_parameters_:es        {:LinkedList<Expres
                     |   /* LAMBDA */                            {:RESULT = new LinkedList<Expression>();:};
                     
 set_statement 		::= statement:s set_statement:ss            {:LinkedList<Statement> sets = new LinkedList<Statement>();
-                                                                sets.addAll(ss); sets.add(s); RESULT=sets;:} 
+                                                                sets.add(s); sets.addAll(ss); RESULT=sets;:} 
                     |   /* LAMBDA */                            {:RESULT = new LinkedList<Statement>();:};
 
 block       		::= LLL                                     {:table.insertLevel();:} 
                         set_field_decl:sf set_statement:ss      {:table.deleteLevel();:} 
                         RLL                                     {:RESULT = new Block(table.getBlockId(), ss);:};
 
-type        		::= WFLOAT:w                                {:RESULT = w;:}
-                    |   WBOOLEAN:w                              {:RESULT = w;:}
-                    |   WINT:w                                  {:RESULT = w;:};
-
 expr        		::= location:l                              {:RESULT = l;:}
-                    |   method_call:mc                          {:RESULT = mc;:}
+                    |   method_call_expr:mc                     {:RESULT = mc;:}
 			        |   literal:l                               {:RESULT = l;:}
 			        |   MINUS expr:e                            {:RESULT = new NegativeExpr(e, e.getType());:}
 			        |   NOT expr:e                              {:RESULT = new NegationExpr(e, e.getType());:}
 			        |   LPAR expr:e RPAR                        {:RESULT = new InParentExpr(e, e.getType());:}
 			        |   expr:e1 bin_op:b expr:e2                {:b.setLeftOperand(e1); b.setRightOperand(e2); RESULT = b;:};
 
+method_call_expr    ::= ID:i LPAR expr_parameters:p RPAR        {:absSymbol a = table.search(i);
+                                                                if (a == null) parser.report_error("ID desconocido.",i);
+                                                                else { if (a instanceof functionSymbol)
+                                                                RESULT = new MethodCallExpr(i, p, ((functionSymbol) a).type);}:}
+			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {::}
+			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA WVOID:t arg_invoc:a RPAR {::};
+
 location            ::= ID:i                                    {:if (table.search(i) == null) parser.report_error("ID desconocido."+i,i);
                                                                 RESULT = new VarLocation(i,table.getBlockId());:}                               
                     |   ID:i LC expr:e RC                       {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
                                                                 RESULT = new ArrayLocation(i, table.getBlockId(), e);:};      
 
+type        		::= WFLOAT                                  {:RESULT = Type.FLOAT;:}
+                    |   WBOOLEAN                                {:RESULT = Type.BOOLEAN;:}
+                    |   WINT                                    {:RESULT = Type.INT;:};
 
 assign_op   		::= ASSIGN:a                                {:RESULT = new SimpleAssign();:}
     			    |   ASSIGN_INC:i                            {:RESULT = new IncrementAssign();:}
@@ -247,22 +255,22 @@ bin_op      		::= arith_op:a                              {:RESULT = a;:}
                     |   eq_op:e                                 {:RESULT = e;:}
                     |   cond_op:c                               {:RESULT = c;:};
 
-arith_op    		::= PLUS:p                                  {:ArithExpr ar = new ArithExpr(); ar.setOperator(p); RESULT = ar;:} 
-                    |   MINUS:m                                 {:ArithExpr ar = new ArithExpr(); ar.setOperator(m); RESULT = ar;:} 
-                    |   MULT:m                                  {:ArithExpr ar = new ArithExpr(); ar.setOperator(m); RESULT = ar;:} 
-                    |   DIV:d                                   {:ArithExpr ar = new ArithExpr(); ar.setOperator(d); RESULT = ar;:} 
-                    |   MODULE:m                                {:ArithExpr ar = new ArithExpr(); ar.setOperator(m); RESULT = ar;:} ;
+arith_op    		::= PLUS                                    {:ArithExpr ar = new ArithExpr();ar.setOperator(BinOpType.PLUS); RESULT = ar;:} 
+                    |   MINUS                                   {:ArithExpr ar=new ArithExpr(); ar.setOperator(BinOpType.MINUS); RESULT = ar;:} 
+                    |   MULT                                    {:ArithExpr ar=new ArithExpr();ar.setOperator(BinOpType.MULTIPLY);RESULT= ar;:} 
+                    |   DIV                                     {:ArithExpr ar = new ArithExpr(); ar.setOperator(BinOpType.DIVIDE);RESULT=ar;:} 
+                    |   MODULE                                  {:ArithExpr ar = new ArithExpr(); ar.setOperator(BinOpType.MOD); RESULT = ar;:};
 
-rel_op      		::= LESS_THAN:l                             {:RelExpr rel = new RelExpr(); rel.setOperator(l); RESULT = rel;:} 
-                    |   GREATER_THAN:g                          {:RelExpr rel = new RelExpr(); rel.setOperator(g); RESULT = rel;:} 
-                    |   LESS_EQ_THAN:le                         {:RelExpr rel = new RelExpr(); rel.setOperator(le); RESULT = rel;:} 
-                    |   GREATER_EQ_THAN:ge                      {:RelExpr rel = new RelExpr(); rel.setOperator(ge); RESULT = rel;:} ;
+rel_op      		::= LESS_THAN                               {:RelExpr rel = new RelExpr(); rel.setOperator(BinOpType.LE); RESULT = rel;:} 
+                    |   GREATER_THAN                            {:RelExpr rel = new RelExpr(); rel.setOperator(BinOpType.GE); RESULT = rel;:} 
+                    |   LESS_EQ_THAN                            {:RelExpr rel = new RelExpr(); rel.setOperator(BinOpType.LEQ); RESULT = rel;:} 
+                    |   GREATER_EQ_THAN                         {:RelExpr rel = new RelExpr(); rel.setOperator(BinOpType.GEQ); RESULT = rel;:} ;
 
-eq_op       		::= EQ:e                                    {:EqExpr eq = new EqExpr(); eq.setOperator(e); RESULT = eq;:} 
-                    |   NOT_EQ:n                                {:EqExpr eq = new EqExpr(); eq.setOperator(n); RESULT = eq;:} ;
+eq_op       		::= EQ                                      {:EqExpr eq = new EqExpr(); eq.setOperator(BinOpType.CEQ); RESULT = eq;:} 
+                    |   NOT_EQ                                  {:EqExpr eq = new EqExpr(); eq.setOperator(BinOpType.NEQ); RESULT = eq;:} ;
 
-cond_op     		::= AND:a                                   {:CondExpr c = new CondExpr(); c.setOperator(a); RESULT = c;:}
-                    |   OR:o                                    {:CondExpr c = new CondExpr(); c.setOperator(o); RESULT = c;:} ;
+cond_op     		::= AND                                     {:CondExpr c = new CondExpr(); c.setOperator(BinOpType.AND); RESULT = c;:}
+                    |   OR                                      {:CondExpr c = new CondExpr(); c.setOperator(BinOpType.OR); RESULT = c;:} ;
 
 literal     		::= INT:l                                   {:RESULT = l;:}
                     |   FLOAT:l                                 {:RESULT = l;:}

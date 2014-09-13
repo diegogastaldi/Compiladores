@@ -1,0 +1,29 @@
+package ir.ast;
+
+import ir.ASTVisitor;
+
+public class SemiColon extends Statement {
+	private int blockId;
+	
+	public SemiColon(int bId) {
+		blockId = bId;
+	}	
+	public int getBlockId() {
+		return blockId;
+	}
+
+	public void setBlockId(int blockId) {
+		this.blockId = blockId;
+	}
+
+	@Override
+	public String toString() {
+		return ";\n"; 
+	}   
+
+	@Override
+	public <T> T accept(ASTVisitor<T> v) {
+		return v.visit(this);
+	}
+	
+}

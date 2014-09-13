@@ -2,7 +2,7 @@ class a{
 
 void method (float b, boolean a) {
   if (a<=b) {
-    a = true && c(b()+1);
+    a = true && (b()+1);
   }
 }
 }

@@ -45,7 +45,7 @@ public class Block extends Statement {
 		if (rtn.length() > 0) return rtn.substring(0, rtn.length() - 1); // remove last new line char
 		
 		return rtn; 
-	}
+	}   
 
 	@Override
 	public <T> T accept(ASTVisitor<T> v) {

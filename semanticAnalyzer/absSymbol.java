@@ -1,15 +1,16 @@
 package compiler2014;
+import ir.ast.Type;
 public abstract class absSymbol {
   public String name;
-  public String type;
+  public Type type;
   
-  public absSymbol (String name, String type) {
+  public absSymbol (String name, Type type) {
     this.name = name;
     this.type = type;
   }
   
  	public String toString(){
-    return ("name: "+this.name) + (", type: "+this.type+";");
+    return ("name: "+name) + (", type: "+type.toString()+";");
   }
 
 } 

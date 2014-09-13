@@ -19,7 +19,7 @@ public class ArithExpr extends BinOpExpr {
 	
 	@Override
 	public String toString() {
-		return lOperand + " " + operator + " " + rOperand;
+		return lOperand + " " + operator.toString() + " " + rOperand;
 	}
 
 	@Override

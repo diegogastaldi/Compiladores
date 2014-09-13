@@ -1,10 +1,11 @@
 package compiler2014;
 import java.util.LinkedList;
 import java.util.Iterator;
+import ir.ast.Type;
 public class functionSymbol extends absSymbol {
   public LinkedList<absSymbol> parameters;
 
-  public functionSymbol(String name, String type, LinkedList<absSymbol> parameters){
+  public functionSymbol(String name, Type type, LinkedList<absSymbol> parameters){
 		super(name, type);
 		this.parameters = parameters;
 	}
