@@ -17,7 +17,7 @@ public class IncrementAssign extends AssignStmt {
 	
 	@Override
 	public String toString() {
-		return location + " " + AssignOpType.INCREMENT + " " + expr;
+		return location + " " + AssignOpType.INCREMENT + " " + expr.toString();
 		
 	}
 

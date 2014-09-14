@@ -29,7 +29,9 @@ public interface ASTVisitor<T> {
 	T visit(CondExpr expr);	
 	T visit(EqExpr expr);
 	T visit(InParentExpr expr);
-	T visit(MethodCallExpr expr);		
+	T visit(MethodCallExpr expr);	
+	T visit(InternInvkExpr expr);	
+	T visit(ExternInvkExpr expr);
 	
 // visit literals	
 	T visit(IntLiteral lit);
@@ -40,4 +42,7 @@ public interface ASTVisitor<T> {
 	T visit(VarLocation loc);
 	T visit(ArrayLocation loc);
 	
+// arg invoc
+	T visit(ArgInvocExpr arg);
+    T visit(ArgInvocSL arg);
 }

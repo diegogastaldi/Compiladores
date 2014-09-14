@@ -2,26 +2,22 @@ package ir.ast;
 import java.util.ArrayList;
 import java.util.List;
 import ir.ASTVisitor;
-public class MethodCall extends Expression {
-	protected String id;
+public class InternInvkExpr extends MethodCallExpr{
 	protected List<Expression> parameters;
 	
-	public MethodCall (String id){
-	    this.id = id;
+	public InternInvkExpr (String id){
+	    super(id);
 	    parameters = new ArrayList<Expression>();
 	}
 	
-	public MethodCall (String id, List<Expression> par){
-	    this.id = id;
+	public InternInvkExpr (String id, List<Expression> par){
+	    super(id);
 	    parameters = par;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getId() {
-		return id;
+	public InternInvkExpr (String id, List<Expression> par, Type t){
+	    super(id, t);
+	    parameters = par;
 	}
 	
 	public void setParameters(List<Expression> par) {
@@ -45,7 +41,7 @@ public class MethodCall extends Expression {
 		}
 		
 		if (mc.length() > 0) return mc.substring(0, mc.length() - 2); // remove last comma
-		
+		mc += ")";
 		return mc; 
 	}
 

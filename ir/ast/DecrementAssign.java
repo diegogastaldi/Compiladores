@@ -13,7 +13,7 @@ public class DecrementAssign extends AssignStmt {
 	
 	@Override
 	public String toString() {
-		return location + " " + AssignOpType.DECREMENT + " " + expr;
+		return location + " " + AssignOpType.DECREMENT + " " + expr.toString();
 	}
 	
 	public AssignOpType getOperator() {
