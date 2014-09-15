@@ -1,14 +1,36 @@
+/* Taller de Diseño de Software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase, como indica el nombre, es 
+  la tabla de simbolos de compilador, aqui
+  se almacenan los simbolos que tienen "vida"
+  en un determinados lugares de los programas, 
+  los cuales se agrupan en niveles teniendo
+  en cuenta donde fueron declarados.
+*/
+
 package compiler2014;
 import java.util.*;
 import ir.ast.Type;
+
 public class symbolTable{
+    /*Tabla formadas por listas de simbolos, donde cada lista representa un nivel de declaracion*/
 	LinkedList<LinkedList<absSymbol>> t;
+	/*Cantidad de niveles*/
 	int blockId;
+	
 	public symbolTable(){
 		t = new LinkedList<LinkedList<absSymbol>>();
 	    blockId = 0;
 	}
-	
+	/*Inserta una lista de simbolos en el nivel actual*/
 	public LinkedList<absSymbol> insertSymbolList(LinkedList<absSymbol> l) {
 	    blockId = 0;
         for (int i = 0 ; (i < l.size()) ; i++) {
@@ -18,6 +40,7 @@ public class symbolTable{
         return l;
 	}
 	
+	/*Retorna el numero del nivel actual*/
 	public int getBlockId() {
 	    return blockId;
 	}
@@ -56,23 +79,7 @@ public class symbolTable{
         blockId--;
 	    t.removeFirst();
 	}
-
-	public void print(){
-        Iterator<LinkedList<absSymbol>> levelIt = t.iterator();
-        Iterator<absSymbol> symbolIt;
-        absSymbol s;
-	    while (levelIt.hasNext()){
-	        symbolIt = levelIt.next().iterator();
-	        while(symbolIt.hasNext()){
-	            s = symbolIt.next();
-	            if (s.type == null) 
-	                System.out.print(s.name+"u: undefined; ");
-	            else 
-	                System.out.println(s.toString());
-	        }
-	    }	
-	}
-
+    /*Metodo que busca un simbolo con el nombre "name" en el nivel "level" y lo retorna*/
 	private absSymbol containsSymbol(String name, Integer level){
 	    Iterator<absSymbol> levelIt = t.get(level).iterator();
 	    absSymbol s;

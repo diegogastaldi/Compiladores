@@ -12,11 +12,5 @@ public class ArgInvocSL extends ArgInvoc {
     public String toString() {
         return s;
     }
-    	
-    @Override
-	public <T> T accept(ASTVisitor<T> v) {
-		return v.visit(this);
-	}
-
 }
 

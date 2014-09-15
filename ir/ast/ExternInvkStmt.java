@@ -2,33 +2,28 @@ package ir.ast;
 import java.util.ArrayList;
 import java.util.List;
 import ir.ASTVisitor;
-public class InternInvkExpr extends MethodCallExpr{
-	protected List<Expression> parameters;
-	
-	public InternInvkExpr (String id){
+public class ExternInvkStmt extends MethodCallStmt{
+    private List<ArgInvoc> parameters;
+    	
+	public ExternInvkStmt (String id){
 	    super(id);
-	    parameters = new ArrayList<Expression>();
+	    parameters = new ArrayList<ArgInvoc>();
 	}
 	
-	public InternInvkExpr (String id, List<Expression> par){
+	public ExternInvkStmt (String id, List<ArgInvoc> par){
 	    super(id);
 	    parameters = par;
 	}
 	
-	public InternInvkExpr (String id, List<Expression> par, Type t){
-	    super(id, t);
-	    parameters = par;
-	}
-	
-	public void setParameters(List<Expression> par) {
+	public void setParameters(List<ArgInvoc> par) {
 		this.parameters = par;
 	}
 	
-	public List<Expression> getParameters() {
+	public List<ArgInvoc> getParameters() {
 		return parameters;
 	}
 	
-	public void addParamaters(Expression e) {
+	public void addParamaters(ArgInvoc e) {
 	    parameters.add(e);
 	}
 	
@@ -36,7 +31,7 @@ public class InternInvkExpr extends MethodCallExpr{
 	public String toString() {
 		String mc = id+"(";
 		
-	    for (Expression e: parameters) {
+	    for (ArgInvoc e: parameters) {
 			mc += e.toString()+", ";
 		}
 		

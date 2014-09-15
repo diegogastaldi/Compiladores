@@ -13,7 +13,7 @@ public class SimpleAssign extends AssignStmt {
 	
 	@Override
 	public String toString() {
-		return location + " " + AssignOpType.ASSIGN + " " + expr.toString();
+		return location + " " + AssignOpType.ASSIGN.toString() + " " + expr.toString();
 	}
 	
 	public AssignOpType getOperator() {

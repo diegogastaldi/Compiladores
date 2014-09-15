@@ -1,5 +1,5 @@
 package ir.ast;
-public abstract class ArgInvoc extends AST {
+public abstract class ArgInvoc {
     
 }
 

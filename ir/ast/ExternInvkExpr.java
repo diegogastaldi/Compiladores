@@ -40,9 +40,9 @@ public class ExternInvkExpr extends MethodCallExpr{
 			mc += e.toString()+", ";
 		}
 		
-		if (mc.length() > 0) return mc.substring(0, mc.length() - 2); // remove last comma
+		if (mc.length() > 0) mc = mc.substring(0, mc.length() - 2); // remove last comma
 		mc += ")";
-		return null; 
+		return mc; 
 	}
 
 	@Override

@@ -1,11 +1,27 @@
+/* Taller de Diseño de Software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase representa los identificadores
+  de tipo function declarados en el programa 
+  que se esta compilando.
+*/
+
 package compiler2014;
 import java.util.LinkedList;
 import java.util.Iterator;
 import ir.ast.Type;
 public class functionSymbol extends absSymbol {
-  public LinkedList<absSymbol> parameters;
+    /*Guarda los parametros de la funcion*/
+    public LinkedList<absSymbol> parameters;
 
-  public functionSymbol(String name, Type type, LinkedList<absSymbol> parameters){
+    public functionSymbol(String name, Type type, LinkedList<absSymbol> parameters){
 		super(name, type);
 		this.parameters = parameters;
 	}

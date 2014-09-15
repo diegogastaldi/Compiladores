@@ -121,7 +121,7 @@ start with program;
 
 program     	    ::= WCLASS                              {:table.insertLevel();:} 
                         ID:i                                {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED)) == null)
-                                                                parser.report_error("ID ya difinido: ",i);:}
+                                                                parser.report_fatal_error("ID ya difinido: ",i);:}
                         LLL set_decl                        {:table.deleteLevel();:} 
                         RLL;
 
@@ -130,35 +130,35 @@ set_decl			::= field_decl SEMICOLON set_decl
 
 
 field_decl		    ::= type:t ID:i LC INT:il RC            {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null)) == null)
-                                                                parser.report_error("ID ya difinido: ",i);:}     
+                                                                parser.report_fatal_error("ID ya difinido: ",i);:}     
                         set_complete_id:s                   {:if (table.insertSymbolList(setType(s, t)) == null)
-                                                                parser.report_error("ID ya difinido: ",i);:}
+                                                                parser.report_fatal_error("ID ya difinido: ",i);:}
                     |   type:t ID:i                         {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null)
-                                                                parser.report_error("ID ya difinido: ",i);:} 
+                                                                parser.report_fatal_error("ID ya difinido: ",i);:} 
                         set_complete_id:s                   {:if (table.insertSymbolList(setType(s, t)) == null)
-                                                                parser.report_error("ID ya difinido: ",i);:};
+                                                                parser.report_fatal_error("ID ya difinido: ",i);:};
                                                         
 set_field_decl		::= field_decl SEMICOLON set_field_decl
                     |   /*LAMBDA*/;                                                        
              
 set_method_decl		::= type:t ID:i                         {:functionSymbol f = new functionSymbol(i, t, null);
                                                             if (table.insertSymbol(f) == null) 
-                                                                parser.report_error("ID ya difinido: ",i);
+                                                                parser.report_fatal_error("ID ya difinido: ",i);
                                                             table.insertLevel();:} 
                         LPAR parameters:p RPAR              {:if (p != null) 
                                                                 ((functionSymbol)table.search(i)).parameters = p;
                                                             if (table.insertSymbolList(p)==null)
-                                                                parser.report_error("ID ya difinido: ",p.toString());
+                                                                parser.report_fatal_error("ID ya difinido: ",p.toString());
                                                             :}
-                        block:b {:System.out.println(b.toString());table.deleteLevel();:} set_method_decl
+                        block:b {:table.deleteLevel();:} set_method_decl
                     |   WVOID ID:i                          {:functionSymbol f = new functionSymbol(i, null, null);
                                                             if (table.insertSymbol(f) == null)
-                                                                parser.report_error("ID ya difinido: ",i);
+                                                                parser.report_fatal_error("ID ya difinido: ",i);
                                                             table.insertLevel();:} 
                         LPAR parameters:p RPAR              {:if (p != null) ((functionSymbol)table.search(i)).parameters = p;
                                                             if (table.insertSymbolList(p)==null)
-                                                                parser.report_error("ID ya difinido: ",p.toString());:} 
-                        block:b {:System.out.println(b.toString());table.deleteLevel();:} set_method_decl
+                                                                parser.report_fatal_error("ID ya difinido: ",p.toString());:} 
+                        block:b {:table.deleteLevel();:} set_method_decl
                     |   /*Lambda*/;
     
 set_complete_id 	::= COMMA ID:i                          {:declList.add(new simpleSymbol(i, null, Type.UNDEFINED));:} 
@@ -179,7 +179,7 @@ set_type_id 		::= COMMA type:t ID:i                   {:parList.add(new simpleSy
 statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.setExpression(e); RESULT = a;:}
 			        |   method_call_stmt:mc SEMICOLON       {:RESULT = mc;:}
     			    |   stmt_if:i 			                {:RESULT = i;:}
-	    		    |   WFOR ID:i                           {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);:} 
+	    		    |   WFOR ID:i                           {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);:} 
                         ASSIGN expr:e1 COMMA expr:e2 block:b{:RESULT = new ForStmt(i, e1, e2, b);:}
 	    		    |   WWHILE expr:e block:b               {:RESULT = new WhileStmt(e, b);:}
 	    		    |   stmt_return:r SEMICOLON             {:RESULT = r;:}
@@ -188,10 +188,10 @@ statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.
 	    		    |   SEMICOLON                           {:RESULT = new SemiColon(table.getBlockId());:}
 	    		    |   block:b                             {:RESULT = b;:} ;
 
-method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR    {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
-                                                            else RESULT = new MethodCallStmt(i, p);:}
-			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {::}
-			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA WVOID:t arg_invoc:a RPAR {::};
+method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR    {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);
+                                                            else RESULT = new InternInvkStmt(i, p);:}
+			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA type arg_invoc:a RPAR {:RESULT = new ExternInvkStmt(s, a);:}
+			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA WVOID:t arg_invoc:a RPAR {:RESULT = new ExternInvkStmt(s, a);:};
 
                       
 stmt_return 		::= WRETURN expr:e                          {:RESULT = new ReturnStmt(e);:} 
@@ -227,7 +227,7 @@ expr        		::= location:l                              {:RESULT = l;:}
 method_call_expr    ::= WEXTERNINVK LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {:RESULT = new ExternInvkExpr(s, a, t);:}
 			        |   WEXTERNINVK LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR {:RESULT = new ExternInvkExpr(s, a, null);:}
                     |   ID:i LPAR expr_parameters:p RPAR        {:absSymbol a = table.search(i); if (a == null) 
-                                                                parser.report_error("ID desconocido.",i); 
+                                                                parser.report_fatal_error("ID desconocido.",i); 
                                                                 else { if (a instanceof functionSymbol)         
                                                                 RESULT = new InternInvkExpr(i, p, ((functionSymbol)             
                                                                 a).type);}:};			        
@@ -239,9 +239,9 @@ arg_invoc 		    ::= COMMA externinvk_arg:ea arg_invoc:ai    {:LinkedList<ArgInvo
 externinvk_arg  	::= expr:e                                  {:RESULT = new ArgInvocExpr(e);:}
                     |   STRING_LITERAL:s                        {:RESULT = new ArgInvocSL(s);:};
 
-location            ::= ID:i                                    {:if (table.search(i) == null) parser.report_error("ID desconocido."+i,i);
+location            ::= ID:i                                    {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido."+i,i);
                                                                 RESULT = new VarLocation(i,table.getBlockId());:}                               
-                    |   ID:i LC expr:e RC                       {:if (table.search(i) == null) parser.report_error("ID desconocido.",i);
+                    |   ID:i LC expr:e RC                       {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);
                                                                 RESULT = new ArrayLocation(i, table.getBlockId(), e);:};      
 
 type        		::= WFLOAT                                  {:RESULT = Type.FLOAT;:}

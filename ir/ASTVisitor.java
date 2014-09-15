@@ -17,8 +17,10 @@ public interface ASTVisitor<T> {
     T visit(BreakStmt stmt);
     T visit(CycleStmt stmt);
     T visit(ForStmt stmt);
-	T visit(MethodCallStmt stmt);
     T visit(SemiColon stmt);
+	T visit(MethodCallStmt stmt);	
+	T visit(InternInvkStmt stmt);	
+	T visit(ExternInvkStmt stmt);
     
 // visit expressions
 	T visit(BinOpExpr expr);
@@ -42,7 +44,4 @@ public interface ASTVisitor<T> {
 	T visit(VarLocation loc);
 	T visit(ArrayLocation loc);
 	
-// arg invoc
-	T visit(ArgInvocExpr arg);
-    T visit(ArgInvocSL arg);
 }

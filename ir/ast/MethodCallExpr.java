@@ -1,8 +1,6 @@
 package ir.ast;
-import java.util.ArrayList;
-import java.util.List;
-import ir.ASTVisitor;
-public class MethodCallExpr extends Expression{
+
+public abstract class MethodCallExpr extends Expression{
 	protected String id;
 	
 	public MethodCallExpr (String id){
@@ -20,17 +18,6 @@ public class MethodCallExpr extends Expression{
 	
 	public String getId() {
 		return id;
-	}
-	
-	@Override
-	public String toString() {
-		String mc = id;
-		return mc; 
-	}
-
-	@Override
-	public <T> T accept(ASTVisitor<T> v) {
-		return v.visit(this);
 	}
 
 } 

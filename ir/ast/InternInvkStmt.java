@@ -2,21 +2,16 @@ package ir.ast;
 import java.util.ArrayList;
 import java.util.List;
 import ir.ASTVisitor;
-public class InternInvkExpr extends MethodCallExpr{
+public class InternInvkStmt extends MethodCallStmt{
 	protected List<Expression> parameters;
 	
-	public InternInvkExpr (String id){
+	public InternInvkStmt (String id){
 	    super(id);
 	    parameters = new ArrayList<Expression>();
 	}
 	
-	public InternInvkExpr (String id, List<Expression> par){
+	public InternInvkStmt (String id, List<Expression> par){
 	    super(id);
-	    parameters = par;
-	}
-	
-	public InternInvkExpr (String id, List<Expression> par, Type t){
-	    super(id, t);
 	    parameters = par;
 	}
 	

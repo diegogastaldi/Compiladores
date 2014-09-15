@@ -13,10 +13,5 @@ public class ArgInvocExpr extends ArgInvoc {
         return expr.toString();
     }
     
-	@Override
-	public <T> T accept(ASTVisitor<T> v) {
-		return v.visit(this);
-	}
-    
 }
 

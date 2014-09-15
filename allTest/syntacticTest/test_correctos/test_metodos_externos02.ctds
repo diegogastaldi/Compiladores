@@ -1,5 +1,5 @@
 class test_maxcomdiv{
-
+int a;
 int maxcomdiv (int a, int b){
         int dividendo,divisor,resto;
 	if(a > b){
