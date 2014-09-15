@@ -74,18 +74,18 @@ COMMENT2="//"[^\n]*
 "+="            		{return new Symbol(sym.ASSIGN_INC, yyline, yycolumn);}
 "-="            		{return new Symbol(sym.ASSIGN_DEC, yyline, yycolumn);}
 "="             		{return new Symbol(sym.ASSIGN, yyline, yycolumn);}
-"boolean"       		{return new Symbol(sym.WBOOLEAN, yyline, yycolumn, new String(yytext()));}
+"boolean"       		{return new Symbol(sym.WBOOLEAN, yyline, yycolumn, Type.BOOLEAN);}
 "externinvk"       		{return new Symbol(sym.WEXTERNINVK, yyline, yycolumn, new String(yytext()));}
 "break"         		{return new Symbol(sym.WBREAK, yyline, yycolumn, new String(yytext()));}
 "class"         		{return new Symbol(sym.WCLASS, yyline, yycolumn, new String(yytext()));}
 "continue"      		{return new Symbol(sym.WCONTINUE, yyline, yycolumn, new String(yytext()));}
 "else"          		{return new Symbol(sym.WELSE, yyline, yycolumn, new String(yytext()));}
-"float"         		{return new Symbol(sym.WFLOAT, yyline, yycolumn, new String(yytext()));}
+"float"         		{return new Symbol(sym.WFLOAT, yyline, yycolumn, Type.FLOAT);}
 "for"           		{return new Symbol(sym.WFOR, yyline, yycolumn, new String(yytext()));}
 "if"            		{return new Symbol(sym.WIF, yyline, yycolumn, new String(yytext()));}
-"int"           		{return new Symbol(sym.WINT, yyline, yycolumn, new String(yytext()));}
+"int"           		{return new Symbol(sym.WINT, yyline, yycolumn, Type.INT);}
 "return"        		{return new Symbol(sym.WRETURN, yyline, yycolumn, new String(yytext()));}
-"void"          		{return new Symbol(sym.WVOID, yyline, yycolumn, new String(yytext()));}
+"void"          		{return new Symbol(sym.WVOID, yyline, yycolumn, Type.VOID);}
 "while"         		{return new Symbol(sym.WWHILE, yyline, yycolumn, new String(yytext()));}
 "false" | "true"  		{return new Symbol(sym.BOOLEAN, yyline, yycolumn, new BoolLiteral(yytext()));}
 {L}({L}|{D}|_)*   		{return new Symbol(sym.ID, yyline, yycolumn, new String(yytext()));}
