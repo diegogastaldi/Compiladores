@@ -1,0 +1,9 @@
+class clase {
+    boolean inc(int x) {
+        while x {
+            return x+1;
+        }
+        break;
+        return true;
+    }
+} 

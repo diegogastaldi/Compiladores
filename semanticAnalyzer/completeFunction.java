@@ -26,7 +26,6 @@ public class completeFunction extends functionSymbol {
     public completeFunction(functionSymbol f, Block b){
        super(f.name, f.type, f.parameters);
        block = b;
-       System.out.println(b);
     }
 
     public void setBlock (Block b) {

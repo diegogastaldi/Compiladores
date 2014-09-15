@@ -1,0 +1,5 @@
+class program {
+int a;
+int b;
+} 
+ 

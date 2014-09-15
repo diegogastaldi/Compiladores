@@ -75,39 +75,39 @@ action code {:
 :}
 
 
-terminal                LPAR, RPAR, LC, RC, LLL, RLL, COMMA, SEMICOLON;
-terminal String         ID, WBREAK, WCLASS, WCONTINUE, WELSE, WFOR, WIF, WRETURN, WWHILE, WEXTERNINVK;
-terminal BinOpType      LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN, PLUS, MULT, MINUS, 
-                        OR, AND, EQ, NOT_EQ, MODULE, DIV, NOT;
-terminal Type           WVOID, WINT, WFLOAT, WBOOLEAN;
-terminal IntLiteral     INT;
-terminal FloatLiteral   FLOAT;
-terminal BoolLiteral    BOOLEAN;
-terminal String         STRING_LITERAL;
-terminal AssignStmt     ASSIGN_INC, ASSIGN_DEC, ASSIGN;
+terminal                               LPAR, RPAR, LC, RC, LLL, RLL, COMMA, SEMICOLON;
+terminal        String                 ID, WBREAK, WCLASS, WCONTINUE, WELSE, WFOR, WIF, WRETURN, WWHILE, WEXTERNINVK;
+terminal        BinOpType              LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN, PLUS, MULT, MINUS, 
+                                       OR, AND, EQ, NOT_EQ, MODULE, DIV, NOT;
+terminal        Type                   WVOID, WINT, WFLOAT, WBOOLEAN;
+terminal        IntLiteral             INT;
+terminal        FloatLiteral           FLOAT;
+terminal        BoolLiteral            BOOLEAN;
+terminal        String                 STRING_LITERAL;
+terminal        AssignStmt             ASSIGN_INC, ASSIGN_DEC, ASSIGN;
 
-non terminal            program, field_decl, set_field_decl, set_method_decl, set_decl;
-non terminal            LinkedList<ArgInvoc> arg_invoc;
-non terminal            ArgInvoc externinvk_arg;
-non terminal            MethodCallExpr method_call_expr; 
-non terminal            MethodCallStmt method_call_stmt;                        
-non terminal            Location location;                        
-non terminal            LinkedList<Expression> expr_parameters, expr_parameters_;
-non terminal            Block block;
-non terminal            LinkedList<absSymbol> set_complete_id, parameters, set_type_id;
-non terminal            Type type;
-non terminal            Expression expr;
-non terminal            AssignStmt assign_op;
-non terminal            Statement statement;
-non terminal            LinkedList<Statement> set_statement;
-non terminal            ReturnStmt stmt_return;
-non terminal            IfStmt stmt_if;
-non terminal            Literal literal;
-non terminal            BinOpExpr bin_op;
-non terminal            ArithExpr arith_op;
-non terminal            RelExpr rel_op;
-non terminal            EqExpr eq_op;
-non terminal            CondExpr cond_op;
+non terminal                           program, field_decl, set_field_decl, set_method_decl, set_decl;
+non terminal    LinkedList<ArgInvoc>   arg_invoc;
+non terminal    ArgInvoc               externinvk_arg;
+non terminal    MethodCallExpr         method_call_expr; 
+non terminal    MethodCallStmt         method_call_stmt;                        
+non terminal    Location               location;                        
+non terminal    LinkedList<Expression> expr_parameters, expr_parameters_;
+non terminal    Block                  block;
+non terminal    LinkedList<absSymbol>  set_complete_id, parameters, set_type_id;
+non terminal    Type                   type;
+non terminal    Expression             expr;
+non terminal    AssignStmt             assign_op;
+non terminal    Statement              statement;
+non terminal    LinkedList<Statement>  set_statement;
+non terminal    ReturnStmt             stmt_return;
+non terminal    IfStmt                 stmt_if;
+non terminal    Literal                literal;
+non terminal    BinOpExpr              bin_op;
+non terminal    ArithExpr              arith_op;
+non terminal    RelExpr                rel_op;
+non terminal    EqExpr                 eq_op;
+non terminal    CondExpr               cond_op;
 
 
 precedence left EQ, AND, NOT, NOT_EQ;
@@ -122,7 +122,7 @@ start with program;
 program     	    ::= WCLASS                              {:table.insertLevel();:} 
                         ID:i                                {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED)) == null)
                                                                 parser.report_fatal_error("ID ya difinido: ",i);:}
-                        LLL set_decl                        {:table.deleteLevel();setAst.toString();:} 
+                        LLL set_decl                        {:table.deleteLevel();:} 
                         RLL;
 
 set_decl			::= field_decl SEMICOLON set_decl 

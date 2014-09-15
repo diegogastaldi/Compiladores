@@ -1,0 +1,9 @@
+class clase {
+    boolean inc(boolean x) {
+        while x {
+            return x;
+        }
+        break;
+        return true;
+    }
+} 

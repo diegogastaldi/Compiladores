@@ -1,0 +1,7 @@
+class clase {
+    boolean x;
+    void method () {
+        boolean y;
+        y = y && x;
+    }
+} 

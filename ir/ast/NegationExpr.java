@@ -10,6 +10,14 @@ public class NegationExpr extends Expression {
         this.type = type;
 	}
 
+    public Expression getExpression() {
+        return expr;
+    }
+
+    public void setExpression(Expression e) {
+        expr = e;
+    }
+    
 	@Override
 	public String toString() {
 		return "!" + expr;

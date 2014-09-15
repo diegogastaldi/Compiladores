@@ -9,12 +9,7 @@ public class EqExpr extends BinOpExpr {
 
 	public EqExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);   	
-		if ((op == BinOpType.CEQ) || (op == BinOpType.NEQ)) 
-            super.operator = op;
-        else {
-            /*Si el operador es de tipo incorrecto, Carga el EQUALS*/
-            super.operator = BinOpType.CEQ;
-        }
+        super.operator = op;
 	}
 	
 	@Override

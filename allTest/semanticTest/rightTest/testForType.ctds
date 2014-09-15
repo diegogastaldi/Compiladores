@@ -1,0 +1,8 @@
+class clase {
+    boolean inc(int x) {
+        for x = true , false{
+            return x+1;
+        }
+        return true;
+    }
+} 

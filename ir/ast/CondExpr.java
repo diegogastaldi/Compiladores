@@ -9,12 +9,7 @@ public class CondExpr extends BinOpExpr {
 
    	public CondExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);   	
-		if ((op == BinOpType.AND) || (op == BinOpType.OR)) 
-            super.operator = op;
-        else {
-            /*Si el operador es de tipo incorrecto, Carga el AND*/
-            super.operator = BinOpType.AND;
-        }
+        super.operator = op;
 	}	
 	
 	@Override

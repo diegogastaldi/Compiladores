@@ -1,0 +1,17 @@
+
+class Factorial{
+
+int factorial(int n){
+
+	int i;
+	int total;
+    i = total;
+}
+
+int main(){
+   int a;
+   int b;
+   a = a+b;
+}
+
+}

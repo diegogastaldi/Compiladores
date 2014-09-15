@@ -21,7 +21,7 @@ echo "     "
 comp=$1
 
 echo "///////////////////////// TESTS CORRECTOS ////////////////////////////////////////" 
-files=`ls allTest/syntacticTest/test_correctos/*.ctds`
+files=`ls allTest/syntacticTest/rightTest/*.ctds`
 
 
 for file in $files ; do 
@@ -34,7 +34,7 @@ done
 
 echo "///////////////////////// TESTS CON FALLAS ////////////////////////////////////////" 
 
-files=`ls allTest/syntacticTest/test_errores/*.ctds`
+files=`ls allTest/syntacticTest/failedTest/*.ctds`
 
 for file in $files ; do 
 	echo "---------------- Test $file ... -------------------" 

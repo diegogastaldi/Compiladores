@@ -1,0 +1,7 @@
+class clase {
+    int x;
+    void method () {
+        float y;
+        y = y && x;
+    }
+} 

@@ -1,0 +1,7 @@
+class clase {
+    int y;
+    
+    void main(float x) {
+        y = x;
+    }
+} 
