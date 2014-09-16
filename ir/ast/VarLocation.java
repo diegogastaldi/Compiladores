@@ -10,6 +10,13 @@ public class VarLocation extends Location {
 		this.blockId = block;
 	}
 	
+	public VarLocation(String id, int block, int line, int col) {
+		this.id = id;
+		this.blockId = block;
+		lineNumber = line;
+		colNumber = col;
+	}
+	
 	public int getBlockId() {
 		return blockId;
 	}

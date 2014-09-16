@@ -11,6 +11,11 @@ public class DecrementAssign extends AssignStmt {
         super(loc, e);
 	}
 	
+	public DecrementAssign(int line, int col) {
+        lineNumber = line;
+        colNumber = col;
+	}
+	
 	@Override
 	public String toString() {
 		return location + " " + AssignOpType.DECREMENT + " " + expr.toString();

@@ -5,14 +5,13 @@ import java.util.List;
 
 import ir.ASTVisitor;
 import ir.ast.*;
-//import error.Error; // define class error
+import error.Error; // define class error
 
 
 // type checker, concrete visitor 
 public class TypeCheckVisitor implements ASTVisitor<Type> {
-/*	
 	private List<Error> errors;
-*/
+
     // visit statements    
     @Override
 	public Type visit(AssignStmt stmt){
@@ -106,7 +105,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	
 	@Override
 	public Type visit(NegativeExpr expr){
-	    if (expr.getExpression().getType()==Type.INT) 
+	    if (expr.getExpression().accept(this)==Type.INT) 
             return Type.INT;	
         else
             /*Error*/ return null;
@@ -114,7 +113,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	
 	@Override
 	public Type visit(NegationExpr expr){
-	    if (expr.getExpression().getType()==Type.BOOLEAN) 
+	    if (expr.getExpression().accept(this)==Type.BOOLEAN) 
             return Type.BOOLEAN;	
         else
             /*Error*/ return null;
@@ -122,9 +121,9 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	
 	@Override
 	public Type visit(RelExpr expr){
-	    Expression l = expr.getRightOperand();
-	    Expression r = expr.getLeftOperand();
-	    if (l.getType()==Type.INT && r.getType()==Type.INT) 
+	    Type l = expr.getRightOperand().accept(this);
+	    Type r = expr.getLeftOperand().accept(this);
+	    if (l==Type.INT && r==Type.INT) 
             return Type.BOOLEAN;	
         else 
             /*Error*/ return null;
@@ -133,20 +132,19 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	
 	@Override
 	public Type visit(ArithExpr expr){
-	    Expression l = expr.getRightOperand();
-	    Expression r = expr.getLeftOperand();
-	    if (l.getType()==Type.INT && r.getType()==Type.INT) 
+	    Type l = expr.getRightOperand().accept(this);
+	    Type r = expr.getLeftOperand().accept(this);
+	    if (l==Type.INT && r==Type.INT) 
             return Type.INT;	
         else 
             /*Error*/ return null;
-
 	}
 	
 	@Override
 	public Type visit(CondExpr expr){	
-	    Expression l = expr.getRightOperand();
-	    Expression r = expr.getLeftOperand();
-	    if (l.getType()==Type.BOOLEAN && r.getType()==Type.BOOLEAN) 
+	    Type l = expr.getRightOperand().accept(this);
+	    Type r = expr.getLeftOperand().accept(this);
+	    if (l==Type.BOOLEAN && r==Type.BOOLEAN) 
             return Type.BOOLEAN;	
         else 
             /*Error*/ return null;
@@ -154,9 +152,9 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	
 	@Override
 	public Type visit(EqExpr expr){
-	    Expression l = expr.getRightOperand();
-	    Expression r = expr.getLeftOperand();
-	    if (l.getType()==Type.BOOLEAN && r.getType()==Type.BOOLEAN) 
+	    Type l = expr.getRightOperand().accept(this);
+	    Type r = expr.getLeftOperand().accept(this);
+	    if (l==Type.BOOLEAN && r==Type.BOOLEAN) 
             return Type.BOOLEAN;	
         else 
             /*Error*/ return null;
@@ -164,6 +162,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
     
     @Override
 	public Type visit(InParentExpr expr){
+	    expr.getExpression().accept(this);
         return expr.getType();	
 	}
 	
@@ -207,9 +206,10 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	
 	@Override
 	public Type visit(ArrayLocation loc){
+        loc.getExpression().accept(this);
         return loc.getType();
     }
-/*    
+    
 	private void addError(AST a, String desc) {
 		errors.add(new Error(a.getLineNumber(), a.getColumnNumber(), desc));
 	}
@@ -221,5 +221,5 @@ public class TypeCheckVisitor implements ASTVisitor<Type> {
 	public void setErrors(List<Error> errors) {
 		this.errors = errors;
 	}
-*/
+
 }

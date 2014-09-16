@@ -9,6 +9,17 @@ public class ReturnStmt extends Statement {
 		this.expression = e;
 	}
 	
+	public ReturnStmt(Expression e, int line, int col) {
+		this.expression = e;
+		lineNumber = line;
+		colNumber = col;
+	}
+
+	public ReturnStmt(int line, int col) {
+		lineNumber = line;
+		colNumber = col;
+	}
+
 	public ReturnStmt() {
 		this.expression = null;
 	}

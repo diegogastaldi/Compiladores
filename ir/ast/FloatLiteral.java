@@ -3,29 +3,25 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class FloatLiteral extends Literal {
-	private String rawValue;
 	private Float value;
 	
 	/*
 	 * Constructor for float literal that takes a string as an input
 	 * @param: String float
 	 */
-	public FloatLiteral(String val){
-		rawValue = val; // Will convert to float value in semantic check
-		value = Float.valueOf(val);
+	public FloatLiteral(Float val){
+		value = val;
+	}
+	
+	public FloatLiteral(Float val, int line, int col){
+		value = val;
+	    lineNumber = line;
+	    colNumber = col;	
 	}
 
 	@Override
 	public Type getType() {
 		return Type.FLOAT;
-	}
-
-	public String getStringValue() {
-		return rawValue;
-	}
-
-	public void setStringValue(String stringValue) {
-		this.rawValue = stringValue;
 	}
 
 	public Float getValue() {
@@ -38,7 +34,7 @@ public class FloatLiteral extends Literal {
 
 	@Override
 	public String toString() {
-		return rawValue;
+		return value.toString();
 	}
 
 	@Override

@@ -13,6 +13,15 @@ public class ForStmt extends CycleStmt {
 		this.assignExpr = ass;
 		this.id = id;
 	}
+	 
+	public ForStmt(String id, Expression cond, Expression ass, Block block, int line, int col) {
+		this.condition = cond;
+		this.block = block;
+		this.assignExpr = ass;
+		this.id = id;
+	    lineNumber = line;
+	    colNumber = col;
+	} 
 	
 	public void setId(String id) {
 		this.id = id;

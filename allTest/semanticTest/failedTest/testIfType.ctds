@@ -1,6 +1,6 @@
 class clase {
     boolean inc(int x) {
-        if x {
+        if (x) {
             return x+1;
         }
     }

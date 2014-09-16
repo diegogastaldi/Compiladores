@@ -6,13 +6,27 @@ public class ExternInvkStmt extends MethodCallStmt{
     private List<ArgInvoc> parameters;
     	
 	public ExternInvkStmt (String id){
-	    super(id);
+	    this.id = id;
 	    parameters = new ArrayList<ArgInvoc>();
 	}
 	
+	public ExternInvkStmt (String id, int line, int col){
+	    this.id = id;
+	    parameters = new ArrayList<ArgInvoc>();
+	    lineNumber = line;
+	    colNumber = col;
+	}
+	
 	public ExternInvkStmt (String id, List<ArgInvoc> par){
-	    super(id);
+	    this.id = id;
 	    parameters = par;
+	}
+	
+	public ExternInvkStmt (String id, List<ArgInvoc> par, int line, int col){
+	    this.id = id;
+	    parameters = new ArrayList<ArgInvoc>();
+	    lineNumber = line;
+	    colNumber = col;
 	}
 	
 	public void setParameters(List<ArgInvoc> par) {

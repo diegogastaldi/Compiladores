@@ -9,12 +9,13 @@ public class RelExpr extends BinOpExpr {
 
 	public RelExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);
-		if ((op == BinOpType.LE) || (op == BinOpType.LEQ) || (op == BinOpType.GE) || (op == BinOpType.GEQ)) 
-            super.operator = op;
-        else {
-            /*Si el operador es de tipo incorrecto, Carga el GE*/
-            super.operator = BinOpType.GE;
-        }
+        super.operator = op;
+	}
+	
+	public RelExpr(BinOpType op, int line, int col){
+        super.operator = op;
+        lineNumber = line;
+        colNumber = col;
 	}
 	
 	@Override

@@ -18,6 +18,13 @@ public class Block extends Statement {
 		statements = s;
 	}
 	
+	public Block(int bId, List<Statement> s, int line, int col) {
+		blockId = bId;
+		statements = s;
+		lineNumber = line;
+		colNumber = col;
+	}
+
 	public void addStatement(Statement s) {
 		this.statements.add(s);
 	}

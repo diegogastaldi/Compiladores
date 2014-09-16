@@ -1,11 +1,12 @@
 class clase {
     float y;
     
-    void main(float x) {
-       y = x + method2();
-    }
-    
-    float method2() {
+    float method() {
         return 2.0;
     }
+    
+    void main(float x) {
+       y = x + method();
+    }
+    
 }  

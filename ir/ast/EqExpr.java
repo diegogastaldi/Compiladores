@@ -12,6 +12,12 @@ public class EqExpr extends BinOpExpr {
         super.operator = op;
 	}
 	
+	public EqExpr(BinOpType op, int line, int col){
+        super.operator = op;
+        lineNumber = line;
+        colNumber = col;
+	}
+	
 	@Override
 	public String toString() {
 		return lOperand + " " + operator + " " + rOperand;

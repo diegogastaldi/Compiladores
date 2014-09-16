@@ -3,29 +3,25 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class BoolLiteral extends Literal {
-	private String rawValue;
 	private Boolean value;
 	
 	/*
 	 * Constructor for bool literal that takes a string as an input
 	 * @param: String boolean
 	 */
-	public BoolLiteral(String val){
-		rawValue = val; // Will convert to boolean value in semantic check
-		value = Boolean.valueOf(val);
+	public BoolLiteral(Boolean val){
+		value = val;
+	}
+
+	public BoolLiteral(Boolean val, int line, int col){
+		value = val;
+		lineNumber = line;
+		colNumber = col;
 	}
 
 	@Override
 	public Type getType() {
 		return Type.BOOLEAN;
-	}
-
-	public String getStringValue() {
-		return rawValue;
-	}
-
-	public void setStringValue(String stringValue) {
-		this.rawValue = stringValue;
 	}
 
 	public Boolean getValue() {
@@ -38,7 +34,7 @@ public class BoolLiteral extends Literal {
 
 	@Override
 	public String toString() {
-		return rawValue;
+		return value.toString();
 	}
 
 	@Override

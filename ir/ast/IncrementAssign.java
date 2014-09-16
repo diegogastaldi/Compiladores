@@ -11,6 +11,11 @@ public class IncrementAssign extends AssignStmt {
         super(loc, e);
 	}
 	
+	public IncrementAssign(int line, int col) {
+       	lineNumber = line;
+	    colNumber = col;
+	}
+	
 	public AssignOpType getOperator() {
 	    return AssignOpType.INCREMENT;
 	}

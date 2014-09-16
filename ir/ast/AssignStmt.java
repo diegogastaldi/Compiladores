@@ -13,6 +13,13 @@ public abstract class AssignStmt extends Statement {
 		this.location = loc;
 		this.expr = e;
 	}
+
+	public AssignStmt(Location loc, Expression e, int line, int col) {
+		this.location = loc;
+		this.expr = e;
+		lineNumber = line;
+		colNumber = col;
+	}
 	
 	public void setLocation(Location loc) {
 		this.location = loc;

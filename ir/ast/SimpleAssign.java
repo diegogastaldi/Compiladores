@@ -11,6 +11,11 @@ public class SimpleAssign extends AssignStmt {
         super(loc, e);
 	}
 	
+	public SimpleAssign(int line, int col) {
+        lineNumber = line;
+        colNumber = col;
+	}
+	
 	@Override
 	public String toString() {
 		return location + " " + AssignOpType.ASSIGN.toString() + " " + expr.toString();

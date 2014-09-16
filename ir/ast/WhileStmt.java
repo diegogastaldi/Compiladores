@@ -10,6 +10,13 @@ public class WhileStmt extends CycleStmt {
 		this.block = block;
 	}
 
+	public WhileStmt(Expression cond, Block block, int line, int col) {
+		this.condition = cond;
+		this.block = block;
+		lineNumber = line;
+		colNumber = col;
+	}
+
 	public Expression getCondition() {
 		return condition;
 	}

@@ -6,13 +6,20 @@ public class InternInvkStmt extends MethodCallStmt{
 	protected List<Expression> parameters;
 	
 	public InternInvkStmt (String id){
-	    super(id);
+	    this.id = id;
 	    parameters = new ArrayList<Expression>();
 	}
 	
 	public InternInvkStmt (String id, List<Expression> par){
-	    super(id);
+	    this.id = id;
 	    parameters = par;
+	}
+	
+	public InternInvkStmt (String id, List<Expression> par, int line, int col){
+	    this.id = id;
+	    parameters = par;
+	    lineNumber = line;
+	    colNumber = col;	
 	}
 	
 	public void setParameters(List<Expression> par) {

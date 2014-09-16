@@ -16,6 +16,13 @@ public abstract class BinOpExpr extends Expression {
 		rOperand = r;
 	}
 	
+	public BinOpExpr(Expression l, Expression r, int line, int col){
+		lOperand = l;
+		rOperand = r;
+		lineNumber = line;
+		colNumber = col;
+	}
+	
 	public BinOpType getOperator() {
 		return operator;
 	}

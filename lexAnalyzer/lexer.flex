@@ -87,10 +87,10 @@ COMMENT2="//"[^\n]*
 "return"        		{return new Symbol(sym.WRETURN, yyline, yycolumn, new String(yytext()));}
 "void"          		{return new Symbol(sym.WVOID, yyline, yycolumn, Type.VOID);}
 "while"         		{return new Symbol(sym.WWHILE, yyline, yycolumn, new String(yytext()));}
-"false" | "true"  		{return new Symbol(sym.BOOLEAN, yyline, yycolumn, new BoolLiteral(yytext()));}
+"false" | "true"  		{return new Symbol(sym.BOOLEAN, new BoolLiteral(Boolean.parseBoolean(yytext()), yyline, yycolumn));}
 {L}({L}|{D}|_)*   		{return new Symbol(sym.ID, yyline, yycolumn, new String(yytext()));}
-{D}({D})*       		{return new Symbol(sym.INT, yyline, yycolumn, new IntLiteral(yytext()));}
-{D}({D})* ("." {D}({D})*)?  	{return new Symbol(sym.FLOAT, yyline, yycolumn, new FloatLiteral(yytext()));}
+{D}({D})*       		{return new Symbol(sym.INT, new IntLiteral(Integer.parseInt(yytext()), yyline, yycolumn));}
+{D}({D})* ("." {D}({D})*)? {return new Symbol(sym.FLOAT, new FloatLiteral(Float.parseFloat(yytext()), yyline, yycolumn));}
 \"[^\"]*\"   			{return new Symbol(sym.STRING_LITERAL, yyline, yycolumn, yytext().substring(1,yytext().length()-1));}
 .               		{System.err.println("Illegal character: "+ yytext()+ " linea: " + (yyline+1) + " columna: " + (yycolumn+1));}
 }

@@ -10,6 +10,13 @@ public class NegationExpr extends Expression {
         this.type = type;
 	}
 
+	public NegationExpr(Expression expr, Type type, int line, int col){
+        this.expr = expr;
+        this.type = type;
+        lineNumber = line;
+        colNumber = col;
+	}
+	
     public Expression getExpression() {
         return expr;
     }

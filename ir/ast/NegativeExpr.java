@@ -9,6 +9,17 @@ public class NegativeExpr extends Expression {
         this.expr = expr;
         this.type = type;
 	}
+	
+	public NegativeExpr(Expression expr, Type type, int line, int col){
+        this.expr = expr;
+        this.type = type;
+        lineNumber = line;
+        colNumber = col;
+	}
+	
+    public Expression getExpression() {
+        return expr;
+    }
 
 	@Override
 	public String toString() {

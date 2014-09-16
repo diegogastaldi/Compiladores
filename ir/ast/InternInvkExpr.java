@@ -6,20 +6,28 @@ public class InternInvkExpr extends MethodCallExpr{
 	protected List<Expression> parameters;
 	
 	public InternInvkExpr (String id){
-	    super(id);
+	    this.id = id;
 	    parameters = new ArrayList<Expression>();
 	}
 	
 	public InternInvkExpr (String id, List<Expression> par){
-	    super(id);
+	    this.id = id;
 	    parameters = par;
 	}
 	
 	public InternInvkExpr (String id, List<Expression> par, Type t){
-	    super(id, t);
+	    this.id = id;	
+	    type = t;
 	    parameters = par;
 	}
 	
+	public InternInvkExpr (String id, List<Expression> par, Type t, int line, int col){
+	    this.id = id;
+	    this.type = t;
+	    parameters = par;
+	    lineNumber = line;
+	    colNumber = col;	
+	}
 	public void setParameters(List<Expression> par) {
 		this.parameters = par;
 	}

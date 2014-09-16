@@ -3,29 +3,25 @@ package ir.ast;
 import ir.ASTVisitor;
 
 public class IntLiteral extends Literal {
-	private String rawValue;
 	private Integer value;
 	
 	/*
 	 * Constructor for int literal that takes a string as an input
 	 * @param: String integer
 	 */
-	public IntLiteral(String val){
-		rawValue = val; // Will convert to int value in semantic check
-		value = Integer.valueOf(val);
+	public IntLiteral(Integer val){
+		value = val;
 	}
 
+	public IntLiteral(Integer val, int line, int col){
+		value = val;
+		lineNumber = line;
+		colNumber = col;
+	}
+	
 	@Override
 	public Type getType() {
 		return Type.INT;
-	}
-
-	public String getStringValue() {
-		return rawValue;
-	}
-
-	public void setStringValue(String stringValue) {
-		this.rawValue = stringValue;
 	}
 
 	public Integer getValue() {
@@ -38,7 +34,7 @@ public class IntLiteral extends Literal {
 
 	@Override
 	public String toString() {
-		return rawValue;
+		return value.toString();
 	}
 
 	@Override

@@ -12,6 +12,14 @@ public class ArrayLocation extends Location {
 		this.exp = exp;
 	}
 	
+	public ArrayLocation(String id, int block, Expression exp, int line, int col) {
+		this.id = id;
+		this.blockId = block;
+		this.exp = exp;
+		this.lineNumber = line;
+		this.colNumber = col;
+	}
+	
 	public int getBlockId() {
 		return blockId;
 	}
@@ -30,7 +38,7 @@ public class ArrayLocation extends Location {
 		return v.visit(this);
 	}
 
-	public Expression getExp() {
+	public Expression getExpression() {
 	  return exp;
 	}
 

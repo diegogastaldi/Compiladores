@@ -8,6 +8,13 @@ public class SemiColon extends Statement {
 	public SemiColon(int bId) {
 		blockId = bId;
 	}	
+	
+	public SemiColon(int bId, int line, int col) {
+		blockId = bId;
+		lineNumber = line;
+		colNumber = col;
+	}	
+	
 	public int getBlockId() {
 		return blockId;
 	}
