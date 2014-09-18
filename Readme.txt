@@ -9,8 +9,5 @@ Compilacion y ejecucion de codigos:
   - javac -d . sym.java parser.java lexAnalyzer/yylex.java -- Compilar classes java generadas
   - Correr archivos en la carpeta compiladores2014 escribir: 
       - sh AllTest/SyntacticTest/runTests.sh compiler2014/parser  parados en la carpeta principal de git -- Testear Analizador sintactco y lexico
-      
-      preguntar : Los parametros de las llamadas externas las ponemos en la tabla de simbolos para que no tire error?
-                    Las declaracion se deben incorporar al arbol?
 Nota:
     - El archivo astUML es el esquema del arbol sintactico, el cual puede verse mediante la aplicacion umbrello.

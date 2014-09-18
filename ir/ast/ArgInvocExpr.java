@@ -8,6 +8,10 @@ public class ArgInvocExpr extends ArgInvoc {
         expr = e;
     }
     
+    public Expression getExpression() {
+        return expr;
+    }
+    
     @Override
     public String toString() {
         return expr.toString();

@@ -37,7 +37,7 @@ public class completeFunction extends functionSymbol {
     }
     
 	public String toString(){
-        return super.toString() + "Block: " + block.toString();
+        return super.toString() + " , Block: " + block.toString();
     }
 
 }  
