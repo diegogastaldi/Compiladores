@@ -1,0 +1,11 @@
+class a {
+
+    void method() {
+        return;
+    }
+    
+    void main() {
+        int b;
+        method(b);
+    }
+} 

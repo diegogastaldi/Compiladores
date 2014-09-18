@@ -57,7 +57,6 @@ public class BreakContCheckVisitor implements ASTVisitor<Boolean>{
   }
   
   public Boolean visit(ContinueStmt stmt){
-  System.out.println("LLego a break");
     if (!inCycle)
       addError(stmt, "Las sentencias continue deben estar dentro de un ciclo");
     return inCycle;

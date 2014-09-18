@@ -21,6 +21,7 @@ public class Main {
             typeCheck(par.getAST());
             returnCheck(par.getAST());
             breakContinueCheck(par.getAST());
+            methodInvocCheck(par.getAST(), par.getTable());
             
         }catch(Exception x){
             x.printStackTrace();
@@ -72,4 +73,15 @@ public class Main {
             System.out.println(bcv.getErrors().toString());
         }           
     }
+    
+    private static void methodInvocCheck(LinkedList<completeFunction> ast, symbolTable st) {    
+        MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(st);
+        for (completeFunction c: ast) {
+            c.getBlock().accept(bcv);
+        }        
+        if (bcv.getErrors().size() > 0) {
+            System.out.println("------------ METHOD INVOC ERROR --------------");
+            System.out.println(bcv.getErrors().toString());
+        }           
+    }    
 }

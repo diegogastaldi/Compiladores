@@ -14,7 +14,6 @@ Nota:
     
     
 Chequeos semanticos faltantes: 
-    - Llamadas a funciones con igual cantidad de parametros y del mismo tipo
     - Tamaño de arreglo mayor a cero
     - Toda clase tiene un metodo main sin parametros y con tipo void
     
