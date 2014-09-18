@@ -2,4 +2,8 @@ class clase {
     boolean inc(int x) {
         return (1 < 3) && false;
     }
+    
+    void main() {
+    return;    
+    }
 } 

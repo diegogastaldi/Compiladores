@@ -10,4 +10,5 @@ class clase {
         x = inc(x) + y;
         return;
     }
+    
 } 

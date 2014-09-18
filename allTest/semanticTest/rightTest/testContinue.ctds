@@ -6,4 +6,8 @@ class clase {
         }
         return true;
     }
+    
+    void main() {
+        return;
+    }    
 } 

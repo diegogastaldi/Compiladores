@@ -2,4 +2,8 @@ class c {
     boolean a(){
         return false;        
     }
+    
+    void main() {
+        return;
+    }    
 } 

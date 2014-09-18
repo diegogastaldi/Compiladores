@@ -1,12 +1,12 @@
 class a {
 
-    void method() {
+    void method(int a) {
         return;
     }
     
     void main() {
-        int b;
-        method(b);
+        boolean b;
+        b(b);
         return ;
     }
 } 

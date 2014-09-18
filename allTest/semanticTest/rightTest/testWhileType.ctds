@@ -3,5 +3,9 @@ class clase {
         while (x+4)<2 {
             return (x+1)<2;
         }
+        return true;
     }
+    void main() {
+        return;
+    }    
 } 

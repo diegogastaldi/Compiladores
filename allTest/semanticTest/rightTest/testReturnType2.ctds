@@ -1,0 +1,13 @@
+class c {
+    boolean a(){
+        if (true) {
+            return false;        
+        } else {
+            return false;
+        }
+    }
+    
+    void main() {
+        return;
+    }    
+} 

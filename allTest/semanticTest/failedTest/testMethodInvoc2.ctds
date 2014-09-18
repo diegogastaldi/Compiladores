@@ -1,11 +1,11 @@
 class a {
 
-    void method() {
+    void method(int a) {
         return;
     }
     
     void main() {
-        int b;
+        boolean b;
         method(b);
         return ;
     }

@@ -52,9 +52,7 @@ public class ReturnTypeCheckVisitor implements ASTVisitor<Boolean>{
   }
   
   public Boolean visit(WhileStmt stmt)  {
-    Boolean block = stmt.getBlock().accept(this);
-
-  	return block;
+  	return false;
   }
   	
   public Boolean visit(Block stmt){
@@ -74,9 +72,7 @@ public class ReturnTypeCheckVisitor implements ASTVisitor<Boolean>{
   }
     
   public Boolean visit(ForStmt stmt)  {
-    Boolean block = stmt.getBlock().accept(this);
-    
-  	return block;
+  	return false;
   }
   
   public Boolean visit(SemiColon stmt){

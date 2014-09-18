@@ -1,0 +1,24 @@
+class clase {
+    
+    int method1(int a) {
+        return 1;
+    }
+    
+    void method2() {
+        return;
+    }
+
+    float method3() {
+        float b;
+        b = 2.0;
+        return b;
+    }
+
+    void main () {
+        float a;
+        a = method3() + method1(2);
+        method2();
+        return;
+    }
+
+} 

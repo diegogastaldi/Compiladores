@@ -4,6 +4,7 @@ import java.util.*;
 import ir.semcheck.*;
 import java_cup.runtime.*;
 import ir.ast.Block;
+import ir.ast.Type;
 import error.Error;
 public class Main {
     public static void main(String[] args){
@@ -21,8 +22,8 @@ public class Main {
             typeCheck(par.getAST());
             returnCheck(par.getAST());
             breakContinueCheck(par.getAST());
-            methodInvocCheck(par.getAST(), par.getTable());
-            
+            methodInvocCheck(par.getAST());
+            methodMainCheck(par.getAST());
         }catch(Exception x){
             x.printStackTrace();
             System.out.println("Error fatal.\n"); 
@@ -57,10 +58,11 @@ public class Main {
             System.out.println("------------RETURN ERROR ---------------");
             System.out.println(returnTypeCheckVisitor.getErrors().toString());
         }
-        if (err.size() > 0)
+        if (err.size() > 0) {
             if (returnTypeCheckVisitor.getErrors().size() == 0) 
                 System.out.println("------------RETURN ERROR ---------------");
             System.out.println(err.toString());    
+        }
     }
     
     private static void breakContinueCheck(LinkedList<completeFunction> ast) {
@@ -74,8 +76,8 @@ public class Main {
         }           
     }
     
-    private static void methodInvocCheck(LinkedList<completeFunction> ast, symbolTable st) {    
-        MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(st);
+    private static void methodInvocCheck(LinkedList<completeFunction> ast) {    
+        MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(ast);
         for (completeFunction c: ast) {
             c.getBlock().accept(bcv);
         }        
@@ -84,4 +86,18 @@ public class Main {
             System.out.println(bcv.getErrors().toString());
         }           
     }    
+    
+    public static void methodMainCheck(LinkedList<completeFunction> ast) {
+        Boolean find = false;
+        for (completeFunction c : ast) {
+            if (c.name.equals("main") && (c.parameters.size()==0) && (c.type == Type.VOID)) {
+                find = true;
+            }
+        }
+        if (!find) {
+            System.out.println("------------MAIN METHOD ERROR --------------");
+            System.out.println((new Error(0, 0, "La clase debe tener un metodo main sin parametros y de tipo void")).toString());            
+        }
+        
+    }
 }

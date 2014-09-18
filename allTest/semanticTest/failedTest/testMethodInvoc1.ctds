@@ -6,7 +6,7 @@ class a {
     
     void main() {
         int b;
-        method(b);
+        b = method();
         return ;
     }
 } 

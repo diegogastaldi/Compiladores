@@ -5,4 +5,8 @@ class clase {
         y = y && x;
         return;
     }
+    
+    void main() {
+        return;
+    }    
 } 

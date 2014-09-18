@@ -1,0 +1,14 @@
+class c {
+    boolean a(){
+        if (true) {
+            int a;
+            a = 2;
+            return true;
+        }else{
+            boolean b;
+            while (b) {
+                return b;
+            }
+        }
+    }
+} 

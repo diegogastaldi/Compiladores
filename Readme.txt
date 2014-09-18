@@ -14,6 +14,5 @@ Nota:
     
     
 Chequeos semanticos faltantes: 
-    - Tamaño de arreglo mayor a cero
     - Toda clase tiene un metodo main sin parametros y con tipo void
     

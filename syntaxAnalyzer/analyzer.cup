@@ -63,14 +63,10 @@ parser code {:
   public LinkedList<completeFunction> getAST() {
     return CUP$parser$actions.setAst;
   }
-  
-  public symbolTable getTable() {
-    return CUP$parser$actions.table;
-  }
 :}
 
 action code {:
-  public static symbolTable table = new symbolTable();
+  static symbolTable table = new symbolTable();
   public static LinkedList<completeFunction> setAst = new LinkedList<completeFunction>();  
   
   private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, Type type) {

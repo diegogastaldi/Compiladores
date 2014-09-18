@@ -5,29 +5,29 @@ import java.util.LinkedList;
 import ir.ast.*;
 import error.Error;
 import ir.ASTVisitor;
-import compiler2014.symbolTable;
 import compiler2014.absSymbol;
 import compiler2014.functionSymbol;
+import compiler2014.completeFunction;
 
 public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   private List<Error> errors; 
-  private symbolTable st;
+  private List<completeFunction> cf;
   //Constructor
-  public MethodInvocCheckVisitor(symbolTable st){
+  public MethodInvocCheckVisitor(List<completeFunction> cf){
     errors = new LinkedList<Error>();
-    this.st = st;
+    this.cf = cf;
   }
   
   public Boolean visit(IncrementAssign stmt)   {
-    return true;
+    return stmt.getExpression().accept(this);
   }
   
   public Boolean visit(DecrementAssign stmt)   {
-    return true;
+    return stmt.getExpression().accept(this);
   }
   
   public Boolean visit(SimpleAssign stmt)   {
-    return true;
+    return stmt.getExpression().accept(this);
   }
   
   public Boolean visit(ReturnStmt stmt){
@@ -51,7 +51,7 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   public Boolean visit(Block stmt){
     Boolean block = true;
     for (Statement s : stmt.getStatements()) {
-        block = block && s.accept(this);
+        block = s.accept(this) && block;
     }
   	return block;
   }
@@ -74,9 +74,8 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   }
     
   public Boolean visit(InternInvkStmt stmt){
-    absSymbol a = st.search(stmt.getId());
-    if (a instanceof functionSymbol) {
-        functionSymbol f = (functionSymbol)a;
+    completeFunction f = searchBlock(stmt.getId());
+    if (f != null) {
         if (f.parameters.size() == stmt.getParameters().size()) {
             for (absSymbol p : f.parameters) {
                 for (Expression e : stmt.getParameters()) {
@@ -103,7 +102,7 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
     List<ArgInvoc> args = stmt.getParameters();
     for (ArgInvoc a : args) {
         if (a instanceof ArgInvocExpr) {
-            ret = ret && ((ArgInvocExpr)a).getExpression().accept(this);
+            ret = ((ArgInvocExpr)a).getExpression().accept(this) && ret ;
         }
     }
     return ret;
@@ -146,11 +145,10 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   }
 
   public Boolean visit (InternInvkExpr expr){
-    absSymbol a = st.search(expr.getId());
-    if (a instanceof functionSymbol) {
-        functionSymbol f = (functionSymbol)a;
-        if (f.type != Type.VOID) {
-            if (f.parameters.size() == expr.getParameters().size()) {
+    completeFunction f = searchBlock(expr.getId());
+    if (f != null) {
+        if (f.parameters.size() == expr.getParameters().size()) {
+            if (f.type != Type.VOID) {
                 for (absSymbol p : f.parameters) {
                     for (Expression e : expr.getParameters()) {
                         if (e.getType() != p.type) {
@@ -161,17 +159,17 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
                 }
                 return true;
             } else {
-                addError(expr, "No coinciden cantidad de parametros formales con actuales");
-                return false;
+                addError(expr, "Las funciones que retornan void no pueden formar parte de expresiones   ");
+                return false;   
             }
         } else {
-            addError(expr, "Retorno de la funcion de tipo null: No puede ser parte de una funcion");
-            return false;
+            addError(expr, "No coinciden cantidad de parametros formales con actuales");
+            return false;   
         }
     } else {
         addError(expr, "Actual id no es de tipo function");
         return false;
-    }
+    } 
   } 
   
   public Boolean visit (ExternInvkExpr expr){
@@ -215,4 +213,11 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
 	return errors;
   }
 
+  private completeFunction searchBlock(String name) {
+    for (completeFunction c : cf) {
+        if (c.name.equals(name)) 
+            return c;
+    }
+    return null;
+  }
 }

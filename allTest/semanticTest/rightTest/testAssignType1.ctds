@@ -5,9 +5,13 @@ class clase {
         return 2.0;
     }
     
-    void main(float x) {
+    void main2(float x) {
        y = x + method();
        return ;
+    }
+    
+    void main() {
+        return;
     }
     
 }  
