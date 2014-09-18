@@ -20,6 +20,7 @@ public class Main {
 
             typeCheck(par.getAST());
             returnCheck(par.getAST());
+            breakContinueCheck(par.getAST());
             
         }catch(Exception x){
             x.printStackTrace();
@@ -56,6 +57,19 @@ public class Main {
             System.out.println(returnTypeCheckVisitor.getErrors().toString());
         }
         if (err.size() > 0)
-                System.out.println(err.toString());    
+            if (returnTypeCheckVisitor.getErrors().size() == 0) 
+                System.out.println("------------RETURN ERROR ---------------");
+            System.out.println(err.toString());    
+    }
+    
+    private static void breakContinueCheck(LinkedList<completeFunction> ast) {
+        BreakContCheckVisitor bcv = new BreakContCheckVisitor();
+        for (completeFunction c: ast) {
+            c.getBlock().accept(bcv);
+        }        
+        if (bcv.getErrors().size() > 0) {
+            System.out.println("------------ BREAK CONTINUE ERROR --------------");
+            System.out.println(bcv.getErrors().toString());
+        }           
     }
 }

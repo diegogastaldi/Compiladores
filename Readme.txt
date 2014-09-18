@@ -13,13 +13,8 @@ Nota:
     - El archivo astUML es el esquema del arbol sintactico, el cual puede verse mediante la aplicacion umbrello.
     
     
-    
-    
-    
-    
 Chequeos semanticos faltantes: 
     - Llamadas a funciones con igual cantidad de parametros y del mismo tipo
-    - Break y Continue dentro de ciclos
     - Tamaño de arreglo mayor a cero
     - Toda clase tiene un metodo main sin parametros y con tipo void
     

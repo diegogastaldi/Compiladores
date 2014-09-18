@@ -2,8 +2,8 @@ class clase {
     boolean inc(boolean x) {
         while x {
             return x;
+                    continue;
         }
-        continue;
         return true;
     }
 } 

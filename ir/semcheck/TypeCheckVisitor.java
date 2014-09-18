@@ -235,7 +235,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
   public Type visit(ArrayLocation loc)  {
     Type expression = loc.getExpression().accept(this); 
     if (expression == Type.BOOLEAN){
-	    addError(loc,"La expresion del ArrayLocation no puede ser entera");  
+	    addError(loc,"La expresion del ArrayLocation debe ser entera");  
     }
     return loc.getType();
   }
