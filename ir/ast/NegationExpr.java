@@ -5,14 +5,14 @@ import ir.ASTVisitor;
 public class NegationExpr extends Expression {
 	private Expression expr;
 	
-	public NegationExpr(Expression expr, Type type){
+	public NegationExpr(Expression expr){
         this.expr = expr;
-        this.type = type;
+        type = Type.BOOLEAN;
 	}
 
-	public NegationExpr(Expression expr, Type type, int line, int col){
+	public NegationExpr(Expression expr, int line, int col){
         this.expr = expr;
-        this.type = type;
+        this.type = Type.BOOLEAN;
         lineNumber = line;
         colNumber = col;
 	}

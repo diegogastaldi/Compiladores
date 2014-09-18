@@ -34,15 +34,16 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
   public Type visit(SimpleAssign stmt)   {
     Type expr = stmt.getExpression().accept(this);
     Type loc = stmt.getLocation().accept(this);
-
     if (expr != loc){
     addError(stmt,"Los operandos de la asignacion = deben ser de igual tipo");
     }
     return null;
   }
   
-  public Type visit(ReturnStmt stmt){
-    Type expr = stmt.getExpression().accept(this);
+  public Type visit(ReturnStmt stmt) {
+    if (stmt.getExpression() != null) {
+        Type e = stmt.getExpression().accept(this);
+    }
   	return null;
   }
   
@@ -61,7 +62,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
   public Type visit(WhileStmt stmt)  {
     Type cond = stmt.getCondition().accept(this);
     Type block = stmt.getBlock().accept(this);
-    if (cond == Type.BOOLEAN) {
+    if (cond != Type.BOOLEAN) {
     addError(stmt,"La condicion de la sentencia While debe ser de tipo Bool");
     }
   	return null;
@@ -173,10 +174,10 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
 	    addError(expr,"Error interno:  Al Crear una operacion Condicional");  
     }
     if ( !(leftOperand == rightOperand)){
-	    addError(expr,"Los operandos de una expresion aritmetica deben ser del mismo tipo");  
+	    addError(expr,"Los operandos de una expresion condicional deben ser del mismo tipo");  
     }
     if ( (leftOperand != Type.BOOLEAN)){
- 		  addError(expr,"Los operando de una expresion booleana no pueden ser de tipo bool");
+ 		  addError(expr,"Los operando de una expresion booleana deben ser de tipo bool");
     } 
     return Type.BOOLEAN;
   }

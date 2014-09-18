@@ -22,7 +22,7 @@ public abstract class BinOpExpr extends Expression {
 		lineNumber = line;
 		colNumber = col;
 	}
-	
+
 	public BinOpType getOperator() {
 		return operator;
 	}

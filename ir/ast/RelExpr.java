@@ -5,17 +5,20 @@ import ir.ASTVisitor;
 public class RelExpr extends BinOpExpr {
     public RelExpr() {
         super();
+        type = Type.BOOLEAN;
     }
 
 	public RelExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);
         super.operator = op;
+        type = Type.BOOLEAN;
 	}
 	
 	public RelExpr(BinOpType op, int line, int col){
         super.operator = op;
         lineNumber = line;
         colNumber = col;
+        type = Type.BOOLEAN;
 	}
 	
 	@Override

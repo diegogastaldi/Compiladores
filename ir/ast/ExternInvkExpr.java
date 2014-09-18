@@ -18,11 +18,12 @@ public class ExternInvkExpr extends MethodCallExpr{
 	public ExternInvkExpr (String id, List<ArgInvoc> par, Type t){
 	    this.id = id;
 	    parameters = par;
+	    type = t;
 	}
 	
 	public ExternInvkExpr (String id, List<ArgInvoc> par, Type t, int line, int col){
 	    this.id = id;
-	    this.type = type;
+	    this.type = t;
 	    parameters = par;
 	    lineNumber = line;
 	    colNumber = col;

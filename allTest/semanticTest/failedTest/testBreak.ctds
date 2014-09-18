@@ -1,6 +1,6 @@
 class clase {
     boolean inc(int x) {
-        while x {
+        while true {
             return x+1;
         }
         break;

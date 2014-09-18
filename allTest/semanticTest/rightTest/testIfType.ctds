@@ -1,7 +1,7 @@
 class clase {
     boolean inc(int x) {
-        if (x) {
-            return x+1;
+        if (x<=0) {
+            return x>0;
         }
     }
 } 

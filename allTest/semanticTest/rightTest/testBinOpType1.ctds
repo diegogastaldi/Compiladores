@@ -3,5 +3,6 @@ class clase {
     void method () {
         int y;
         y = y + x;
+        return;
     }
 } 

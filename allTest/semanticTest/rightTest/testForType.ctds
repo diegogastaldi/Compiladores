@@ -1,7 +1,7 @@
 class clase {
     boolean inc(int x) {
-        for x = true , false{
-            return x+1;
+        for x = x , x{
+            return x==2;
         }
         return true;
     }

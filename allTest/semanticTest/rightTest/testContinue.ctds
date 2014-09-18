@@ -1,7 +1,7 @@
 class clase {
-    boolean inc(int x) {
+    boolean inc(boolean x) {
         while x {
-            return x+1;
+            return x;
         }
         continue;
         return true;

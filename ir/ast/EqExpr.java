@@ -10,12 +10,14 @@ public class EqExpr extends BinOpExpr {
 	public EqExpr(Expression l, BinOpType op, Expression r){
 	    super(l, r);   	
         super.operator = op;
+        type = Type.BOOLEAN;
 	}
 	
 	public EqExpr(BinOpType op, int line, int col){
         super.operator = op;
         lineNumber = line;
         colNumber = col;
+        type = Type.BOOLEAN;        
 	}
 	
 	@Override
