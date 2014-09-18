@@ -1,7 +1,0 @@
-class program {
-int a;
-int b;
-
-void method () {}
-
-}

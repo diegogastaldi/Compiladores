@@ -75,22 +75,6 @@ action code {:
     }
     return symbolList;
   }
-
-  private int getColumn(Object o) {
-    if(o instanceof java_cup.runtime.Symbol) {
-        java_cup.runtime.Symbol s=((java_cup.runtime.Symbol)o);
-        return s.right;
-    } else
-        return -1;
-  }
-  
-  private int getLine(Object o) {
-      if(o instanceof java_cup.runtime.Symbol) {
-          java_cup.runtime.Symbol s=((java_cup.runtime.Symbol)o);
-          return s.left;
-      } else
-          return -1;
-  }
 :}
 
 
@@ -138,164 +122,133 @@ precedence left MULT, DIV, MODULE;
 
 start with program;
 
-program     	    ::= WCLASS                              {:table.insertLevel();:} 
-                        ID:i                                {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:}
-                        LLL set_decl                        {:table.deleteLevel();:} 
+program     	    ::= WCLASS {:table.insertLevel();:} 
+                        ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
+                        LLL set_decl {:table.deleteLevel();:} 
                         RLL;
 
 set_decl			::= field_decl SEMICOLON set_decl 
                     |   set_method_decl ;
 
 
-field_decl		    ::= type:t ID:i LC INT:il RC            {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:}     
-                        set_complete_id:s                   {:if (table.insertSymbolList(setType(s, t)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:}
-                    |   type:t ID:i                         {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:} 
-                        set_complete_id:s                   {:if (table.insertSymbolList(setType(s, t)) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);:};
+field_decl		    ::= type:t ID:i LC INT:il {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}     
+                        set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
+                    |   type:t ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:} 
+                        set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:};
                                                         
 set_field_decl		::= field_decl SEMICOLON set_field_decl
                     |   /*LAMBDA*/;                                                        
              
-set_method_decl		::= type:t ID:i                         {:functionSymbol f = new functionSymbol(i, t, null);
-                                                            if (table.insertSymbol(f) == null) 
-                                                                parser.report_fatal_error("ID ya difinido: ",i);
-                                                            table.insertLevel();:} 
-                        LPAR parameters:p RPAR              {:if (p != null) 
-                                                                ((functionSymbol)table.search(i)).parameters = p;
-                                                            if (table.insertSymbolList(p)==null)
-                                                                parser.report_fatal_error("ID ya difinido: ",p.toString());
-                                                            :}
-                        block:b                  {:setAst.add(new completeFunction((functionSymbol)table.search(i), b)); table.deleteLevel();:} 
+set_method_decl		::= type:t ID:i {:functionSymbol f = new functionSymbol(i, t, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();:} 
+                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).parameters = p; if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:}
+                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b)); table.deleteLevel();:} 
                         set_method_decl
-                    |   WVOID:v ID:i                        {:functionSymbol f = new functionSymbol(i, v, null);
-                                                            if (table.insertSymbol(f) == null)
-                                                                parser.report_fatal_error("ID ya difinido: ",i);
-                                                            table.insertLevel();:} 
-                        LPAR parameters:p RPAR              {:if (p != null) ((functionSymbol)table.search(i)).parameters = p;
-                                                            if (table.insertSymbolList(p)==null)
-                                                                parser.report_fatal_error("ID ya difinido: ",p.toString());:} 
-                        block:b                  {:setAst.add(new completeFunction((functionSymbol)table.search(i), b)); table.deleteLevel();:} 
+                    |   WVOID:v ID:i {:functionSymbol f = new functionSymbol(i, v, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();:} 
+                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).parameters = p; if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:} 
+                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b)); table.deleteLevel();:} 
                         set_method_decl
                     |   /*Lambda*/;
     
-set_complete_id 	::= COMMA ID:i set_complete_id:s              {:s.add(new simpleSymbol(i, null, Type.UNDEFINED)); RESULT = s;:} 
+set_complete_id 	::= COMMA ID:i set_complete_id:s {:s.add(new simpleSymbol(i, null, Type.UNDEFINED)); RESULT = s;:} 
                     |   COMMA ID:i LC INT:il RC set_complete_id:s {:s.add(new arraySymbol(i,Type.UNDEFINED,il.getValue(), null)); RESULT = s;:} 
-                    |   /* LAMBDA */                        {:RESULT = new LinkedList<absSymbol>();:};
+                    |   /* LAMBDA */ {:RESULT = new LinkedList<absSymbol>();:};
 
-parameters 		    ::= type:t ID:i set_type_id:s           {:s.add(new simpleSymbol(i, null, t));RESULT = s;:} 
-                    |   /*LAMBDA*/                          {:RESULT = new LinkedList<absSymbol>();:};
+parameters 		    ::= type:t ID:i set_type_id:s {:s.add(new simpleSymbol(i, null, t));RESULT = s;:} 
+                    |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
 
-set_type_id 		::= COMMA type:t ID:i set_type_id:s     {:s.add(new simpleSymbol(i, null, t)); RESULT = s;:} 
-                    |   /*LAMBDA*/                          {:RESULT = new LinkedList<absSymbol>();:};
+set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(new simpleSymbol(i, null, t)); RESULT = s;:} 
+                    |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
 
 
 statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.setExpression(e); RESULT = a;:}
-			        |   method_call_stmt:mc SEMICOLON       {:RESULT = mc;:}
-    			    |   stmt_if:i 			                {:RESULT = i;:}
-	    		    |   WFOR:w ID:i                         {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);:} 
-                        ASSIGN expr:e1 COMMA expr:e2 block:b{:RESULT = new ForStmt(i, e1, e2, b,getLine(w),getColumn(w));:}
-	    		    |   WWHILE:w expr:e block:b             {:RESULT = new WhileStmt(e, b,getLine(w),getColumn(w));:}
-	    		    |   stmt_return:r SEMICOLON             {:RESULT = r;:}
-	    		    |   WBREAK:w SEMICOLON                  {:RESULT = new BreakStmt(getLine(w),getColumn(w));:}
-	    		    |   WCONTINUE:w SEMICOLON               {:RESULT = new ContinueStmt(getLine(w),getColumn(w));:}
-	    		    |   SEMICOLON:s                         {:RESULT = new SemiColon(table.getBlockId(),getLine(s),getColumn(s));:}
-	    		    |   block:b                             {:RESULT = b;:} ;
+			        |   method_call_stmt:mc SEMICOLON {:RESULT = mc;:}
+    			    |   stmt_if:i {:RESULT = i;:}
+	    		    |   WFOR:w ID:i {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);:} 
+                        ASSIGN expr:e1 COMMA expr:e2 block:b {:RESULT = new ForStmt(i, e1, e2, b,wleft,wright);:}
+	    		    |   WWHILE:w expr:e block:b {:RESULT = new WhileStmt(e, b,wleft,wright);:}
+	    		    |   stmt_return:r SEMICOLON {:RESULT = r;:}
+	    		    |   WBREAK:w SEMICOLON {:RESULT = new BreakStmt(wleft,wright);:}
+	    		    |   WCONTINUE:w SEMICOLON {:RESULT = new ContinueStmt(wleft,wright);:}
+	    		    |   SEMICOLON:s {:RESULT = new SemiColon(table.getBlockId(),sleft,sright);:}
+	    		    |   block:b {:RESULT = b;:} ;
 
-method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR    {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);
-                                                            else RESULT = new InternInvkStmt(i, p,getLine(i),getColumn(i));:}
-			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type arg_invoc:a RPAR  {:RESULT=new ExternInvkStmt(s,a,getLine(w),
-			                                                                                getColumn(w));:}
-			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,getLine(w),
-			                                                                                getColumn(w));:};
+method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i); else RESULT = new InternInvkStmt(i, p,ileft,iright);:}
+			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,wleft,wright);:}
+			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,wleft,wright);:};
 
                       
-stmt_return 		::= WRETURN:w expr:e                        {:RESULT = new ReturnStmt(e,getLine(w),getColumn(w));:} 
-                    |   WRETURN:w                               {:RESULT = new ReturnStmt(getLine(w),getColumn(w));:} ;
+stmt_return 		::= WRETURN:w expr:e {:RESULT = new ReturnStmt(e,wleft,wright);:} 
+                    |   WRETURN:w {:RESULT = new ReturnStmt(wleft,wright);:} ;
 
-stmt_if             ::= WIF:w LPAR expr:e RPAR block:b1 WELSE block:b2{:RESULT = new IfStmt(e, b1, b2,getLine(w),getColumn(w));:}
-    			    |   WIF:w LPAR expr:e RPAR block:b          {:RESULT = new IfStmt(e, b,getLine(w),getColumn(w));:} ;
+stmt_if             ::= WIF:w LPAR expr:e RPAR block:b1 WELSE block:b2 {:RESULT = new IfStmt(e, b1, b2,wleft,wright);:}
+    			    |   WIF:w LPAR expr:e RPAR block:b {:RESULT = new IfStmt(e, b,wleft,wright);:} ;
 
-expr_parameters 	::= expr:e expr_parameters_:es              {:LinkedList<Expression> l =new LinkedList<Expression>(es); l.add(e);
-                                                                RESULT = l;:}
-                    |   /* LAMBDA */                            {:RESULT = new LinkedList<Expression>();:};
+expr_parameters 	::= expr:e expr_parameters_:es {:LinkedList<Expression> l =new LinkedList<Expression>(es); l.add(e); RESULT = l;:}
+                    |   /* LAMBDA */ {:RESULT = new LinkedList<Expression>();:};
 
-expr_parameters_	::= COMMA expr:e expr_parameters_:es        {:LinkedList<Expression> l =new LinkedList<Expression>(es); l.add(e);
-                                                                RESULT = l;:}
-                    |   /* LAMBDA */                            {:RESULT = new LinkedList<Expression>();:};
+expr_parameters_	::= COMMA expr:e expr_parameters_:es {:LinkedList<Expression> l =new LinkedList<Expression>(es); l.add(e); RESULT = l;:}
+                    |   /* LAMBDA */ {:RESULT = new LinkedList<Expression>();:};
                     
-set_statement 		::= statement:s set_statement:ss            {:LinkedList<Statement> sets = new LinkedList<Statement>();
-                                                                sets.add(s); sets.addAll(ss); RESULT=sets;:} 
-                    |   /* LAMBDA */                            {:RESULT = new LinkedList<Statement>();:};
+set_statement 		::= statement:s set_statement:ss {:LinkedList<Statement> sets = new LinkedList<Statement>(); sets.add(s); sets.addAll(ss); RESULT=sets;:} 
+                    |   /* LAMBDA */ {:RESULT = new LinkedList<Statement>();:};
 
-block       		::= LLL:l                                   {:table.insertLevel();:} 
-                        set_field_decl:sf set_statement:ss      {:table.deleteLevel();:} 
-                        RLL                                     {:RESULT = new Block(table.getBlockId(), ss,getLine(l),getColumn(l));:};
+block       		::= LLL:l {:table.insertLevel();:} 
+                        set_field_decl:sf set_statement:ss {:table.deleteLevel();:} 
+                        RLL {:RESULT = new Block(table.getBlockId(), ss,lleft,lright);:};
 
-expr        		::= location:l                              {:RESULT = l;:}
-                    |   method_call_expr:mc                     {:RESULT = mc;:}
-			        |   literal:l                               {:RESULT = l;:}
-			        |   MINUS:m expr:e                          {:RESULT = new NegativeExpr(e, e.getType(),getLine(m),getColumn(m));:}
-			        |   NOT:n expr:e                            {:RESULT = new NegationExpr(e, e.getType(),getLine(n),getColumn(n));:}
-			        |   LPAR:l expr:e RPAR                      {:RESULT = new InParentExpr(e, e.getType(),getLine(l),getColumn(l));:}
-			        |   expr:e1 bin_op:b expr:e2                {:b.setLeftOperand(e1); b.setRightOperand(e2); RESULT = b;:};
+expr        		::= location:l {:RESULT = l;:}
+                    |   method_call_expr:mc {:RESULT = mc;:}
+			        |   literal:l {:RESULT = l;:}
+			        |   MINUS:m expr:e {:RESULT = new NegativeExpr(e, e.getType(),mleft,mright);:}
+			        |   NOT:n expr:e {:RESULT = new NegationExpr(e, e.getType(),nleft,nright);:}
+			        |   LPAR:l expr:e RPAR {:RESULT = new InParentExpr(e, e.getType(),lleft,lright);:}
+			        |   expr:e1 bin_op:b expr:e2 {:b.setLeftOperand(e1); b.setRightOperand(e2); RESULT = b;:};
 
-method_call_expr    ::= WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {:RESULT=new ExternInvkExpr(s,a,t,getLine(w),
-                                                                                            getColumn(w));:}
-			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR{:RESULT=new ExternInvkExpr(s,a,null,getLine(w),
-			                                                                            getColumn(w));:}
-                    |   ID:i LPAR expr_parameters:p RPAR    {:absSymbol a = table.search(i); if (a == null) 
-                                                            parser.report_fatal_error("ID desconocido.",i); 
-                                                            else { if (a instanceof functionSymbol)         
-                                                            RESULT=new InternInvkExpr(i,p,((functionSymbol)a).type,getLine(i),getColumn(i));}:};
+method_call_expr    ::= WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {:RESULT=new ExternInvkExpr(s,a,t,wleft,wright);:}
+			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR{:RESULT=new ExternInvkExpr(s,a,null,wleft,wright);:}
+                    |   ID:i LPAR expr_parameters:p RPAR {:absSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof functionSymbol) RESULT=new InternInvkExpr(i,p,((functionSymbol)a).type,ileft,iright);}:};
 			       
-arg_invoc 		    ::= COMMA externinvk_arg:ea arg_invoc:ai    {:LinkedList<ArgInvoc> sets = new LinkedList<ArgInvoc>();
-                                                                sets.add(ea); sets.addAll(ai); RESULT=sets;:} 
-                    |   /* LAMBDA */                            {:RESULT = new LinkedList<ArgInvoc>();:};  
+arg_invoc 		    ::= COMMA externinvk_arg:ea arg_invoc:ai {:LinkedList<ArgInvoc> sets = new LinkedList<ArgInvoc>(); sets.add(ea); sets.addAll(ai); RESULT=sets;:} 
+                    |   /* LAMBDA */ {:RESULT = new LinkedList<ArgInvoc>();:};  
 
-externinvk_arg  	::= expr:e                                  {:RESULT = new ArgInvocExpr(e);:}
-                    |   STRING_LITERAL:s                        {:RESULT = new ArgInvocSL(s);:};
+externinvk_arg  	::= expr:e {:RESULT = new ArgInvocExpr(e);:}
+                    |   STRING_LITERAL:s {:RESULT = new ArgInvocSL(s);:};
 
-location            ::= ID:i                                    {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido."+i,i);
-                                                                RESULT=new VarLocation(i,table.getBlockId(),getLine(i),getColumn(i));:}
-                    |   ID:i LC expr:e RC                       {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);
-                                                                RESULT=new ArrayLocation(i,table.getBlockId(),e,getLine(i),getColumn(i));:};
+location            ::= ID:i {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido."+i,i); RESULT=new VarLocation(i,table.getBlockId(),ileft,iright);:}
+                    |   ID:i LC expr:e RC {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i);RESULT=new ArrayLocation(i,table.getBlockId(),e,ileft,iright);:};
 
-type        		::= WFLOAT:f                                {:RESULT = f;:}
-                    |   WBOOLEAN:b                              {:RESULT = b;:}
-                    |   WINT:i                                  {:RESULT = i;:};
+type        		::= WFLOAT:f {:RESULT = f;:}
+                    |   WBOOLEAN:b {:RESULT = b;:}
+                    |   WINT:i {:RESULT = i;:};
 
-assign_op   		::= ASSIGN:a                                {:System.out.println(getLine(a));RESULT = new SimpleAssign(getLine(a),getColumn(a));:}
-    			    |   ASSIGN_INC:i                            {:RESULT = new IncrementAssign(getLine(i),getColumn(i));:}
-    			    |   ASSIGN_DEC:d                            {:RESULT = new DecrementAssign(getLine(d),getColumn(d));:};
+assign_op   		::= ASSIGN:a {:RESULT = new SimpleAssign(aleft,aright);:}
+    			    |   ASSIGN_INC:i {:RESULT = new IncrementAssign(ileft,iright);:}
+    			    |   ASSIGN_DEC:d {:RESULT = new DecrementAssign(dleft,dright);:};
 
 
-bin_op      		::= arith_op:a                              {:RESULT = a;:}
-                    |   rel_op:r                                {:RESULT = r;:}
-                    |   eq_op:e                                 {:RESULT = e;:}
-                    |   cond_op:c                               {:RESULT = c;:};
+bin_op      		::= arith_op:a {:RESULT = a;:}
+                    |   rel_op:r {:RESULT = r;:}
+                    |   eq_op:e {:RESULT = e;:}
+                    |   cond_op:c {:RESULT = c;:};
 
-arith_op    		::= PLUS:p                              {:ArithExpr a=new ArithExpr(BinOpType.PLUS,getLine(p),getColumn(p));RESULT=a;:} 
-                    |   MINUS:m                             {:ArithExpr a=new ArithExpr(BinOpType.MINUS,getLine(m),getColumn(m));RESULT=a;:} 
-                    |   MULT:m                              {:ArithExpr a=new ArithExpr(BinOpType.MULTIPLY,getLine(m),getColumn(m));RESULT=a;:} 
-                    |   DIV:d                               {:ArithExpr a=new ArithExpr(BinOpType.DIVIDE,getLine(d),getColumn(d));RESULT=a;:} 
-                    |   MODULE:m                            {:ArithExpr a=new ArithExpr(BinOpType.MOD,getLine(m),getColumn(m));RESULT=a;:};
+arith_op    		::= PLUS:p {:ArithExpr a=new ArithExpr(BinOpType.PLUS,pleft,pright);RESULT=a;:} 
+                    |   MINUS:m {:ArithExpr a=new ArithExpr(BinOpType.MINUS,mleft,mright);RESULT=a;:} 
+                    |   MULT:m {:ArithExpr a=new ArithExpr(BinOpType.MULTIPLY,mleft,mright);RESULT=a;:} 
+                    |   DIV:d {:ArithExpr a=new ArithExpr(BinOpType.DIVIDE,dleft,dright);RESULT=a;:} 
+                    |   MODULE:m {:ArithExpr a=new ArithExpr(BinOpType.MOD,mleft,mright);RESULT=a;:};
 
-rel_op      		::= LESS_THAN:l                             {:RelExpr rel=new RelExpr(BinOpType.LE,getLine(l),getColumn(l));RESULT=rel;:} 
-                    |   GREATER_THAN:g                          {:RelExpr rel=new RelExpr(BinOpType.GE,getLine(g),getColumn(g));RESULT=rel;:} 
-                    |   LESS_EQ_THAN:l                          {:RelExpr rel=new RelExpr(BinOpType.LEQ,getLine(l),getColumn(l));RESULT=rel;:} 
-                    |   GREATER_EQ_THAN:g                       {:RelExpr rel=new RelExpr(BinOpType.GEQ,getLine(g),getColumn(g));RESULT=rel;:} ;
+rel_op      		::= LESS_THAN:l {:RelExpr rel=new RelExpr(BinOpType.LE,lleft,lright);RESULT=rel;:} 
+                    |   GREATER_THAN:g {:RelExpr rel=new RelExpr(BinOpType.GE,gleft,gright);RESULT=rel;:} 
+                    |   LESS_EQ_THAN:l {:RelExpr rel=new RelExpr(BinOpType.LEQ,lleft,lright);RESULT=rel;:} 
+                    |   GREATER_EQ_THAN:g {:RelExpr rel=new RelExpr(BinOpType.GEQ,gleft,gright);RESULT=rel;:} ;
 
-eq_op       		::= EQ:e                                    {:EqExpr eq=new EqExpr(BinOpType.CEQ,getLine(e),getColumn(e));RESULT = eq;:} 
-                    |   NOT_EQ:n                                {:EqExpr eq=new EqExpr(BinOpType.NEQ,getLine(n),getColumn(n));RESULT = eq;:} ;
+eq_op       		::= EQ:e {:EqExpr eq=new EqExpr(BinOpType.CEQ,eleft,eright);RESULT = eq;:} 
+                    |   NOT_EQ:n {:EqExpr eq=new EqExpr(BinOpType.NEQ,nleft,nright);RESULT = eq;:} ;
 
-cond_op     		::= AND:a                                   {:CondExpr c=new CondExpr(BinOpType.AND,getLine(a),getColumn(a));RESULT=c;:}
-                    |   OR:o                                    {:CondExpr c=new CondExpr(BinOpType.OR,getLine(o),getColumn(o));RESULT=c;:};
+cond_op     		::= AND:a {:CondExpr c=new CondExpr(BinOpType.AND,aleft,aright);RESULT=c;:}
+                    |   OR:o {:CondExpr c=new CondExpr(BinOpType.OR,oleft,oright);RESULT=c;:};
 
-literal     		::= INT:l                                   {:RESULT = l;:}
-                    |   FLOAT:l                                 {:RESULT = l;:}
-                    |   BOOLEAN:l                               {:RESULT = l;:};
+literal     		::= INT:l {:RESULT = l;:}
+                    |   FLOAT:l {:RESULT = l;:}
+                    |   BOOLEAN:l {:RESULT = l;:};
 

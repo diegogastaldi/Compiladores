@@ -1,8 +1,0 @@
-class a{ 
-
-void method (float b, boolean a) {
-  if (a<=b) {
-    a = true && (b()+1);
-  }
-}
-}

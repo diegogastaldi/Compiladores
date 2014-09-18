@@ -5,7 +5,7 @@ import ir.ast.*;
 // Abstract visitor
 public interface ASTVisitor<T> {
 // visit statements
-	T visit(AssignStmt stmt);
+//	T visit(AssignStmt stmt);
 	T visit(IncrementAssign stmt);
 	T visit(DecrementAssign stmt);
 	T visit(SimpleAssign stmt);
@@ -15,15 +15,15 @@ public interface ASTVisitor<T> {
     T visit(Block stmt);
     T visit(ContinueStmt stmt);
     T visit(BreakStmt stmt);
-    T visit(CycleStmt stmt);
+//    T visit(CycleStmt stmt);
     T visit(ForStmt stmt);
     T visit(SemiColon stmt);
-	T visit(MethodCallStmt stmt);	
+//	T visit(MethodCallStmt stmt);	
 	T visit(InternInvkStmt stmt);	
 	T visit(ExternInvkStmt stmt);
     
 // visit expressions
-	T visit(BinOpExpr expr);
+//	T visit(BinOpExpr expr);
 	T visit(NegativeExpr expr);
 	T visit(NegationExpr expr);
 	T visit(RelExpr expr);
@@ -31,7 +31,7 @@ public interface ASTVisitor<T> {
 	T visit(CondExpr expr);	
 	T visit(EqExpr expr);
 	T visit(InParentExpr expr);
-	T visit(MethodCallExpr expr);	
+//	T visit(MethodCallExpr expr);	
 	T visit(InternInvkExpr expr);	
 	T visit(ExternInvkExpr expr);
 	
