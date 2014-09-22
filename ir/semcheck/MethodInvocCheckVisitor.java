@@ -1,3 +1,20 @@
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase implementa el patron visitor, 
+  la cual comprueba que las invocaciones a 
+  metodos se realizen correctamente, tanto
+  por la cantidad de parametros, como por los 
+  tipos de los mismos.
+  
+*/
 package ir.semcheck;
 
 import java.util.List;

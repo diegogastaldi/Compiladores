@@ -1,3 +1,20 @@
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase prueba lo desarrollado hasta 
+  el momento. Cargando un programa en ctds,
+  y lo analiza tanto lexica, sintantica como
+  semanticamente.
+  
+*/
+
 package compiler2014;
 import java.io.*;
 import java.util.*;
@@ -6,6 +23,7 @@ import java_cup.runtime.*;
 import ir.ast.Block;
 import ir.ast.Type;
 import error.Error;
+
 public class Main {
     public static void main(String[] args){
         try {
@@ -17,8 +35,11 @@ public class Main {
             parser par = new parser(lex);
             /* Analize file */
             par.setScanner(lex);
+            
+            /* Chequeos lexicos y semanticos */
             par.parse();
 
+            /* Chequeos semanticos */
             typeCheck(par.getAST());
             returnCheck(par.getAST());
             breakContinueCheck(par.getAST());
@@ -30,6 +51,8 @@ public class Main {
         }
     }
     
+    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+    de tipos, si es que hay este tipo de errores */
     private static void typeCheck(LinkedList<completeFunction> ast) {
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
 
@@ -42,6 +65,9 @@ public class Main {
         }    
     }
     
+    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+    de retorno, tanto si no hay un return en cierto camino del programa, como si el tipo
+    retornado es erroneo, si es que hay este tipo de errores */
     private static void returnCheck(LinkedList<completeFunction> ast) {
         ReturnTypeCheckVisitor returnTypeCheckVisitor = new ReturnTypeCheckVisitor();
         Block currentBlock;
@@ -65,6 +91,8 @@ public class Main {
         }
     }
     
+    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+    de ubicacion de las sentencias break y continue, si es que hay este tipo de errores */    
     private static void breakContinueCheck(LinkedList<completeFunction> ast) {
         BreakContCheckVisitor bcv = new BreakContCheckVisitor();
         for (completeFunction c: ast) {
@@ -75,7 +103,10 @@ public class Main {
             System.out.println(bcv.getErrors().toString());
         }           
     }
-    
+
+    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+    de invocacion a metodos que pueden tanto los tipos como la cantidad de los parametros en
+    la invocacion, si es que hay este tipo de errores */    
     private static void methodInvocCheck(LinkedList<completeFunction> ast) {    
         MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(ast);
         for (completeFunction c: ast) {
@@ -87,6 +118,8 @@ public class Main {
         }           
     }    
     
+    /* Toma el arbol de analisis sintatico y corrobora si hay un metodo que cumpla con las 
+    caracteristicas del metodo principal para iniciar la ejecucion del programa */
     public static void methodMainCheck(LinkedList<completeFunction> ast) {
         Boolean find = false;
         for (completeFunction c : ast) {

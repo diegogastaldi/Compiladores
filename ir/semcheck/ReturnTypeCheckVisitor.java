@@ -1,3 +1,20 @@
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase implementa el patron visitor, 
+  la cual realiza el chequeo de tipos de 
+  retorno. Tambien comprueba que halla 
+  siempre una sentencia return por todos
+  los caminos del programa a analizar.
+  
+*/
 package ir.semcheck;
 
 import java.util.List;

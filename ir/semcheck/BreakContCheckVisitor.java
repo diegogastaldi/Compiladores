@@ -1,3 +1,19 @@
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase implementa el patron visitor, 
+  la cual comprueba que tanto si hay sentencias 
+  break o visitor, esten dentro de un ciclo, 
+  como indica las especificaciones del lenguaje.  
+*/
+
 package ir.semcheck;
 
 import java.util.List;
@@ -41,7 +57,7 @@ public class BreakContCheckVisitor implements ASTVisitor<Boolean>{
     return blockIf;
   }
   
-  public Boolean visit(WhileStmt stmt)  {
+  public Boolean visit(WhileStmt stmt)  {    
     inCycle = true;
     Boolean block = stmt.getBlock().accept(this);
     inCycle = false;

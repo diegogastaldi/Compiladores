@@ -8,7 +8,10 @@
     
   *************************************
   
-
+  Esta clase representa una funcion completa, 
+  la cual mentiene la informacion de tipo, nombre,
+  parametros y el bloque correspondiente a dicha 
+  funcion.
 */
 
 package compiler2014;
