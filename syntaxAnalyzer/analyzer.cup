@@ -131,7 +131,7 @@ set_decl			::= field_decl SEMICOLON set_decl
                     |   set_method_decl ;
 
 
-field_decl		    ::= type:t ID:i LC INT:il {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}     
+field_decl		    ::= type:t ID:i LC INT:il RC {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}     
                         set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
                     |   type:t ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:} 
                         set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:};
@@ -172,7 +172,7 @@ statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.
 	    		    |   SEMICOLON:s {:RESULT = new SemiColon(table.getBlockId(),sleft+1,sright+1);:}
 	    		    |   block:b {:RESULT = b;:} ;
 
-method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR {:if (table.search(i) == null) parser.report_fatal_error("ID desconocido.",i); else RESULT = new InternInvkStmt(i, p,ileft+1,iright+1);:}
+method_call_stmt    ::= ID:i LPAR expr_parameters:p RPAR {:absSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof functionSymbol) RESULT=new InternInvkStmt(i,p,ileft+1,iright+1); else parser.report_fatal_error("ID "+i+"no es una funcion",i); }:}
 			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,wleft+1,wright+1);:}
 			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,wleft+1,wright+1);:};
 
@@ -206,7 +206,7 @@ expr        		::= location:l {:RESULT = l;:}
 
 method_call_expr    ::= WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {:RESULT=new ExternInvkExpr(s,a,t,wleft+1,wright+1);:}
 			        |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR{:RESULT=new ExternInvkExpr(s,a,null,wleft+1,wright+1);:}
-                    |   ID:i LPAR expr_parameters:p RPAR {:absSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof functionSymbol) RESULT=new InternInvkExpr(i,p,((functionSymbol)a).type,ileft+1,iright+1);}:};
+                    |   ID:i LPAR expr_parameters:p RPAR {:absSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof functionSymbol) RESULT=new InternInvkExpr(i,p,((functionSymbol)a).type,ileft+1,iright+1); else parser.report_fatal_error("ID "+i+"no es una funcion",i); }:};
 			       
 arg_invoc 		    ::= COMMA externinvk_arg:ea arg_invoc:ai {:LinkedList<ArgInvoc> sets = new LinkedList<ArgInvoc>(); sets.add(ea); sets.addAll(ai); RESULT=sets;:} 
                     |   /* LAMBDA */ {:RESULT = new LinkedList<ArgInvoc>();:};  
@@ -248,7 +248,7 @@ eq_op       		::= EQ:e {:EqExpr eq=new EqExpr(BinOpType.CEQ,eleft+1,eright+1);RE
 cond_op     		::= AND:a {:CondExpr c=new CondExpr(BinOpType.AND,aleft+1,aright+1);RESULT=c;:}
                     |   OR:o {:CondExpr c=new CondExpr(BinOpType.OR,oleft+1,oright+1);RESULT=c;:};
 
-literal     		::= INT:l {:RESULT = l;:}
-                    |   FLOAT:l {:RESULT = l;:}
-                    |   BOOLEAN:l {:RESULT = l;:};
+literal     		::= INT:l {:l.setType(Type.INT); RESULT = l;:}
+                    |   FLOAT:l {:l.setType(Type.FLOAT); RESULT = l;:}
+                    |   BOOLEAN:l {:l.setType(Type.BOOLEAN); RESULT = l;:};
 

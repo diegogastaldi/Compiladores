@@ -19,9 +19,9 @@ float promedio (float nota1, float nota2, float nota3){
 Saca el promedio entre las dos notas mas altas.
 */
 
-int main(){ 
+void main(){ 
  externinvk("printf", float ,"%f resultado : ", promedio( 3.3, 0.66 , 10.0) );
- return 1;
+ return ;
 }
 
 }

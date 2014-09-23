@@ -2,6 +2,7 @@ class program {
 int a;
 int b;
 
-void method () {}
-
+void main () {
+return;
+}
 }

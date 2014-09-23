@@ -9,6 +9,7 @@ void main(){
     c= (a && b) || !b;
 
     externinvk("printf", boolean , c);
+    return ;
 }
 
 }

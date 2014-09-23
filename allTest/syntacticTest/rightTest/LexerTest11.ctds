@@ -3,7 +3,7 @@ class program {
 int a;
 int b;
 
-void method (int a) {}
+void method (int a) {return;}
 
 void method2 () {
   return ;
@@ -12,14 +12,20 @@ void method2 () {
 
 int method3(int a) {
 for a = 2, 1 {}
+return a;
 }
 
 int method4() {
+    int y;
   if (a==b) {
-    y = inc(externinvk("get_int", int));}
+    y = method3(externinvk("get_int", int));}
   else {
-    while (true) {abcd = assd;}
+    while (true) {}
   }
+  return y;
+}
+void main () {
+return;
 }
 }
  

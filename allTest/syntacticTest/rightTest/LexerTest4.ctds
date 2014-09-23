@@ -10,5 +10,6 @@ externinvk("printf", void, "y==1\n");
 } else {
 externinvk("printf", void, "y==%d\n", y);
 }
+return;
 }
 }

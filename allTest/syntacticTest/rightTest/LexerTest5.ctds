@@ -1,4 +1,6 @@
 class program {
 int a;
-
+void main () {
+    return;
+}
 } 

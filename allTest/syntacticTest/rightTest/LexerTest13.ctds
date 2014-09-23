@@ -1,8 +1,13 @@
 class a{ 
 
-void method (float b, boolean a) {
+void method (float b, float a) {
+    boolean x;
   if (a<=b) {
-    a = true && (b()+1);
+    x = true && (b == 1.0);
   }
+  return;
 }
-}
+
+void main () {
+return;
+}}

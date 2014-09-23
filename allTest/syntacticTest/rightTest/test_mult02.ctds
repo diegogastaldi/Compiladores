@@ -9,8 +9,9 @@ int pruMult( ){
 
 }
 
-int main(){
+void main(){
     externinvk("printf", int , pruMult());
+    return;
 }
 
 }

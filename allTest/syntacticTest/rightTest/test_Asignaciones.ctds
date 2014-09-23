@@ -14,8 +14,9 @@ int pruAritmetica(int c){
 		return c;	
 }
 
-int main(){
+void main(){
     externinvk("printf", int , pruAritmetica(3));
+    return ;
 }
 
 }

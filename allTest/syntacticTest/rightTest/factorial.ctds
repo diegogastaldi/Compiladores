@@ -6,12 +6,14 @@ int factorial(int n){
 	int i;
 	int total;
     i = total;
+    return i ;
 }
 
-int main(){
+void main(){
    int a;
    int b;
    a = a+b;
+   return;
 }
 
 }

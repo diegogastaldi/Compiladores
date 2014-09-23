@@ -37,6 +37,8 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     addError(stmt,"Los operandos de la asignacion += no pueden ser de tipo Bool");
     }
     return null;
+    
+    /*VER EL ASIGNAR FLOAT A INT*/
   }
   
   public Type visit(DecrementAssign stmt)   {
@@ -134,6 +136,11 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     if (operand == Type.BOOLEAN){
     addError(expr,"La expresion luego del - no puede ser de tipo Bool");
     }
+    if (operand == Type.FLOAT)
+      expr.setType(Type.FLOAT);
+    else 
+      expr.setType(Type.INT);
+
     return operand;
   }
 
@@ -142,6 +149,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     if (operand != Type.BOOLEAN){
     addError(expr,"La condicion de la expresion ! debe ser de tipo Bool");  
     }
+    expr.setType(Type.BOOLEAN);
     return operand;
   }
 
@@ -156,7 +164,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
       case DIVIDE: case MINUS: case MULTIPLY: case PLUS: case CEQ: case NEQ:
       case AND: case OR: case MOD:
 				    addError(expr,"Error interno:  Al Crear una operacion Relacional");  
-      default: return Type.BOOLEAN;
+      default: expr.setType(Type.BOOLEAN); return Type.BOOLEAN;
     }
   }
 
@@ -173,12 +181,18 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
 
       case DIVIDE: case MOD:
         if(!(leftOperand == rightOperand)){
-				    addError(expr,"Error interno:  Al Crear una operacion Aritmetica");  
-         }else return leftOperand; 
+				    addError(expr,"Error de tipos en operacion aritmetica");  
+         }else {
+            expr.setType(leftOperand);
+            return leftOperand; 
+         }
       case PLUS: case MINUS: case MULTIPLY:
-        if (!(leftOperand == rightOperand)){
-          return Type.FLOAT;
-        }else return leftOperand;
+        if(!(leftOperand == rightOperand)){
+            addError(expr,"Error de tipos en operacion aritmetica");  
+         }else {
+            expr.setType(leftOperand);
+            return leftOperand; 
+         }
     }
     return null;
   }
@@ -196,6 +210,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     if ( (leftOperand != Type.BOOLEAN)){
  		  addError(expr,"Los operando de una expresion booleana deben ser de tipo bool");
     } 
+    expr.setType(Type.BOOLEAN);    
     return Type.BOOLEAN;
   }
 
@@ -209,11 +224,14 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     if (! (leftOperand == rightOperand)){
 	    addError(expr,"Los operandos de una expresion de Equivalencia deben ser del mismo tipo");  
     } 
+    expr.setType(Type.BOOLEAN);
     return Type.BOOLEAN;
   }
 
   public Type visit (InParentExpr expr){
-    return expr.getExpression().accept(this);
+    Type type = expr.getExpression().accept(this);
+    expr.setType(type);
+    return type;
   }
 
   public Type visit (InternInvkExpr expr){

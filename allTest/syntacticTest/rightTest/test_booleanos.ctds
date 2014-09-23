@@ -21,6 +21,7 @@ void main(){
     c= or(and(a,b), neg(b) );
 
     externinvk("printf", boolean , c);
+    return;
 }
 
 }

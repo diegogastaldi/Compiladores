@@ -22,7 +22,7 @@ float potencia(float x, int n){
 		neg = true;
 	}
 
-	while(i < n || i == n){
+	while((i < n) || (i == n)){
 		prod = prod * x * 2.0; 
 		i = i + 1;
 	}

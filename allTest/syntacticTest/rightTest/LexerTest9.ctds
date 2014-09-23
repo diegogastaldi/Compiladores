@@ -2,9 +2,13 @@ class program {
 int a;
 int b;
 
-void method (int a) {}
+void method (int a) {return ;}
 
 void method2 () {
   return ;
   }
+  
+  void main () {
+return;
+}
 }  

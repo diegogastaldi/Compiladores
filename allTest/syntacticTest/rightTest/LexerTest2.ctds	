@@ -3,4 +3,8 @@
 hola*/
 // @
 /**//**/
-class program {}
+class program {
+void main() {
+    return;
+}
+}

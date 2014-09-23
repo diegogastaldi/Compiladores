@@ -23,6 +23,7 @@ import java_cup.runtime.*;
 import ir.ast.Block;
 import ir.ast.Type;
 import error.Error;
+import intermediateCode.*;
 
 public class Main {
     public static void main(String[] args){
@@ -45,6 +46,10 @@ public class Main {
             breakContinueCheck(par.getAST());
             methodInvocCheck(par.getAST());
             methodMainCheck(par.getAST());
+
+            List<Instr> i = instCodeGen(par.getAST());
+            System.out.println(i.toString());
+            
         }catch(Exception x){
             x.printStackTrace();
             System.out.println("Error fatal.\n"); 
@@ -107,7 +112,7 @@ public class Main {
     /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
     de invocacion a metodos que pueden tanto los tipos como la cantidad de los parametros en
     la invocacion, si es que hay este tipo de errores */    
-    private static void methodInvocCheck(LinkedList<completeFunction> ast) {    
+    private static void methodInvocCheck(List<completeFunction> ast) {    
         MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(ast);
         for (completeFunction c: ast) {
             c.getBlock().accept(bcv);
@@ -120,7 +125,7 @@ public class Main {
     
     /* Toma el arbol de analisis sintatico y corrobora si hay un metodo que cumpla con las 
     caracteristicas del metodo principal para iniciar la ejecucion del programa */
-    public static void methodMainCheck(LinkedList<completeFunction> ast) {
+    public static void methodMainCheck(List<completeFunction> ast) {
         Boolean find = false;
         for (completeFunction c : ast) {
             if (c.name.equals("main") && (c.parameters.size()==0) && (c.type == Type.VOID)) {
@@ -132,5 +137,13 @@ public class Main {
             System.out.println((new Error(0, 0, "La clase debe tener un metodo main sin parametros y de tipo void")).toString());            
         }
         
+    }
+
+    public static List<Instr> instCodeGen(List<completeFunction> ast) {
+        InstCodeGenVisitor icg = new InstCodeGenVisitor();
+        for (completeFunction c : ast) {
+            c.getBlock().accept(icg);
+        }
+        return icg.getInst();
     }
 }

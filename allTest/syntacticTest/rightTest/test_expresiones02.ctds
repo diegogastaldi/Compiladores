@@ -2,7 +2,7 @@ class test_prueba1{
 
 	int prueba ( int p) {
 		int a;
-		float f;
+		int f;
 		{
 			int b;
 			int c;
@@ -12,8 +12,8 @@ class test_prueba1{
 			p=a+p;
 		}
 		{
-			float pi;
-			pi=3.14;
+			int pi;
+			pi=3;
 			f= 2*pi;
 		}
 		if ((a/f)>5){
@@ -24,8 +24,9 @@ class test_prueba1{
 		}
 	}
 
-			int main(){
+			void main(){
 		  externinvk("printf", float , prueba(6));
+		  return;
 	}
 
 }

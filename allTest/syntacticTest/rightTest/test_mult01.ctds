@@ -11,8 +11,9 @@ int pruMult(int c){
 
 }
 
-int main(){
+void main(){
     externinvk("printf", int , pruMult(2));
+    return;
 }
 
 }

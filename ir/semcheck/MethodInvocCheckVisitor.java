@@ -94,13 +94,16 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
     completeFunction f = searchBlock(stmt.getId());
     if (f != null) {
         if (f.parameters.size() == stmt.getParameters().size()) {
-            for (absSymbol p : f.parameters) {
-                for (Expression e : stmt.getParameters()) {
-                    if (e.getType() != p.type) {
-                        addError(stmt, "No coinciden tipos de parametros formales con actuales");
-                        return false;
-                    }
-                }
+            absSymbol p; 
+            Expression e;
+            for (int i = 0; i < stmt.getParameters().size(); i++) {
+              p = f.parameters.get(i);
+              e = stmt.getParameters().get(i);
+              if (e.getType() != p.type) {
+                addError(stmt, "No coinciden tipos de parametros formales con actuales");
+                return false;
+              }
+                
             }
             return true;
         } else {
@@ -166,13 +169,16 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
     if (f != null) {
         if (f.parameters.size() == expr.getParameters().size()) {
             if (f.type != Type.VOID) {
-                for (absSymbol p : f.parameters) {
-                    for (Expression e : expr.getParameters()) {
-                        if (e.getType() != p.type) {
-                            addError(expr, "No coinciden tipos de parametros formales con actuales");
-                            return false;
-                        }
-                    }
+                absSymbol p; 
+                Expression e;
+                for (int i = 0; i < expr.getParameters().size(); i++) {
+                  p = f.parameters.get(i);
+                  e = expr.getParameters().get(i);
+                  if (e.getType() != p.type) {
+                    addError(expr, "No coinciden tipos de parametros formales con actuales");
+                    return false;
+                  }
+                  
                 }
                 return true;
             } else {

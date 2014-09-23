@@ -2,7 +2,7 @@ class test_if{
 
 int pruAritmetica(int b, int c ){
 	
-        float res;
+        int res;
 
         if(b != c){
                 if(b > c){
@@ -21,12 +21,14 @@ int pruAritmetica(int b, int c ){
 		
 	}
 
-int main(){
+void main(){
 
     externinvk("printf", int , pruAritmetica(4,8 ));
     externinvk("printf", int);
     externinvk("printf", int , pruAritmetica(4,4 ));
     externinvk("printf", int , pruAritmetica(8,5 ));
+    
+    return;
 }
 
 }

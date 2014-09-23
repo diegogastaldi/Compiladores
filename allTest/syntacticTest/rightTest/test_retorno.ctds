@@ -36,8 +36,11 @@ class test_retorno{
 		   return x;
 	}
 
-		int main(){
+		void main(){
 		  externinvk("printf", int , id(9));
+
+return;
+
 	}
 
 }

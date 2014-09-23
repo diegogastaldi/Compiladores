@@ -24,12 +24,10 @@ import ir.ASTVisitor;
 
 public class BreakContCheckVisitor implements ASTVisitor<Boolean>{
   private List<Error> errors; 
-  private Boolean inCycle;
   
   //Constructor
   public BreakContCheckVisitor(){
     errors = new LinkedList<Error>();
-    inCycle = false;
   }
   
   public Boolean visit(IncrementAssign stmt)   {
@@ -58,10 +56,7 @@ public class BreakContCheckVisitor implements ASTVisitor<Boolean>{
   }
   
   public Boolean visit(WhileStmt stmt)  {    
-    inCycle = true;
-    Boolean block = stmt.getBlock().accept(this);
-    inCycle = false;
-  	return block;
+  	return true;
   }
   	
   public Boolean visit(Block stmt){
@@ -73,22 +68,17 @@ public class BreakContCheckVisitor implements ASTVisitor<Boolean>{
   }
   
   public Boolean visit(ContinueStmt stmt){
-    if (!inCycle)
-      addError(stmt, "Las sentencias continue deben estar dentro de un ciclo");
-    return inCycle;
+    addError(stmt, "Las sentencias continue deben estar dentro de un ciclo");
+    return false;
   }
   
   public Boolean visit(BreakStmt stmt){
-    if (!inCycle)
-      addError(stmt, "Las sentencias break deben estar dentro de un ciclo");
-    return inCycle;
+    addError(stmt, "Las sentencias break deben estar dentro de un ciclo");
+    return false;
   }
     
   public Boolean visit(ForStmt stmt)  {
-    inCycle = true;
-    Boolean block = stmt.getBlock().accept(this);
-    inCycle = false;
-  	return block;
+  	return false;
   }
   
   public Boolean visit(SemiColon stmt){

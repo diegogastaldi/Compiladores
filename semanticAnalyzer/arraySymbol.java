@@ -21,14 +21,14 @@ public class arraySymbol extends absSymbol {
     /*Valores de las distintas posiciones del arreglo*/
     public LinkedList<Object> values;
   
- 	public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values){
- 	    super(name, type);
-		this.size = size;
-		this.values = values;
-	}
+ 	  public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values){
+ 	      super(name, type);
+		    this.size = size;
+		    this.values = values;
+	  } 
 
-	public String toString(){
-	  return super.toString() + (", size: "+this.size) + (", values: "+values.toString());
+    public String toString(){
+        return super.toString() + (", size: "+this.size) + (", values: "+values.toString());
     }
 
 } 

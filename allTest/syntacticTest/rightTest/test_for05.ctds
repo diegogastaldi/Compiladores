@@ -21,11 +21,11 @@ int pruArreglos(int b, int c ){
         
 }
 
-int main(){
+void main(){
 
     externinvk("printf", int ,"%d resultado : ", pruArreglos(4,8 ));
     
-    return 1;
+    return ;
     
 }
 

@@ -23,8 +23,9 @@ int maxcomdiv (int a, int b){
 	return dividendo;
 }
 
-int main(){
+void main(){
     externinvk("printf", float , "%dMcd",  maxcomdiv(6,9 ) );
+    return;
 }
 
 }

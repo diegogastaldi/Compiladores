@@ -1,5 +1,9 @@
 class program {
 int a;
 int b;
+
+void main () {
+return;
+}
 } 
  

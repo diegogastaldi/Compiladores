@@ -1,7 +1,7 @@
 class test_prueba{
-	float prueba(int b){
+	int prueba(int b){
 		int a;
-		float c;
+		int c;
 		int g;
 		g=50;
 		if (g>0){
@@ -20,8 +20,9 @@ class test_prueba{
 		return c;
 	}
 
-		int main(){
+		void main(){
 		  externinvk("printf", float , prueba(6));
+		  return;
 	}
 
 }
