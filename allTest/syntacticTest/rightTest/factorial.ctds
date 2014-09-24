@@ -1,13 +1,7 @@
 
 class Factorial{
 
-int factorial(int n){
 
-	int i;
-	int total;
-    i = total;
-    return i ;
-}
 
 void main(){
    int a;

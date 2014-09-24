@@ -142,6 +142,8 @@ public class Main {
     public static List<Instr> instCodeGen(List<completeFunction> ast) {
         InstCodeGenVisitor icg = new InstCodeGenVisitor();
         for (completeFunction c : ast) {
+            System.out.println(c.name);
+        	icg.addInstr(new Instr(Operator.LABEL, null, null, c.name));
             c.getBlock().accept(icg);
         }
         return icg.getInst();

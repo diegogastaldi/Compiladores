@@ -1,7 +1,8 @@
 package intermediateCode;
 public enum Operator {
  	CALLINTMETHOD, ARRAYINDEX, PLUS, MINUS, MULTIPLY, DIVIDE, MOD, GE,  LE,
- 	LEQ, GEQ, NOT, UNARYMINUS, AND, OR, CEQ, NEQ;
+ 	LEQ, GEQ, NOT, UNARYMINUS, AND, OR, CEQ, NEQ, ASSIGN, LABEL, CALLEXTMETHOD,
+ 	LNE, CMP, JMP, JNL, JNE;
 	
 	@Override
 	public String toString() {
@@ -19,7 +20,7 @@ public enum Operator {
 		    case DIVIDE:
 		        return "DIVIDE";
 		    case MOD:
-		        return "GE";
+		        return "MOD";
 		    case LE:
 		        return "LE";
 		    case LEQ:
@@ -33,11 +34,27 @@ public enum Operator {
 			case UNARYMINUS:
 		        return "UNARYMINUS";
 		    case AND:
-		        return "OR";
+		        return "AND";
 		    case CEQ:
 		        return "CEQ";
 		    case NEQ:
-		        return "LE";
+		        return "NEQ";
+			case ASSIGN:
+		        return "ASSIGN";
+		    case LABEL:
+		    	return "LABEL";
+		    case CALLEXTMETHOD:
+		    	return "CALLEXTMETHOD";
+		    case LNE:
+		    	return "LNE";
+		    case CMP:
+		    	return "CMP";
+		    case JMP:
+		    	return "JMP";
+		    case JNL: 
+		    	return "JNL";
+		    case JNE:
+		    	return "JNE";
 		}
 		return null;
 	}
