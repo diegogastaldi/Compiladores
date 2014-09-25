@@ -5,29 +5,22 @@ float pruContinue(float x, float b){
 	float i;
 	int n; 
 	float total;
-        total = -1.0;
-        n= 23;
-        i = 23.0;
+    total = -1.0;
+    n= 23;
+    i = 23.0;
 
 	while(i >= 0){
 		i = i - 1.0;
 		if (x < 2.0){
 			if(i != 0.0){
 				total = total * x * b;
-                        }
+            }
 			continue;
-		}
-		else {
+		} else {
 			total = -1000.2343 + 6752.0;
-			
 			break;
-
 		}	
-	
-
 	}
-
-
 	return -2.0 * total;
 }
 

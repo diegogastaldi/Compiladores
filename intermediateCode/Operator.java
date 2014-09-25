@@ -1,8 +1,44 @@
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+
+  Operator es un tipo enumerado que contiene
+  los nombres de las operaciones que estan 
+  permitidas en el codigo intermedio 
+  generado por el compilador.
+
+*/
+
 package intermediateCode;
 public enum Operator {
- 	CALLINTMETHOD, ARRAYINDEX, PLUS, MINUS, MULTIPLY, DIVIDE, MOD, GE,  LE,
- 	LEQ, GEQ, NOT, UNARYMINUS, AND, OR, CEQ, NEQ, ASSIGN, LABEL, CALLEXTMETHOD,
- 	LNE, CMP, JMP, JNL, JNE, RETURN, PARAM;
+ 	CALLINTMETHOD /*Primer parametro: Nombre del metodo, 
+ 					Segundo parametro: Cantidad de parametros, 
+ 					Tercer parametro: Variable para resultado */
+ 	, ARRAYINDEX  /*Primer parametro: Nombre del arreglo, 
+ 					Segundo parametro: indice, 
+ 					Tercer parametro: Variable para resultado */
+ 	, PLUS, MINUS, MULTIPLY, DIVIDE, MOD
+ 	, GE, LE, LEQ, GEQ, AND, OR, CEQ, NEQ/*Primer y Segundo parametro: operandos, 
+ 											Tercer parametro: Variable para resultado */
+
+ 	, NOT, UNARYMINUS /* Primer parametro: operando
+ 						 Tercer parametro: Variable para resultado */
+ 	, ASSIGN	  /* Primer parametro: Valor a asignar
+ 					 Tercer parametro: Variable a ser asignada */
+ 	, LABEL		  /* Tercer parametro: Nombre del label a crear */	
+ 	, CALLEXTMETHOD
+ 	, JNL, JNE	  /* Tercer parametro: Label a saltar */
+ 	, RETURN 	  /* Tercer parametro: Variable con valor a retornar */
+ 	, PARAM 	  /* Tercer parametro: Variable con valor del parametro */
+ 	, CMP 		  /* Primer parametro: valor a comparar
+ 					 Segundo parametro: valor a comparar*/
+ 	, JMP 		  /* Tercer parametro: Label a saltar */;
 	
 	@Override
 	public String toString() {

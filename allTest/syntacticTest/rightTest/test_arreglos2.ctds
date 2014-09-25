@@ -21,7 +21,7 @@ void main(){
     y = true;
      A[1] = 58 - (-6) ; 
      B[0] = -2.6;
-     C[2] = !((4 < 6)) ;
+     C[2] = !(4 < 6) ;
      C[3] = ( 5 >= A[ 7 -(3+3) ]) || true ;
     externinvk("printf", int ,"%d resultado : ", pruArreglos(4, (8 * 6) / (7 % 2) ) );
     

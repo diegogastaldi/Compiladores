@@ -48,7 +48,7 @@ public class Main {
             breakContinueCheck(par.getAST());
             methodInvocCheck(par.getAST());
             methodMainCheck(par.getAST());
-
+           	/* Genera el codigo intermedio solo si el coddigo fuente no tiene errores */
             if (!hasErrors) {
                 List<Instr> i = instCodeGen(par.getAST());
                 System.out.println(i.toString());
@@ -150,9 +150,11 @@ public class Main {
         
     }
 
+    /* A partir del arbol sintactico genera el codigo intermedio y lo retorna */
     public static List<Instr> instCodeGen(List<completeFunction> ast) {
         InstCodeGenVisitor icg = new InstCodeGenVisitor();
         for (completeFunction c : ast) {
+        	/* Label de inicio de funcion */
         	icg.addInstr(new Instr(Operator.LABEL, null, null, c.name));
             c.getBlock().accept(icg);
         }

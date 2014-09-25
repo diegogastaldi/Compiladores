@@ -7,6 +7,12 @@
     - Gastaldi, Diego
     
   *************************************
+
+  Clase que representa una instriccion 
+  perteneciente al codigo intermedio. 
+  Formada por tres operandos (el ultimo
+  almacena el resultado) y un nombre de 
+  tipo Operator
   
 */
 package intermediateCode;

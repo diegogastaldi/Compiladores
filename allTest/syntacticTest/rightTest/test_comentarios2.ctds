@@ -8,13 +8,12 @@ int pruAritmetica(int b, int c ){
 
 	if(b > c){ /* este es otro comentario */ 
 		res = b;
-        }
-	else{
+    } else {
 		res = c;
-        }
+    }
 	return res;
 		
-	}
+}
 
 void main(){ // dentro de este comentario podria aparecer externinvk( 
     externinvk("printf", int , pruAritmetica(4,8 ));

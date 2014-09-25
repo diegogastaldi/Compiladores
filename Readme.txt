@@ -14,4 +14,4 @@ Nota:
     - El archivo astUML es el esquema del arbol sintactico, el cual puede verse mediante la aplicacion umbrello.
 
     Codigo intermedio: 
-        - Ver el tema de las comparaciones y los saltos segun iguales o distintos
+        - Llamadas externas y arreglos

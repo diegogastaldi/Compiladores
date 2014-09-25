@@ -60,8 +60,10 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   }
   
   public String visit(DecrementAssign stmt)   {
+  	/* Genera instrucciones para la expresion*/  	
     String expr = stmt.getExpression().accept(this);
     String loc = stmt.getLocation().accept(this);
+    /* Label donde guardara el resultado */    
     String result = Labels.getLabel();
     String op = Labels.getLabel();
     instructions.add(new Instr(Operator.ASSIGN, "1", null, op));
@@ -401,7 +403,7 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   public String visit(ArrayLocation loc)  {
   	String index = loc.getExpression().accept(this);
   	String result = Labels.getLabel();
-  	instructions.add(new Instr(Operator.ARRAYINDEX, loc.getId()+"["+index+"]", null, result));
+  	instructions.add(new Instr(Operator.ARRAYINDEX, loc.getId(), index, result));
     return result;
   }
 

@@ -16,10 +16,9 @@ class test_prueba1{
 			pi=3;
 			f= 2*pi;
 		}
-		if ((a/f)>5){
+		if ((a/f) > 5){
 			return 1;
-		}
-		else{
+		} else {
 			return 0;	
 		}
 	}
