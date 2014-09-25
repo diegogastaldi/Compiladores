@@ -26,6 +26,8 @@ import error.Error;
 import intermediateCode.*;
 
 public class Main {
+    private static Boolean hasErrors = false;
+
     public static void main(String[] args){
         try {
             /* Loading the file*/
@@ -47,8 +49,10 @@ public class Main {
             methodInvocCheck(par.getAST());
             methodMainCheck(par.getAST());
 
-            List<Instr> i = instCodeGen(par.getAST());
-            System.out.println(i.toString());
+            if (!hasErrors) {
+                List<Instr> i = instCodeGen(par.getAST());
+                System.out.println(i.toString());
+            }
             
         }catch(Exception x){
             x.printStackTrace();
@@ -67,6 +71,7 @@ public class Main {
         if (typeCheckVisitor.getErrors().size() > 0) {
             System.out.println("------------ TYPE ERROR --------------");
             System.out.println(typeCheckVisitor.getErrors().toString());
+            hasErrors = true;
         }    
     }
     
@@ -88,11 +93,14 @@ public class Main {
         if (returnTypeCheckVisitor.getErrors().size() > 0) {
             System.out.println("------------RETURN ERROR ---------------");
             System.out.println(returnTypeCheckVisitor.getErrors().toString());
+            hasErrors = true;
         }
         if (err.size() > 0) {
-            if (returnTypeCheckVisitor.getErrors().size() == 0) 
+            if (returnTypeCheckVisitor.getErrors().size() == 0) {
                 System.out.println("------------RETURN ERROR ---------------");
-            System.out.println(err.toString());    
+                hasErrors = true;
+            }
+            System.out.println(err.toString());
         }
     }
     
@@ -106,6 +114,7 @@ public class Main {
         if (bcv.getErrors().size() > 0) {
             System.out.println("------------ BREAK CONTINUE ERROR --------------");
             System.out.println(bcv.getErrors().toString());
+            hasErrors = true;            
         }           
     }
 
@@ -120,6 +129,7 @@ public class Main {
         if (bcv.getErrors().size() > 0) {
             System.out.println("------------ METHOD INVOC ERROR --------------");
             System.out.println(bcv.getErrors().toString());
+            hasErrors = true;            
         }           
     }    
     
@@ -135,6 +145,7 @@ public class Main {
         if (!find) {
             System.out.println("------------MAIN METHOD ERROR --------------");
             System.out.println((new Error(0, 0, "La clase debe tener un metodo main sin parametros y de tipo void")).toString());            
+            hasErrors = true;            
         }
         
     }
@@ -142,7 +153,6 @@ public class Main {
     public static List<Instr> instCodeGen(List<completeFunction> ast) {
         InstCodeGenVisitor icg = new InstCodeGenVisitor();
         for (completeFunction c : ast) {
-            System.out.println(c.name);
         	icg.addInstr(new Instr(Operator.LABEL, null, null, c.name));
             c.getBlock().accept(icg);
         }
