@@ -2,7 +2,7 @@ package intermediateCode;
 public enum Operator {
  	CALLINTMETHOD, ARRAYINDEX, PLUS, MINUS, MULTIPLY, DIVIDE, MOD, GE,  LE,
  	LEQ, GEQ, NOT, UNARYMINUS, AND, OR, CEQ, NEQ, ASSIGN, LABEL, CALLEXTMETHOD,
- 	LNE, CMP, JMP, JNL, JNE;
+ 	LNE, CMP, JMP, JNL, JNE, RETURN, PARAM;
 	
 	@Override
 	public String toString() {
@@ -55,6 +55,10 @@ public enum Operator {
 		    	return "JNL";
 		    case JNE:
 		    	return "JNE";
+		    case RETURN:
+		    	return "RETURN";
+		    case PARAM:
+		    	return "PARAM";
 		}
 		return null;
 	}

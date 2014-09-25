@@ -46,10 +46,15 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   }
 
   public String visit(IncrementAssign stmt)   {
+  	/* Genera instrucciones para la expresion*/
     String expr = stmt.getExpression().accept(this);
     String loc = stmt.getLocation().accept(this);
+    /* Label donde guardara el resultado */
     String result = Labels.getLabel();
-    instructions.add(new Instr(Operator.PLUS, expr, "1", result));
+    String op = Labels.getLabel();
+    instructions.add(new Instr(Operator.ASSIGN, "1", null, op));
+    /* Realiza el incremento */
+    instructions.add(new Instr(Operator.PLUS, expr, op, result));
     instructions.add(new Instr(Operator.ASSIGN, result, null, loc));
     return null;
   }
@@ -58,7 +63,10 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
     String expr = stmt.getExpression().accept(this);
     String loc = stmt.getLocation().accept(this);
     String result = Labels.getLabel();
-    instructions.add(new Instr(Operator.MINUS, expr, "1", result));
+    String op = Labels.getLabel();
+    instructions.add(new Instr(Operator.ASSIGN, "1", null, op));
+
+    instructions.add(new Instr(Operator.MINUS, expr, op, result));
     instructions.add(new Instr(Operator.ASSIGN, result, null, loc));
     return null;
   }
@@ -71,9 +79,11 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   }
   
   public String visit(ReturnStmt stmt) {
-//    if (stmt.getExpression() != null) {
-  //      String e = stmt.getExpression().accept(this);
-    //}
+  	String e = null;
+    if (stmt.getExpression() != null) {
+        e = stmt.getExpression().accept(this);
+    }
+    instructions.add(new Instr(Operator.RETURN, null, null, e));
   	return null;
   }
   
@@ -157,22 +167,19 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
 
   	/* Genera codigo para la primer expresion */
     String expr1 = stmt.getCondition().accept(this);
-    /* Obtiene una variable para ir aumentando el valor de expr1 */
-    String var1 = Labels.getLabel();
-    instructions.add(new Instr(Operator.ASSIGN, expr1, null, var1));
   	/* Genera codigo para la segunda expresion */    
     String expr2 = stmt.getAssignExpr().accept(this);
 
     /* Pone la etiqueta de inicio del for */
 	instructions.add(new Instr(Operator.LABEL, null, null, labelBeginFor));        
     /* Compara las expresiones */
-	instructions.add(new Instr(Operator.CMP, var1, expr2, null));
+	instructions.add(new Instr(Operator.CMP, expr1, expr2, null));
 	/* Si la primera es menor que la segunda no salta*/
 	instructions.add(new Instr(Operator.JNL, null, null, labelEndFor));
 	/* Genera las instrucciones para el bloque */
     String block = stmt.getBlock().accept(this);
     /* Incrementa el contador */
-    instructions.add(new Instr(Operator.PLUS, var1, "1", var1));
+    instructions.add(new Instr(Operator.PLUS, expr1, "1", expr1));
     /* Vuelve al inicio del ciclo */
     instructions.add(new Instr(Operator.JMP, null, null, labelBeginFor));
     /* Pone la etique de fin del for */
@@ -198,16 +205,17 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   }
     
   public String visit(InternInvkStmt stmt){
-  	String parameters = "";
+  	Integer cantParameter = stmt.getParameters().size();
+  	String parameter;
     for (Expression a : stmt.getParameters()) {
-        parameters += a.accept(this);
-        parameters += ",";
+        parameter = a.accept(this);
+        instructions.add(new Instr(Operator.PARAM, null, null, parameter));
     }
-    /* Remueve la ultima coma */
-    if (parameters.length() > 0)
-    	parameters = parameters.substring(0, parameters.length()-1);
-    instructions.add(new Instr(Operator.CALLINTMETHOD, stmt.getId()+"("+parameters+")", null, null));
-  	return null;
+    /* Llama al metodo */
+  	String methodResult = "methodResult"+Labels.getLabel();
+    instructions.add(new Instr(Operator.CALLINTMETHOD, stmt.getId(), cantParameter.toString(), "methodResult"+methodResult));
+
+    return null;
   }	
   
   public String visit(ExternInvkStmt stmt){
@@ -336,17 +344,17 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   }
 
   public String visit (InternInvkExpr expr){
-  	String parameters = "";
+  	Integer cantParameter = expr.getParameters().size();
+  	String parameter;
     for (Expression a : expr.getParameters()) {
-        parameters += a.accept(this);
-        parameters += ",";
+        parameter = a.accept(this);
+        instructions.add(new Instr(Operator.PARAM, null, null, parameter));
     }
-    /* Remueve la ultima coma */
-    if (parameters.length() > 0)
-    	parameters = parameters.substring(0, parameters.length()-1);
-  	String result = Labels.getLabel();
-    instructions.add(new Instr(Operator.CALLINTMETHOD, expr.getId()+"("+parameters+")", null, result));
-    return result;
+    /* Llama al metodo */
+  	String methodResult = Labels.getLabel();
+    instructions.add(new Instr(Operator.CALLINTMETHOD, expr.getId(), cantParameter.toString(), methodResult));
+
+    return methodResult;
   } 
   
   public String visit (ExternInvkExpr expr){
@@ -368,15 +376,21 @@ public class InstCodeGenVisitor implements ASTVisitor<String>{
   
 // visit literals
   public String visit(IntLiteral lit)   {
-    return lit.getValue().toString();
+  	String result = "intLiteral"+Labels.getLabel();
+  	instructions.add(new Instr(Operator.ASSIGN, lit.getValue().toString(), null, result));
+    return result;
   }
 
  public String visit(FloatLiteral lit)   {
-    return lit.getValue().toString();
+  	String result = "floatLiteral"+Labels.getLabel();
+  	instructions.add(new Instr(Operator.ASSIGN, lit.getValue().toString(), null, result));
+    return result;
   }
 
   public String visit(BoolLiteral lit)   {
-    return lit.getValue().toString();
+  	String result = "boolLiteral"+Labels.getLabel();
+  	instructions.add(new Instr(Operator.ASSIGN, lit.getValue().toString(), null, result));
+    return result;
   }
   
 // visit locations  

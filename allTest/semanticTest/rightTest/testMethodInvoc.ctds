@@ -1,7 +1,7 @@
 class clase {
     
-    int method1(int a) {
-        return 1;
+    float method1(int a) {
+        return 1.0;
     }
     
     void method2() {
