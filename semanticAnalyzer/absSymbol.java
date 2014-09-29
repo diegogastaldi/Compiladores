@@ -11,7 +11,7 @@
   tipos de identificadores
 */
 
-package compiler2014;
+package semanticAnalyzer;
 import ir.ast.Type;
 public abstract class absSymbol {
     public String name;

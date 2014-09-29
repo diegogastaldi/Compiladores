@@ -12,7 +12,7 @@
   que se esta compilando.  
 */
 
-package compiler2014;
+package semanticAnalyzer;
 import java.util.LinkedList;
 import ir.ast.Type;
 public class arraySymbol extends absSymbol {

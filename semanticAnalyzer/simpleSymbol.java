@@ -13,7 +13,7 @@
   boolean.
 */
 
-package compiler2014;
+package semanticAnalyzer;
 import ir.ast.Type;
 
 public class simpleSymbol extends absSymbol{

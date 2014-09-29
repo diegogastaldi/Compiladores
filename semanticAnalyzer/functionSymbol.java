@@ -1,4 +1,4 @@
-package compiler2014;
+package semanticAnalyzer;
 import java.util.LinkedList;
 import java.util.Iterator;
 import ir.ast.Type;

@@ -16,7 +16,7 @@
   en cuenta donde fueron declarados.
 */
 
-package compiler2014;
+package semanticAnalyzer;
 import java.util.*;
 import ir.ast.Type;
 

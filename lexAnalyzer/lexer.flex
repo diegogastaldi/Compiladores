@@ -14,10 +14,11 @@
   
 */
 
-package compiler2014;
+package lexAnalyzer;
 import java_cup.runtime.Symbol;
 import java.io.*;
 import ir.ast.*;
+import syntaxAnalyzer.sym;
 %%
 %class yylex
 %public

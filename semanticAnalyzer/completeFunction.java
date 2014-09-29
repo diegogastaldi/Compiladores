@@ -14,7 +14,7 @@
   funcion.
 */
 
-package compiler2014;
+package semanticAnalyzer;
 import ir.ast.Block;
 import ir.ast.Type;
 import java.util.LinkedList;
