@@ -22,9 +22,9 @@ import java.util.LinkedList;
 import ir.ast.*;
 import error.Error;
 import ir.ASTVisitor;
-import compiler2014.absSymbol;
-import compiler2014.functionSymbol;
-import compiler2014.completeFunction;
+import semanticAnalyzer.absSymbol;
+import semanticAnalyzer.functionSymbol;
+import semanticAnalyzer.completeFunction;
 
 public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   private List<Error> errors; 

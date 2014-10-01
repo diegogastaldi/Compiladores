@@ -11,5 +11,7 @@ Compilacion y ejecucion de codigos:
       - sh AllTest/SyntacticTest/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador sintactco y lexico
       - sh AllTest/SemanticTest/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador semantico
       
-  - Por ahora el codigo intemedio se muestra por pantalla
+
+Nota:
+  - Ver cuando setear ell offset de los locations
 

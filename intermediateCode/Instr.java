@@ -18,12 +18,12 @@
 package intermediateCode;
 public class Instr {
 	private Operator operator;
-	private String operand1, operand2, result;
+	private Object operand1, operand2, result;
 
 	public Instr() {
 	}
     
-    public Instr(Operator o, String o1, String o2, String r) {
+    public Instr(Operator o, Object o1, Object o2, Object r) {
     	operator = o;
     	operand1 = o1;
     	operand2 = o2;
@@ -34,15 +34,15 @@ public class Instr {
     	return operator;
     }
 
-    public String getOperand1(){
+    public Object getOperand1(){
     	return operand1;
     } 
 
-    public String getOperand2(){
+    public Object getOperand2(){
     	return operand2;
     }     
 
-    public String getResult() {
+    public Object getResult() {
     	return result;
     }
 

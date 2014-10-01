@@ -24,6 +24,10 @@ import ir.ast.Block;
 import ir.ast.Type;
 import error.Error;
 import intermediateCode.*;
+import semanticAnalyzer.*;
+import syntaxAnalyzer.*;
+import lexAnalyzer.*;
+import assemblyCode.genAssemblyCode;
 
 public class Main {
     private static Boolean hasErrors = false;
@@ -50,8 +54,10 @@ public class Main {
             methodMainCheck(par.getAST());
            	/* Genera el codigo intermedio solo si el coddigo fuente no tiene errores */
             if (!hasErrors) {
-                List<Instr> i = instCodeGen(par.getAST());
-                System.out.println(i.toString());
+                List<Instr> ic = instCodeGen(par.getAST());
+                System.out.println("Intermedite Code : " + ic.toString());
+//                String assembly = genAssemblyCode.gACode(ic);
+//                System.out.println("Assembly code: " + assembly.toString());
             }
             
         }catch(Exception x){
@@ -154,9 +160,7 @@ public class Main {
     public static List<Instr> instCodeGen(List<completeFunction> ast) {
         InstCodeGenVisitor icg = new InstCodeGenVisitor();
         for (completeFunction c : ast) {
-        	/* Label de inicio de funcion */
-        	icg.addInstr(new Instr(Operator.LABEL, null, null, c.name));
-            c.getBlock().accept(icg);
+        	icg.blockCode(c);
         }
         return icg.getInst();
     }

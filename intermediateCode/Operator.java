@@ -38,8 +38,8 @@ public enum Operator {
  	, PARAM 	  /* Tercer parametro: Variable con valor del parametro */
  	, CMP 		  /* Primer parametro: valor a comparar
  					 Segundo parametro: valor a comparar*/
- 	, JMP 		  /* Tercer parametro: Label a saltar */;
-	
+ 	, JMP 		  /* Tercer parametro: Label a saltar */
+	, VAR;	
 	@Override
 	public String toString() {
 		switch(this) {
@@ -47,6 +47,8 @@ public enum Operator {
 				return "CALLINTMETHOD";
 			case ARRAYINDEX:
 				return "ARRAYINDEX";
+			case VAR:
+				return "VAR";
 			case PLUS:
 				return "PLUS";
 			case MINUS:
@@ -81,8 +83,6 @@ public enum Operator {
 		    	return "LABEL";
 		    case CALLEXTMETHOD:
 		    	return "CALLEXTMETHOD";
-		    case LNE:
-		    	return "LNE";
 		    case CMP:
 		    	return "CMP";
 		    case JMP:

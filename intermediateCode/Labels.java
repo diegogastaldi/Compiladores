@@ -16,9 +16,24 @@
 
 package intermediateCode;
 public class Labels {
-	private static int l = 0;
+	private int l;
+  private int m;
 
-	public static String getLabel() {
+  public Labels() {
+    m = 0;
+    l = 0;
+  }
+
+	public String getLabel() {
 		return "L"+(++l);
 	}
+
+  public void restart() {
+    m = 0;
+  }
+
+  public int getOffSet() {
+    m+=4;
+    return m;
+  }  
 } 
