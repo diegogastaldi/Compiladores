@@ -100,7 +100,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Genera las instrucciones para evaluar la condicion */
     Integer cond = stmt.getCondition().accept(this);
 	  String labelElse = "falseCond"+genLabels.getLabel();
-    instructions.add(new Instr(Operator.CMP, cond, "true", null));
+    Integer vtrue = genLabels.getOffSet();
+    instructions.add(new Instr(Operator.CONST, 1, null, vtrue));
+    instructions.add(new Instr(Operator.CMP, cond, vtrue/*true*/, null));
 	  /* Si la condicion es verdadera no salta */
 	  instructions.add(new Instr(Operator.JNE, null, null, labelElse));
 	  /* Crea las instruccions del bloque if */
@@ -138,7 +140,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Genera las instrucciones para evaluar la condicion */
     Integer cond = stmt.getCondition().accept(this);	
     /* Si la condicion es verdadera no salta */
-    instructions.add(new Instr(Operator.CMP, cond, "true", null));
+    Integer vtrue = genLabels.getOffSet();
+    instructions.add(new Instr(Operator.CONST, 1, null, vtrue));
+    instructions.add(new Instr(Operator.CMP, cond, vtrue /*True*/, null));
 	  instructions.add(new Instr(Operator.JNE, null, null, labelEndWhile));
 	  /* Crea las instruccions del bloque */
 	  Integer block = stmt.getBlock().accept(this);
@@ -169,6 +173,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(ForStmt stmt)  {
     String labelEndFor = "endFor"+genLabels.getLabel();
     String labelBeginFor = "beginFor"+genLabels.getLabel();
+    Integer incrementValue = genLabels.getOffSet();
+    /* Variable a incrementar */
+    instructions.add(new Instr(Operator.CONST, 1, null, incrementValue));
 
     /* Actualizacion del stack */
     labelsStack.add(labelsStack.size(), labelBeginFor);
@@ -179,20 +186,20 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	/* Genera codigo para la segunda expresion */    
     Integer expr2 = stmt.getAssignExpr().accept(this);
 
+    /* Salta a evaluar las condiciones */
+    instructions.add(new Instr(Operator.JMP, null, null, labelEndFor));
     /* Pone la etiqueta de inicio del for */
 	  instructions.add(new Instr(Operator.LABEL, null, null, labelBeginFor));        
+    /* Genera las instrucciones para el bloque */
+    Integer block = stmt.getBlock().accept(this);
+    /* Incrementa el contador */
+    instructions.add(new Instr(Operator.PLUS, expr1, incrementValue, expr1));
+    /* Pone la etique de fin del for */
+    instructions.add(new Instr(Operator.LABEL, null, null, labelEndFor));    
     /* Compara las expresiones */
 	  instructions.add(new Instr(Operator.CMP, expr1, expr2, null));
 	  /* Si la primera es menor que la segunda no salta*/
-	  instructions.add(new Instr(Operator.JNL, null, null, labelEndFor));
-	  /* Genera las instrucciones para el bloque */
-    Integer block = stmt.getBlock().accept(this);
-    /* Incrementa el contador */
-    instructions.add(new Instr(Operator.PLUS, expr1, "1", expr1));
-    /* Vuelve al inicio del ciclo */
-    instructions.add(new Instr(Operator.JMP, null, null, labelBeginFor));
-    /* Pone la etique de fin del for */
-	  instructions.add(new Instr(Operator.LABEL, null, null, labelEndFor));    
+	  instructions.add(new Instr(Operator.JLE, null, null, labelBeginFor));
 
     /* Actualizacion del stack */
     labelsStack.remove(labelsStack.size() -1);
@@ -383,19 +390,19 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 // visit literals
   public Integer visit(IntLiteral lit)   {
     Integer result = genLabels.getOffSet();
-  	instructions.add(new Instr(Operator.ASSIGN, lit, null, result));
+  	instructions.add(new Instr(Operator.CONST, lit, null, result));
     return result;
   }
 
  public Integer visit(FloatLiteral lit)   {
     Integer result = genLabels.getOffSet();
-  	instructions.add(new Instr(Operator.ASSIGN, lit, null, result));
+  	instructions.add(new Instr(Operator.CONST, lit, null, result));
     return result;
   }
 
   public Integer visit(BoolLiteral lit)   {
   	Integer result = genLabels.getOffSet();
-  	instructions.add(new Instr(Operator.ASSIGN, lit, null, result));
+  	instructions.add(new Instr(Operator.CONST, lit, null, result));
     return result;
   }
   

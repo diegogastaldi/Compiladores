@@ -13,5 +13,7 @@ Compilacion y ejecucion de codigos:
       
 
 Nota:
-  - Ver cuando setear ell offset de los locations
+  - Ver cuando setear ell offset de los locations (al crearlos)
+  - instrucciones de cod interm.
+
 

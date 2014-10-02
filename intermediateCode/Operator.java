@@ -33,22 +33,22 @@ public enum Operator {
  					 Tercer parametro: Variable a ser asignada */
  	, LABEL		  /* Tercer parametro: Nombre del label a crear */	
  	, CALLEXTMETHOD
- 	, JNL, JNE	  /* Tercer parametro: Label a saltar */
+ 	, JLE, JNE	  /* Tercer parametro: Label a saltar */
  	, RETURN 	  /* Tercer parametro: Variable con valor a retornar */
  	, PARAM 	  /* Tercer parametro: Variable con valor del parametro */
- 	, CMP 		  /* Primer parametro: valor a comparar
- 					 Segundo parametro: valor a comparar*/
+ 	, CMP 		  /* Primer parametro: valor a comparar (direccion)
+ 					 Segundo parametro: valor a comparar (direccion)*/
  	, JMP 		  /* Tercer parametro: Label a saltar */
-	, VAR;	
+ 	, CONST;
 	@Override
 	public String toString() {
 		switch(this) {
+			case CONST:
+				return "CONST";
 			case CALLINTMETHOD:
 				return "CALLINTMETHOD";
 			case ARRAYINDEX:
 				return "ARRAYINDEX";
-			case VAR:
-				return "VAR";
 			case PLUS:
 				return "PLUS";
 			case MINUS:
@@ -73,6 +73,8 @@ public enum Operator {
 		        return "UNARYMINUS";
 		    case AND:
 		        return "AND";
+		    case OR:
+		    	return "OR";
 		    case CEQ:
 		        return "CEQ";
 		    case NEQ:
@@ -87,8 +89,8 @@ public enum Operator {
 		    	return "CMP";
 		    case JMP:
 		    	return "JMP";
-		    case JNL: 
-		    	return "JNL";
+		    case JLE: 
+		    	return "JLE";
 		    case JNE:
 		    	return "JNE";
 		    case RETURN:

@@ -56,8 +56,8 @@ public class Main {
             if (!hasErrors) {
                 List<Instr> ic = instCodeGen(par.getAST());
                 System.out.println("Intermedite Code : " + ic.toString());
-//                String assembly = genAssemblyCode.gACode(ic);
-//                System.out.println("Assembly code: " + assembly.toString());
+                String assembly = genAssemblyCode.gACode(ic);
+                System.out.println("Assembly code: " + assembly.toString());
             }
             
         }catch(Exception x){

@@ -11,68 +11,148 @@ public class genAssemblyCode {
 			Operator op = instr.getOperator();
 			switch (op) {
 				case CALLINTMETHOD:
-					return "CALLINTMETHOD";
+					result += "CALLINTMETHOD \n";
+					break;
+			    case CALLEXTMETHOD:
+			    	result += "CALLEXTMETHOD \n";					
+			    	break;
 				case ARRAYINDEX:
-					return "ARRAYINDEX";
+					result += "ARRAYINDEX\n";
+					break;
+			    case PARAM:
+			    	result += "PARAM\n";
+			    	break;
+			    case JLE: 
+			    	result += "jle 		" + instr.getResult() + "\n";
+			    	break;
+			    case JNE:
+			    	result += "jne 		" + instr.getResult() + "\n";
+			    	break;			    	
+			    case CONST:
+			    	result += "movl 	$" + instr.getOperand1() + ", -" + instr.getResult() + "(%rbp)\n";
+			    	break;
+			    case CMP:
+			        result += "movl		-" + instr.getOperand1() + "(%rbp), %eax\n";
+			    	result += "cmpl 	-" + instr.getOperand2() + "(%rbp), %eax\n";
+			    	break;								    	
 				case PLUS:
-					result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
-					result += "addl	%eax, -" + instr.getOperand2() + "(%rbp) \n";
+					result += "movl		-" + instr.getOperand1() + "(%rbp), %eax \n";
+					result += "addl		%eax, -" + instr.getOperand2() + "(%rbp) \n";
+					break;
 				case MINUS:
-					result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
-					result += "subl	%eax, -" + instr.getOperand2() + "(%rbp) \n";
+					result += "movl		-" + instr.getOperand1() + "(%rbp), %eax \n";
+					result += "subl		%eax, -" + instr.getOperand2() + "(%rbp) \n";
+					break;
 			    case MULTIPLY:
-					result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
-					result += "imull %eax, -" + instr.getOperand2() + "(%rbp) \n";
+					result += "movl		-" + instr.getOperand1() + "(%rbp), %eax \n";
+					result += "imull 	%eax, -" + instr.getOperand2() + "(%rbp) \n";
+					break;
 			    case DIVIDE:
-					result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
-					result += "idivl %eax, -" + instr.getOperand2() + "(%rbp) \n";
+					result += "movl		-" + instr.getOperand1() + "(%rbp), %eax \n";
+					result += "idivl 	%eax, -" + instr.getOperand2() + "(%rbp) \n";
+					break;
 			    case MOD:
-					result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
-					result += "cltd";
-					result += "idivl -" + instr.getOperand2() + "(%rbp) \n";
-					result += "movl	%edx, -" + instr.getResult() + "(%rbp) \n";
+					result += "movl		-" + instr.getOperand1() + "(%rbp), %eax \n";
+					result += "cltd\n";
+					result += "idivl 	-" + instr.getOperand2() + "(%rbp) \n";
+					result += "movl		%edx, -" + instr.getResult() + "(%rbp) \n";
+					break;
 			    case LE:
-			        return "LE";
+			        result += "movl		-" + instr.getOperand1() + "(%rbp), %eax\n";
+					result += "cmpl		-" + instr.getOperand2() + "(%rbp), %eax\n";
+					result += "setl		%al\n";
+					result += "movzbl 	%al, %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case LEQ:
-			        return "LEQ";
+			        result += "movl		-" + instr.getOperand1() + "(%rbp), %eax\n";
+					result += "cmpl		-" + instr.getOperand2() + "(%rbp), %eax\n";
+					result += "setle 	%al\n";
+					result += "movzbl 	%al, %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case GE:
-			        return "GE";
+			        result += "movl		-" + instr.getOperand1() +"(%rbp), %eax\n";
+					result += "cmpl		-" + instr.getOperand2() + "(%rbp), %eax\n";
+					result += "setg		%al\n";
+					result += "movzbl	%al, %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case GEQ:
-			        return "GEQ";
+			        result += "movl		-" + instr.getOperand1() + "(%rbp), %eax\n";
+					result += "cmpl		-" + instr.getOperand2() + "(%rbp), %eax\n";
+					result += "setge 	%al\n";
+					result += "movzbl 	%al, %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case NOT:
-					result += "cmpl	$0, -" + instr.getOperand1() + "(%rbp) \n";
-					result += "sete	%al \n";
+					result += "cmpl		$0, -" + instr.getOperand1() + "(%rbp) \n";
+					result += "sete		%al \n";
 					result += "movzbl	%al, %eax \n";
-					result += "movl	%eax, -" + instr.getResult() + "(%rbp) \n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp) \n";
+					break;
 				case UNARYMINUS:
-			        result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
-			        result += "negl	%eax \n";
-					result += "movl	%eax, -" + instr.getResult() + "(%rbp) \n";
+			        result += "movl		-" + instr.getOperand1() + "(%rbp), %eax \n";
+			        result += "negl		%eax \n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp) \n";
+					break;
 			    case AND:
-			        return "AND";
+					result += "cmpl		$0, -" + instr.getOperand1() + "(%rbp)\n";
+					result += "je 		.L2\n";
+					result += "cmpl		$0, -" + instr.getOperand2() + "(%rbp)\n";
+					result += "je 		.L2\n";
+					result += "movl		$1, %eax\n";
+					result += "jmp		.L3\n";
+					result += ".L2:\n";
+					result += "movl		$0, %eax\n";
+					result += ".L3:\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
+				case OR:
+					result += "cmpl		$0, -" + instr.getOperand1() + "(%rbp)\n";
+					result += "jne 		.L2\n";
+					result += "cmpl		$0, -" + instr.getOperand2() + "(%rbp)\n";
+					result += "je 		.L3\n";
+					result += ".L2: \n";
+					result += "movl		$1, %eax\n";
+					result += "jmp 		.L4\n";
+					result += ".L3:\n";
+					result += "movl		$0, %eax\n";
+					result += ".L4:\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case CEQ:
-			        return "CEQ";
+			        result += "movl 	-" + instr.getOperand1() + "(%rbp), %eax\n";
+					result += "cmpl		-" + instr.getOperand2() + "(%rbp), %eax\n";
+					result += "sete		%al\n";
+					result += "movzbl	%al, %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case NEQ:
-			        return "NEQ";
+			        result += "movl		-" + instr.getOperand1() + "(%rbp), %eax\n";
+					result += "cmpl		-" + instr.getOperand2() + "(%rbp), %eax\n";
+					result += "setne 	%al\n";
+					result += "movzbl 	%al, %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 				case ASSIGN:
-			        return "ASSIGN";
+					result += "movl		-" + instr.getOperand1() + "(%rbp), %eax\n";
+					result += "movl		%eax, -" + instr.getResult() + "(%rbp)\n";
+					break;
 			    case LABEL:
 			    	result += "." + instr.getResult() + ": \n";
-			    case CALLEXTMETHOD:
-			    	return "CALLEXTMETHOD";
-			    case CMP:
-			    	return "CMP";
+			    	break;
 			    case JMP:
-			    	return "JMP";
-			    case JNL: 
-			    	return "JNL";
-			    case JNE:
-			    	return "JNE";
+			    	result += "jmp 		"+ instr.getResult() + "\n";
+			    	break;
 			    case RETURN:
-			    	return "RETURN";
-			    case PARAM:
-			    	return "PARAM";
-
+			    	if (instr.getResult() != null) 
+			    		result += "movl		" + instr.getResult() + ", %eax\n";
+			    	else 
+			    		result += "mov 		$0, %eax\n";
+			    	result += "popq		%rbp\n";
+					result += "ret\n";
+			    	break;
 			}
 			result+="\n";
 		}
