@@ -40,9 +40,14 @@ public class genAssemblyCode {
 			    case GEQ:
 			        return "GEQ";
 			    case NOT:
-			        return "NOT";
+					result += "cmpl	$0, -" + instr.getOperand1() + "(%rbp) \n";
+					result += "sete	%al \n";
+					result += "movzbl	%al, %eax \n";
+					result += "movl	%eax, -" + instr.getResult() + "(%rbp) \n";
 				case UNARYMINUS:
-			        return "UNARYMINUS";
+			        result += "movl	-" + instr.getOperand1() + "(%rbp), %eax \n";
+			        result += "negl	%eax \n";
+					result += "movl	%eax, -" + instr.getResult() + "(%rbp) \n";
 			    case AND:
 			        return "AND";
 			    case CEQ:
