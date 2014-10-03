@@ -17,7 +17,7 @@
 
 package intermediateCode;
 public enum Operator {
- 	CALLINTMETHOD /*Primer parametro: Nombre del metodo, 
+ 	CALLMETHOD /*Primer parametro: Nombre del metodo, 
  					Segundo parametro: Cantidad de parametros, 
  					Tercer parametro: Variable para resultado */
  	, ARRAYINDEX  /*Primer parametro: Nombre del arreglo, 
@@ -32,7 +32,6 @@ public enum Operator {
  	, ASSIGN	  /* Primer parametro: Valor a asignar
  					 Tercer parametro: Variable a ser asignada */
  	, LABEL		  /* Tercer parametro: Nombre del label a crear */	
- 	, CALLEXTMETHOD
  	, JLE, JNE	  /* Tercer parametro: Label a saltar */
  	, RETURN 	  /* Tercer parametro: Variable con valor a retornar */
  	, PARAM 	  /* Tercer parametro: Variable con valor del parametro */
@@ -45,8 +44,8 @@ public enum Operator {
 		switch(this) {
 			case CONST:
 				return "CONST";
-			case CALLINTMETHOD:
-				return "CALLINTMETHOD";
+			case CALLMETHOD:
+				return "CALLMETHOD";
 			case ARRAYINDEX:
 				return "ARRAYINDEX";
 			case PLUS:
@@ -83,8 +82,6 @@ public enum Operator {
 		        return "ASSIGN";
 		    case LABEL:
 		    	return "LABEL";
-		    case CALLEXTMETHOD:
-		    	return "CALLEXTMETHOD";
 		    case CMP:
 		    	return "CMP";
 		    case JMP:

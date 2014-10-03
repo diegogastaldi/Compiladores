@@ -40,8 +40,12 @@ public class Labels {
     return m;
   }  
 
-  public int getOffSetPar() {
+  public int getOffSetParam() {
     p+=4;
     return p;
   }  
+
+  public void restartParam() {
+    p = 0;
+  }
 } 

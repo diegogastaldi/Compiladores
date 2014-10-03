@@ -1,4 +1,4 @@
-// VER EL ORDEN DE LOS OPERANDOS.
+// VER EL ORDENDE LOS OPERANDOS.
 
 package assemblyCode;
 
@@ -150,23 +150,19 @@ public class genAssemblyCode {
 					result += "movzbl 	%al, %eax\n";
 					result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
 					break;
-
-
-
-
-				case CALLINTMETHOD:
-					result += "CALLINTMETHOD \n";
-					break;
-			  case CALLEXTMETHOD:
-			  	result += "CALLEXTMETHOD \n";					
+			  case PARAM:
+			   	result += "movl		" + instr.getOperand1() + "(%rbp), %edi\n";
+			   	result += "movl	 	%edi, " + instr.getResult() + "(%rsp)\n";
 			   	break;
 				case ARRAYINDEX:
-					result += "ARRAYINDEX\n";
+					int array = ((Integer)instr.getOperand1() * (Integer)instr.getOperand2());
+			   	result += "movl		" + array + "(%rbp), %edi\n";
+			   	result += "movl	 	%edi, " + instr.getResult() + "(%rsp)\n";
 					break;
-			  case PARAM:
-			   	result += "PARAM\n";
+			  case CALLMETHOD:
+			  	result += "call 	" + instr.getOperand1() + "\n";				
+			  	result += "movl 	%eax, " + instr.getResult() + "(%rbp) \n";
 			   	break;
-
 			}
 			result+="\n";
 		}

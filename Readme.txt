@@ -13,7 +13,9 @@ Compilacion y ejecucion de codigos:
       
 
 Nota:
-  - Ver cuando setear ell offset de los locations (al crearlos)
-  - instrucciones de cod interm.
+  - Memoria de parametros y atributos
+  - diferencia entre 64 y 32
+  - reservar espacio para arreglo
+  - DOCUMENTACION
 
 

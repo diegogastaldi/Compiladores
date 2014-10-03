@@ -223,12 +223,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(InternInvkStmt stmt){
   	Integer cantParameter = stmt.getParameters().size();
   	Integer parameter;
+    genLabels.restartParam();
     for (Expression a : stmt.getParameters()) {
         parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, null, null, parameter));
+        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSetParam()));
     }
 
-    instructions.add(new Instr(Operator.CALLINTMETHOD, stmt, cantParameter, null));
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), cantParameter, null));
 
     return null;
   }	
@@ -245,7 +246,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Remueve la ultima coma */
     if (parameters.length() > 0)
         parameters = parameters.substring(0, parameters.length()-1);
-    instructions.add(new Instr(Operator.CALLEXTMETHOD, stmt.getId()+"("+parameters+")", null,null));
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId()+"("+parameters+")", null,null));
   	return null; 
   }
 
@@ -359,13 +360,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit (InternInvkExpr expr){
   	Integer cantParameter = expr.getParameters().size();
   	Integer parameter;
+    genLabels.restartParam();
     for (Expression a : expr.getParameters()) {
         parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, null, null, parameter));
+        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSetParam()));
     }
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLINTMETHOD, expr, cantParameter, result));
+    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), cantParameter, result));
 
     return result;
   } 
@@ -383,7 +385,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     if (parameters.length() > 0)
         parameters = parameters.substring(0, parameters.length()-1);
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLEXTMETHOD, expr.getId()+"("+parameters+")", null, result));
+    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId()+"("+parameters+")", null, result));
     return result;
   }
   
