@@ -3,6 +3,7 @@ package ir.ast;
 public abstract class Location extends Expression {
 	protected String id;
 	protected Integer offset;
+
 	public void setId(String id) {
 		this.id = id;
 	}

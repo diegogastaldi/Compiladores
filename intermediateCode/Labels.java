@@ -18,10 +18,12 @@ package intermediateCode;
 public class Labels {
 	private int l;
   private int m;
+  private int p;
 
   public Labels() {
     m = 0;
     l = 0;
+    p = 0;
   }
 
 	public String getLabel() {
@@ -30,10 +32,16 @@ public class Labels {
 
   public void restart() {
     m = 0;
+    p = 0;
   }
 
   public int getOffSet() {
-    m+=4;
+    m-=4;
     return m;
+  }  
+
+  public int getOffSetPar() {
+    p+=4;
+    return p;
   }  
 } 

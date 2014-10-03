@@ -5,20 +5,15 @@ import ir.ASTVisitor;
 public class ArrayLocation extends Location {
 	private int blockId;
     private Expression exp;
-
-	public ArrayLocation(String id, int block, Expression exp) {
-		this.id = id;
-		this.blockId = block;
-		this.exp = exp;
-	}
 	
-	public ArrayLocation(String id, Type t, int block, Expression exp, int line, int col) {
+	public ArrayLocation(String id, Type t, int block, Expression exp, int line, int col, int os) {
 		this.id = id;
 		this.blockId = block;
 		this.exp = exp;
 		this.lineNumber = line;
 		this.colNumber = col;
 		this.type = t;
+		offset = os;
 	}
 	
 	public int getBlockId() {

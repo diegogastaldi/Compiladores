@@ -93,13 +93,13 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   public Boolean visit(InternInvkStmt stmt){
     completeFunction f = searchBlock(stmt.getId());
     if (f != null) {
-        if (f.parameters.size() == stmt.getParameters().size()) {
+        if (f.getParameters().size() == stmt.getParameters().size()) {
             absSymbol p; 
             Expression e;
             for (int i = 0; i < stmt.getParameters().size(); i++) {
-              p = f.parameters.get(i);
+              p = f.getParameters().get(i);
               e = stmt.getParameters().get(i);
-              if (e.getType() != p.type) {
+              if (e.getType() != p.getType()) {
                 addError(stmt, "No coinciden tipos de parametros formales con actuales");
                 return false;
               }
@@ -167,14 +167,14 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   public Boolean visit (InternInvkExpr expr){
     completeFunction f = searchBlock(expr.getId());
     if (f != null) {
-        if (f.parameters.size() == expr.getParameters().size()) {
-            if (f.type != Type.VOID) {
+        if (f.getParameters().size() == expr.getParameters().size()) {
+            if (f.getType() != Type.VOID) {
                 absSymbol p; 
                 Expression e;
                 for (int i = 0; i < expr.getParameters().size(); i++) {
-                  p = f.parameters.get(i);
+                  p = f.getParameters().get(i);
                   e = expr.getParameters().get(i);
-                  if (e.getType() != p.type) {
+                  if (e.getType() != p.getType()) {
                     addError(expr, "No coinciden tipos de parametros formales con actuales");
                     return false;
                   }
@@ -238,7 +238,7 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
 
   private completeFunction searchBlock(String name) {
     for (completeFunction c : cf) {
-        if (c.name.equals(name)) 
+        if (c.getName().equals(name)) 
             return c;
     }
     return null;

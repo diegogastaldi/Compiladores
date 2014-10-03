@@ -48,7 +48,7 @@ public class symbolTable{
 	/*Si contiene el simbolo en el nivel retorna null,
 	en caso contrario retortna el simbolo creado*/
 	public absSymbol insertSymbol(absSymbol s){
-	  if (containsSymbol(s.name,0) != null)
+	  if (containsSymbol(s.getName(),0) != null)
 	    return null;
 	  else {
 	    t.getFirst().push(s);		   
@@ -85,7 +85,7 @@ public class symbolTable{
 	    absSymbol s;
 	    while (levelIt.hasNext()){
 	        s = levelIt.next();
-            if (s.name.equals(name))
+            if (s.getName().equals(name))
                 return s;	
         }
 	    return null;

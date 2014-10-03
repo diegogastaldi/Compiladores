@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import ir.ast.Type;
 public class functionSymbol extends absSymbol {
-    public LinkedList<absSymbol> parameters;
+    private LinkedList<absSymbol> parameters;
 
     public functionSymbol(String name, Type type, LinkedList<absSymbol> parameters){
 		super(name, type);
@@ -21,4 +21,11 @@ public class functionSymbol extends absSymbol {
         return super.toString() + (", parameters: "+string);
     }
 
+    public LinkedList<absSymbol> getParameters() {
+    	return parameters;
+    }
+
+    public void setParameters(LinkedList<absSymbol> p) {
+    	parameters = p;
+    }
 } 

@@ -36,12 +36,12 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public InstCodeGenVisitor(){
     instructions = new LinkedList<Instr>();
     labelsStack = new LinkedList<String>();
-    genLabels = new Labels ();    
+    genLabels = new Labels();
   }
 
   public void blockCode(completeFunction c) {
     /* Label de inicio de funcion */
-    instructions.add(new Instr(Operator.LABEL, null, null, c.name));
+    instructions.add(new Instr(Operator.LABEL, null, null, c.getName()));
     /* Reinicia labels */
     genLabels.restart();
 
@@ -414,7 +414,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(ArrayLocation loc)  {
   	Integer index = loc.getExpression().accept(this);
   	Integer result = genLabels.getOffSet();
-  	instructions.add(new Instr(Operator.ARRAYINDEX, loc, index, result));
+    Integer os = loc.getOffSet();
+  	instructions.add(new Instr(Operator.ARRAYINDEX, os, index, result));
     return result;
   }
 }

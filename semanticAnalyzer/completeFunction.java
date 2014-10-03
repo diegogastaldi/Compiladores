@@ -22,12 +22,12 @@ public class completeFunction extends functionSymbol {
     private Block block;
 
     public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b){
-		super(name, type, parameters);
+	     	super(name, type, parameters);
         block = b;
-	}
+  	}
 
     public completeFunction(functionSymbol f, Block b){
-       super(f.name, f.type, f.parameters);
+       super(f.getName(), f.getType(), f.getParameters());
        block = b;
     }
 
