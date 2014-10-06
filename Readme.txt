@@ -13,9 +13,9 @@ Compilacion y ejecucion de codigos:
       
 
 Nota:
-  - Memoria de parametros y atributos
-  - diferencia entre 64 y 32
-  - reservar espacio para arreglo
+  - Memoria de parametros y atributos: parametros los apilamos con positivos(4,8,....)y variables con negativos (-4,-8.......)
+  - diferencia entre 64 y 32()
+  - reservar espacio para arreglo(el tema de reservar(calcular el offset) tiene que ser en el cup, a la hora de crear los location)
   - DOCUMENTACION
 
 
