@@ -143,12 +143,12 @@ set_field_decl	::= field_decl SEMICOLON set_field_decl
                     |   /*LAMBDA*/;                                                        
              
 set_method_decl	::= type:t ID:i {:functionSymbol f = new functionSymbol(i, t, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();offset = new Labels();:} 
-                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString()); offset = new Labels();:}
-                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b)); table.deleteLevel();:} 
+                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:}
+                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b, offset.getOffSet())); table.deleteLevel();:} 
                         set_method_decl
                     |   WVOID:v ID:i {:functionSymbol f = new functionSymbol(i, v, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();offset = new Labels();:} 
-                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());offset = new Labels();:} 
-                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b)); table.deleteLevel();:} 
+                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:} 
+                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b, offset.getOffSet())); table.deleteLevel();:} 
                         set_method_decl
                     |   /*Lambda*/;
     

@@ -1,12 +1,13 @@
 class Factorial{
 
+void main() {return;}
 
-
-void main(){
+int met(){
    int a;
    int b;
-   a = a-b;
-   return;
+   int c;
+   c = a-b;
+   return c;
 }
 
 }

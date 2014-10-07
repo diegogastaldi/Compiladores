@@ -41,9 +41,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   public void blockCode(completeFunction c) {
     /* Label de inicio de funcion */
-    instructions.add(new Instr(Operator.LABEL, null, null, c.getName()));
+    instructions.add(new Instr(Operator.METHODLABEL, null, null, c.getName()));
     /* Reinicia labels */
-    genLabels.restart();
+    genLabels.restart(c.getOffSet());
 
     c.getBlock().accept(this);
   }
@@ -99,7 +99,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(IfStmt stmt)  {
     /* Genera las instrucciones para evaluar la condicion */
     Integer cond = stmt.getCondition().accept(this);
-	  String labelElse = "falseCond"+genLabels.getLabel();
+	  String labelElse = ".falseCond"+genLabels.getLabel();
     Integer vtrue = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CONST, 1, null, vtrue));
     instructions.add(new Instr(Operator.CMP, cond, vtrue/*true*/, null));
@@ -109,7 +109,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	  Integer blockIf = stmt.getIfBlock().accept(this);
     
     if (stmt.getElseBlock() != null) {    
-	    String labelEndIf = "endIf"+genLabels.getLabel();
+	    String labelEndIf = ".endIf"+genLabels.getLabel();
 	    /* Si llego aca es porque se ejecuto el bloque if, por lo que salta 
 	       ejecutar el bloque else */
 	    instructions.add(new Instr(Operator.JMP, null, null, labelEndIf));
@@ -128,8 +128,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
   
   public Integer visit(WhileStmt stmt)  {
-    String labelEndWhile = "endWhile"+genLabels.getLabel();
-    String labelBeginWhile = "beginWhile"+genLabels.getLabel();
+    String labelEndWhile = ".endWhile"+genLabels.getLabel();
+    String labelBeginWhile = ".beginWhile"+genLabels.getLabel();
 
     /* Actualizacion del stack */
     labelsStack.add(labelsStack.size(), labelBeginWhile);
@@ -171,8 +171,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
     
   public Integer visit(ForStmt stmt)  {
-    String labelEndFor = "endFor"+genLabels.getLabel();
-    String labelBeginFor = "beginFor"+genLabels.getLabel();
+    String labelEndFor = ".endFor"+genLabels.getLabel();
+    String labelBeginFor = ".beginFor"+genLabels.getLabel();
     Integer incrementValue = genLabels.getOffSet();
     /* Variable a incrementar */
     instructions.add(new Instr(Operator.CONST, 1, null, incrementValue));
@@ -224,9 +224,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	Integer cantParameter = stmt.getParameters().size();
   	Integer parameter;
     genLabels.restartParam();
+
+    int numParam = 1;
     for (Expression a : stmt.getParameters()) {
         parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSetParam()));
+        instructions.add(new Instr(Operator.PARAM, parameter, numParam++, genLabels.getOffSetParam()));
     }
 
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), cantParameter, null));
@@ -361,9 +363,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	Integer cantParameter = expr.getParameters().size();
   	Integer parameter;
     genLabels.restartParam();
+
+    int numParam = 1;    
     for (Expression a : expr.getParameters()) {
         parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSetParam()));
+        instructions.add(new Instr(Operator.PARAM, parameter, numParam++, genLabels.getOffSetParam()));
     }
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();

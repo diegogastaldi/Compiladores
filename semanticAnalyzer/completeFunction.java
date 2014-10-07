@@ -20,15 +20,18 @@ import ir.ast.Type;
 import java.util.LinkedList;
 public class completeFunction extends functionSymbol {
     private Block block;
+    private int offset;
 
-    public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b){
+    public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b, int os){
 	     	super(name, type, parameters);
         block = b;
+        offset = os;
   	}
 
-    public completeFunction(functionSymbol f, Block b){
+    public completeFunction(functionSymbol f, Block b, int os){
        super(f.getName(), f.getType(), f.getParameters());
        block = b;
+       offset = os;
     }
 
     public void setBlock (Block b) {
@@ -39,8 +42,12 @@ public class completeFunction extends functionSymbol {
         return block;
     }
     
-	public String toString(){
+	  public String toString(){
         return super.toString() + " , Block: " + block.toString();
+    }
+
+    public int getOffSet() {
+      return offset;
     }
 
 }  

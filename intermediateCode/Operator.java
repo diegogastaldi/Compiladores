@@ -32,6 +32,7 @@ public enum Operator {
  	, ASSIGN	  /* Primer parametro: Valor a asignar
  					 Tercer parametro: Variable a ser asignada */
  	, LABEL		  /* Tercer parametro: Nombre del label a crear */	
+ 	, METHODLABEL		  /* Tercer parametro: Nombre del label a crear */	
  	, JLE, JNE	  /* Tercer parametro: Label a saltar */
  	, RETURN 	  /* Tercer parametro: Variable con valor a retornar */
  	, PARAM 	  /* Tercer parametro: Variable con valor del parametro */
@@ -82,6 +83,8 @@ public enum Operator {
 		        return "ASSIGN";
 		    case LABEL:
 		    	return "LABEL";
+		    case METHODLABEL:
+		    	return "METHODLABEL";		    	
 		    case CMP:
 		    	return "CMP";
 		    case JMP:

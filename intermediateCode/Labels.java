@@ -30,8 +30,8 @@ public class Labels {
 		return "L"+(++l);
 	}
 
-  public void restart() {
-    m = 0;
+  public void restart(int begin) {
+    m = begin + 4;
     p = 0;
   }
 

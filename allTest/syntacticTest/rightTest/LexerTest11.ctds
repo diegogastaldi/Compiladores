@@ -1,31 +1,41 @@
 
 class program {
-int a;
-int b;
 
-void method (int a) {return;}
-
-void method2 () {
-  return ;
-  }
- 
-
-int method3(int a) {
-for a = 2, 1 {}
-return a;
+void inc (int x, int y, int a , int b, int c, int d, int e, int f, int g, int h, int i, int j, int k , int l) {
+	x = 0;
+	y = 0;
+	a = 0;
+	b = 0;
+	c = 0;
+	d = 0;
+	e = 0;
+	f = 0;
+	g = 0;
+	h = 0;
+	i = 0;
+	j = 0;
+	k = 0;
+	l = 0;
+	return;
 }
 
-int method4() {
-    int y;
-  if (a==b) {
-    y = method3(externinvk("get_int", int));}
-  else {
-    while (true) {}
-  }
-  return y;
-}
 void main () {
-return;
+	int x ;
+	int y ;
+	int a ;
+	int b ;
+	int c ;
+	int d ;
+	int e ;
+	int f ;
+	int g ;
+	int h ;
+	int i ;
+	int j ;
+	int k ;
+	int l ;
+    inc(x, y, a, b, c, d, e, f, g, h, i, j, k, l);
+    return ;
 }
 }
  
