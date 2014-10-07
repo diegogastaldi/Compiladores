@@ -20,6 +20,7 @@ import ir.ast.Type;
 import java.util.LinkedList;
 public class completeFunction extends functionSymbol {
     private Block block;
+    /* Guarda la direcciones a partir de la cual se pueden crear variables temporales para las operaciones */
     private int offset;
 
     public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b, int os){

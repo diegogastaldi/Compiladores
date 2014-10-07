@@ -16,20 +16,19 @@
   
 */
 
-package ir.semcheck;
+package intermediateCode;
 
 import java.util.List;
 import java.util.LinkedList;
 import ir.ast.*;
-import intermediateCode.Instr;
-import intermediateCode.Operator;
-import intermediateCode.Labels;
 import ir.ASTVisitor;
 import semanticAnalyzer.completeFunction;
 
 public class InstCodeGenVisitor implements ASTVisitor<Integer>{
+	/* Instrucciones generadas a partir del los bloques */
   private List<Instr> instructions; 
   private List<String> labelsStack;
+  /* Generador de direcciones de memoria y labes que no se repiten */
   private Labels genLabels;
 
   //Constructor
@@ -44,7 +43,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions.add(new Instr(Operator.METHODLABEL, null, null, c.getName()));
     /* Reinicia labels */
     genLabels.restart(c.getOffSet());
-
+    /* Genera instrucciones assembler */
     c.getBlock().accept(this);
   }
 

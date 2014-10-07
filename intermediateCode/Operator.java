@@ -23,23 +23,24 @@ public enum Operator {
  	, ARRAYINDEX  /*Primer parametro: Nombre del arreglo, 
  					Segundo parametro: indice, 
  					Tercer parametro: Variable para resultado */
- 	, PLUS, MINUS, MULTIPLY, DIVIDE, MOD
+ 	, PLUS, MINUS, MULTIPLY, DIVIDE, MOD /*Primer y segundo parametro: operando, 
+ 											Tercer parametro: variable para resultado */
  	, GE, LE, LEQ, GEQ, AND, OR, CEQ, NEQ/*Primer y Segundo parametro: operandos, 
  											Tercer parametro: Variable para resultado */
-
  	, NOT, UNARYMINUS /* Primer parametro: operando
  						 Tercer parametro: Variable para resultado */
  	, ASSIGN	  /* Primer parametro: Valor a asignar
  					 Tercer parametro: Variable a ser asignada */
  	, LABEL		  /* Tercer parametro: Nombre del label a crear */	
- 	, METHODLABEL		  /* Tercer parametro: Nombre del label a crear */	
+ 	, METHODLABEL /* Tercer parametro: Nombre del label a crear */	
  	, JLE, JNE	  /* Tercer parametro: Label a saltar */
  	, RETURN 	  /* Tercer parametro: Variable con valor a retornar */
  	, PARAM 	  /* Tercer parametro: Variable con valor del parametro */
  	, CMP 		  /* Primer parametro: valor a comparar (direccion)
  					 Segundo parametro: valor a comparar (direccion)*/
  	, JMP 		  /* Tercer parametro: Label a saltar */
- 	, CONST;
+ 	, CONST       /* Primer parametro: Valor constante, 
+ 				  	 Tercer parametro: variable con dicho valor */;
 	@Override
 	public String toString() {
 		switch(this) {

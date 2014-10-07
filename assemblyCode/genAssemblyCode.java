@@ -6,7 +6,9 @@ import java.util.List;
 import intermediateCode.*;
 
 public class genAssemblyCode {
+	/* Guarda codigo generado */
 	private static String result;
+	
 	public static String gACode(List<Instr> interCode) {
 		result = "";
 		for (Instr instr : interCode) {

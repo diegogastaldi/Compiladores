@@ -16,8 +16,11 @@
 
 package intermediateCode;
 public class Labels {
+	/* Modificador para label */
 	private int l;
+	/* Modificador para variables */	
   private int m;
+	/* Modificador para parametros */  
   private int p;
 
   public Labels() {
