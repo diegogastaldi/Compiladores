@@ -19,36 +19,42 @@ public class Labels {
 	/* Modificador para label */
 	private int l;
 	/* Modificador para variables */	
-  private int m;
-	/* Modificador para parametros */  
-  private int p;
+  public int temp;
+  public int globalParam;
+  private boolean global;
 
   public Labels() {
-    m = 0;
+    temp = 0;
     l = 0;
-    p = 0;
+    globalParam = 0;
+    global = false;
   }
 
 	public String getLabel() {
 		return "L"+(++l);
 	}
 
-  public void restart(int begin) {
-    m = begin + 4;
-    p = 0;
+  public void restartGlobal () {
+    if (!global) {
+      globalParam = temp;
+      global = true;
+    } else       
+      temp = globalParam;
+  }
+
+  public void restart(int value) {
+    temp = - value;
   }
 
   public int getOffSet() {
-    m-=4;
-    return m;
+    temp -= 4;
+    return temp;
   }  
 
-  public int getOffSetParam() {
-    p+=4;
-    return p;
+  public int getOffSet(int space) {
+    temp -= 4;
+    int r = temp;
+    temp -= 4 * (space - 1);
+    return r;
   }  
-
-  public void restartParam() {
-    p = 0;
-  }
 } 

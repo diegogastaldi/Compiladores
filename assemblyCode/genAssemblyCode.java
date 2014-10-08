@@ -89,9 +89,6 @@ public class genAssemblyCode {
 			  case PARAM:
 			  	paramMethod(instr);
 			   	break;
-				case ARRAYINDEX:
-					arrayindexMethod(instr);
-					break;
 			  case CALLMETHOD:
 			  	callmethodMethod(instr);
 			   	break;
@@ -217,7 +214,7 @@ public class genAssemblyCode {
 
 	public static void returnMethod(Instr instr) {
 	 	if (instr.getResult() != null) 
-	 		result += "movl		" + instr.getResult() + ", %eax\n";
+	 		result += "movl		" + instr.getResult() + "(%rbp), %eax\n";
 	 	else 
 			result += "mov 		$0, %eax\n";
 	 	result += "leave\n";
@@ -259,12 +256,6 @@ public class genAssemblyCode {
 	public static void paramMethod(Instr instr) {
 		result += "movl		" + instr.getOperand1() + "(%rbp), %edi\n";
 		result += "movl	 	%edi, " + instr.getResult() + "(%rsp)\n";
-	}
-
-	public static void arrayindexMethod(Instr instr) {
-		int array = ((Integer)instr.getOperand1() * (Integer)instr.getOperand2());
-   	result += "movl		" + array + "(%rbp), %edi\n";
-   	result += "movl	 	%edi, " + instr.getResult() + "(%rsp)\n";
 	}
 
 	public static void callmethodMethod(Instr instr) {

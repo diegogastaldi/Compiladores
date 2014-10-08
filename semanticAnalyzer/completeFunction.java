@@ -20,19 +20,17 @@ import ir.ast.Type;
 import java.util.LinkedList;
 public class completeFunction extends functionSymbol {
     private Block block;
-    /* Guarda la direcciones a partir de la cual se pueden crear variables temporales para las operaciones */
-    private int offset;
-
-    public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b, int os){
+    private int local;
+    public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b, int reserve){
 	     	super(name, type, parameters);
         block = b;
-        offset = os;
+        local = reserve;
   	}
 
-    public completeFunction(functionSymbol f, Block b, int os){
+    public completeFunction(functionSymbol f, Block b, int reserve){
        super(f.getName(), f.getType(), f.getParameters());
        block = b;
-       offset = os;
+       local = reserve;
     }
 
     public void setBlock (Block b) {
@@ -47,8 +45,11 @@ public class completeFunction extends functionSymbol {
         return super.toString() + " , Block: " + block.toString();
     }
 
-    public int getOffSet() {
-      return offset;
+    public int getReserve() {
+      return local;
     }
 
 }  
+
+
+

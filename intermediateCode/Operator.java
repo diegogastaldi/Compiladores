@@ -20,9 +20,6 @@ public enum Operator {
  	CALLMETHOD /*Primer parametro: Nombre del metodo, 
  					Segundo parametro: Cantidad de parametros, 
  					Tercer parametro: Variable para resultado */
- 	, ARRAYINDEX  /*Primer parametro: Nombre del arreglo, 
- 					Segundo parametro: indice, 
- 					Tercer parametro: Variable para resultado */
  	, PLUS, MINUS, MULTIPLY, DIVIDE, MOD /*Primer y segundo parametro: operando, 
  											Tercer parametro: variable para resultado */
  	, GE, LE, LEQ, GEQ, AND, OR, CEQ, NEQ/*Primer y Segundo parametro: operandos, 
@@ -48,8 +45,6 @@ public enum Operator {
 				return "CONST";
 			case CALLMETHOD:
 				return "CALLMETHOD";
-			case ARRAYINDEX:
-				return "ARRAYINDEX";
 			case PLUS:
 				return "PLUS";
 			case MINUS:

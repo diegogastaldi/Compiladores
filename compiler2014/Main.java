@@ -16,7 +16,8 @@
 */
 
 package compiler2014;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.util.*;
 import ir.semcheck.*;
 import java_cup.runtime.*;
@@ -57,7 +58,10 @@ public class Main {
   //    System.out.println("Intermedite Code : " + ic.toString());
         String assembly = genAssemblyCode.gACode(ic);
         System.out.println("Assembly code: " + assembly.toString());
-      }
+//				FileWriter fw=new FileWriter(args[0]+".s");
+//        fw.write(assembly);
+//        fw.close();
+    	}
               
     }catch(Exception x){
       x.printStackTrace();

@@ -42,7 +42,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label de inicio de funcion */
     instructions.add(new Instr(Operator.METHODLABEL, null, null, c.getName()));
     /* Reinicia labels */
-    genLabels.restart(c.getOffSet());
+    genLabels.restart(c.getReserve());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
   }
@@ -222,12 +222,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(InternInvkStmt stmt){
   	Integer cantParameter = stmt.getParameters().size();
   	Integer parameter;
-    genLabels.restartParam();
 
     int numParam = 1;
     for (Expression a : stmt.getParameters()) {
         parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, numParam++, genLabels.getOffSetParam()));
+        instructions.add(new Instr(Operator.PARAM, parameter, null, 4 * numParam++));
     }
 
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), cantParameter, null));
@@ -361,12 +360,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit (InternInvkExpr expr){
   	Integer cantParameter = expr.getParameters().size();
   	Integer parameter;
-    genLabels.restartParam();
 
     int numParam = 1;    
     for (Expression a : expr.getParameters()) {
         parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, numParam++, genLabels.getOffSetParam()));
+        instructions.add(new Instr(Operator.PARAM, parameter, null, 4 * numParam++));
     }
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
@@ -418,9 +416,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   public Integer visit(ArrayLocation loc)  {
   	Integer index = loc.getExpression().accept(this);
-  	Integer result = genLabels.getOffSet();
     Integer os = loc.getOffSet();
-  	instructions.add(new Instr(Operator.ARRAYINDEX, os, index, result));
-    return result;
+    Integer four = genLabels.getOffSet(), parcialResult = genLabels.getOffSet(), result = genLabels.getOffSet();
+    instructions.add(new Instr(Operator.CONST, 4, null, four));
+    instructions.add(new Instr(Operator.MULTIPLY, index, four, parcialResult));
+    instructions.add(new Instr(Operator.PLUS, parcialResult, os, result));    
+    return result /* ES UNA DIRECCION QUE CONTIENE LA DIRECCIONES QUE QUEREMOS DEVOLVER. COMO SE HACE EL DIRECCIONAMIENTO INDIRECTO? */;
   }
 }
