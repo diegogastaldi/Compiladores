@@ -58,9 +58,9 @@ public class Main {
   //    System.out.println("Intermedite Code : " + ic.toString());
         String assembly = genAssemblyCode.gACode(ic);
         System.out.println("Assembly code: " + assembly.toString());
-//				FileWriter fw=new FileWriter(args[0]+".s");
-//        fw.write(assembly);
-//        fw.close();
+				FileWriter fw=new FileWriter(args[0]+".s");
+        fw.write(assembly);
+        fw.close();
     	}
               
     }catch(Exception x){

@@ -3,6 +3,7 @@
 package assemblyCode;
 
 import java.util.List;
+import java.util.LinkedList;
 import intermediateCode.*;
 
 public class genAssemblyCode {
@@ -14,6 +15,12 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+			  case ARRAYASSIGN: 
+			   	arrayassignMethod(instr);
+			   	break;
+			  case VARASSIGN:
+					varassignMethod(instr);
+			   	break;			    	
 			  case JLE: 
 			   	jleMethod(instr);
 			   	break;
@@ -53,9 +60,6 @@ public class genAssemblyCode {
 			  case NEQ:
 			  	neqMethod(instr);
 					break;
-				case ASSIGN:
-					assignMethod(instr);
-					break;
 			  case NOT:
 					notMethod(instr);
 					break;
@@ -92,6 +96,9 @@ public class genAssemblyCode {
 			  case CALLMETHOD:
 			  	callmethodMethod(instr);
 			   	break;
+			  case TEXT:
+			  	textMethod(instr);
+			   	break;			   	
 			}
 			result+="\n";
 		}
@@ -144,29 +151,42 @@ public class genAssemblyCode {
 	}
 
 	public static void andMethod(Instr instr) {
-		result += "cmpl		$0, " + instr.getOperand1() + "(%rbp)\n";
-		result += "je 		.L2\n";
-		result += "cmpl		$0, " + instr.getOperand2() + "(%rbp)\n";
-		result += "je 		.L2\n";
+		Integer operand1 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
+		Integer operand2 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
+
+		String label1 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
+		String label2 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
+
+		result += "cmpl		$0, " + operand1 + "(%rbp)\n";
+		result += "je 		." + label1 + "\n";
+		result += "cmpl		$0, " + operand2 + "(%rbp)\n";
+		result += "je 		." + label1 + "\n";
 		result += "movl		$1, %eax\n";
-		result += "jmp		.L3\n";
-		result += ".L2:\n";
+		result += "jmp		." + label2 + "\n";
+		result += "." + label1 + ":\n";
 		result += "movl		$0, %eax\n";
-		result += ".L3:\n";
+		result += "." + label2 + ":\n";
 		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void orMethod(Instr instr) {
-		result += "cmpl		$0, " + instr.getOperand1() + "(%rbp)\n";
-		result += "jne 		.L2\n";
-		result += "cmpl		$0, " + instr.getOperand2() + "(%rbp)\n";
-		result += "je 		.L3\n";
-		result += ".L2: \n";
+		Integer operand1 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
+		Integer operand2 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
+
+		String label1 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
+		String label2 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
+		String label3 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
+
+		result += "cmpl		$0, " + operand1 + "(%rbp)\n";
+		result += "jne 		." + label1 + "\n";
+		result += "cmpl		$0, " + operand2 + "(%rbp)\n";
+		result += "je 		." + label2 + "\n";
+		result += "." + label1 + ": \n";
 		result += "movl		$1, %eax\n";
-		result += "jmp 		.L4\n";
-		result += ".L3:\n";
+		result += "jmp 		." + label3 + "\n";
+		result += "." + label2 + ":\n";
 		result += "movl		$0, %eax\n";
-		result += ".L4:\n";
+		result += "." + label3 + ":\n";
 		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
 	}
 
@@ -183,11 +203,6 @@ public class genAssemblyCode {
 		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
 		result += "setne 	%al\n";
 		result += "movzbl %al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
-	}
-
-	public static void assignMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
 		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
 	}
 
@@ -272,8 +287,25 @@ public class genAssemblyCode {
 	}
 
 	public static void methodlabelMethod(Instr instr) {
-		labelMethod(instr);
+		result += ".globl	" + instr.getResult() + "\n";
+		result += ".type	" + instr.getResult() + ", @function \n";			
+		result += instr.getResult() + ": \n";		
 		result += "pushq	%rbp\n";
 		result += "movq		%rsp, %rbp\n";
+	}
+
+	public static void arrayassignMethod(Instr instr) {
+		result += "movl 	" + instr.getOperand1() + ", %ebx \n";
+		result += "movl 	" + instr.getOperand2() + ", %edx \n";
+		result += "movl 	%ebx, " + instr.getResult() + "(%rbp, %edx, 4) \n";		
+	}
+
+	public static void varassignMethod(Instr instr) {
+		result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
+		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+	}
+
+	public static void textMethod(Instr instr) {
+		result += instr.getResult();
 	}
 } 

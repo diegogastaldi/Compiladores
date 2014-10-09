@@ -25,7 +25,7 @@ import ir.ASTVisitor;
 import semanticAnalyzer.completeFunction;
 
 public class InstCodeGenVisitor implements ASTVisitor<Integer>{
-	/* Instrucciones generadas a partir del los bloques */
+  /* Instrucciones generadas a partir del los bloques */
   private List<Instr> instructions; 
   private List<String> labelsStack;
   /* Generador de direcciones de memoria y labes que no se repiten */
@@ -36,6 +36,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions = new LinkedList<Instr>();
     labelsStack = new LinkedList<String>();
     genLabels = new Labels();
+    instructions.add(new Instr(Operator.TEXT, null, null, ".text\n"));
   }
 
   public void blockCode(completeFunction c) {
@@ -58,10 +59,18 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.ASSIGN, "1", null, op));
+    Integer one = 1;
+    instructions.add(new Instr(Operator.CONST, "1", null, one));
+    instructions.add(new Instr(Operator.VARASSIGN, one, null, op));
     /* Realiza el incremento */
     instructions.add(new Instr(Operator.PLUS, expr, op, result));
-    instructions.add(new Instr(Operator.ASSIGN, result, null, loc));
+    
+    if (stmt.getLocation() instanceof VarLocation) 
+      instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+    else {
+      ArrayLocation a = (ArrayLocation) stmt.getLocation();
+      instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+    }
     return null;
   }
   
@@ -72,17 +81,29 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label donde guardara el resultado */    
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.ASSIGN, "1", null, op));
-
+    Integer one = 1;
+    instructions.add(new Instr(Operator.CONST, "1", null, one));    
+    instructions.add(new Instr(Operator.VARASSIGN, one, null, op));
     instructions.add(new Instr(Operator.MINUS, expr, op, result));
-    instructions.add(new Instr(Operator.ASSIGN, result, null, loc));
+
+    if (stmt.getLocation() instanceof VarLocation) 
+      instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+    else {
+      ArrayLocation a = (ArrayLocation) stmt.getLocation();
+      instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+    }
     return null;
   }
   
   public Integer visit(SimpleAssign stmt)   {
     Integer expr = stmt.getExpression().accept(this);
-    Integer loc = stmt.getLocation().accept(this);
-    instructions.add(new Instr(Operator.ASSIGN, expr, null, loc));
+    Integer loc = stmt.getLocation().accept(this);    
+    if (stmt.getLocation() instanceof VarLocation) 
+      instructions.add(new Instr(Operator.VARASSIGN, expr, null, loc));
+    else {
+      ArrayLocation a = (ArrayLocation) stmt.getLocation();
+      instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), loc));
+    }
     return null;
   }
   
@@ -98,9 +119,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(IfStmt stmt)  {
     /* Genera las instrucciones para evaluar la condicion */
     Integer cond = stmt.getCondition().accept(this);
-	  String labelElse = ".falseCond"+genLabels.getLabel();
+	  String labelElse = "falseCond"+genLabels.getLabel();
     Integer vtrue = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CONST, 1, null, vtrue));
+    instructions.add(new Instr(Operator.CONST, "1", null, vtrue));
     instructions.add(new Instr(Operator.CMP, cond, vtrue/*true*/, null));
 	  /* Si la condicion es verdadera no salta */
 	  instructions.add(new Instr(Operator.JNE, null, null, labelElse));
@@ -108,7 +129,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	  Integer blockIf = stmt.getIfBlock().accept(this);
     
     if (stmt.getElseBlock() != null) {    
-	    String labelEndIf = ".endIf"+genLabels.getLabel();
+	    String labelEndIf = "endIf"+genLabels.getLabel();
 	    /* Si llego aca es porque se ejecuto el bloque if, por lo que salta 
 	       ejecutar el bloque else */
 	    instructions.add(new Instr(Operator.JMP, null, null, labelEndIf));
@@ -127,8 +148,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
   
   public Integer visit(WhileStmt stmt)  {
-    String labelEndWhile = ".endWhile"+genLabels.getLabel();
-    String labelBeginWhile = ".beginWhile"+genLabels.getLabel();
+    String labelEndWhile = "endWhile"+genLabels.getLabel();
+    String labelBeginWhile = "beginWhile"+genLabels.getLabel();
 
     /* Actualizacion del stack */
     labelsStack.add(labelsStack.size(), labelBeginWhile);
@@ -140,7 +161,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer cond = stmt.getCondition().accept(this);	
     /* Si la condicion es verdadera no salta */
     Integer vtrue = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CONST, 1, null, vtrue));
+    instructions.add(new Instr(Operator.CONST, "1", null, vtrue));
     instructions.add(new Instr(Operator.CMP, cond, vtrue /*True*/, null));
 	  instructions.add(new Instr(Operator.JNE, null, null, labelEndWhile));
 	  /* Crea las instruccions del bloque */
@@ -170,11 +191,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
     
   public Integer visit(ForStmt stmt)  {
-    String labelEndFor = ".endFor"+genLabels.getLabel();
-    String labelBeginFor = ".beginFor"+genLabels.getLabel();
+    String labelEndFor = "endFor"+genLabels.getLabel();
+    String labelBeginFor = "beginFor"+genLabels.getLabel();
     Integer incrementValue = genLabels.getOffSet();
     /* Variable a incrementar */
-    instructions.add(new Instr(Operator.CONST, 1, null, incrementValue));
+    instructions.add(new Instr(Operator.CONST, "1", null, incrementValue));
 
     /* Actualizacion del stack */
     labelsStack.add(labelsStack.size(), labelBeginFor);
@@ -328,10 +349,21 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     BinOpType operator = expr.getOperator();
 
     Integer result = genLabels.getOffSet();
+
+    List<Integer> operand = new LinkedList<Integer>();
+    operand.add(leftOperand);
+    operand.add(rightOperand);
+
+    List<String> labels = new LinkedList<String>();
+    labels.add(genLabels.getLabel());
+    labels.add(genLabels.getLabel());
+
+
   	switch (operator) {
-  		case AND : 	instructions.add(new Instr(Operator.AND, leftOperand, rightOperand, result));
+  		case AND : 	instructions.add(new Instr(Operator.AND, labels, operand, result));
   					break;
-  		case OR : 	instructions.add(new Instr(Operator.OR, leftOperand, rightOperand, result));
+  		case OR : 	labels.add(genLabels.getLabel());
+                  instructions.add(new Instr(Operator.OR, labels, operand, result));
   					break;
   	}
     return result;
@@ -411,16 +443,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   
 // visit locations  
   public Integer visit(VarLocation loc)   {
-    return loc.getOffSet();
+    return genLabels.getOffSet();
   }
 
   public Integer visit(ArrayLocation loc)  {
-  	Integer index = loc.getExpression().accept(this);
-    Integer os = loc.getOffSet();
-    Integer four = genLabels.getOffSet(), parcialResult = genLabels.getOffSet(), result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CONST, 4, null, four));
-    instructions.add(new Instr(Operator.MULTIPLY, index, four, parcialResult));
-    instructions.add(new Instr(Operator.PLUS, parcialResult, os, result));    
-    return result /* ES UNA DIRECCION QUE CONTIENE LA DIRECCIONES QUE QUEREMOS DEVOLVER. COMO SE HACE EL DIRECCIONAMIENTO INDIRECTO? */;
+    return genLabels.getOffSet();
   }
 }
