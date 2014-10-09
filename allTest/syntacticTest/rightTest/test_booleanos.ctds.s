@@ -22,14 +22,14 @@ pushq	%rbp
 movq		%rsp, %rbp
 
 cmpl		$0, -12(%rbp)
-je 		.L1
+je 		.1
 cmpl		$0, -16(%rbp)
-je 		.L1
+je 		.1
 movl		$1, %eax
-jmp		.L2
-.L1:
+jmp		.2
+.1:
 movl		$0, %eax
-.L2:
+.2:
 movl		%eax, -20(%rbp)
 
 movl		-20(%rbp), %eax
@@ -43,15 +43,15 @@ pushq	%rbp
 movq		%rsp, %rbp
 
 cmpl		$0, -12(%rbp)
-jne 		.L3
+jne 		.3
 cmpl		$0, -16(%rbp)
-je 		.L4
-.L3: 
+je 		.4
+.3: 
 movl		$1, %eax
-jmp 		.L5
-.L4:
+jmp 		.5
+.4:
 movl		$0, %eax
-.L5:
+.5:
 movl		%eax, -20(%rbp)
 
 movl		-20(%rbp), %eax
@@ -64,12 +64,12 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$true, -24(%rbp)
+movl 	$1, -24(%rbp)
 
 movl		-24(%rbp), %eax
 movl		%eax, -28(%rbp)
 
-movl 	$false, -32(%rbp)
+movl 	$0, -32(%rbp)
 
 movl		-32(%rbp), %eax
 movl		%eax, -36(%rbp)
@@ -110,7 +110,7 @@ movl 	%eax, -72(%rbp)
 movl		-72(%rbp), %eax
 movl		%eax, -76(%rbp)
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

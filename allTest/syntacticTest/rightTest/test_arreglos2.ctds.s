@@ -1,3 +1,6 @@
+.L04: 
+		.string "%d resultado : " 
+
 .text
 
 .globl	pruArreglos
@@ -17,7 +20,7 @@ movl 	$0, -32(%rbp)
 
 movl 	-24, %ebx 
 movl 	-32, %edx 
-movl 	%ebx, -28(%rbp, %edx, 4) 
+movl 	%ebx, -28(%rbp, %rdx, 4) 
 
 movl 	$2.6, -36(%rbp)
 
@@ -30,7 +33,7 @@ movl 	$55, -52(%rbp)
 
 movl 	-44, %ebx 
 movl 	-52, %edx 
-movl 	%ebx, -48(%rbp, %edx, 4) 
+movl 	%ebx, -48(%rbp, %rdx, 4) 
 
 movl		-56(%rbp), %eax
 cmpl		-60(%rbp), %eax
@@ -42,7 +45,7 @@ movl 	$0, -72(%rbp)
 
 movl 	-64, %ebx 
 movl 	-72, %edx 
-movl 	%ebx, -68(%rbp, %edx, 4) 
+movl 	%ebx, -68(%rbp, %rdx, 4) 
 
 movl		-76(%rbp), %eax
 cmpl		-80(%rbp), %eax
@@ -54,7 +57,7 @@ movl 	$1, -92(%rbp)
 
 movl 	-84, %ebx 
 movl 	-92, %edx 
-movl 	%ebx, -88(%rbp, %edx, 4) 
+movl 	%ebx, -88(%rbp, %rdx, 4) 
 
 movl		-96(%rbp), %eax
 leave
@@ -66,7 +69,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$true, -4(%rbp)
+movl 	$1, -4(%rbp)
 
 movl		-4(%rbp), %eax
 movl		%eax, -8(%rbp)
@@ -88,7 +91,7 @@ movl 	$1, -32(%rbp)
 
 movl 	-24, %ebx 
 movl 	-32, %edx 
-movl 	%ebx, -28(%rbp, %edx, 4) 
+movl 	%ebx, -28(%rbp, %rdx, 4) 
 
 movl 	$2.6, -36(%rbp)
 
@@ -100,7 +103,7 @@ movl 	$0, -48(%rbp)
 
 movl 	-40, %ebx 
 movl 	-48, %edx 
-movl 	%ebx, -44(%rbp, %edx, 4) 
+movl 	%ebx, -44(%rbp, %rdx, 4) 
 
 movl 	$4, -52(%rbp)
 
@@ -121,7 +124,7 @@ movl 	$2, -72(%rbp)
 
 movl 	-64, %ebx 
 movl 	-72, %edx 
-movl 	%ebx, -68(%rbp, %edx, 4) 
+movl 	%ebx, -68(%rbp, %rdx, 4) 
 
 movl 	$5, -76(%rbp)
 
@@ -131,27 +134,67 @@ setge 	%al
 movzbl %al, %eax
 movl		%eax, -84(%rbp)
 
-movl 	$true, -88(%rbp)
+movl 	$1, -88(%rbp)
 
 cmpl		$0, -84(%rbp)
-jne 		.L1
+jne 		.1
 cmpl		$0, -88(%rbp)
-je 		.L2
-.L1: 
+je 		.2
+.1: 
 movl		$1, %eax
-jmp 		.L3
-.L2:
+jmp 		.3
+.2:
 movl		$0, %eax
-.L3:
+.3:
 movl		%eax, -92(%rbp)
 
 movl 	$3, -100(%rbp)
 
 movl 	-92, %ebx 
 movl 	-100, %edx 
-movl 	%ebx, -96(%rbp, %edx, 4) 
+movl 	%ebx, -96(%rbp, %rdx, 4) 
 
-call 	printf()
+movl		$.L04, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$4, -104(%rbp)
+
+movl		-104(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$8, -108(%rbp)
+
+movl 	$6, -112(%rbp)
+
+movl		-108(%rbp), %eax 
+movl		-112(%rbp), %edx 
+imull	%eax, %edx 
+movl		%edx, -116(%rbp)
+
+movl 	$7, -120(%rbp)
+
+movl 	$2, -124(%rbp)
+
+movl		-124(%rbp), %eax 
+cltd
+idivl	-120
+movl		%edx, -128(%rbp)
+
+movl		-116(%rbp), %eax 
+cltd
+idivl	-128
+movl		%eax, -132(%rbp)
+
+movl		-132(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	pruArreglos
+movl 	%eax, -136(%rbp) 
+
+movl		-136(%rbp), %edi
+movl	 	%edi, 12(%rsp)
+
+call 	printf
 
 mov 		$0, %eax
 leave

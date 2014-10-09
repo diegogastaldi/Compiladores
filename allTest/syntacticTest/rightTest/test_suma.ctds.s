@@ -19,15 +19,15 @@ movl 	$1, -24(%rbp)
 movl		-24(%rbp), %eax
 cmpl 	-20(%rbp), %eax
 
-jne 		falseCondL1
+jne 		.falseCond1
 
 movl		-28(%rbp), %eax
 leave
 ret
 
-jmp 		endIfL2
+jmp 		.endIf2
 
-.falseCondL1: 
+.falseCond1: 
 
 movl 	$0, -36(%rbp)
 
@@ -42,15 +42,15 @@ movl 	$1, -44(%rbp)
 movl		-44(%rbp), %eax
 cmpl 	-40(%rbp), %eax
 
-jne 		falseCondL3
+jne 		.falseCond3
 
 movl		-48(%rbp), %eax
 leave
 ret
 
-jmp 		endIfL4
+jmp 		.endIf4
 
-.falseCondL3: 
+.falseCond3: 
 
 movl		-52(%rbp), %eax 
 movl		-56(%rbp), %edx 
@@ -61,9 +61,9 @@ movl		-60(%rbp), %eax
 leave
 ret
 
-.endIfL4: 
+.endIf4: 
 
-.endIfL2: 
+.endIf2: 
 
 .globl	main
 .type	main, @function 
@@ -71,7 +71,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

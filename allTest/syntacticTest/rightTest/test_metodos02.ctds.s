@@ -11,7 +11,7 @@ movl 	$1, -16(%rbp)
 movl		-16(%rbp), %eax
 cmpl 	-12(%rbp), %eax
 
-jne 		falseCondL1
+jne 		.falseCond1
 
 movl 	$1, -24(%rbp)
 
@@ -23,9 +23,9 @@ movl		%edx, -28(%rbp)
 movl		-28(%rbp), %eax
 movl		%eax, -32(%rbp)
 
-jmp 		endIfL2
+jmp 		.endIf2
 
-.falseCondL1: 
+.falseCond1: 
 
 movl 	$1, -40(%rbp)
 
@@ -37,7 +37,7 @@ movl		%edx, -44(%rbp)
 movl		-44(%rbp), %eax
 movl		%eax, -48(%rbp)
 
-.endIfL2: 
+.endIf2: 
 
 mov 		$0, %eax
 leave
@@ -62,7 +62,7 @@ movq		%rsp, %rbp
 movl		-8(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
-movl 	$true, -12(%rbp)
+movl 	$1, -12(%rbp)
 
 movl		-12(%rbp), %edi
 movl	 	%edi, 8(%rsp)
@@ -118,7 +118,7 @@ movl		%edx, -44(%rbp)
 movl		-44(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
-movl 	$false, -48(%rbp)
+movl 	$0, -48(%rbp)
 
 movl		-48(%rbp), %edi
 movl	 	%edi, 8(%rsp)

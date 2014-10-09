@@ -19,7 +19,7 @@ movl		%eax, -36(%rbp)
 movl		-40(%rbp), %eax
 movl		%eax, -44(%rbp)
 
-.beginWhileL2: 
+.beginWhile2: 
 
 movl		-48(%rbp), %eax
 cmpl		-52(%rbp), %eax
@@ -32,12 +32,12 @@ movl 	$1, -60(%rbp)
 movl		-60(%rbp), %eax
 cmpl 	-56(%rbp), %eax
 
-jne 		endWhileL1
+jne 		.endWhile1
 
 movl		-64(%rbp), %eax
 movl		%eax, -68(%rbp)
 
-.beginWhileL4: 
+.beginWhile4: 
 
 movl 	$0, -76(%rbp)
 
@@ -56,15 +56,15 @@ movzbl %al, %eax
 movl		%eax, -92(%rbp)
 
 cmpl		$0, -80(%rbp)
-jne 		.L5
+jne 		.5
 cmpl		$0, -92(%rbp)
-je 		.L6
-.L5: 
+je 		.6
+.5: 
 movl		$1, %eax
-jmp 		.L7
-.L6:
+jmp 		.7
+.6:
 movl		$0, %eax
-.L7:
+.7:
 movl		%eax, -96(%rbp)
 
 movl 	$1, -100(%rbp)
@@ -72,7 +72,7 @@ movl 	$1, -100(%rbp)
 movl		-100(%rbp), %eax
 cmpl 	-96(%rbp), %eax
 
-jne 		endWhileL3
+jne 		.endWhile3
 
 movl 	$0, -108(%rbp)
 
@@ -87,7 +87,7 @@ movl 	$1, -116(%rbp)
 movl		-116(%rbp), %eax
 cmpl 	-112(%rbp), %eax
 
-jne 		falseCondL8
+jne 		.falseCond8
 
 movl 	$1, -124(%rbp)
 
@@ -99,9 +99,9 @@ movl		%edx, -128(%rbp)
 movl		-128(%rbp), %eax
 movl		%eax, -132(%rbp)
 
-jmp 		endIfL9
+jmp 		.endIf9
 
-.falseCondL8: 
+.falseCond8: 
 
 movl 	$1, -140(%rbp)
 
@@ -113,13 +113,13 @@ movl		%edx, -144(%rbp)
 movl		-144(%rbp), %eax
 movl		%eax, -148(%rbp)
 
-.endIfL9: 
+.endIf9: 
 
-jmp 		beginWhileL4
+jmp 		.beginWhile4
 
-.endWhileL3: 
+.endWhile3: 
 
-.beginWhileL11: 
+.beginWhile11: 
 
 movl		-152(%rbp), %eax
 cmpl		-156(%rbp), %eax
@@ -134,15 +134,15 @@ movzbl	%al, %eax
 movl		%eax, -172(%rbp)
 
 cmpl		$0, -160(%rbp)
-jne 		.L12
+jne 		.12
 cmpl		$0, -172(%rbp)
-je 		.L13
-.L12: 
+je 		.13
+.12: 
 movl		$1, %eax
-jmp 		.L14
-.L13:
+jmp 		.14
+.13:
 movl		$0, %eax
-.L14:
+.14:
 movl		%eax, -176(%rbp)
 
 movl 	$1, -180(%rbp)
@@ -150,7 +150,7 @@ movl 	$1, -180(%rbp)
 movl		-180(%rbp), %eax
 cmpl 	-176(%rbp), %eax
 
-jne 		endWhileL10
+jne 		.endWhile10
 
 movl		-184(%rbp), %eax
 cmpl		-188(%rbp), %eax
@@ -163,7 +163,7 @@ movl 	$1, -196(%rbp)
 movl		-196(%rbp), %eax
 cmpl 	-192(%rbp), %eax
 
-jne 		falseCondL15
+jne 		.falseCond15
 
 movl 	$1, -204(%rbp)
 
@@ -175,9 +175,9 @@ movl		%edx, -208(%rbp)
 movl		-208(%rbp), %eax
 movl		%eax, -212(%rbp)
 
-jmp 		endIfL16
+jmp 		.endIf16
 
-.falseCondL15: 
+.falseCond15: 
 
 movl 	-216(%rbp), %eax
 cmpl		-220(%rbp), %eax
@@ -190,7 +190,7 @@ movl 	$1, -228(%rbp)
 movl		-228(%rbp), %eax
 cmpl 	-224(%rbp), %eax
 
-jne 		falseCondL17
+jne 		.falseCond17
 
 movl 	$1, -236(%rbp)
 
@@ -222,13 +222,13 @@ movl		%edx, -272(%rbp)
 movl		-272(%rbp), %eax
 movl		%eax, -276(%rbp)
 
-.falseCondL17: 
+.falseCond17: 
 
-.endIfL16: 
+.endIf16: 
 
-jmp 		beginWhileL11
+jmp 		.beginWhile11
 
-.endWhileL10: 
+.endWhile10: 
 
 movl		-280(%rbp), %eax
 movl		%eax, -284(%rbp)
@@ -243,9 +243,9 @@ movl		%edx, -296(%rbp)
 movl		-296(%rbp), %eax
 movl		%eax, -300(%rbp)
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endWhileL1: 
+.endWhile1: 
 
 movl		-304(%rbp), %eax
 leave
@@ -257,7 +257,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

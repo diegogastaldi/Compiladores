@@ -1,11 +1,27 @@
+/* Taller de Diseño de Software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+  Esta clase representa un simbolo de tipo funcion, 
+  la cual mantiene la informacion de tipo, nombre y
+  parametros de la misma.
+*/
+
 package semanticAnalyzer;
 import java.util.LinkedList;
 import java.util.Iterator;
 import ir.ast.Type;
 public class functionSymbol extends absSymbol {
-    private LinkedList<absSymbol> parameters;
+	/* Parametros de la funcion */
+  private LinkedList<absSymbol> parameters;
 
-    public functionSymbol(String name, Type type, LinkedList<absSymbol> parameters){
+  public functionSymbol(String name, Type type, LinkedList<absSymbol> parameters){
 		super(name, type);
 		this.parameters = parameters;
 	}

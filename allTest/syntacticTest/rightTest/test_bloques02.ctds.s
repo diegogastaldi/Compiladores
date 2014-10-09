@@ -1,3 +1,6 @@
+.L05: 
+		.string "%f resultado : " 
+
 .text
 
 .globl	breaks
@@ -11,7 +14,7 @@ movl 	$0, -16(%rbp)
 movl		-16(%rbp), %eax
 movl		%eax, -20(%rbp)
 
-.beginWhileL2: 
+.beginWhile2: 
 
 movl 	$10, -28(%rbp)
 
@@ -26,7 +29,7 @@ movl 	$1, -36(%rbp)
 movl		-36(%rbp), %eax
 cmpl 	-32(%rbp), %eax
 
-jne 		endWhileL1
+jne 		.endWhile1
 
 movl 	$1, -44(%rbp)
 
@@ -56,21 +59,21 @@ movl 	$1, -76(%rbp)
 movl		-76(%rbp), %eax
 cmpl 	-72(%rbp), %eax
 
-jne 		falseCondL3
+jne 		.falseCond3
 
-jmp 		endWhileL1
+jmp 		.endWhile1
 
-jmp 		endIfL4
+jmp 		.endIf4
 
-.falseCondL3: 
+.falseCond3: 
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endIfL4: 
+.endIf4: 
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endWhileL1: 
+.endWhile1: 
 
 movl		-80(%rbp), %eax
 leave
@@ -82,7 +85,21 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+movl		$.L05, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$1, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+call 	breaks
+movl 	%eax, -8(%rbp) 
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 12(%rsp)
+
+call 	printf
 
 mov 		$0, %eax
 leave

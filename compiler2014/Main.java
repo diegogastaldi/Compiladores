@@ -57,8 +57,9 @@ public class Main {
         List<Instr> ic = instCodeGen(par.getAST());
   //    System.out.println("Intermedite Code : " + ic.toString());
         String assembly = genAssemblyCode.gACode(ic);
-        System.out.println("Assembly code: " + assembly.toString());
-				FileWriter fw=new FileWriter(args[0]+".s");
+  //      System.out.println("Assembly code: " + assembly.toString());
+		    /* Archivo donde se guarda el codigo assembler */
+    		FileWriter fw=new FileWriter(args[0]+".s");
         fw.write(assembly);
         fw.close();
     	}
@@ -69,8 +70,8 @@ public class Main {
     }
   }
     
-    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
-    de tipos, si es que hay este tipo de errores */
+  /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+  de tipos, si es que hay este tipo de errores */
   private static void typeCheck(LinkedList<completeFunction> ast) {
     TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
 

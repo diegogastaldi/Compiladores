@@ -33,20 +33,16 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
   public Type visit(IncrementAssign stmt)   {
     Type expr = stmt.getExpression().accept(this);
     Type loc = stmt.getLocation().accept(this);
-    if ((expr == Type.BOOLEAN) || (loc == Type.BOOLEAN)){
-    addError(stmt,"Los operandos de la asignacion += no pueden ser de tipo Bool");
-    }
+    if (expr != loc )
+    	addError(stmt,"Los operandos de la asignacion += no pueden ser distintos");
     return null;
-    
-    /*VER EL ASIGNAR FLOAT A INT*/
   }
   
   public Type visit(DecrementAssign stmt)   {
     Type expr = stmt.getExpression().accept(this);
     Type loc = stmt.getLocation().accept(this);
-    if ((expr == Type.BOOLEAN) || (loc == Type.BOOLEAN)){
-    addError(stmt,"Los operandos de la asignacion -= no pueden ser de tipo Bool");
-    }
+    if (expr != loc )
+    	addError(stmt,"Los operandos de la asignacion -= no pueden ser distintos");
     return null;
   }
   
@@ -157,8 +153,8 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     Type leftOperand = expr.getLeftOperand().accept(this);
     Type rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
-    if  (leftOperand == Type.BOOLEAN || rightOperand == Type.BOOLEAN){
-    addError(expr,"Los operando de una expresion relacional no pueden ser de tipo Bool");
+    if  (leftOperand != rightOperand && leftOperand == Type.BOOLEAN) {
+    addError(expr,"Los operando de una expresion relacional no pueden ser de tipo Bool, tampoco distintos");
     } 
     switch(operator){
       case DIVIDE: case MINUS: case MULTIPLY: case PLUS: case CEQ: case NEQ:
@@ -172,8 +168,8 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     Type leftOperand = expr.getLeftOperand().accept(this);
     Type rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
-    if  (leftOperand == Type.BOOLEAN || rightOperand == Type.BOOLEAN){
-    addError(expr,"Los operando de una expresion aritmetica no peden ser Bool");
+    if  (leftOperand != rightOperand && leftOperand == Type.BOOLEAN) {
+    addError(expr,"Los operando de una expresion aritmetica no peden ser Bool ni distintos");
     } 
     switch(operator){
       case LE: case LEQ: case GE: case GEQ: case CEQ: case NEQ:

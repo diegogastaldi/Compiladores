@@ -76,7 +76,18 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+movl 	$3, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+call 	pruAritmetica
+movl 	%eax, -8(%rbp) 
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	printf
 
 mov 		$0, %eax
 leave

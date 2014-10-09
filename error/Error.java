@@ -1,3 +1,6 @@
+/*  Clase que almacena errores, usada para
+	centralizar el tratamiento de los mismos */
+
 package error;
 public class Error {
     int line;

@@ -16,7 +16,7 @@ movl 	$0, -28(%rbp)
 movl		-28(%rbp), %eax
 movl		%eax, -32(%rbp)
 
-.beginWhileL2: 
+.beginWhile2: 
 
 movl		-36(%rbp), %eax
 cmpl		-40(%rbp), %eax
@@ -29,7 +29,7 @@ movl 	$1, -48(%rbp)
 movl		-48(%rbp), %eax
 cmpl 	-44(%rbp), %eax
 
-jne 		endWhileL1
+jne 		.endWhile1
 
 movl		-52(%rbp), %eax 
 movl		-56(%rbp), %edx 
@@ -49,9 +49,9 @@ movl		%edx, -76(%rbp)
 movl		-76(%rbp), %eax
 movl		%eax, -80(%rbp)
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endWhileL1: 
+.endWhile1: 
 
 movl		-84(%rbp), %eax
 leave
@@ -63,7 +63,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

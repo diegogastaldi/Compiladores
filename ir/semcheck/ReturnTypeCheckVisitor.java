@@ -25,6 +25,7 @@ import ir.ASTVisitor;
 
 public class ReturnTypeCheckVisitor implements ASTVisitor<Boolean>{
   private List<Error> errors; 
+  /* Tipo que debe retornar */
   private Type type;
   //Constructor
   public ReturnTypeCheckVisitor(){
@@ -122,12 +123,8 @@ public class ReturnTypeCheckVisitor implements ASTVisitor<Boolean>{
   public Boolean visit (ArithExpr expr)   {
     Type leftOperand = expr.getLeftOperand().getType();
     Type rightOperand = expr.getRightOperand().getType();
-    if (leftOperand == rightOperand)
-        return (leftOperand == type);
-    else 
-        // La unica manera que los operando que sean distintos es que uno sea entero y el otro real, por lo
-        // tanto la operacion es de tipo real
-        return (Type.FLOAT == type);
+    return (leftOperand == type) && (rightOperand == type);
+
   }
 
   public Boolean visit (CondExpr expr)   {    

@@ -20,6 +20,7 @@ public class arraySymbol extends absSymbol {
 	private Integer size;
 	/*Valores de las distintas posiciones del arreglo*/
 	private LinkedList<Object> values;
+	/* Posicion del primer elemento del arreglo con respecto al registro rbp donde fue declarado */
 	private Integer offset;
 
 	public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values, Integer offset){

@@ -17,7 +17,7 @@ movl 	$1, -28(%rbp)
 movl		-28(%rbp), %eax
 cmpl 	-24(%rbp), %eax
 
-jne 		falseCondL1
+jne 		.falseCond1
 
 movl		-32(%rbp), %eax
 cmpl		-36(%rbp), %eax
@@ -30,7 +30,7 @@ movl 	$1, -44(%rbp)
 movl		-44(%rbp), %eax
 cmpl 	-40(%rbp), %eax
 
-jne 		falseCondL2
+jne 		.falseCond2
 
 movl		-52(%rbp), %eax 
 movl		-48(%rbp), %edx 
@@ -40,9 +40,9 @@ movl		%edx, -56(%rbp)
 movl		-56(%rbp), %eax
 movl		%eax, -60(%rbp)
 
-jmp 		endIfL3
+jmp 		.endIf3
 
-.falseCondL2: 
+.falseCond2: 
 
 movl		-68(%rbp), %eax 
 movl		-64(%rbp), %edx 
@@ -52,11 +52,11 @@ movl		%edx, -72(%rbp)
 movl		-72(%rbp), %eax
 movl		%eax, -76(%rbp)
 
-.endIfL3: 
+.endIf3: 
 
-jmp 		endIfL4
+jmp 		.endIf4
 
-.falseCondL1: 
+.falseCond1: 
 
 movl 	$5, -84(%rbp)
 
@@ -68,7 +68,7 @@ movl		%edx, -88(%rbp)
 movl		-88(%rbp), %eax
 movl		%eax, -92(%rbp)
 
-.endIfL4: 
+.endIf4: 
 
 movl		-96(%rbp), %eax
 leave
@@ -80,13 +80,13 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
-call 	printf()
+call 	printf
 
-call 	printf()
+call 	printf
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

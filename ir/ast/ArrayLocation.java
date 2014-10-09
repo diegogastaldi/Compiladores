@@ -13,6 +13,7 @@ public class ArrayLocation extends Location {
 		this.lineNumber = line;
 		this.colNumber = col;
 		this.type = t;
+		/* Ubicacion en memoria respecto al regristro rbp de donde fue declarado */
 		offset = os;
 	}
 	

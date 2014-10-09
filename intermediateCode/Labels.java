@@ -20,7 +20,9 @@ public class Labels {
 	private int l;
 	/* Modificador para variables */	
   public int temp;
+  /* Posicion base para definir las variables locales */
   public int globalParam;
+  /* Indica si ya se cargaron las variables globales */
   private boolean global;
 
   public Labels() {
@@ -31,7 +33,7 @@ public class Labels {
   }
 
 	public String getLabel() {
-		return "L"+(++l);
+		return ""+(++l);
 	}
 
   public void restartGlobal () {

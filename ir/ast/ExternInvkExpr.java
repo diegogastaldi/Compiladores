@@ -1,5 +1,5 @@
 package ir.ast;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import ir.ASTVisitor;
 public class ExternInvkExpr extends MethodCallExpr{
@@ -7,7 +7,7 @@ public class ExternInvkExpr extends MethodCallExpr{
     	
 	public ExternInvkExpr (String id){
 	    this.id = id;
-	    parameters = new ArrayList<ArgInvoc>();
+	    parameters = new LinkedList<ArgInvoc>();
 	}
 	
 	public ExternInvkExpr (String id, List<ArgInvoc> par){

@@ -70,7 +70,7 @@ movl 	$3.5698, -36(%rbp)
 movl		-36(%rbp), %eax
 movl		%eax, -40(%rbp)
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

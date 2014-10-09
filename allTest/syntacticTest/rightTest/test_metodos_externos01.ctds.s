@@ -1,3 +1,9 @@
+.L02: 
+		.string "%d" 
+
+.L01: 
+		.string "-estoEsUnaPrueba" 
+
 .text
 
 .globl	alo
@@ -61,11 +67,28 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+movl		$.L01, %edi
+movl	 	%edi, 8(%rsp)
 
-call 	printf()
+call 	printf
 
-call 	/home/programas/primer_primo_par()
+movl		$.L02, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$5, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+call 	alo
+movl 	%eax, -8(%rbp) 
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 12(%rsp)
+
+call 	printf
+
+call 	/home/programas/primer_primo_par
 
 mov 		$0, %eax
 leave

@@ -1,4 +1,19 @@
-// VER EL ORDENDE LOS OPERANDOS.
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+  
+	Esta clase a partir de una lista de 
+	instrucciones en codigo de tres direcciones 
+  y genera un string con la traduccion
+  de los mismos a assebler.
+*/
+
 
 package assemblyCode;
 
@@ -15,6 +30,9 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+			  case STRING: 
+			   	stringMethod(instr);
+			   	break;				
 			  case ARRAYASSIGN: 
 			   	arrayassignMethod(instr);
 			   	break;
@@ -105,12 +123,17 @@ public class genAssemblyCode {
 		return result;
 	}
 
+	public static void stringMethod(Instr instr) {
+		result += "." + instr.getOperand2() + ": \n";		
+		result += "		.string \""+ instr.getOperand1() + "\" \n";
+	}
+
 	public static void jleMethod(Instr instr) {
-		result += "jle 		" + instr.getResult() + "\n";
+		result += "jle 		." + instr.getResult() + "\n";
 	}
 
 	public static void jneMethod(Instr instr) {
-	  result += "jne 		" + instr.getResult() + "\n";
+	  result += "jne 		." + instr.getResult() + "\n";
 	}
 
 	public static void constMethod(Instr instr) {
@@ -224,7 +247,7 @@ public class genAssemblyCode {
 	}
 
 	public static void jmpMethod(Instr instr) {
-		result += "jmp 		"+ instr.getResult() + "\n";		
+		result += "jmp 		."+ instr.getResult() + "\n";		
 	}
 
 	public static void returnMethod(Instr instr) {
@@ -269,7 +292,10 @@ public class genAssemblyCode {
 	}
 
 	public static void paramMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %edi\n";
+		if (instr.getOperand1() instanceof String ) 
+			result += "movl		" + instr.getOperand1() + ", %edi\n";
+		else
+			result += "movl		" + instr.getOperand1() + "(%rbp), %edi\n";
 		result += "movl	 	%edi, " + instr.getResult() + "(%rsp)\n";
 	}
 
@@ -297,7 +323,7 @@ public class genAssemblyCode {
 	public static void arrayassignMethod(Instr instr) {
 		result += "movl 	" + instr.getOperand1() + ", %ebx \n";
 		result += "movl 	" + instr.getOperand2() + ", %edx \n";
-		result += "movl 	%ebx, " + instr.getResult() + "(%rbp, %edx, 4) \n";		
+		result += "movl 	%ebx, " + instr.getResult() + "(%rbp, %rdx, 4) \n";		
 	}
 
 	public static void varassignMethod(Instr instr) {

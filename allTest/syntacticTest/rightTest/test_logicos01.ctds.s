@@ -6,26 +6,26 @@ pruebaLogica:
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$true, -12(%rbp)
+movl 	$1, -12(%rbp)
 
 movl		-12(%rbp), %eax
 movl		%eax, -16(%rbp)
 
-movl 	$false, -20(%rbp)
+movl 	$0, -20(%rbp)
 
 cmpl		$0, -20(%rbp)
-jne 		.L1
+jne 		.1
 cmpl		$0, -24(%rbp)
-je 		.L2
-.L1: 
+je 		.2
+.1: 
 movl		$1, %eax
-jmp 		.L3
-.L2:
+jmp 		.3
+.2:
 movl		$0, %eax
-.L3:
+.3:
 movl		%eax, -28(%rbp)
 
-movl 	$true, -32(%rbp)
+movl 	$1, -32(%rbp)
 
 cmpl		$0, -32(%rbp) 
 sete		%al 
@@ -33,14 +33,14 @@ movzbl	%al, %eax
 movl		%eax, -36(%rbp) 
 
 cmpl		$0, -28(%rbp)
-je 		.L4
+je 		.4
 cmpl		$0, -36(%rbp)
-je 		.L4
+je 		.4
 movl		$1, %eax
-jmp		.L5
-.L4:
+jmp		.5
+.4:
 movl		$0, %eax
-.L5:
+.5:
 movl		%eax, -40(%rbp)
 
 cmpl		$0, -44(%rbp) 
@@ -49,14 +49,14 @@ movzbl	%al, %eax
 movl		%eax, -48(%rbp) 
 
 cmpl		$0, -40(%rbp)
-je 		.L6
+je 		.6
 cmpl		$0, -48(%rbp)
-je 		.L6
+je 		.6
 movl		$1, %eax
-jmp		.L7
-.L6:
+jmp		.7
+.6:
 movl		$0, %eax
-.L7:
+.7:
 movl		%eax, -52(%rbp)
 
 movl		-52(%rbp), %eax
@@ -69,7 +69,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

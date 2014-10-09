@@ -6,7 +6,7 @@ potencia:
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$false, -24(%rbp)
+movl 	$0, -24(%rbp)
 
 movl		-24(%rbp), %eax
 movl		%eax, -28(%rbp)
@@ -34,7 +34,7 @@ movl 	$1, -60(%rbp)
 movl		-60(%rbp), %eax
 cmpl 	-56(%rbp), %eax
 
-jne 		falseCondL1
+jne 		.falseCond1
 
 movl		-64(%rbp), %eax 
 negl		%eax 
@@ -51,9 +51,9 @@ movl		%eax, -80(%rbp)
 movl		-80(%rbp), %eax
 movl		%eax, -84(%rbp)
 
-.falseCondL1: 
+.falseCond1: 
 
-.beginWhileL3: 
+.beginWhile3: 
 
 movl		-88(%rbp), %eax
 cmpl		-92(%rbp), %eax
@@ -66,7 +66,7 @@ movl 	$1, -100(%rbp)
 movl		-100(%rbp), %eax
 cmpl 	-96(%rbp), %eax
 
-jne 		endWhileL2
+jne 		.endWhile2
 
 movl		-104(%rbp), %eax 
 movl		-108(%rbp), %edx 
@@ -86,9 +86,9 @@ movl		%edx, -128(%rbp)
 movl		-128(%rbp), %eax
 movl		%eax, -132(%rbp)
 
-jmp 		beginWhileL3
+jmp 		.beginWhile3
 
-.endWhileL2: 
+.endWhile2: 
 
 cmpl		$0, -136(%rbp) 
 sete		%al 
@@ -100,7 +100,7 @@ movl 	$1, -144(%rbp)
 movl		-144(%rbp), %eax
 cmpl 	-140(%rbp), %eax
 
-jne 		falseCondL4
+jne 		.falseCond4
 
 movl 	$1.0, -148(%rbp)
 
@@ -113,15 +113,15 @@ movl		-156(%rbp), %eax
 leave
 ret
 
-jmp 		endIfL5
+jmp 		.endIf5
 
-.falseCondL4: 
+.falseCond4: 
 
 movl		-160(%rbp), %eax
 leave
 ret
 
-.endIfL5: 
+.endIf5: 
 
 movl 	$100.1, -164(%rbp)
 
@@ -158,7 +158,7 @@ movl 	%eax, -28(%rbp)
 movl		-28(%rbp), %eax
 movl		%eax, -32(%rbp)
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

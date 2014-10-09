@@ -17,7 +17,7 @@ movl 	$1, -28(%rbp)
 movl		-28(%rbp), %eax
 cmpl 	-24(%rbp), %eax
 
-jne 		falseCondL1
+jne 		.falseCond1
 
 movl 	$5, -36(%rbp)
 
@@ -29,14 +29,14 @@ movl		%edx, -40(%rbp)
 movl		-40(%rbp), %eax
 movl		%eax, -44(%rbp)
 
-jmp 		endIfL2
+jmp 		.endIf2
 
-.falseCondL1: 
+.falseCond1: 
 
 movl		-48(%rbp), %eax
 movl		%eax, -52(%rbp)
 
-.endIfL2: 
+.endIf2: 
 
 movl		-56(%rbp), %eax
 leave
@@ -48,7 +48,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

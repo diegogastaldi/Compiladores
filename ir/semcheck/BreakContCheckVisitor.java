@@ -68,11 +68,13 @@ public class BreakContCheckVisitor implements ASTVisitor<Boolean>{
   }
   
   public Boolean visit(ContinueStmt stmt){
+  	/* Al no entrar a las secuencias de los ciclos, cada que encuetra una sentencia continue, es un error */
     addError(stmt, "Las sentencias continue deben estar dentro de un ciclo");
     return false;
   }
   
   public Boolean visit(BreakStmt stmt){
+  	/* Al no entrar a las secuencias de los ciclos, cada que encuetra una sentencia break, es un error */
     addError(stmt, "Las sentencias break deben estar dentro de un ciclo");
     return false;
   }

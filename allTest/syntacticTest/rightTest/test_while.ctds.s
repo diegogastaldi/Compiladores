@@ -11,7 +11,7 @@ movl 	$1, -24(%rbp)
 movl		-24(%rbp), %eax
 movl		%eax, -28(%rbp)
 
-.beginWhileL2: 
+.beginWhile2: 
 
 movl 	$0, -36(%rbp)
 
@@ -26,7 +26,7 @@ movl 	$1, -44(%rbp)
 movl		-44(%rbp), %eax
 cmpl 	-40(%rbp), %eax
 
-jne 		endWhileL1
+jne 		.endWhile1
 
 movl		-52(%rbp), %eax 
 cltd
@@ -59,13 +59,13 @@ movl		%edx, -80(%rbp)
 movl		-80(%rbp), %eax
 movl		%eax, -76(%rbp)
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endWhileL1: 
+.endWhile1: 
 
-.beginWhileL4: 
+.beginWhile4: 
 
 movl 	$0, -92(%rbp)
 
@@ -80,15 +80,15 @@ movl 	$1, -100(%rbp)
 movl		-100(%rbp), %eax
 cmpl 	-96(%rbp), %eax
 
-jne 		endWhileL3
+jne 		.endWhile3
 
-jmp 		endWhileL3
+jmp 		.endWhile3
 
-jmp 		beginWhileL4
+jmp 		.beginWhile4
 
-.endWhileL3: 
+.endWhile3: 
 
-.beginWhileL6: 
+.beginWhile6: 
 
 movl 	$0, -108(%rbp)
 
@@ -103,11 +103,11 @@ movl 	$1, -116(%rbp)
 movl		-116(%rbp), %eax
 cmpl 	-112(%rbp), %eax
 
-jne 		endWhileL5
+jne 		.endWhile5
 
-jmp 		beginWhileL6
+jmp 		.beginWhile6
 
-.endWhileL5: 
+.endWhile5: 
 
 movl		-120(%rbp), %eax
 leave
@@ -119,7 +119,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

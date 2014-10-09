@@ -236,6 +236,7 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
 	return errors;
   }
 
+  /* Retorna el bloque con nombre "name" */
   private completeFunction searchBlock(String name) {
     for (completeFunction c : cf) {
         if (c.getName().equals(name)) 

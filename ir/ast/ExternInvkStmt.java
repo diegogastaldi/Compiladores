@@ -1,5 +1,5 @@
 package ir.ast;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import ir.ASTVisitor;
 public class ExternInvkStmt extends MethodCallStmt{
@@ -7,12 +7,12 @@ public class ExternInvkStmt extends MethodCallStmt{
     	
 	public ExternInvkStmt (String id){
 	    this.id = id;
-	    parameters = new ArrayList<ArgInvoc>();
+	    parameters = new LinkedList<ArgInvoc>();
 	}
 	
 	public ExternInvkStmt (String id, int line, int col){
 	    this.id = id;
-	    parameters = new ArrayList<ArgInvoc>();
+	    parameters = new LinkedList<ArgInvoc>();
 	    lineNumber = line;
 	    colNumber = col;
 	}
@@ -24,7 +24,7 @@ public class ExternInvkStmt extends MethodCallStmt{
 	
 	public ExternInvkStmt (String id, List<ArgInvoc> par, int line, int col){
 	    this.id = id;
-	    parameters = new ArrayList<ArgInvoc>();
+	    parameters = par;
 	    lineNumber = line;
 	    colNumber = col;
 	}

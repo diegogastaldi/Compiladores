@@ -1,3 +1,9 @@
+.L04: 
+		.string "y==%d\n" 
+
+.L02: 
+		.string "y==1\n" 
+
 .text
 
 .globl	inc
@@ -23,7 +29,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	get_int()
+call 	get_int
 movl 	%eax, -8(%rbp) 
 
 movl		-8(%rbp), %edi
@@ -48,17 +54,26 @@ movl 	$1, -32(%rbp)
 movl		-32(%rbp), %eax
 cmpl 	-28(%rbp), %eax
 
-jne 		falseCondL1
+jne 		.falseCond1
 
-call 	printf()
+movl		$.L02, %edi
+movl	 	%edi, 8(%rsp)
 
-jmp 		endIfL2
+call 	printf
 
-.falseCondL1: 
+jmp 		.endIf3
 
-call 	printf()
+.falseCond1: 
 
-.endIfL2: 
+movl		$.L04, %edi
+movl	 	%edi, 8(%rsp)
+
+movl		-36(%rbp), %edi
+movl	 	%edi, 12(%rsp)
+
+call 	printf
+
+.endIf3: 
 
 mov 		$0, %eax
 leave

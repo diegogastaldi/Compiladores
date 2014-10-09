@@ -11,7 +11,7 @@ movl 	$0, -12(%rbp)
 movl		-12(%rbp), %eax
 movl		%eax, -16(%rbp)
 
-.beginWhileL2: 
+.beginWhile2: 
 
 movl 	$10, -24(%rbp)
 
@@ -26,7 +26,7 @@ movl 	$1, -32(%rbp)
 movl		-32(%rbp), %eax
 cmpl 	-28(%rbp), %eax
 
-jne 		endWhileL1
+jne 		.endWhile1
 
 movl 	$1, -40(%rbp)
 
@@ -51,21 +51,21 @@ movl 	$1, -64(%rbp)
 movl		-64(%rbp), %eax
 cmpl 	-60(%rbp), %eax
 
-jne 		falseCondL3
+jne 		.falseCond3
 
-jmp 		endWhileL1
+jmp 		.endWhile1
 
-jmp 		endIfL4
+jmp 		.endIf4
 
-.falseCondL3: 
+.falseCond3: 
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endIfL4: 
+.endIf4: 
 
-jmp 		beginWhileL2
+jmp 		.beginWhile2
 
-.endWhileL1: 
+.endWhile1: 
 
 movl		-68(%rbp), %eax
 leave
@@ -77,7 +77,7 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf()
+call 	printf
 
 mov 		$0, %eax
 leave

@@ -19,6 +19,7 @@ import ir.ast.Type;
 public class simpleSymbol extends absSymbol{
   /*Almacena el valor de la variable*/
 	private Object value;
+	/* Posicion en la memoria con respecto al registro rbp de donde fue declarado */
   private Integer offset;
 
 	public simpleSymbol(String name, Object value, Type type, Integer offset){
