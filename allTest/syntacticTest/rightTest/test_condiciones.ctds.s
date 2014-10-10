@@ -548,6 +548,27 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
+movl 	$1, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$6, -8(%rbp)
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$9, -12(%rbp)
+
+movl		-12(%rbp), %edi
+movl	 	%edi, 12(%rsp)
+
+call 	dados
+movl 	%eax, -16(%rbp) 
+
+movl		-16(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
 call 	printf
 
 mov 		$0, %eax

@@ -156,10 +156,10 @@ set_complete_id ::= COMMA ID:i set_complete_id:s {:s.add(new simpleSymbol(i, nul
                     |   COMMA ID:i LC INT:il RC set_complete_id:s {:s.add(new arraySymbol(i,Type.UNDEFINED,il.getValue(), null, offset.getOffSet(il.getValue()))); RESULT = s;:} 
                     |   /* LAMBDA */ {:RESULT = new LinkedList<absSymbol>();:};
 
-parameters 		  ::= type:t ID:i set_type_id:s {:s.add(new simpleSymbol(i, null, t,  offset.getOffSet()));RESULT = s;:} 
+parameters 		  ::= type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getOffSet()));RESULT = s;:} 
                     |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
 
-set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(new simpleSymbol(i, null, t,  offset.getOffSet())); RESULT = s;:} 
+set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getOffSet())); RESULT = s;:} 
                     |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
 
 

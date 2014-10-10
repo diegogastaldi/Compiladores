@@ -86,19 +86,19 @@ movl		%eax, -48(%rbp)
 movl		-52(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
-call 	neg
-movl 	%eax, -56(%rbp) 
-
 movl		-56(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+movl	 	%edi, 8(%rsp)
+
+call 	and
+movl 	%eax, -60(%rbp) 
 
 movl		-60(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
 movl		-64(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl	 	%edi, 4(%rsp)
 
-call 	and
+call 	neg
 movl 	%eax, -68(%rbp) 
 
 movl		-68(%rbp), %edi
@@ -109,6 +109,9 @@ movl 	%eax, -72(%rbp)
 
 movl		-72(%rbp), %eax
 movl		%eax, -76(%rbp)
+
+movl		-80(%rbp), %edi
+movl	 	%edi, 8(%rsp)
 
 call 	printf
 

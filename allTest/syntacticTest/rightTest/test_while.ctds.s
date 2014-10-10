@@ -1,3 +1,6 @@
+.L07: 
+		.string "%dMcd" 
+
 .text
 
 .globl	maxcomdiv
@@ -33,9 +36,7 @@ cltd
 idivl	-48
 movl		%edx, -56(%rbp)
 
-movl 	$1, 1(%rbp)
-
-movl		1(%rbp), %eax
+movl		$1, %eax
 movl		%eax, -68(%rbp)
 
 movl		-56(%rbp), %eax 
@@ -46,9 +47,7 @@ movl		%edx, -64(%rbp)
 movl		-64(%rbp), %eax
 movl		%eax, -60(%rbp)
 
-movl 	$1, 1(%rbp)
-
-movl		1(%rbp), %eax
+movl		$1, %eax
 movl		%eax, -84(%rbp)
 
 movl		-84(%rbp), %eax 
@@ -118,6 +117,25 @@ ret
 main: 
 pushq	%rbp
 movq		%rsp, %rbp
+
+movl		$.L07, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$6, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$9, -8(%rbp)
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	maxcomdiv
+movl 	%eax, -12(%rbp) 
+
+movl		-12(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

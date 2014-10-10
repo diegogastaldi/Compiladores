@@ -43,6 +43,17 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
+movl 	$2, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+call 	pruMult
+movl 	%eax, -8(%rbp) 
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
 call 	printf
 
 mov 		$0, %eax

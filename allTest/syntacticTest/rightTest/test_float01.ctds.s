@@ -1,3 +1,6 @@
+.L06: 
+		.string "%f" 
+
 .text
 
 .globl	potencia
@@ -144,10 +147,10 @@ movl 	$8.0, -12(%rbp)
 movl		-12(%rbp), %eax
 movl		%eax, -16(%rbp)
 
-movl 	$2, -20(%rbp)
-
 movl		-20(%rbp), %edi
 movl	 	%edi, 4(%rsp)
+
+movl 	$2, -24(%rbp)
 
 movl		-24(%rbp), %edi
 movl	 	%edi, 8(%rsp)
@@ -157,6 +160,12 @@ movl 	%eax, -28(%rbp)
 
 movl		-28(%rbp), %eax
 movl		%eax, -32(%rbp)
+
+movl		$.L06, %edi
+movl	 	%edi, 8(%rsp)
+
+movl		-36(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

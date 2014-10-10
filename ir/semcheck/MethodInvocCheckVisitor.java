@@ -55,7 +55,7 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
     Boolean blockIf = stmt.getIfBlock().accept(this);
     if (stmt.getElseBlock() != null) {
     	Boolean blockElse = stmt.getElseBlock().accept(this);	
-        return blockElse && blockIf;
+      return blockElse && blockIf;
     }
     return blockIf;
   }
@@ -172,7 +172,7 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
                 absSymbol p; 
                 Expression e;
                 for (int i = 0; i < expr.getParameters().size(); i++) {
-                  p = f.getParameters().get(i);
+                  p = f.getParameters().get(i); 
                   e = expr.getParameters().get(i);
                   if (e.getType() != p.getType()) {
                     addError(expr, "No coinciden tipos de parametros formales con actuales");
@@ -199,9 +199,8 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
     Boolean ret = true;
     List<ArgInvoc> args = expr.getParameters();
     for (ArgInvoc a : args) {
-        if (a instanceof ArgInvocExpr) {
-            ret = ret && ((ArgInvocExpr)a).getExpression().accept(this);
-        }
+      if (a instanceof ArgInvocExpr) 
+          ret = ret && ((ArgInvocExpr)a).getExpression().accept(this);
     }
     return ret;
   }
@@ -229,11 +228,11 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   }
 
   private void addError(AST a, String desc) {
-	errors.add(new Error(a.getLineNumber(), a.getColumnNumber(), desc));
+	  errors.add(new Error(a.getLineNumber(), a.getColumnNumber(), desc));
   }
 
   public List<Error> getErrors() {
-	return errors;
+  	return errors;
   }
 
   /* Retorna el bloque con nombre "name" */

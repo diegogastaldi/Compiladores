@@ -86,18 +86,18 @@ movl 	$0, -8(%rbp)
 movl		-8(%rbp), %eax
 movl		%eax, -12(%rbp)
 
-movl 	$10.2, -16(%rbp)
+movl 	$5, -16(%rbp)
 
 movl		-16(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
-movl 	$5, -20(%rbp)
+call 	inc
+movl 	%eax, -20(%rbp) 
 
 movl		-20(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
-call 	inc
-movl 	%eax, -24(%rbp) 
+movl 	$10.2, -24(%rbp)
 
 movl		-24(%rbp), %edi
 movl	 	%edi, 8(%rsp)

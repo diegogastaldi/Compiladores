@@ -1,3 +1,6 @@
+.L03: 
+		.string "%d resultado : " 
+
 .text
 
 .globl	pruArreglos
@@ -56,6 +59,25 @@ jle 		.beginFor2
 main: 
 pushq	%rbp
 movq		%rsp, %rbp
+
+movl		$.L03, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$4, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$8, -8(%rbp)
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	pruArreglos
+movl 	%eax, -12(%rbp) 
+
+movl		-12(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

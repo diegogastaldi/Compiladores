@@ -1,3 +1,6 @@
+.L028: 
+		.string "%f" 
+
 .text
 
 .globl	potencia
@@ -390,9 +393,7 @@ movl		%eax, -320(%rbp)
 
 movl 	$1, -324(%rbp)
 
-movl 	$1, 1(%rbp)
-
-movl		1(%rbp), %eax
+movl		$1, %eax
 movl		%eax, -336(%rbp)
 
 movl		-324(%rbp), %eax 
@@ -596,10 +597,10 @@ movl		%eax, -44(%rbp)
 movl		-44(%rbp), %eax
 movl		%eax, -48(%rbp)
 
-movl 	$2, -52(%rbp)
-
 movl		-52(%rbp), %edi
 movl	 	%edi, 4(%rsp)
+
+movl 	$2, -56(%rbp)
 
 movl		-56(%rbp), %edi
 movl	 	%edi, 8(%rsp)
@@ -609,6 +610,28 @@ movl 	%eax, -60(%rbp)
 
 movl		-60(%rbp), %eax
 movl		%eax, -64(%rbp)
+
+movl		$.L028, %edi
+movl	 	%edi, 8(%rsp)
+
+movl		-68(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$2.0, -76(%rbp)
+
+movl		-72(%rbp), %eax 
+movl		-76(%rbp), %edx 
+addl		%eax, %edx 
+movl		%edx, -80(%rbp)
+
+movl		-80(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	multiples
+movl 	%eax, -84(%rbp) 
+
+movl		-84(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

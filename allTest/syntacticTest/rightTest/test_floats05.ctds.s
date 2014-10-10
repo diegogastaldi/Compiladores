@@ -1,3 +1,6 @@
+.L01: 
+		.string "anidandofuncionesflotantes" 
+
 .text
 
 .globl	div
@@ -69,6 +72,39 @@ movl 	$3.5698, -36(%rbp)
 
 movl		-36(%rbp), %eax
 movl		%eax, -40(%rbp)
+
+movl		$.L01, %edi
+movl	 	%edi, 8(%rsp)
+
+movl		-44(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl		-48(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	resta
+movl 	%eax, -52(%rbp) 
+
+movl		-52(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl		-56(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl		-60(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	div
+movl 	%eax, -64(%rbp) 
+
+movl		-64(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	sum
+movl 	%eax, -68(%rbp) 
+
+movl		-68(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

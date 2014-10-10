@@ -80,11 +80,59 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
-call 	printf
+movl 	$4, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$8, -8(%rbp)
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	pruAritmetica
+movl 	%eax, -12(%rbp) 
+
+movl		-12(%rbp), %edi
+movl	 	%edi, 8(%rsp)
 
 call 	printf
 
 call 	printf
+
+movl 	$4, -16(%rbp)
+
+movl		-16(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$4, -20(%rbp)
+
+movl		-20(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	pruAritmetica
+movl 	%eax, -24(%rbp) 
+
+movl		-24(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	printf
+
+movl 	$8, -28(%rbp)
+
+movl		-28(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$5, -32(%rbp)
+
+movl		-32(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	pruAritmetica
+movl 	%eax, -36(%rbp) 
+
+movl		-36(%rbp), %edi
+movl	 	%edi, 8(%rsp)
 
 call 	printf
 

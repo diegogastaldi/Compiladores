@@ -1,3 +1,6 @@
+.L015: 
+		.string "%f resultado : " 
+
 .text
 
 .globl	promedio
@@ -208,6 +211,30 @@ ret
 main: 
 pushq	%rbp
 movq		%rsp, %rbp
+
+movl		$.L015, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$3.3, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$0.66, -8(%rbp)
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$10.0, -12(%rbp)
+
+movl		-12(%rbp), %edi
+movl	 	%edi, 12(%rsp)
+
+call 	promedio
+movl 	%eax, -16(%rbp) 
+
+movl		-16(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

@@ -1,3 +1,6 @@
+.L07: 
+		.string "%f" 
+
 .text
 
 .globl	sumatoria
@@ -78,9 +81,7 @@ movl		%eax, -96(%rbp)
 
 movl 	$1.0, -100(%rbp)
 
-movl 	$1, 1(%rbp)
-
-movl		1(%rbp), %eax
+movl		$1, %eax
 movl		%eax, -112(%rbp)
 
 movl		-112(%rbp), %eax 
@@ -121,6 +122,12 @@ movl 	%eax, -24(%rbp)
 
 movl		-24(%rbp), %eax
 movl		%eax, -28(%rbp)
+
+movl		$.L07, %edi
+movl	 	%edi, 8(%rsp)
+
+movl		-32(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

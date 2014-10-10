@@ -50,6 +50,9 @@ movl		%eax, -64(%rbp)
 movl		-64(%rbp), %eax
 movl		%eax, -68(%rbp)
 
+movl		-72(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
 call 	printf
 
 mov 		$0, %eax

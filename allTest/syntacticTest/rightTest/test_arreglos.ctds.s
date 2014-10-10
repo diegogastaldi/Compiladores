@@ -117,7 +117,7 @@ movl 	%ebx, -184(%rbp, %rdx, 4)
 
 movl 	$1, -192(%rbp)
 
-movl		$1(%rbp), %eax
+movl		$1, %eax
 movl		%eax, -204(%rbp)
 
 movl		-192(%rbp), %eax 
@@ -167,7 +167,7 @@ movl 	%ebx, -244(%rbp, %rdx, 4)
 
 movl 	$1, -252(%rbp)
 
-movl		$1(%rbp), %eax
+movl		$1, %eax
 movl		%eax, -264(%rbp)
 
 movl		-264(%rbp), %eax 

@@ -327,7 +327,10 @@ public class genAssemblyCode {
 	}
 
 	public static void varassignMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
+		if (instr.getOperand1() instanceof String ) 
+			result += "movl		" + instr.getOperand1() + ", %eax\n";
+		else 
+			result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
 		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
 	}
 

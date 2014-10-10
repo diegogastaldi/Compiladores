@@ -59,10 +59,10 @@ alo2:
 pushq	%rbp
 movq		%rsp, %rbp
 
+movl 	$1, -8(%rbp)
+
 movl		-8(%rbp), %edi
 movl	 	%edi, 4(%rsp)
-
-movl 	$1, -12(%rbp)
 
 movl		-12(%rbp), %edi
 movl	 	%edi, 8(%rsp)
@@ -108,17 +108,17 @@ movl 	%eax, -28(%rbp)
 movl		-28(%rbp), %eax
 movl		%eax, -32(%rbp)
 
-movl 	$3, -36(%rbp)
+movl 	$0, -36(%rbp)
 
-movl		-36(%rbp), %eax 
-movl		-40(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -44(%rbp)
-
-movl		-44(%rbp), %edi
+movl		-36(%rbp), %edi
 movl	 	%edi, 4(%rsp)
 
-movl 	$0, -48(%rbp)
+movl 	$3, -40(%rbp)
+
+movl		-40(%rbp), %eax 
+movl		-44(%rbp), %edx 
+imull	%eax, %edx 
+movl		%edx, -48(%rbp)
 
 movl		-48(%rbp), %edi
 movl	 	%edi, 8(%rsp)

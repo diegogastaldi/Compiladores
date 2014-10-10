@@ -25,7 +25,9 @@ float pruContinue(float x, float b){
 }
 
 void main(){
-    externinvk("printf", float , pruContinue( ));
+	float x;
+	float y;
+    externinvk("printf", float , pruContinue(x, y));
     return;
 }
 

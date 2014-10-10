@@ -63,6 +63,22 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
+movl 	$6.0, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl 	$2, -8(%rbp)
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	sumx
+movl 	%eax, -12(%rbp) 
+
+movl		-12(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
 call 	printf
 
 mov 		$0, %eax

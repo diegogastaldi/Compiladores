@@ -1,3 +1,6 @@
+.L05: 
+		.string "%f resultado : " 
+
 .text
 
 .globl	breaks
@@ -76,6 +79,20 @@ ret
 main: 
 pushq	%rbp
 movq		%rsp, %rbp
+
+movl		$.L05, %edi
+movl	 	%edi, 8(%rsp)
+
+movl 	$1, -4(%rbp)
+
+movl		-4(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+call 	breaks
+movl 	%eax, -8(%rbp) 
+
+movl		-8(%rbp), %edi
+movl	 	%edi, 12(%rsp)
 
 call 	printf
 

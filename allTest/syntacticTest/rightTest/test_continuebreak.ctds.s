@@ -148,6 +148,18 @@ main:
 pushq	%rbp
 movq		%rsp, %rbp
 
+movl		-12(%rbp), %edi
+movl	 	%edi, 4(%rsp)
+
+movl		-16(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
+call 	pruContinue
+movl 	%eax, -20(%rbp) 
+
+movl		-20(%rbp), %edi
+movl	 	%edi, 8(%rsp)
+
 call 	printf
 
 mov 		$0, %eax
