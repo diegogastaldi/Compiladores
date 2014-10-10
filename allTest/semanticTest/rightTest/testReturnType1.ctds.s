@@ -1,20 +1,20 @@
 .text
 
-.globl	method
-.type	method, @function 
-method: 
-enter   $(4 * 0), $0 
+.globl	a
+.type	a, @function 
+a: 
 pushq	%rbp
 movq		%rsp, %rbp
 
-mov 		$0, %eax
+movl 	$0, -4(%rbp)
+
+movl		-4(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 

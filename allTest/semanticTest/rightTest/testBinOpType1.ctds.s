@@ -3,20 +3,16 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-mov 		$0, %eax
-leave
-ret
+movl		-8(%rbp), %eax 
+movl		-12(%rbp), %edx 
+addl		%eax, %edx 
+movl		%edx, -16(%rbp)
 
-.globl	method2
-.type	method2, @function 
-method2: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+movl		-16(%rbp), %eax
+movl		%eax, -20(%rbp)
 
 mov 		$0, %eax
 leave
@@ -25,7 +21,6 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 

@@ -1,4 +1,4 @@
-.L09: 
+.L08: 
 		.string "%f" 
 
 .text
@@ -6,263 +6,266 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
+enter   $(4 * 3), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$0, -24(%rbp)
+movl 	$0, -3(%rbp)
 
-movl		-24(%rbp), %eax
-movl		%eax, -28(%rbp)
+movl		-3(%rbp), %eax
+movl		%eax, -16(%rbp)
 
-movl 	$1, -32(%rbp)
+movl 	$1, -7(%rbp)
 
-movl		-32(%rbp), %eax
-movl		%eax, -36(%rbp)
+movl		-7(%rbp), %eax
+movl		%eax, -12(%rbp)
 
-movl 	$1.0, -40(%rbp)
+movl 	$1.0, -11(%rbp)
 
-movl		-40(%rbp), %eax
-movl		%eax, -44(%rbp)
+movl		-11(%rbp), %eax
+movl		%eax, -20(%rbp)
 
-movl 	$0, -52(%rbp)
+movl 	$0, -15(%rbp)
 
-movl		-48(%rbp), %eax
-cmpl		-52(%rbp), %eax
+movl		0(%rbp), %eax
+cmpl		-15(%rbp), %eax
 setl		%al
 movzbl %al, %eax
-movl		%eax, -56(%rbp)
+movl		%eax, -19(%rbp)
 
-movl 	$1, -60(%rbp)
+movl 	$1, -23(%rbp)
 
-movl		-60(%rbp), %eax
-cmpl 	-56(%rbp), %eax
+movl		-23(%rbp), %eax
+cmpl 	-19(%rbp), %eax
 
-jne 		.falseCond1
+jne 		.falseCond0
 
-movl		-64(%rbp), %eax 
+movl		0(%rbp), %eax 
 negl		%eax 
-movl		%eax, -68(%rbp) 
+movl		%eax, -27(%rbp) 
 
-movl		-68(%rbp), %eax
-movl		%eax, -72(%rbp)
+movl		-27(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$1, -76(%rbp)
+movl 	$1, -31(%rbp)
 
-movl		-76(%rbp), %eax
-movl		%eax, -80(%rbp)
+movl		-31(%rbp), %eax
+movl		%eax, -16(%rbp)
 
-.falseCond1: 
+.falseCond0: 
 
-.beginWhile3: 
+.beginWhile2: 
 
-movl		-84(%rbp), %eax
-cmpl		-88(%rbp), %eax
+movl		-12(%rbp), %eax
+cmpl		0(%rbp), %eax
 setl		%al
 movzbl %al, %eax
-movl		%eax, -92(%rbp)
+movl		%eax, -35(%rbp)
 
-movl 	-96(%rbp), %eax
-cmpl		-100(%rbp), %eax
+movl 	-12(%rbp), %eax
+cmpl		0(%rbp), %eax
 sete		%al
 movzbl	%al, %eax
-movl		%eax, -104(%rbp)
+movl		%eax, -39(%rbp)
 
-cmpl		$0, -92(%rbp)
-jne 		.4
-cmpl		$0, -104(%rbp)
-je 		.5
-.4: 
+cmpl		$0, -35(%rbp)
+jne 		.3
+cmpl		$0, -39(%rbp)
+je 		.4
+.3: 
 movl		$1, %eax
-jmp 		.6
-.5:
+jmp 		.5
+.4:
 movl		$0, %eax
-.6:
-movl		%eax, -108(%rbp)
+.5:
+movl		%eax, -43(%rbp)
 
-movl 	$1, -112(%rbp)
+movl 	$1, -47(%rbp)
 
-movl		-112(%rbp), %eax
-cmpl 	-108(%rbp), %eax
+movl		-47(%rbp), %eax
+cmpl 	-43(%rbp), %eax
 
-jne 		.endWhile2
+jne 		.endWhile1
 
-movl 	$2.0, -124(%rbp)
+movl 	$2.0, -51(%rbp)
 
-movl		-120(%rbp), %eax 
-movl		-124(%rbp), %edx 
+movl		4(%rbp), %eax 
+movl		-51(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -128(%rbp)
+movl		%edx, -55(%rbp)
 
-movl		-116(%rbp), %eax 
-movl		-128(%rbp), %edx 
+movl		-20(%rbp), %eax 
+movl		-55(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -132(%rbp)
+movl		%edx, -59(%rbp)
 
-movl		-132(%rbp), %eax
-movl		%eax, -136(%rbp)
+movl		-59(%rbp), %eax
+movl		%eax, -20(%rbp)
 
-movl 	$1, -144(%rbp)
+movl 	$1, -63(%rbp)
 
-movl		-140(%rbp), %eax 
-movl		-144(%rbp), %edx 
+movl		-12(%rbp), %eax 
+movl		-63(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -148(%rbp)
+movl		%edx, -67(%rbp)
 
-movl		-148(%rbp), %eax
-movl		%eax, -152(%rbp)
+movl		-67(%rbp), %eax
+movl		%eax, -12(%rbp)
 
-jmp 		.beginWhile3
+jmp 		.beginWhile2
 
-.endWhile2: 
+.endWhile1: 
 
-cmpl		$0, -156(%rbp) 
+cmpl		$0, -16(%rbp) 
 sete		%al 
 movzbl	%al, %eax 
-movl		%eax, -160(%rbp) 
+movl		%eax, -71(%rbp) 
 
-cmpl		$0, -160(%rbp) 
+cmpl		$0, -71(%rbp) 
 sete		%al 
 movzbl	%al, %eax 
-movl		%eax, -164(%rbp) 
+movl		%eax, -75(%rbp) 
 
-movl 	$1, -168(%rbp)
+movl 	$1, -79(%rbp)
 
-movl		-168(%rbp), %eax
-cmpl 	-164(%rbp), %eax
+movl		-79(%rbp), %eax
+cmpl 	-75(%rbp), %eax
 
-jne 		.falseCond7
+jne 		.falseCond6
 
-movl 	$1.0, -172(%rbp)
+movl 	$1.0, -83(%rbp)
 
-movl		-172(%rbp), %eax 
+movl		-83(%rbp), %eax 
 cltd
-idivl	-176
-movl		%eax, -180(%rbp)
+idivl	-20
+movl		%eax, -87(%rbp)
 
-movl		-180(%rbp), %eax
+movl		-87(%rbp), %eax
 leave
 ret
 
-jmp 		.endIf8
+jmp 		.endIf7
 
-.falseCond7: 
+.falseCond6: 
 
-movl		-184(%rbp), %eax
+movl		-20(%rbp), %eax
 leave
 ret
 
-.endIf8: 
+.endIf7: 
 
-movl 	$100.1, -188(%rbp)
+movl 	$100.1, -91(%rbp)
 
-movl		-188(%rbp), %eax 
+movl		-91(%rbp), %eax 
 negl		%eax 
-movl		%eax, -192(%rbp) 
+movl		%eax, -95(%rbp) 
 
-movl		-192(%rbp), %eax
+movl		-95(%rbp), %eax
 leave
 ret
 
 .globl	multRepeat
 .type	multRepeat, @function 
 multRepeat: 
+enter   $(4 * 1), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		-32(%rbp), %eax 
-movl		-36(%rbp), %edx 
+movl		4(%rbp), %eax 
+movl		0(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -40(%rbp)
+movl		%edx, -1(%rbp)
 
-movl		-28(%rbp), %eax 
-movl		-40(%rbp), %edx 
+movl		4(%rbp), %eax 
+movl		-1(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -44(%rbp)
+movl		%edx, -5(%rbp)
 
-movl		-24(%rbp), %eax 
-movl		-44(%rbp), %edx 
+movl		4(%rbp), %eax 
+movl		-5(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -48(%rbp)
+movl		%edx, -9(%rbp)
 
-movl		-20(%rbp), %eax 
-movl		-48(%rbp), %edx 
+movl		0(%rbp), %eax 
+movl		-9(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -52(%rbp)
+movl		%edx, -13(%rbp)
 
-movl		-16(%rbp), %eax 
-movl		-52(%rbp), %edx 
+movl		0(%rbp), %eax 
+movl		-13(%rbp), %edx 
 imull	%eax, %edx 
-movl		%edx, -56(%rbp)
+movl		%edx, -17(%rbp)
 
-movl		-56(%rbp), %eax
-movl		%eax, -60(%rbp)
+movl		-17(%rbp), %eax
+movl		%eax, -12(%rbp)
 
-movl		-64(%rbp), %eax
+movl		-12(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 2), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$15.0, -12(%rbp)
+movl 	$15.0, -2(%rbp)
 
-movl		-12(%rbp), %eax 
+movl		-2(%rbp), %eax 
 negl		%eax 
-movl		%eax, -16(%rbp) 
+movl		%eax, -6(%rbp) 
 
-movl		-16(%rbp), %eax
-movl		%eax, -20(%rbp)
+movl		-6(%rbp), %eax
+movl		%eax, -8(%rbp)
 
-movl 	$4.3, -24(%rbp)
+movl 	$4.3, -10(%rbp)
 
-movl		-24(%rbp), %eax
-movl		%eax, -28(%rbp)
+movl		-10(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$7.6, -32(%rbp)
+movl 	$7.6, -14(%rbp)
 
-movl		-32(%rbp), %eax 
+movl		-14(%rbp), %eax 
 negl		%eax 
-movl		%eax, -36(%rbp) 
+movl		%eax, -18(%rbp) 
 
-movl		-36(%rbp), %eax
-movl		%eax, -40(%rbp)
+movl		-18(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-movl 	$80.0, -44(%rbp)
+movl 	$80.0, -22(%rbp)
 
-movl		-44(%rbp), %eax
-movl		%eax, -48(%rbp)
+movl		-22(%rbp), %eax
+movl		%eax, -16(%rbp)
 
-movl		-52(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+movl 	$2, -26(%rbp)
 
-movl 	$2, -56(%rbp)
+movl		-26(%rbp), %edi
+movl	 	%edi, -30(%rsp)
 
-movl		-56(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl		-16(%rbp), %edi
+movl	 	%edi, -34(%rsp)
 
 call 	potencia
-movl 	%eax, -60(%rbp) 
+movl 	%eax, -38(%rbp) 
 
-movl		-60(%rbp), %eax
-movl		%eax, -64(%rbp)
+movl		-38(%rbp), %eax
+movl		%eax, -12(%rbp)
 
-movl		$.L09, %edi
-movl	 	%edi, 8(%rsp)
+movl		-12(%rbp), %edi
+movl	 	%edi, -46(%rsp)
 
-movl		-68(%rbp), %edi
-movl	 	%edi, 4(%rsp)
-
-movl		-72(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl		-8(%rbp), %edi
+movl	 	%edi, -50(%rsp)
 
 call 	multRepeat
-movl 	%eax, -76(%rbp) 
+movl 	%eax, -54(%rbp) 
 
-movl		-76(%rbp), %edi
-movl	 	%edi, 12(%rsp)
+movl		-54(%rbp), %edi
+movl	 	%edi, -62(%rsp)
+
+movl		$.L08, %edi
+movl	 	%edi, -66(%rsp)
 
 call 	printf
 

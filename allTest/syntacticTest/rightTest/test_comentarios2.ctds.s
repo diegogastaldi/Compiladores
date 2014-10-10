@@ -3,59 +3,61 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
+enter   $(4 * 1), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		-16(%rbp), %eax
-cmpl		-20(%rbp), %eax
+movl		4(%rbp), %eax
+cmpl		0(%rbp), %eax
 setg		%al
 movzbl	%al, %eax
-movl		%eax, -24(%rbp)
+movl		%eax, -1(%rbp)
 
-movl 	$1, -28(%rbp)
+movl 	$1, -5(%rbp)
 
-movl		-28(%rbp), %eax
-cmpl 	-24(%rbp), %eax
+movl		-5(%rbp), %eax
+cmpl 	-1(%rbp), %eax
 
-jne 		.falseCond1
+jne 		.falseCond0
 
-movl		-32(%rbp), %eax
-movl		%eax, -36(%rbp)
+movl		4(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-jmp 		.endIf2
+jmp 		.endIf1
 
-.falseCond1: 
+.falseCond0: 
 
-movl		-40(%rbp), %eax
-movl		%eax, -44(%rbp)
+movl		0(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-.endIf2: 
+.endIf1: 
 
-movl		-48(%rbp), %eax
+movl		0(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$4, -4(%rbp)
+movl 	$8, 0(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+movl		0(%rbp), %edi
+movl	 	%edi, -4(%rsp)
 
-movl 	$8, -8(%rbp)
+movl 	$4, -8(%rbp)
 
 movl		-8(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl	 	%edi, -12(%rsp)
 
 call 	pruAritmetica
-movl 	%eax, -12(%rbp) 
+movl 	%eax, -16(%rbp) 
 
-movl		-12(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl		-16(%rbp), %edi
+movl	 	%edi, -24(%rsp)
 
 call 	printf
 

@@ -316,6 +316,7 @@ public class genAssemblyCode {
 		result += ".globl	" + instr.getResult() + "\n";
 		result += ".type	" + instr.getResult() + ", @function \n";			
 		result += instr.getResult() + ": \n";		
+		result += "enter   $(4 * " + instr.getOperand1() + "), $0 \n";
 		result += "pushq	%rbp\n";
 		result += "movq		%rsp, %rbp\n";
 	}

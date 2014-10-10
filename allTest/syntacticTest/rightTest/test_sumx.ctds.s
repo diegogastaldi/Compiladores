@@ -3,81 +3,83 @@
 .globl	sumx
 .type	sumx, @function 
 sumx: 
+enter   $(4 * 2), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$0.0, -20(%rbp)
+movl 	$0.0, -2(%rbp)
 
-movl		-20(%rbp), %eax
-movl		%eax, -24(%rbp)
+movl		-2(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$0, -28(%rbp)
+movl 	$0, -6(%rbp)
 
-movl		-28(%rbp), %eax
-movl		%eax, -32(%rbp)
+movl		-6(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-.beginWhile2: 
+.beginWhile1: 
 
-movl		-36(%rbp), %eax
-cmpl		-40(%rbp), %eax
+movl		-4(%rbp), %eax
+cmpl		0(%rbp), %eax
 setl		%al
 movzbl %al, %eax
-movl		%eax, -44(%rbp)
+movl		%eax, -10(%rbp)
 
-movl 	$1, -48(%rbp)
+movl 	$1, -14(%rbp)
 
-movl		-48(%rbp), %eax
-cmpl 	-44(%rbp), %eax
+movl		-14(%rbp), %eax
+cmpl 	-10(%rbp), %eax
 
-jne 		.endWhile1
+jne 		.endWhile0
 
-movl		-52(%rbp), %eax 
-movl		-56(%rbp), %edx 
+movl		0(%rbp), %eax 
+movl		4(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -60(%rbp)
+movl		%edx, -18(%rbp)
 
-movl		-60(%rbp), %eax
-movl		%eax, -64(%rbp)
+movl		-18(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$1, -72(%rbp)
+movl 	$1, -22(%rbp)
 
-movl		-68(%rbp), %eax 
-movl		-72(%rbp), %edx 
+movl		-4(%rbp), %eax 
+movl		-22(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -76(%rbp)
+movl		%edx, -26(%rbp)
 
-movl		-76(%rbp), %eax
-movl		%eax, -80(%rbp)
+movl		-26(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-jmp 		.beginWhile2
+jmp 		.beginWhile1
 
-.endWhile1: 
+.endWhile0: 
 
-movl		-84(%rbp), %eax
+movl		0(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$6.0, -4(%rbp)
+movl 	$2, 0(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+movl		0(%rbp), %edi
+movl	 	%edi, -4(%rsp)
 
-movl 	$2, -8(%rbp)
+movl 	$6.0, -8(%rbp)
 
 movl		-8(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl	 	%edi, -12(%rsp)
 
 call 	sumx
-movl 	%eax, -12(%rbp) 
+movl 	%eax, -16(%rbp) 
 
-movl		-12(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl		-16(%rbp), %edi
+movl	 	%edi, -24(%rsp)
 
 call 	printf
 

@@ -17,24 +17,44 @@
 package intermediateCode;
 public class Labels {
 	/* Modificador para label */
-	private int l;
+	private int label;
 	/* Modificador para variables */	
   public int temp;
   /* Posicion base para definir las variables locales */
   public int globalParam;
   /* Indica si ya se cargaron las variables globales */
+  private int param;
   private boolean global;
 
   public Labels() {
     temp = 0;
-    l = 0;
+    param = 0;
+    label = 0;
     globalParam = 0;
     global = false;
   }
 
 	public String getLabel() {
-		return ""+(++l);
+		return ""+(label++);
 	}
+
+  public int getOffSet() {
+    int result = temp;
+    temp -= 4;
+    return result;
+  }  
+
+  public int getOffSet(int space) {
+    int result = temp;
+    temp -= (4 * space);
+    return result;
+  }  
+
+  public int getOffSetParam() {
+    int result = param;
+    param += 4;
+    return result;
+  }  
 
   public void restartGlobal () {
     if (!global) {
@@ -42,21 +62,11 @@ public class Labels {
       global = true;
     } else       
       temp = globalParam;
+    param = 0;
   }
 
   public void restart(int value) {
     temp = - value;
   }
 
-  public int getOffSet() {
-    temp -= 4;
-    return temp;
-  }  
-
-  public int getOffSet(int space) {
-    temp -= 4;
-    int r = temp;
-    temp -= 4 * (space - 1);
-    return r;
-  }  
 } 

@@ -1,4 +1,4 @@
-.L05: 
+.L04: 
 		.string "%f resultado : " 
 
 .text
@@ -6,98 +6,100 @@
 .globl	breaks
 .type	breaks, @function 
 breaks: 
+enter   $(4 * 2), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$0, -16(%rbp)
+movl 	$0, -2(%rbp)
 
-movl		-16(%rbp), %eax
-movl		%eax, -20(%rbp)
+movl		-2(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-.beginWhile2: 
+.beginWhile1: 
 
-movl 	$10, -28(%rbp)
+movl 	$10, -6(%rbp)
 
-movl		-24(%rbp), %eax
-cmpl		-28(%rbp), %eax
+movl		0(%rbp), %eax
+cmpl		-6(%rbp), %eax
 setl		%al
 movzbl %al, %eax
-movl		%eax, -32(%rbp)
+movl		%eax, -10(%rbp)
 
-movl 	$1, -36(%rbp)
+movl 	$1, -14(%rbp)
 
-movl		-36(%rbp), %eax
-cmpl 	-32(%rbp), %eax
+movl		-14(%rbp), %eax
+cmpl 	-10(%rbp), %eax
 
-jne 		.endWhile1
+jne 		.endWhile0
 
-movl 	$1, -44(%rbp)
+movl 	$1, -18(%rbp)
 
-movl		-40(%rbp), %eax 
-movl		-44(%rbp), %edx 
+movl		0(%rbp), %eax 
+movl		-18(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -48(%rbp)
+movl		%edx, -22(%rbp)
 
-movl		-48(%rbp), %eax
-movl		%eax, -52(%rbp)
+movl		-22(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$2.3, -56(%rbp)
+movl 	$2.3, -26(%rbp)
 
-movl		-56(%rbp), %eax
-movl		%eax, -60(%rbp)
+movl		-26(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-movl 	$0, -68(%rbp)
+movl 	$0, -30(%rbp)
 
-movl		-64(%rbp), %eax
-cmpl		-68(%rbp), %eax
+movl		0(%rbp), %eax
+cmpl		-30(%rbp), %eax
 setl		%al
 movzbl %al, %eax
-movl		%eax, -72(%rbp)
+movl		%eax, -34(%rbp)
 
-movl 	$1, -76(%rbp)
+movl 	$1, -38(%rbp)
 
-movl		-76(%rbp), %eax
-cmpl 	-72(%rbp), %eax
+movl		-38(%rbp), %eax
+cmpl 	-34(%rbp), %eax
 
-jne 		.falseCond3
+jne 		.falseCond2
 
-jmp 		.endWhile1
+jmp 		.endWhile0
 
-jmp 		.endIf4
+jmp 		.endIf3
 
-.falseCond3: 
+.falseCond2: 
 
-jmp 		.beginWhile2
+jmp 		.beginWhile1
 
-.endIf4: 
+.endIf3: 
 
-jmp 		.beginWhile2
+jmp 		.beginWhile1
 
-.endWhile1: 
+.endWhile0: 
 
-movl		-80(%rbp), %eax
+movl		0(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		$.L05, %edi
-movl	 	%edi, 8(%rsp)
+movl 	$1, 0(%rbp)
 
-movl 	$1, -4(%rbp)
-
-movl		-4(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+movl		0(%rbp), %edi
+movl	 	%edi, -4(%rsp)
 
 call 	breaks
 movl 	%eax, -8(%rbp) 
 
 movl		-8(%rbp), %edi
-movl	 	%edi, 12(%rsp)
+movl	 	%edi, -16(%rsp)
+
+movl		$.L04, %edi
+movl	 	%edi, -20(%rsp)
 
 call 	printf
 

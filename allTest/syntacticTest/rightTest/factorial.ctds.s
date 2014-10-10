@@ -3,6 +3,7 @@
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
@@ -13,18 +14,19 @@ ret
 .globl	met
 .type	met, @function 
 met: 
+enter   $(4 * 3), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		-20(%rbp), %eax 
-movl		-16(%rbp), %edx 
+movl		-4(%rbp), %eax 
+movl		0(%rbp), %edx 
 subl		%eax, %edx 
-movl		%edx, -24(%rbp)
+movl		%edx, -3(%rbp)
 
-movl		-24(%rbp), %eax
-movl		%eax, -28(%rbp)
+movl		-3(%rbp), %eax
+movl		%eax, -8(%rbp)
 
-movl		-32(%rbp), %eax
+movl		-8(%rbp), %eax
 leave
 ret
 

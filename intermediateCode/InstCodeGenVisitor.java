@@ -43,7 +43,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   public void blockCode(completeFunction c) {
     /* Label de inicio de funcion */
-    instructions.add(new Instr(Operator.METHODLABEL, null, null, c.getName()));
+    instructions.add(new Instr(Operator.METHODLABEL, c.getReserve(), null, c.getName()));
     /* Reinicia labels */
     genLabels.restart(c.getReserve());
     /* Genera instrucciones assembler */
@@ -245,34 +245,35 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     
   public Integer visit(InternInvkStmt stmt){
   	Integer parameter;
-    int numParam = 1;
-    for (Expression a : stmt.getParameters()) {
-        parameter = a.accept(this);
-        /* Apila paramatros en memoria */
-        instructions.add(new Instr(Operator.PARAM, parameter, null, 4 * numParam++));
+    Expression a;
+    for (int i = stmt.getParameters().size()-1; i >= 0; i--) {
+      a = stmt.getParameters().get(i);
+      parameter = a.accept(this);
+      /* Apila paramatros en memoria */
+      instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
     }
     /* Realiza la llamada a la funcion */
-    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), numParam - 1, null));
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
     return null;
   }	
   
   public Integer visit(ExternInvkStmt stmt){
-    int numParam = 1;
     Integer parameter;
-    for (ArgInvoc a : stmt.getParameters()) {
-        numParam++;
+    ArgInvoc a;
+    for (int i = stmt.getParameters().size()-1; i >= 0; i--) {
+      a = stmt.getParameters().get(i);
 			/* Apila paramatros en memoria */        
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, 4 * numParam));        
+        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));        
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
-        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, null, 4 * numParam));        
+        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, null, genLabels.getOffSet()));        
       }
     }
     /* Realiza la llamada a la funcion */
-    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), numParam - 1, null));
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
   	return null; 
   }
 
@@ -393,36 +394,36 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   public Integer visit (InternInvkExpr expr){
-    int numParam = 1;
   	Integer parameter;
-
-    for (Expression a : expr.getParameters()) {
-        parameter = a.accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, 4 * numParam++));
+    Expression a;
+    for (int i = expr.getParameters().size()-1; i >= 0; i--) {
+      a = expr.getParameters().get(i);
+      parameter = a.accept(this);
+      instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
     }
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), numParam - 1, result));
+    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
 
     return result;
   } 
   
   public Integer visit (ExternInvkExpr expr){
-    int numParam = 1;
     Integer parameter;    
-    for (ArgInvoc a : expr.getParameters()) {
-      numParam++;
+    ArgInvoc a;
+    for (int i = expr.getParameters().size()-1; i >= 0; i--) {
+      a = expr.getParameters().get(i);
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, 4 * numParam));        
+        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));        
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
-        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, null, 4 * numParam));        
+        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, null, genLabels.getOffSet()));        
       }
     }
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), numParam - 1, result));
+    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
     return result;
   }
   
@@ -456,10 +457,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   
 // visit locations  
   public Integer visit(VarLocation loc)   {
-    return genLabels.getOffSet();
+    return loc.getOffSet();
   }
 
   public Integer visit(ArrayLocation loc)  {
-    return genLabels.getOffSet();
+    return loc.getOffSet();
   }
 }

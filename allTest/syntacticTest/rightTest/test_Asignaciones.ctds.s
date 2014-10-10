@@ -3,89 +3,91 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
+enter   $(4 * 2), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$1, -16(%rbp)
+movl 	$1, -2(%rbp)
 
-movl		-16(%rbp), %eax
-movl		%eax, -20(%rbp)
+movl		-2(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$8, -24(%rbp)
+movl 	$8, -6(%rbp)
 
-movl		-24(%rbp), %eax
-movl		%eax, -28(%rbp)
+movl		-6(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-movl 	$699, -32(%rbp)
+movl 	$699, -10(%rbp)
 
-movl		-32(%rbp), %eax 
-movl		-36(%rbp), %edx 
+movl		-10(%rbp), %eax 
+movl		0(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -40(%rbp)
+movl		%edx, -14(%rbp)
 
-movl		-40(%rbp), %eax
-movl		%eax, -44(%rbp)
+movl		-14(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$2, -52(%rbp)
+movl 	$2, -18(%rbp)
 
-movl		-48(%rbp), %eax 
-movl		-52(%rbp), %edx 
+movl		-4(%rbp), %eax 
+movl		-18(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -56(%rbp)
+movl		%edx, -22(%rbp)
 
-movl		-56(%rbp), %eax
-movl		%eax, -60(%rbp)
+movl		-22(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-movl 	$2, -76(%rbp)
+movl 	$2, -26(%rbp)
 
-movl		-72(%rbp), %eax 
+movl		-4(%rbp), %eax 
 cltd
-idivl	-76
-movl		%eax, -80(%rbp)
+idivl	-26
+movl		%eax, -30(%rbp)
 
-movl		-68(%rbp), %eax 
+movl		0(%rbp), %eax 
 cltd
-idivl	-80
-movl		%eax, -84(%rbp)
+idivl	-30
+movl		%eax, -34(%rbp)
 
-movl		-64(%rbp), %eax 
+movl		0(%rbp), %eax 
 cltd
-idivl	-84
-movl		%eax, -88(%rbp)
+idivl	-34
+movl		%eax, -38(%rbp)
 
-movl		-88(%rbp), %eax
-movl		%eax, -92(%rbp)
+movl		-38(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl 	$2, -100(%rbp)
+movl 	$2, -42(%rbp)
 
-movl		-100(%rbp), %eax 
+movl		-42(%rbp), %eax 
 cltd
-idivl	-96
-movl		%edx, -104(%rbp)
+idivl	0
+movl		%edx, -46(%rbp)
 
-movl		-104(%rbp), %eax
-movl		%eax, -108(%rbp)
+movl		-46(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl		-112(%rbp), %eax
+movl		0(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$3, -4(%rbp)
+movl 	$3, 0(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+movl		0(%rbp), %edi
+movl	 	%edi, -4(%rsp)
 
 call 	pruAritmetica
 movl 	%eax, -8(%rbp) 
 
 movl		-8(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl	 	%edi, -16(%rsp)
 
 call 	printf
 

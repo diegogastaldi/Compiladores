@@ -1,4 +1,4 @@
-.L07: 
+.L06: 
 		.string "%dMcd" 
 
 .text
@@ -6,136 +6,138 @@
 .globl	maxcomdiv
 .type	maxcomdiv, @function 
 maxcomdiv: 
+enter   $(4 * 3), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl 	$1, -24(%rbp)
+movl 	$1, -3(%rbp)
 
-movl		-24(%rbp), %eax
-movl		%eax, -28(%rbp)
+movl		-3(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-.beginWhile2: 
+.beginWhile1: 
 
-movl 	$0, -36(%rbp)
+movl 	$0, -7(%rbp)
 
-movl		-32(%rbp), %eax
-cmpl		-36(%rbp), %eax
+movl		-4(%rbp), %eax
+cmpl		-7(%rbp), %eax
 setne 	%al
 movzbl %al, %eax
-movl		%eax, -40(%rbp)
+movl		%eax, -11(%rbp)
 
-movl 	$1, -44(%rbp)
+movl 	$1, -15(%rbp)
 
-movl		-44(%rbp), %eax
-cmpl 	-40(%rbp), %eax
+movl		-15(%rbp), %eax
+cmpl 	-11(%rbp), %eax
 
-jne 		.endWhile1
+jne 		.endWhile0
 
-movl		-52(%rbp), %eax 
+movl		-8(%rbp), %eax 
 cltd
-idivl	-48
-movl		%edx, -56(%rbp)
+idivl	0
+movl		%edx, -19(%rbp)
 
 movl		$1, %eax
-movl		%eax, -68(%rbp)
+movl		%eax, -27(%rbp)
 
-movl		-56(%rbp), %eax 
-movl		-68(%rbp), %edx 
+movl		-19(%rbp), %eax 
+movl		-27(%rbp), %edx 
 addl		%eax, %edx 
-movl		%edx, -64(%rbp)
+movl		%edx, -23(%rbp)
 
-movl		-64(%rbp), %eax
-movl		%eax, -60(%rbp)
+movl		-23(%rbp), %eax
+movl		%eax, -4(%rbp)
 
 movl		$1, %eax
-movl		%eax, -84(%rbp)
+movl		%eax, -35(%rbp)
 
-movl		-84(%rbp), %eax 
-movl		-72(%rbp), %edx 
+movl		-35(%rbp), %eax 
+movl		-8(%rbp), %edx 
 subl		%eax, %edx 
-movl		%edx, -80(%rbp)
+movl		%edx, -31(%rbp)
 
-movl		-80(%rbp), %eax
-movl		%eax, -76(%rbp)
+movl		-31(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-jmp 		.beginWhile2
+jmp 		.beginWhile1
 
-jmp 		.beginWhile2
+jmp 		.beginWhile1
 
-.endWhile1: 
+.endWhile0: 
 
-.beginWhile4: 
+.beginWhile3: 
 
-movl 	$0, -92(%rbp)
+movl 	$0, -39(%rbp)
 
-movl		-88(%rbp), %eax
-cmpl		-92(%rbp), %eax
+movl		-4(%rbp), %eax
+cmpl		-39(%rbp), %eax
 setne 	%al
 movzbl %al, %eax
-movl		%eax, -96(%rbp)
+movl		%eax, -43(%rbp)
 
-movl 	$1, -100(%rbp)
+movl 	$1, -47(%rbp)
 
-movl		-100(%rbp), %eax
-cmpl 	-96(%rbp), %eax
+movl		-47(%rbp), %eax
+cmpl 	-43(%rbp), %eax
 
-jne 		.endWhile3
+jne 		.endWhile2
 
-jmp 		.endWhile3
+jmp 		.endWhile2
 
-jmp 		.beginWhile4
+jmp 		.beginWhile3
 
-.endWhile3: 
+.endWhile2: 
 
-.beginWhile6: 
+.beginWhile5: 
 
-movl 	$0, -108(%rbp)
+movl 	$0, -51(%rbp)
 
-movl		-104(%rbp), %eax
-cmpl		-108(%rbp), %eax
+movl		-4(%rbp), %eax
+cmpl		-51(%rbp), %eax
 setne 	%al
 movzbl %al, %eax
-movl		%eax, -112(%rbp)
+movl		%eax, -55(%rbp)
 
-movl 	$1, -116(%rbp)
+movl 	$1, -59(%rbp)
 
-movl		-116(%rbp), %eax
-cmpl 	-112(%rbp), %eax
+movl		-59(%rbp), %eax
+cmpl 	-55(%rbp), %eax
 
-jne 		.endWhile5
+jne 		.endWhile4
 
-jmp 		.beginWhile6
+jmp 		.beginWhile5
 
-.endWhile5: 
+.endWhile4: 
 
-movl		-120(%rbp), %eax
+movl		0(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		$.L07, %edi
-movl	 	%edi, 8(%rsp)
+movl 	$9, 0(%rbp)
 
-movl 	$6, -4(%rbp)
+movl		0(%rbp), %edi
+movl	 	%edi, -4(%rsp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, 4(%rsp)
-
-movl 	$9, -8(%rbp)
+movl 	$6, -8(%rbp)
 
 movl		-8(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl	 	%edi, -12(%rsp)
 
 call 	maxcomdiv
-movl 	%eax, -12(%rbp) 
+movl 	%eax, -16(%rbp) 
 
-movl		-12(%rbp), %edi
-movl	 	%edi, 12(%rsp)
+movl		-16(%rbp), %edi
+movl	 	%edi, -24(%rsp)
+
+movl		$.L06, %edi
+movl	 	%edi, -28(%rsp)
 
 call 	printf
 

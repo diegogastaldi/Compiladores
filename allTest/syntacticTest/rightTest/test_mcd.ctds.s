@@ -1,4 +1,4 @@
-.L05: 
+.L04: 
 		.string "mcd%d" 
 
 .text
@@ -6,108 +6,110 @@
 .globl	maxcomdiv
 .type	maxcomdiv, @function 
 maxcomdiv: 
+enter   $(4 * 3), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		-24(%rbp), %eax
-cmpl		-28(%rbp), %eax
+movl		4(%rbp), %eax
+cmpl		0(%rbp), %eax
 setg		%al
 movzbl	%al, %eax
-movl		%eax, -32(%rbp)
+movl		%eax, -3(%rbp)
 
-movl 	$1, -36(%rbp)
+movl 	$1, -7(%rbp)
 
-movl		-36(%rbp), %eax
-cmpl 	-32(%rbp), %eax
+movl		-7(%rbp), %eax
+cmpl 	-3(%rbp), %eax
 
-jne 		.falseCond1
+jne 		.falseCond0
 
-movl		-40(%rbp), %eax
-movl		%eax, -44(%rbp)
+movl		4(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl		-48(%rbp), %eax
-movl		%eax, -52(%rbp)
+movl		0(%rbp), %eax
+movl		%eax, -8(%rbp)
 
-jmp 		.endIf2
+jmp 		.endIf1
 
-.falseCond1: 
+.falseCond0: 
 
-movl		-56(%rbp), %eax
-movl		%eax, -60(%rbp)
+movl		0(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl		-64(%rbp), %eax
-movl		%eax, -68(%rbp)
+movl		4(%rbp), %eax
+movl		%eax, -8(%rbp)
 
-.endIf2: 
+.endIf1: 
 
-movl 	$1, -72(%rbp)
+movl 	$1, -11(%rbp)
 
-movl		-72(%rbp), %eax
-movl		%eax, -76(%rbp)
+movl		-11(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-.beginWhile4: 
+.beginWhile3: 
 
-movl 	$0, -84(%rbp)
+movl 	$0, -15(%rbp)
 
-movl		-80(%rbp), %eax
-cmpl		-84(%rbp), %eax
+movl		-4(%rbp), %eax
+cmpl		-15(%rbp), %eax
 setne 	%al
 movzbl %al, %eax
-movl		%eax, -88(%rbp)
+movl		%eax, -19(%rbp)
 
-movl 	$1, -92(%rbp)
+movl 	$1, -23(%rbp)
 
-movl		-92(%rbp), %eax
-cmpl 	-88(%rbp), %eax
+movl		-23(%rbp), %eax
+cmpl 	-19(%rbp), %eax
 
-jne 		.endWhile3
+jne 		.endWhile2
 
-movl		-100(%rbp), %eax 
+movl		-8(%rbp), %eax 
 cltd
-idivl	-96
-movl		%edx, -104(%rbp)
+idivl	0
+movl		%edx, -27(%rbp)
 
-movl		-104(%rbp), %eax
-movl		%eax, -108(%rbp)
+movl		-27(%rbp), %eax
+movl		%eax, -4(%rbp)
 
-movl		-112(%rbp), %eax
-movl		%eax, -116(%rbp)
+movl		-8(%rbp), %eax
+movl		%eax, 0(%rbp)
 
-movl		-120(%rbp), %eax
-movl		%eax, -124(%rbp)
+movl		-4(%rbp), %eax
+movl		%eax, -8(%rbp)
 
-jmp 		.beginWhile4
+jmp 		.beginWhile3
 
-.endWhile3: 
+.endWhile2: 
 
-movl		-128(%rbp), %eax
+movl		0(%rbp), %eax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
+enter   $(4 * 0), $0 
 pushq	%rbp
 movq		%rsp, %rbp
 
-movl		$.L05, %edi
-movl	 	%edi, 8(%rsp)
+movl 	$9, 0(%rbp)
 
-movl 	$6, -4(%rbp)
+movl		0(%rbp), %edi
+movl	 	%edi, -4(%rsp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, 4(%rsp)
-
-movl 	$9, -8(%rbp)
+movl 	$6, -8(%rbp)
 
 movl		-8(%rbp), %edi
-movl	 	%edi, 8(%rsp)
+movl	 	%edi, -12(%rsp)
 
 call 	maxcomdiv
-movl 	%eax, -12(%rbp) 
+movl 	%eax, -16(%rbp) 
 
-movl		-12(%rbp), %edi
-movl	 	%edi, 12(%rsp)
+movl		-16(%rbp), %edi
+movl	 	%edi, -24(%rsp)
+
+movl		$.L04, %edi
+movl	 	%edi, -28(%rsp)
 
 call 	printf
 
