@@ -42,10 +42,13 @@ public enum Operator {
  	, VARASSIGN 
  	, TEXT			/* Tercer parametro: texto a escribir en el codigo*/
  	, STRING 		/* Primer parametro: string a definir
- 								 Segundo parametro: Label para definir el string*/;
+ 								 Segundo parametro: Label para definir el string*/
+ 	, GLOBAL;
 	@Override
 	public String toString() {
 		switch(this) {
+			case GLOBAL:
+				return "GLOBAL";
 			case STRING:
 				return "STRING";			
 			case ARRAYASSIGN:

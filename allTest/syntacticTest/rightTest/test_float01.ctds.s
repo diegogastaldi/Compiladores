@@ -6,114 +6,112 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(4 * 3), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 23), $0 
 
-movl 	$0, -3(%rbp)
+movl 	$0, -20(%rbp)
 
-movl		-3(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$1, -7(%rbp)
+movl 	$1, -24(%rbp)
 
-movl		-7(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl 	$1.0, -11(%rbp)
+movl 	$1.0, -28(%rbp)
 
-movl		-11(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-movl 	$0, -15(%rbp)
+movl 	$0, -32(%rbp)
 
-movl		0(%rbp), %eax
-cmpl		-15(%rbp), %eax
+mov		0(%rbp), %rax
+cmp		-32(%rbp), %rax
 setl		%al
-movzbl %al, %eax
-movl		%eax, -19(%rbp)
+movzb %al, %rax
+mov		%rax, -36(%rbp)
 
-movl 	$1, -23(%rbp)
+movl 	$1, -40(%rbp)
 
-movl		-23(%rbp), %eax
-cmpl 	-19(%rbp), %eax
+mov		-40(%rbp), %r10
+cmp 	-36(%rbp), %r10
 
 jne 		.falseCond0
 
-movl		0(%rbp), %eax 
-negl		%eax 
-movl		%eax, -27(%rbp) 
+mov		0(%rbp), %rax 
+neg		%rax 
+mov		%rax, -44(%rbp) 
 
-movl		-27(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-44(%rbp), %rax
+mov		%rax, 0(%rbp)
 
-cmpl		$0, -4(%rbp) 
+cmpl		$0, -8(%rbp) 
 sete		%al 
-movzbl	%al, %eax 
-movl		%eax, -31(%rbp) 
+movzb	%al, %rax 
+mov		%rax, -48(%rbp) 
 
-movl		-31(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-48(%rbp), %rax
+mov		%rax, -8(%rbp)
 
 .falseCond0: 
 
 .beginWhile2: 
 
-movl		0(%rbp), %eax
-cmpl		0(%rbp), %eax
+mov		-4(%rbp), %rax
+cmp		0(%rbp), %rax
 setle 	%al
-movzbl %al, %eax
-movl		%eax, -35(%rbp)
+movzb  %al, %rax
+mov		%rax, -52(%rbp)
 
-movl 	$1, -39(%rbp)
+movl 	$1, -56(%rbp)
 
-movl		-39(%rbp), %eax
-cmpl 	-35(%rbp), %eax
+mov		-56(%rbp), %r10
+cmp 	-52(%rbp), %r10
 
 jne 		.endWhile1
 
-movl		-8(%rbp), %eax 
-movl		4(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -43(%rbp)
+mov		-12(%rbp), %r10 
+mov		1(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -60(%rbp)
 
-movl		-43(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-60(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-movl 	$1, -47(%rbp)
+movl 	$1, -64(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-47(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -51(%rbp)
+mov		-4(%rbp), %r10 
+mov		-64(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -68(%rbp)
 
-movl		-51(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-68(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 jmp 		.beginWhile2
 
 .endWhile1: 
 
-cmpl		$0, -4(%rbp) 
+cmpl		$0, -8(%rbp) 
 sete		%al 
-movzbl	%al, %eax 
-movl		%eax, -55(%rbp) 
+movzb	%al, %rax 
+mov		%rax, -72(%rbp) 
 
-movl 	$1, -59(%rbp)
+movl 	$1, -76(%rbp)
 
-movl		-59(%rbp), %eax
-cmpl 	-55(%rbp), %eax
+mov		-76(%rbp), %r10
+cmp 	-72(%rbp), %r10
 
 jne 		.falseCond3
 
-movl 	$1.0, -63(%rbp)
+movl 	$1.0, -80(%rbp)
 
-movl		-63(%rbp), %eax 
+mov		-80(%rbp), %rax 
 cltd
-idivl	-8
-movl		%eax, -67(%rbp)
+idivl	-12(%rbp) 
+mov		%rax, -84(%rbp)
 
-movl		-67(%rbp), %eax
+mov		-84(%rbp), %rax
 leave
 ret
 
@@ -121,57 +119,55 @@ jmp 		.endIf4
 
 .falseCond3: 
 
-movl		-8(%rbp), %eax
+mov		-12(%rbp), %rax
 leave
 ret
 
 .endIf4: 
 
-movl 	$100.1, -71(%rbp)
+movl 	$100.1, -88(%rbp)
 
-movl		-71(%rbp), %eax 
-negl		%eax 
-movl		%eax, -75(%rbp) 
-
-movl		-75(%rbp), %eax
-leave
-ret
+mov		-88(%rbp), %rax 
+neg		%rax 
+mov		%rax, -92(%rbp) 
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 2), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 10), $0 
 
-movl 	$8.0, -2(%rbp)
+mov		-92(%rbp), %rax
+leave
+ret
 
-movl		-2(%rbp), %eax
-movl		%eax, -4(%rbp)
+movl 	$8.0, -16(%rbp)
 
-movl 	$2, -6(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl		-6(%rbp), %edi
-movl	 	%edi, -10(%rsp)
+movl 	$2, -20(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -14(%rsp)
+mov		-20(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-8(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	potencia
-movl 	%eax, -18(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-movl		-18(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-32(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -26(%rsp)
+mov		-4(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L05, %edi
-movl	 	%edi, -30(%rsp)
+mov		$.L05, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

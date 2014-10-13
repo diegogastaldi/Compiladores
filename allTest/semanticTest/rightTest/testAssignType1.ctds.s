@@ -1,45 +1,45 @@
 .text
 
+.comm y, 4
+
 .globl	method
 .type	method, @function 
 method: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 1), $0 
 
 movl 	$2.0, -4(%rbp)
 
-movl		-4(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
 .globl	main2
 .type	main2, @function 
 main2: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 4), $0 
+mov 		%rdi, -4(%rbp) 
 
 call 	method
-movl 	%eax, -12(%rbp) 
+mov 	%rax, -8(%rbp) 
 
-movl		-8(%rbp), %eax 
-movl		-12(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -16(%rbp)
+mov		-4(%rbp), %r10 
+mov		-8(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -16(%rbp)
 
-movl		-16(%rbp), %eax
-movl		%eax, -20(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

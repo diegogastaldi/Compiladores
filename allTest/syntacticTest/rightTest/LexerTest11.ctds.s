@@ -3,136 +3,141 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
-
-movl 	$0, 0(%rbp)
-
-movl		0(%rbp), %eax
-movl		%eax, 52(%rbp)
-
-movl 	$0, -4(%rbp)
-
-movl		-4(%rbp), %eax
-movl		%eax, 48(%rbp)
+enter   $(4 * 15), $0 
 
 movl 	$0, -8(%rbp)
 
-movl		-8(%rbp), %eax
-movl		%eax, 44(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, 13(%rbp)
 
 movl 	$0, -12(%rbp)
 
-movl		-12(%rbp), %eax
-movl		%eax, 40(%rbp)
+mov		-12(%rbp), %rax
+mov		%rax, 12(%rbp)
 
 movl 	$0, -16(%rbp)
 
-movl		-16(%rbp), %eax
-movl		%eax, 36(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, 11(%rbp)
 
 movl 	$0, -20(%rbp)
 
-movl		-20(%rbp), %eax
-movl		%eax, 32(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, 10(%rbp)
 
 movl 	$0, -24(%rbp)
 
-movl		-24(%rbp), %eax
-movl		%eax, 28(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, 9(%rbp)
 
 movl 	$0, -28(%rbp)
 
-movl		-28(%rbp), %eax
-movl		%eax, 24(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, 8(%rbp)
 
 movl 	$0, -32(%rbp)
 
-movl		-32(%rbp), %eax
-movl		%eax, 20(%rbp)
+mov		-32(%rbp), %rax
+mov		%rax, 7(%rbp)
 
 movl 	$0, -36(%rbp)
 
-movl		-36(%rbp), %eax
-movl		%eax, 16(%rbp)
+mov		-36(%rbp), %rax
+mov		%rax, 6(%rbp)
 
 movl 	$0, -40(%rbp)
 
-movl		-40(%rbp), %eax
-movl		%eax, 12(%rbp)
+mov		-40(%rbp), %rax
+mov		%rax, 5(%rbp)
 
 movl 	$0, -44(%rbp)
 
-movl		-44(%rbp), %eax
-movl		%eax, 8(%rbp)
+mov		-44(%rbp), %rax
+mov		%rax, 4(%rbp)
 
 movl 	$0, -48(%rbp)
 
-movl		-48(%rbp), %eax
-movl		%eax, 4(%rbp)
+mov		-48(%rbp), %rax
+mov		%rax, 3(%rbp)
 
 movl 	$0, -52(%rbp)
 
-movl		-52(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-52(%rbp), %rax
+mov		%rax, 2(%rbp)
 
-mov 		$0, %eax
+movl 	$0, -56(%rbp)
+
+mov		-56(%rbp), %rax
+mov		%rax, 1(%rbp)
+
+movl 	$0, -60(%rbp)
+
+mov		-60(%rbp), %rax
+mov		%rax, 0(%rbp)
+
+mov		0(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 14), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 32), $0 
 
-movl		-52(%rbp), %edi
-movl	 	%edi, -14(%rsp)
+mov		-56(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		-48(%rbp), %edi
-movl	 	%edi, -18(%rsp)
+mov		-52(%rbp), %r10
+mov	 	%r10, %rsi
 
-movl		-44(%rbp), %edi
-movl	 	%edi, -22(%rsp)
+mov		-48(%rbp), %r10
+mov	 	%r10, %rdx
 
-movl		-40(%rbp), %edi
-movl	 	%edi, -26(%rsp)
+mov		-44(%rbp), %r10
+mov	 	%r10, %rcx
 
-movl		-36(%rbp), %edi
-movl	 	%edi, -30(%rsp)
+mov		-40(%rbp), %r10
+mov	 	%r10, %r8
 
-movl		-32(%rbp), %edi
-movl	 	%edi, -34(%rsp)
+mov		-36(%rbp), %r10
+mov	 	%r10, %r9
 
-movl		-28(%rbp), %edi
-movl	 	%edi, -38(%rsp)
+mov		-32(%rbp), %r10
+mov	 	%r10, -92(%rbp)
 
-movl		-24(%rbp), %edi
-movl	 	%edi, -42(%rsp)
+mov		-28(%rbp), %r10
+mov	 	%r10, -96(%rbp)
 
-movl		-20(%rbp), %edi
-movl	 	%edi, -46(%rsp)
+mov		-24(%rbp), %r10
+mov	 	%r10, -100(%rbp)
 
-movl		-16(%rbp), %edi
-movl	 	%edi, -50(%rsp)
+mov		-20(%rbp), %r10
+mov	 	%r10, -104(%rbp)
 
-movl		-12(%rbp), %edi
-movl	 	%edi, -54(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, -108(%rbp)
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -58(%rsp)
+mov		-12(%rbp), %r10
+mov	 	%r10, -112(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -62(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, -116(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -66(%rsp)
+mov		-4(%rbp), %r10
+mov	 	%r10, -120(%rbp)
 
 call 	inc
+mov 	%rax, -124(%rbp) 
 
-mov 		$0, %eax
+mov		-124(%rbp), %rax
+mov		%rax, -60(%rbp)
+
+mov		-60(%rbp), %r10
+mov	 	%r10, %rdi
+
+call 	printf
+
+mov 		$0, %rax
 leave
 ret
 

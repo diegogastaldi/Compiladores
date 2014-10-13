@@ -3,74 +3,72 @@
 .globl	prueba
 .type	prueba, @function 
 prueba: 
-enter   $(4 * 5), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 19), $0 
 
-movl 	$4, -5(%rbp)
+movl 	$4, -28(%rbp)
 
-movl		-5(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-movl 	$5, -9(%rbp)
+movl 	$5, -32(%rbp)
 
-movl		-9(%rbp), %eax
-movl		%eax, -12(%rbp)
+mov		-32(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-movl		-8(%rbp), %eax 
-movl		-12(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -13(%rbp)
+mov		-12(%rbp), %r10 
+mov		-16(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -36(%rbp)
 
-movl		-13(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-36(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		0(%rbp), %eax 
-movl		0(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -17(%rbp)
+mov		-4(%rbp), %r10 
+mov		0(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -40(%rbp)
 
-movl		-17(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-40(%rbp), %rax
+mov		%rax, 0(%rbp)
 
-movl 	$3, -21(%rbp)
+movl 	$3, -44(%rbp)
 
-movl		-21(%rbp), %eax
-movl		%eax, -16(%rbp)
+mov		-44(%rbp), %rax
+mov		%rax, -20(%rbp)
 
-movl 	$2, -25(%rbp)
+movl 	$2, -48(%rbp)
 
-movl		-25(%rbp), %eax 
-movl		-16(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -29(%rbp)
+mov		-48(%rbp), %r10 
+mov		-20(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -52(%rbp)
 
-movl		-29(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-52(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl		0(%rbp), %eax 
+mov		-4(%rbp), %rax 
 cltd
-idivl	-4
-movl		%eax, -33(%rbp)
+idivl	-8(%rbp) 
+mov		%rax, -56(%rbp)
 
-movl 	$5, -37(%rbp)
+movl 	$5, -60(%rbp)
 
-movl		-33(%rbp), %eax
-cmpl		-37(%rbp), %eax
+mov		-56(%rbp), %rax
+cmp		-60(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -41(%rbp)
+movzb	%al, %rax
+mov		%rax, -64(%rbp)
 
-movl 	$1, -45(%rbp)
+movl 	$1, -68(%rbp)
 
-movl		-45(%rbp), %eax
-cmpl 	-41(%rbp), %eax
+mov		-68(%rbp), %r10
+cmp 	-64(%rbp), %r10
 
 jne 		.falseCond0
 
-movl 	$1, -49(%rbp)
+movl 	$1, -72(%rbp)
 
-movl		-49(%rbp), %eax
+mov		-72(%rbp), %rax
 leave
 ret
 
@@ -78,9 +76,9 @@ jmp 		.endIf1
 
 .falseCond0: 
 
-movl 	$0, -53(%rbp)
+movl 	$0, -76(%rbp)
 
-movl		-53(%rbp), %eax
+mov		-76(%rbp), %rax
 leave
 ret
 
@@ -89,24 +87,22 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 5), $0 
 
-movl 	$6, 0(%rbp)
+movl 	$6, -8(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	prueba
-movl 	%eax, -8(%rbp) 
+mov 	%rax, -16(%rbp) 
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -16(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

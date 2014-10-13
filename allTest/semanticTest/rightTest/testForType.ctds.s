@@ -3,52 +3,51 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 5), $0 
+mov 		%rdi, -4(%rbp) 
 
 movl 	$1, -8(%rbp)
 
-jmp 		.endFor1
+jmp 		.endFor0
 
-.beginFor2: 
+.beginFor1: 
 
-movl 	$2, -24(%rbp)
+movl 	$2, -12(%rbp)
 
-movl 	-20(%rbp), %eax
-cmpl		-24(%rbp), %eax
+mov 		-4(%rbp), %rax
+cmp		-12(%rbp), %rax
 sete		%al
-movzbl	%al, %eax
-movl		%eax, -28(%rbp)
+movzb	%al, %rax
+mov		%rax, -16(%rbp)
 
-movl		-28(%rbp), %eax
+mov		-16(%rbp), %rax
 leave
 ret
 
-movl		-12(%rbp), %eax 
-movl		-8(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -12(%rbp)
+mov		-4(%rbp), %r10 
+mov		-8(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -4(%rbp)
 
-.endFor1: 
+.endFor0: 
 
-movl		-16(%rbp), %eax
-cmpl 	-12(%rbp), %eax
+mov		-4(%rbp), %r10
+cmp 	-4(%rbp), %r10
 
-jle 		.beginFor2
+jle 		.beginFor1
 
-movl 	$1, -32(%rbp)
+movl 	$1, -20(%rbp)
 
-movl		-32(%rbp), %eax
+mov		-20(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

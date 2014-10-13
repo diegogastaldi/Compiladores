@@ -3,41 +3,40 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 3), $0 
+mov 		%rdi, -4(%rbp) 
 
-.beginWhile2: 
+.beginWhile1: 
 
-movl 	$1, -12(%rbp)
+movl 	$1, -8(%rbp)
 
-movl		-12(%rbp), %eax
-cmpl 	-8(%rbp), %eax
+mov		-8(%rbp), %r10
+cmp 	-4(%rbp), %r10
 
-jne 		.endWhile1
+jne 		.endWhile0
 
-movl		-16(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
-jmp 		.endWhile1
+jmp 		.endWhile0
 
-jmp 		.beginWhile2
+jmp 		.beginWhile1
 
-.endWhile1: 
+.endWhile0: 
 
-movl 	$1, -20(%rbp)
+movl 	$1, -12(%rbp)
 
-movl		-20(%rbp), %eax
+mov		-12(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

@@ -6,59 +6,57 @@
 .globl	breaks
 .type	breaks, @function 
 breaks: 
-enter   $(4 * 2), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 13), $0 
 
-movl 	$0, -2(%rbp)
+movl 	$0, -16(%rbp)
 
-movl		-2(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 .beginWhile1: 
 
-movl 	$10, -6(%rbp)
+movl 	$10, -20(%rbp)
 
-movl		0(%rbp), %eax
-cmpl		-6(%rbp), %eax
+mov		-4(%rbp), %rax
+cmp		-20(%rbp), %rax
 setl		%al
-movzbl %al, %eax
-movl		%eax, -10(%rbp)
+movzb %al, %rax
+mov		%rax, -24(%rbp)
 
-movl 	$1, -14(%rbp)
+movl 	$1, -28(%rbp)
 
-movl		-14(%rbp), %eax
-cmpl 	-10(%rbp), %eax
+mov		-28(%rbp), %r10
+cmp 	-24(%rbp), %r10
 
 jne 		.endWhile0
 
-movl 	$1, -18(%rbp)
+movl 	$1, -32(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-18(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -22(%rbp)
+mov		-4(%rbp), %r10 
+mov		-32(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -36(%rbp)
 
-movl		-22(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-36(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl 	$2.3, -26(%rbp)
+movl 	$2.3, -40(%rbp)
 
-movl		-26(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-40(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$0, -30(%rbp)
+movl 	$0, -44(%rbp)
 
-movl		0(%rbp), %eax
-cmpl		-30(%rbp), %eax
+mov		0(%rbp), %rax
+cmp		-44(%rbp), %rax
 setl		%al
-movzbl %al, %eax
-movl		%eax, -34(%rbp)
+movzb %al, %rax
+mov		%rax, -48(%rbp)
 
-movl 	$1, -38(%rbp)
+movl 	$1, -52(%rbp)
 
-movl		-38(%rbp), %eax
-cmpl 	-34(%rbp), %eax
+mov		-52(%rbp), %r10
+cmp 	-48(%rbp), %r10
 
 jne 		.falseCond2
 
@@ -76,34 +74,32 @@ jmp 		.beginWhile1
 
 .endWhile0: 
 
-movl		0(%rbp), %eax
-leave
-ret
-
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 6), $0 
 
-movl 	$1, 0(%rbp)
+mov		-4(%rbp), %rax
+leave
+ret
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+movl 	$1, -8(%rbp)
+
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	breaks
-movl 	%eax, -8(%rbp) 
+mov 	%rax, -16(%rbp) 
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -16(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L04, %edi
-movl	 	%edi, -20(%rsp)
+mov		$.L04, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

@@ -3,68 +3,65 @@
 .globl	method1
 .type	method1, @function 
 method1: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 2), $0 
+mov 		%rdi, -4(%rbp) 
 
 movl 	$1.0, -8(%rbp)
 
-movl		-8(%rbp), %eax
+mov		-8(%rbp), %rax
 leave
 ret
 
 .globl	method2
 .type	method2, @function 
 method2: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 
 .globl	method3
 .type	method3, @function 
 method3: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 1), $0 
 
-movl 	$2.0, -8(%rbp)
+movl 	$2.0, -4(%rbp)
 
-movl		-8(%rbp), %eax
-movl		%eax, -12(%rbp)
+mov		-4(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		-16(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 7), $0 
 
 call 	method3
-movl 	%eax, -8(%rbp) 
+mov 	%rax, -4(%rbp) 
 
 movl 	$2, -12(%rbp)
 
-movl		-12(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+mov		-12(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	method1
-movl 	%eax, -16(%rbp) 
+mov 	%rax, -20(%rbp) 
 
-movl		-8(%rbp), %eax 
-movl		-16(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -20(%rbp)
+mov		-4(%rbp), %r10 
+mov		-20(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -28(%rbp)
 
-movl		-20(%rbp), %eax
-movl		%eax, -24(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 call 	method2
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

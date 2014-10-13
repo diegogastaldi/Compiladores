@@ -3,11 +3,9 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 1), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

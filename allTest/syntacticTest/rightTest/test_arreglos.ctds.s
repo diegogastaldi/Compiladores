@@ -3,276 +3,274 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(4 * 9), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 53), $0 
+mov 		%rdi, -4(%rbp) 
+mov 		%rsi, -8(%rbp) 
 
-movl		4(%rbp), %eax
-cmpl		0(%rbp), %eax
+mov		1(%rbp), %rax
+cmp		0(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -9(%rbp)
+movzb	%al, %rax
+mov		%rax, -48(%rbp)
 
-movl 	$1, -13(%rbp)
+movl 	$1, -52(%rbp)
 
-movl		-13(%rbp), %eax
-cmpl 	-9(%rbp), %eax
+mov		-52(%rbp), %r10
+cmp 	-48(%rbp), %r10
 
 jne 		.falseCond0
 
-movl 	$1, -17(%rbp)
+movl 	$1, -56(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-17(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -21(%rbp)
+mov		0(%rbp), %r10 
+mov		-56(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -60(%rbp)
 
-movl 	$0, -25(%rbp)
+movl 	$0, -64(%rbp)
 
-movl 	-21, %ebx 
-movl 	-25, %edx 
-movl 	%ebx, -2600(%rbp, %rdx, 4) 
+mov 		-60, %rbx 
+mov 		-64, %rdx 
+mov 		%rbx, 10428(%rbp, %rdx, 4) 
 
 .falseCond0: 
 
-movl 	4(%rbp), %eax
-cmpl		0(%rbp), %eax
+mov 		1(%rbp), %rax
+cmp		0(%rbp), %rax
 sete		%al
-movzbl	%al, %eax
-movl		%eax, -29(%rbp)
+movzb	%al, %rax
+mov		%rax, -68(%rbp)
 
-movl 	$1, -33(%rbp)
+movl 	$1, -72(%rbp)
 
-movl		-33(%rbp), %eax
-cmpl 	-29(%rbp), %eax
+mov		-72(%rbp), %r10
+cmp 	-68(%rbp), %r10
 
 jne 		.falseCond1
 
-movl 	$5, -37(%rbp)
+movl 	$5, -76(%rbp)
 
-movl		4(%rbp), %eax 
-movl		-37(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -41(%rbp)
+mov		1(%rbp), %r10 
+mov		-76(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -80(%rbp)
 
-movl 	$1, -45(%rbp)
+movl 	$1, -84(%rbp)
 
-movl 	$1, -49(%rbp)
+movl 	$1, -88(%rbp)
 
-movl		-49(%rbp), %eax 
-movl		-45(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -53(%rbp)
+mov		-88(%rbp), %r10 
+mov		-84(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -92(%rbp)
 
-movl 	-41, %ebx 
-movl 	-53, %edx 
-movl 	%ebx, -2600(%rbp, %rdx, 4) 
+mov 		-80, %rbx 
+mov 		-92, %rdx 
+mov 		%rbx, 10428(%rbp, %rdx, 4) 
 
 jmp 		.endIf2
 
 .falseCond1: 
 
-movl		4(%rbp), %eax 
-movl		4(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -57(%rbp)
+mov		1(%rbp), %r10 
+mov		1(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -96(%rbp)
 
-movl 	0, %ebx 
-movl 	-57, %edx 
-movl 	%ebx, -2600(%rbp, %rdx, 4) 
+mov 		0, %rbx 
+mov 		-96, %rdx 
+mov 		%rbx, 10428(%rbp, %rdx, 4) 
 
 .endIf2: 
 
-movl 	$0, -61(%rbp)
+movl 	$0, -100(%rbp)
 
-movl		-61(%rbp), %eax
-movl		%eax, -2632(%rbp)
+mov		-100(%rbp), %rax
+mov		%rax, -2640(%rbp)
 
 .beginWhile4: 
 
-movl 	$589, -65(%rbp)
+movl 	$589, -104(%rbp)
 
-movl		-2632(%rbp), %eax
-cmpl		-65(%rbp), %eax
+mov		-2640(%rbp), %rax
+cmp		-104(%rbp), %rax
 setl		%al
-movzbl %al, %eax
-movl		%eax, -69(%rbp)
+movzb %al, %rax
+mov		%rax, -108(%rbp)
 
-movl 	$1, -73(%rbp)
+movl 	$1, -112(%rbp)
 
-movl		-73(%rbp), %eax
-cmpl 	-69(%rbp), %eax
+mov		-112(%rbp), %r10
+cmp 	-108(%rbp), %r10
 
 jne 		.endWhile3
 
-movl 	$2, -77(%rbp)
+movl 	$2, -116(%rbp)
 
-movl		-2632(%rbp), %eax 
-movl		-77(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -81(%rbp)
+mov		-2640(%rbp), %r10 
+mov		-116(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -120(%rbp)
 
-movl 	-81, %ebx 
-movl 	-2632, %edx 
-movl 	%ebx, 0(%rbp, %rdx, 4) 
+mov 		-120, %rbx 
+mov 		-2640, %rdx 
+mov 		%rbx, 12(%rbp, %rdx, 4) 
 
-movl 	$1, -85(%rbp)
+movl 	$1, -124(%rbp)
 
-movl		$1, %eax
-movl		%eax, -93(%rbp)
+mov		$1, %rax
+mov		%rax, -132(%rbp)
 
-movl		-85(%rbp), %eax 
-movl		-93(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -89(%rbp)
+mov		-124(%rbp), %r10 
+mov		-132(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -128(%rbp)
 
-movl		-89(%rbp), %eax
-movl		%eax, -2632(%rbp)
+mov		-128(%rbp), %rax
+mov		%rax, -2640(%rbp)
 
 jmp 		.beginWhile4
 
 .endWhile3: 
 
-movl 	$8, -97(%rbp)
+movl 	$8, -136(%rbp)
 
-movl		-97(%rbp), %eax
-movl		%eax, -2632(%rbp)
+mov		-136(%rbp), %rax
+mov		%rax, -2640(%rbp)
 
 .beginWhile6: 
 
-movl 	$0, -101(%rbp)
+movl 	$0, -140(%rbp)
 
-movl		-2632(%rbp), %eax
-cmpl		-101(%rbp), %eax
+mov		-2640(%rbp), %rax
+cmp		-140(%rbp), %rax
 setge 	%al
-movzbl %al, %eax
-movl		%eax, -105(%rbp)
+movzb %al, %rax
+mov		%rax, -144(%rbp)
 
-movl 	$1, -109(%rbp)
+movl 	$1, -148(%rbp)
 
-movl		-109(%rbp), %eax
-cmpl 	-105(%rbp), %eax
+mov		-148(%rbp), %r10
+cmp 	-144(%rbp), %r10
 
 jne 		.endWhile5
 
-movl 	$3, -113(%rbp)
+movl 	$3, -152(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-113(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -117(%rbp)
+mov		12(%rbp), %r10 
+mov		-152(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -156(%rbp)
 
-movl 	-117, %ebx 
-movl 	-2632, %edx 
-movl 	%ebx, -2356(%rbp, %rdx, 4) 
+mov 		-156, %rbx 
+mov 		-2640, %rdx 
+mov 		%rbx, 9436(%rbp, %rdx, 4) 
 
-movl 	$1, -121(%rbp)
+movl 	$1, -160(%rbp)
 
-movl		$1, %eax
-movl		%eax, -129(%rbp)
+mov		$1, %rax
+mov		%rax, -168(%rbp)
 
-movl		-129(%rbp), %eax 
-movl		-121(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -125(%rbp)
+mov		-168(%rbp), %r10 
+mov		-160(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -164(%rbp)
 
-movl		-125(%rbp), %eax
-movl		%eax, -2632(%rbp)
+mov		-164(%rbp), %rax
+mov		%rax, -2640(%rbp)
 
 jmp 		.beginWhile6
 
 .endWhile5: 
 
-movl 	$0, -133(%rbp)
+movl 	$0, -172(%rbp)
 
-movl		-133(%rbp), %eax
-movl		%eax, -2632(%rbp)
+mov		-172(%rbp), %rax
+mov		%rax, -2640(%rbp)
 
 .beginWhile8: 
 
-movl 	$5, -137(%rbp)
+movl 	$5, -176(%rbp)
 
-movl 	$9, -141(%rbp)
+movl 	$9, -180(%rbp)
 
-movl		-137(%rbp), %eax 
-movl		-141(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -145(%rbp)
+mov		-176(%rbp), %r10 
+mov		-180(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -184(%rbp)
 
-movl 	$40, -149(%rbp)
+movl 	$40, -188(%rbp)
 
-movl		-149(%rbp), %eax 
-movl		-145(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -153(%rbp)
+mov		-188(%rbp), %r10 
+mov		-184(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -192(%rbp)
 
-movl		-2632(%rbp), %eax
-cmpl		-153(%rbp), %eax
+mov		-2640(%rbp), %rax
+cmp		-192(%rbp), %rax
 setle 	%al
-movzbl %al, %eax
-movl		%eax, -157(%rbp)
+movzb  %al, %rax
+mov		%rax, -196(%rbp)
 
-movl 	$1, -161(%rbp)
+movl 	$1, -200(%rbp)
 
-movl		-161(%rbp), %eax
-cmpl 	-157(%rbp), %eax
+mov		-200(%rbp), %r10
+cmp 	-196(%rbp), %r10
 
 jne 		.endWhile7
 
-movl		0(%rbp), %eax
-cmpl		-2356(%rbp), %eax
+mov		12(%rbp), %rax
+cmp		9436(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -165(%rbp)
+movzb	%al, %rax
+mov		%rax, -204(%rbp)
 
-movl 	-165, %ebx 
-movl 	-2632, %edx 
-movl 	%ebx, -2580(%rbp, %rdx, 4) 
+mov 		-204, %rbx 
+mov 		-2640, %rdx 
+mov 		%rbx, 10332(%rbp, %rdx, 4) 
 
-movl 	$1, -169(%rbp)
+movl 	$1, -208(%rbp)
 
-movl		-2632(%rbp), %eax 
-movl		-169(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -173(%rbp)
+mov		-2640(%rbp), %r10 
+mov		-208(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -212(%rbp)
 
-movl		-173(%rbp), %eax
-movl		%eax, -2632(%rbp)
+mov		-212(%rbp), %rax
+mov		%rax, -2640(%rbp)
 
 jmp 		.beginWhile8
 
 .endWhile7: 
 
-movl		-2600(%rbp), %eax
+mov		10428(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 7), $0 
 
-movl 	$8, 0(%rbp)
+movl 	$8, -8(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl 	$4, -8(%rbp)
+movl 	$4, -16(%rbp)
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -12(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruArreglos
-movl 	%eax, -16(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-16(%rbp), %edi
-movl	 	%edi, -24(%rsp)
+mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

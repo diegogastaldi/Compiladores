@@ -6,134 +6,130 @@
 .globl	sumatoria
 .type	sumatoria, @function 
 sumatoria: 
-enter   $(4 * 3), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 18), $0 
 
-movl 	$0.0, -3(%rbp)
+movl 	$0.0, -20(%rbp)
 
-movl		-3(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		0(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		0(%rbp), %rax
+mov		%rax, -8(%rbp)
 
 .beginWhile1: 
 
-movl 	$0, -7(%rbp)
+movl 	$0, -24(%rbp)
 
-movl		-4(%rbp), %eax
-cmpl		-7(%rbp), %eax
+mov		-8(%rbp), %rax
+cmp		-24(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -11(%rbp)
+movzb	%al, %rax
+mov		%rax, -28(%rbp)
 
-movl 	$0, -15(%rbp)
+movl 	$0, -32(%rbp)
 
-movl		-4(%rbp), %eax
-cmpl		-15(%rbp), %eax
+mov		-8(%rbp), %rax
+cmp		-32(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -19(%rbp)
+movzb	%al, %rax
+mov		%rax, -36(%rbp)
 
-cmpl		$0, -11(%rbp)
+cmpl		$0, -28(%rbp)
 jne 		.2
-cmpl		$0, -19(%rbp)
+cmpl		$0, -36(%rbp)
 je 		.3
 .2: 
-movl		$1, %eax
+mov		$1, %r10
 jmp 		.4
 .3:
-movl		$0, %eax
+mov		$0, %r10
 .4:
-movl		%eax, -23(%rbp)
+mov		%r10, -40(%rbp)
 
-movl 	$1, -27(%rbp)
+movl 	$1, -44(%rbp)
 
-movl		-27(%rbp), %eax
-cmpl 	-23(%rbp), %eax
+mov		-44(%rbp), %r10
+cmp 	-40(%rbp), %r10
 
 jne 		.endWhile0
 
-movl 	$0, -31(%rbp)
+movl 	$0, -48(%rbp)
 
-movl		-4(%rbp), %eax
-cmpl		-31(%rbp), %eax
+mov		-8(%rbp), %rax
+cmp		-48(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -35(%rbp)
+movzb	%al, %rax
+mov		%rax, -52(%rbp)
 
-movl 	$1, -39(%rbp)
+movl 	$1, -56(%rbp)
 
-movl		-39(%rbp), %eax
-cmpl 	-35(%rbp), %eax
+mov		-56(%rbp), %r10
+cmp 	-52(%rbp), %r10
 
 jne 		.falseCond5
 
-movl		0(%rbp), %eax 
-movl		-4(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -43(%rbp)
+mov		-4(%rbp), %r10 
+mov		-8(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -60(%rbp)
 
-movl		-43(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-60(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 .falseCond5: 
 
-movl 	$1.0, -47(%rbp)
+movl 	$1.0, -64(%rbp)
 
-movl		$1, %eax
-movl		%eax, -55(%rbp)
+mov		$1, %rax
+mov		%rax, -72(%rbp)
 
-movl		-55(%rbp), %eax 
-movl		-47(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -51(%rbp)
+mov		-72(%rbp), %r10 
+mov		-64(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -68(%rbp)
 
-movl		-51(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-68(%rbp), %rax
+mov		%rax, -8(%rbp)
 
 jmp 		.beginWhile1
 
 .endWhile0: 
 
-movl		0(%rbp), %eax
-movl		%eax, -8(%rbp)
-
-movl		-8(%rbp), %eax
-leave
-ret
+mov		-4(%rbp), %rax
+mov		%rax, -12(%rbp)
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 2), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 8), $0 
 
-movl 	$8.0, -2(%rbp)
+mov		-12(%rbp), %rax
+leave
+ret
 
-movl		-2(%rbp), %eax
-movl		%eax, -4(%rbp)
+movl 	$8.0, -16(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -6(%rsp)
+mov		-16(%rbp), %rax
+mov		%rax, -8(%rbp)
+
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	sumatoria
-movl 	%eax, -10(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-10(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -18(%rsp)
+mov		-4(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L06, %edi
-movl	 	%edi, -22(%rsp)
+mov		$.L06, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

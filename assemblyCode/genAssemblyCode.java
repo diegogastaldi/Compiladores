@@ -30,6 +30,9 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+			  case GLOBAL: 
+			   	globalMethod(instr);
+			   	break;								
 			  case STRING: 
 			   	stringMethod(instr);
 			   	break;				
@@ -141,36 +144,36 @@ public class genAssemblyCode {
 	}
 
 	public static void cmpMethod(Instr instr) {
-		result += "movl		" + instr.getOperand2() + "(%rbp), %eax\n";
-		result += "cmpl 	" + instr.getOperand1() + "(%rbp), %eax\n";
+		result += "mov		" + instr.getOperand2() + "(%rbp), %r10\n";
+		result += "cmp 	" + instr.getOperand1() + "(%rbp), %r10\n";
 	}
 
 	public static void plusMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax \n";
-		result += "movl		" + instr.getOperand2() + "(%rbp), %edx \n";					
-		result += "addl		%eax, %edx \n";
-		result += "movl		%edx, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %r10 \n";
+		result += "mov		" + instr.getOperand2() + "(%rbp), %r11 \n";					
+		result += "add		%r10, %r11 \n";
+		result += "mov		%r11, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void multiplyMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax \n";
-		result += "movl		" + instr.getOperand2() + "(%rbp), %edx \n";					
-		result += "imull	%eax, %edx \n";
-		result += "movl		%edx, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %r10 \n";
+		result += "mov		" + instr.getOperand2() + "(%rbp), %r11 \n";					
+		result += "imul		%r11, %r10 \n";
+		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void minusMethod(Instr instr) {
-		result += "movl		" + instr.getOperand2() + "(%rbp), %eax \n";
-		result += "movl		" + instr.getOperand1() + "(%rbp), %edx \n";					
-		result += "subl		%eax, %edx \n";
-		result += "movl		%edx, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		" + instr.getOperand2() + "(%rbp), %r10 \n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %r11 \n";					
+		result += "sub		%r10, %r11 \n";
+		result += "mov		%r11, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void modMethod(Instr instr) {
-		result += "movl		" + instr.getOperand2() + "(%rbp), %eax \n";
+		result += "mov		" + instr.getOperand2() + "(%rbp), %rax \n";
 		result += "cltd\n";
-		result += "idivl	" + instr.getOperand1() + "\n";
-		result += "movl		%edx, " + instr.getResult() + "(%rbp)\n";
+		result += "idivl	" + instr.getOperand1() + "(%rbp)\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void andMethod(Instr instr) {
@@ -184,12 +187,12 @@ public class genAssemblyCode {
 		result += "je 		." + label1 + "\n";
 		result += "cmpl		$0, " + operand2 + "(%rbp)\n";
 		result += "je 		." + label1 + "\n";
-		result += "movl		$1, %eax\n";
+		result += "mov		$1, %r10\n";
 		result += "jmp		." + label2 + "\n";
 		result += "." + label1 + ":\n";
-		result += "movl		$0, %eax\n";
+		result += "mov		$0, %r10\n";
 		result += "." + label2 + ":\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		%r11, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void orMethod(Instr instr) {
@@ -205,41 +208,41 @@ public class genAssemblyCode {
 		result += "cmpl		$0, " + operand2 + "(%rbp)\n";
 		result += "je 		." + label2 + "\n";
 		result += "." + label1 + ": \n";
-		result += "movl		$1, %eax\n";
+		result += "mov		$1, %r10\n";
 		result += "jmp 		." + label3 + "\n";
 		result += "." + label2 + ":\n";
-		result += "movl		$0, %eax\n";
+		result += "mov		$0, %r10\n";
 		result += "." + label3 + ":\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void ceqMethod(Instr instr) {
-	  result += "movl 	" + instr.getOperand1() + "(%rbp), %eax\n";
-		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
+	  result += "mov 		" + instr.getOperand1() + "(%rbp), %rax\n";
+		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "sete		%al\n";
-		result += "movzbl	%al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "movzb	%al, %rax\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void neqMethod(Instr instr) {
-	  result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
-		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
+	  result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
+		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setne 	%al\n";
-		result += "movzbl %al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "movzb %al, %rax\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void notMethod(Instr instr) {
 		result += "cmpl		$0, " + instr.getOperand1() + "(%rbp) \n";
 		result += "sete		%al \n";
-		result += "movzbl	%al, %eax \n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp) \n";
+		result += "movzb	%al, %rax \n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void unaryminusMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax \n";
-		result += "negl		%eax \n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp) \n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
+		result += "neg		%rax \n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void labelMethod(Instr instr) {
@@ -252,64 +255,71 @@ public class genAssemblyCode {
 
 	public static void returnMethod(Instr instr) {
 	 	if (instr.getResult() != null) 
-	 		result += "movl		" + instr.getResult() + "(%rbp), %eax\n";
+	 		result += "mov		" + instr.getResult() + "(%rbp), %rax\n";
 	 	else 
-			result += "mov 		$0, %eax\n";
+			result += "mov 		$0, %rax\n";
 	 	result += "leave\n";
 		result += "ret\n";
 	}
 
 	public static void leMethod(Instr instr) {
-    result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
-		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
+    result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
+		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setl		%al\n";
-		result += "movzbl %al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";		
+		result += "movzb %al, %rax\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";		
 	}
 
 	public static void leqMethod(Instr instr) {
-    result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
-		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
+    result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
+		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setle 	%al\n";
-		result += "movzbl %al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "movzb  %al, %rax\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void geMethod(Instr instr) {
-    result += "movl		" + instr.getOperand1() +"(%rbp), %eax\n";
-		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
+    result += "mov		" + instr.getOperand1() +"(%rbp), %rax\n";
+		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setg		%al\n";
-		result += "movzbl	%al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "movzb	%al, %rax\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void geqMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
-		result += "cmpl		" + instr.getOperand2() + "(%rbp), %eax\n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
+		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setge 	%al\n";
-		result += "movzbl %al, %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";		
+		result += "movzb %al, %rax\n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";		
 	}
 
 	public static void paramMethod(Instr instr) {
 		if (instr.getOperand1() instanceof String ) 
-			result += "movl		" + instr.getOperand1() + ", %edi\n";
+			result += "mov		" + instr.getOperand1() + ", %r10\n";
 		else
-			result += "movl		" + instr.getOperand1() + "(%rbp), %edi\n";
-		result += "movl	 	%edi, " + instr.getResult() + "(%rsp)\n";
+			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
+		Integer numOperand = (Integer)instr.getOperand2();
+		String destRegister;
+		if (numOperand < 6)  
+			destRegister = paramRegister.registers [numOperand];		
+		else 
+			destRegister = instr.getResult() + "(%rbp)";
+		
+		result += "mov	 	%r10, " + destRegister + "\n";
 	}
 
 	public static void callmethodMethod(Instr instr) {
   	result += "call 	" + instr.getOperand1() + "\n";		
   	if (instr.getResult() != null)
-  		result += "movl 	%eax, " + instr.getResult() + "(%rbp) \n";		
+  		result += "mov 	%rax, " + instr.getResult() + "(%rbp) \n";		
 	}
 
 	public static void divideMethod(Instr instr) {
-		result += "movl		" + instr.getOperand1() + "(%rbp), %eax \n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
 		result += "cltd\n";
-		result += "idivl	" + instr.getOperand2() + "\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		result += "idivl	" + instr.getOperand2() + "(%rbp) \n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void methodlabelMethod(Instr instr) {
@@ -317,25 +327,36 @@ public class genAssemblyCode {
 		result += ".type	" + instr.getResult() + ", @function \n";			
 		result += instr.getResult() + ": \n";		
 		result += "enter   $(4 * " + instr.getOperand1() + "), $0 \n";
-		result += "pushq	%rbp\n";
-		result += "movq		%rsp, %rbp\n";
+		for (int i = 0 ; i < ((Integer)instr.getOperand2()); i++) {
+			result += "mov 		" + paramRegister.registers[i] + ", " + ((i+1) * (-4)) + "(%rbp) \n";
+		}
 	}
 
 	public static void arrayassignMethod(Instr instr) {
-		result += "movl 	" + instr.getOperand1() + ", %ebx \n";
-		result += "movl 	" + instr.getOperand2() + ", %edx \n";
-		result += "movl 	%ebx, " + instr.getResult() + "(%rbp, %rdx, 4) \n";		
+		result += "mov 		" + instr.getOperand1() + ", %rbx \n";
+		result += "mov 		" + instr.getOperand2() + ", %rdx \n";
+		result += "mov 		%rbx, " + instr.getResult() + "(%rbp, %rdx, 4) \n";		
 	}
 
 	public static void varassignMethod(Instr instr) {
-		if (instr.getOperand1() instanceof String ) 
-			result += "movl		" + instr.getOperand1() + ", %eax\n";
-		else 
-			result += "movl		" + instr.getOperand1() + "(%rbp), %eax\n";
-		result += "movl		%eax, " + instr.getResult() + "(%rbp)\n";
+		String op2 = (String)instr.getOperand2();
+		switch (op2) {
+			case "adress" :	result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
+											break;
+			case "register" : String op = paramRegister.registers [(Integer)instr.getOperand1()];
+												result += "mov		" + op + ", %rax\n";
+												break;
+			case "const" : 	result += "mov		" + instr.getOperand1() + ", %rax\n";
+											break;
+		}
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void textMethod(Instr instr) {
 		result += instr.getResult();
 	}
-} 
+
+	public static void globalMethod(Instr instr) {
+		result += ".comm " + instr.getOperand1() + ", " + instr.getOperand2() + "\n";
+	}
+}

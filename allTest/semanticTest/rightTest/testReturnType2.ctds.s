@@ -3,43 +3,41 @@
 .globl	a
 .type	a, @function 
 a: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 4), $0 
 
 movl 	$1, -4(%rbp)
 
 movl 	$1, -8(%rbp)
 
-movl		-8(%rbp), %eax
-cmpl 	-4(%rbp), %eax
+mov		-8(%rbp), %r10
+cmp 	-4(%rbp), %r10
 
-jne 		.falseCond1
+jne 		.falseCond0
 
 movl 	$0, -12(%rbp)
 
-movl		-12(%rbp), %eax
+mov		-12(%rbp), %rax
 leave
 ret
 
-jmp 		.endIf2
+jmp 		.endIf1
 
-.falseCond1: 
+.falseCond0: 
 
 movl 	$0, -16(%rbp)
 
-movl		-16(%rbp), %eax
+mov		-16(%rbp), %rax
 leave
 ret
 
-.endIf2: 
+.endIf1: 
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

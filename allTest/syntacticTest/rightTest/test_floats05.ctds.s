@@ -6,113 +6,105 @@
 .globl	div
 .type	div, @function 
 div: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 2), $0 
 
-movl		4(%rbp), %eax 
+mov		1(%rbp), %rax 
 cltd
-idivl	0
-movl		%eax, 0(%rbp)
+idivl	0(%rbp) 
+mov		%rax, -8(%rbp)
 
-movl		0(%rbp), %eax
+mov		-8(%rbp), %rax
 leave
 ret
 
 .globl	resta
 .type	resta, @function 
 resta: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 2), $0 
 
-movl		0(%rbp), %eax 
-movl		4(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, 0(%rbp)
+mov		0(%rbp), %r10 
+mov		1(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -8(%rbp)
 
-movl		0(%rbp), %eax
+mov		-8(%rbp), %rax
 leave
 ret
 
 .globl	sum
 .type	sum, @function 
 sum: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 2), $0 
 
-movl		4(%rbp), %eax 
-movl		0(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, 0(%rbp)
-
-movl		0(%rbp), %eax
-leave
-ret
+mov		1(%rbp), %r10 
+mov		0(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -8(%rbp)
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 3), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 19), $0 
 
-movl 	$6.982, -3(%rbp)
+mov		-8(%rbp), %rax
+leave
+ret
 
-movl		-3(%rbp), %eax
-movl		%eax, 0(%rbp)
+movl 	$6.982, -20(%rbp)
 
-movl 	$2.5, -7(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		-7(%rbp), %eax 
-negl		%eax 
-movl		%eax, -11(%rbp) 
+movl 	$2.5, -24(%rbp)
 
-movl		-11(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-24(%rbp), %rax 
+neg		%rax 
+mov		%rax, -28(%rbp) 
 
-movl 	$3.5698, -15(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-movl		-15(%rbp), %eax
-movl		%eax, -4(%rbp)
+movl 	$3.5698, -32(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -19(%rsp)
+mov		-32(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -23(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-4(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	div
-movl 	%eax, -27(%rbp) 
+mov 	%rax, -44(%rbp) 
 
-movl		-27(%rbp), %edi
-movl	 	%edi, -35(%rsp)
+mov		-44(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		0(%rbp), %edi
-movl	 	%edi, -39(%rsp)
+mov		-4(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -43(%rsp)
+mov		-12(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	resta
-movl 	%eax, -47(%rbp) 
+mov 	%rax, -64(%rbp) 
 
-movl		-47(%rbp), %edi
-movl	 	%edi, -55(%rsp)
+mov		-64(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	sum
-movl 	%eax, -59(%rbp) 
+mov 	%rax, -76(%rbp) 
 
-movl		-59(%rbp), %edi
-movl	 	%edi, -67(%rsp)
+mov		-76(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L00, %edi
-movl	 	%edi, -71(%rsp)
+mov		$.L00, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

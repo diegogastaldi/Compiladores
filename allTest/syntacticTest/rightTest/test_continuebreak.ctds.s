@@ -3,98 +3,96 @@
 .globl	pruContinue
 .type	pruContinue, @function 
 pruContinue: 
-enter   $(4 * 3), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 28), $0 
 
-movl 	$1.0, -3(%rbp)
+movl 	$1.0, -20(%rbp)
 
-movl		-3(%rbp), %eax 
-negl		%eax 
-movl		%eax, -7(%rbp) 
+mov		-20(%rbp), %rax 
+neg		%rax 
+mov		%rax, -24(%rbp) 
 
-movl		-7(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-movl 	$23, -11(%rbp)
+movl 	$23, -28(%rbp)
 
-movl		-11(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$23.0, -15(%rbp)
+movl 	$23.0, -32(%rbp)
 
-movl		-15(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-32(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 .beginWhile1: 
 
-movl 	$0, -19(%rbp)
+movl 	$0, -36(%rbp)
 
-movl		0(%rbp), %eax
-cmpl		-19(%rbp), %eax
+mov		-4(%rbp), %rax
+cmp		-36(%rbp), %rax
 setge 	%al
-movzbl %al, %eax
-movl		%eax, -23(%rbp)
+movzb %al, %rax
+mov		%rax, -40(%rbp)
 
-movl 	$1, -27(%rbp)
+movl 	$1, -44(%rbp)
 
-movl		-27(%rbp), %eax
-cmpl 	-23(%rbp), %eax
+mov		-44(%rbp), %r10
+cmp 	-40(%rbp), %r10
 
 jne 		.endWhile0
 
-movl 	$1.0, -31(%rbp)
+movl 	$1.0, -48(%rbp)
 
-movl		-31(%rbp), %eax 
-movl		0(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -35(%rbp)
+mov		-48(%rbp), %r10 
+mov		-4(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -52(%rbp)
 
-movl		-35(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-52(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl 	$2.0, -39(%rbp)
+movl 	$2.0, -56(%rbp)
 
-movl		4(%rbp), %eax
-cmpl		-39(%rbp), %eax
+mov		1(%rbp), %rax
+cmp		-56(%rbp), %rax
 setl		%al
-movzbl %al, %eax
-movl		%eax, -43(%rbp)
+movzb %al, %rax
+mov		%rax, -60(%rbp)
 
-movl 	$1, -47(%rbp)
+movl 	$1, -64(%rbp)
 
-movl		-47(%rbp), %eax
-cmpl 	-43(%rbp), %eax
+mov		-64(%rbp), %r10
+cmp 	-60(%rbp), %r10
 
 jne 		.falseCond2
 
-movl 	$0.0, -51(%rbp)
+movl 	$0.0, -68(%rbp)
 
-movl		0(%rbp), %eax
-cmpl		-51(%rbp), %eax
+mov		-4(%rbp), %rax
+cmp		-68(%rbp), %rax
 setne 	%al
-movzbl %al, %eax
-movl		%eax, -55(%rbp)
+movzb %al, %rax
+mov		%rax, -72(%rbp)
 
-movl 	$1, -59(%rbp)
+movl 	$1, -76(%rbp)
 
-movl		-59(%rbp), %eax
-cmpl 	-55(%rbp), %eax
+mov		-76(%rbp), %r10
+cmp 	-72(%rbp), %r10
 
 jne 		.falseCond3
 
-movl		4(%rbp), %eax 
-movl		0(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -63(%rbp)
+mov		1(%rbp), %r10 
+mov		0(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -80(%rbp)
 
-movl		-8(%rbp), %eax 
-movl		-63(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -67(%rbp)
+mov		-12(%rbp), %r10 
+mov		-80(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -84(%rbp)
 
-movl		-67(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-84(%rbp), %rax
+mov		%rax, -12(%rbp)
 
 .falseCond3: 
 
@@ -104,21 +102,21 @@ jmp 		.endIf4
 
 .falseCond2: 
 
-movl 	$1000.2343, -71(%rbp)
+movl 	$1000.2343, -88(%rbp)
 
-movl		-71(%rbp), %eax 
-negl		%eax 
-movl		%eax, -75(%rbp) 
+mov		-88(%rbp), %rax 
+neg		%rax 
+mov		%rax, -92(%rbp) 
 
-movl 	$6752.0, -79(%rbp)
+movl 	$6752.0, -96(%rbp)
 
-movl		-75(%rbp), %eax 
-movl		-79(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -83(%rbp)
+mov		-92(%rbp), %r10 
+mov		-96(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -100(%rbp)
 
-movl		-83(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-100(%rbp), %rax
+mov		%rax, -12(%rbp)
 
 jmp 		.endWhile0
 
@@ -128,43 +126,41 @@ jmp 		.beginWhile1
 
 .endWhile0: 
 
-movl 	$2.0, -87(%rbp)
+movl 	$2.0, -104(%rbp)
 
-movl		-87(%rbp), %eax 
-movl		-8(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -91(%rbp)
+mov		-104(%rbp), %r10 
+mov		-12(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -108(%rbp)
 
-movl		-91(%rbp), %eax 
-negl		%eax 
-movl		%eax, -95(%rbp) 
+mov		-108(%rbp), %rax 
+neg		%rax 
+mov		%rax, -112(%rbp) 
 
-movl		-95(%rbp), %eax
+mov		-112(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 2), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 7), $0 
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -2(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		0(%rbp), %edi
-movl	 	%edi, -6(%rsp)
+mov		-4(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruContinue
-movl 	%eax, -10(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-10(%rbp), %edi
-movl	 	%edi, -18(%rsp)
+mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

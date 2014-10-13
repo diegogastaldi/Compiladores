@@ -3,41 +3,40 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 3), $0 
+mov 		%rdi, -4(%rbp) 
 
-movl 	$1.0, -12(%rbp)
+movl 	$1.0, -8(%rbp)
 
-movl		-8(%rbp), %eax 
-movl		-12(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -16(%rbp)
+mov		-4(%rbp), %r10 
+mov		-8(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -12(%rbp)
 
-movl		-16(%rbp), %eax
+mov		-12(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 4), $0 
 
-movl		-8(%rbp), %edi
-movl	 	%edi, 4(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	inc
-movl 	%eax, -12(%rbp) 
+mov 	%rax, -8(%rbp) 
 
-movl		-12(%rbp), %eax 
-movl		-16(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -20(%rbp)
+mov		-8(%rbp), %r10 
+mov		-4(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -16(%rbp)
 
-movl		-20(%rbp), %eax
-movl		%eax, -24(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

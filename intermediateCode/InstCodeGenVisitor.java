@@ -32,6 +32,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   /* Generador de direcciones de memoria y labes que no se repiten */
   private Labels genLabels;
 
+  private Integer posMethodLabel;
+  private Integer reserveSpace;
+
   //Constructor
   public InstCodeGenVisitor(){
     instructions = new LinkedList<Instr>();
@@ -41,13 +44,22 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions.add(new Instr(Operator.TEXT, null, null, ".text\n"));
   }
 
+  public void globalVar( List<Global> globals) {
+    for (Global g : globals) {
+      instructions.add(new Instr(Operator.GLOBAL, g.getId(), g.getSize(), null));
+    }
+  }
+
   public void blockCode(completeFunction c) {
-    /* Label de inicio de funcion */
-    instructions.add(new Instr(Operator.METHODLABEL, c.getReserve(), null, c.getName()));
+    posMethodLabel = instructions.size();
+    reserveSpace = c.getParameters().size();
+
     /* Reinicia labels */
-    genLabels.restart(c.getReserve());
+    genLabels.restart(c.getParameters().size());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
+    /* Label de inicio de funcion */
+    instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
   }
 
   public List<Instr> getInst() {
@@ -62,16 +74,17 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.VARASSIGN, "$1", null, op));
+    instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
     /* Realiza el incremento */
     instructions.add(new Instr(Operator.PLUS, expr, op, result));
     /* Realiza la asigancion */
     if (stmt.getLocation() instanceof VarLocation) 
-      instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+      instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
     else {
       ArrayLocation a = (ArrayLocation) stmt.getLocation();
       instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
     }
+    reserveSpace += 2;
     return null;
   }
   
@@ -83,15 +96,16 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label donde guardara el resultado */    
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.VARASSIGN, "$1", null, op));
+    instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
     instructions.add(new Instr(Operator.MINUS, expr, op, result));
     /* Realiza la asigancion */
     if (stmt.getLocation() instanceof VarLocation) 
-      instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+      instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
     else {
       ArrayLocation a = (ArrayLocation) stmt.getLocation();
       instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
     }
+    reserveSpace += 2;    
     return null;
   }
   
@@ -102,7 +116,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer loc = stmt.getLocation().accept(this);    
     /* Realiza la asigancion */
     if (stmt.getLocation() instanceof VarLocation) 
-      instructions.add(new Instr(Operator.VARASSIGN, expr, null, loc));
+      instructions.add(new Instr(Operator.VARASSIGN, expr, "adress", loc));
     else {
       ArrayLocation a = (ArrayLocation) stmt.getLocation();
       instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), loc));
@@ -146,7 +160,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     	/* Pone label al que se saltara si este if no tiene un bloque else y 
     		la condidion del mismo es falsa */
 	    instructions.add(new Instr(Operator.LABEL, null, null, labelElse));
-    
+    reserveSpace ++;
   	return null;
   }
   
@@ -178,6 +192,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
 
+    reserveSpace ++;
   	return null;
   }
   
@@ -228,6 +243,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
 
+    reserveSpace ++;
   	return null;
   }
   
@@ -250,10 +266,12 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       a = stmt.getParameters().get(i);
       parameter = a.accept(this);
       /* Apila paramatros en memoria */
-      instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
+      instructions.add(new Instr(Operator.PARAM, parameter, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));
+      reserveSpace++;
     }
     /* Realiza la llamada a la funcion */
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
+
     return null;
   }	
   
@@ -265,11 +283,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 			/* Apila paramatros en memoria */        
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));        
+        instructions.add(new Instr(Operator.PARAM, parameter, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));
+        reserveSpace ++;
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
-        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, null, genLabels.getOffSet()));        
+        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));        
+        reserveSpace ++;
       }
     }
     /* Realiza la llamada a la funcion */
@@ -283,6 +303,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
 	  instructions.add(new Instr(Operator.UNARYMINUS, operand, null, result));
 
+    reserveSpace ++;
     return result;
   }
 
@@ -292,6 +313,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
 	  instructions.add(new Instr(Operator.NOT, operand, null, result));
 
+    reserveSpace ++;
     return result;
   }
 
@@ -317,6 +339,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 				break;
 	  }
 	  instructions.add(new Instr(op, leftOperand, rightOperand, result));
+
+    reserveSpace ++;    
     return result;
   }
 
@@ -346,6 +370,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(op, leftOperand, rightOperand, result));
 
+    reserveSpace ++;
     return result;
   }
 
@@ -371,6 +396,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
                   instructions.add(new Instr(Operator.OR, labels, operand, result));
   								break;
   	}
+
+    reserveSpace ++;    
     return result;
   }
 
@@ -384,8 +411,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   		case CEQ : 	instructions.add(new Instr(Operator.CEQ, leftOperand, rightOperand, result));
   								break;
   		case NEQ : 	instructions.add(new Instr(Operator.NEQ, leftOperand, rightOperand, result));
-  								break;
+  	
+    							break;
   	}
+    reserveSpace ++;
+
     return result;
   }
 
@@ -399,12 +429,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     for (int i = expr.getParameters().size()-1; i >= 0; i--) {
       a = expr.getParameters().get(i);
       parameter = a.accept(this);
-      instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
+      instructions.add(new Instr(Operator.PARAM, parameter, expr.getParameters().size()- 1- i, genLabels.getOffSet()));
+      reserveSpace ++;
     }
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
 
+    reserveSpace += 2;
     return result;
   } 
   
@@ -415,15 +447,19 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       a = expr.getParameters().get(i);
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));        
+        instructions.add(new Instr(Operator.PARAM, parameter, expr.getParameters().size()- 1- i, genLabels.getOffSet()));        
+        reserveSpace ++;
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
-        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, null, genLabels.getOffSet()));        
+        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, expr.getParameters().size()- 1- i, genLabels.getOffSet()));        
+        reserveSpace ++; 
       }
     }
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
+
+    reserveSpace += 2;        
     return result;
   }
   
@@ -431,6 +467,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(IntLiteral lit)   {
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(Operator.CONST, lit, null, result));
+
+    reserveSpace ++;        
     return result;
   }
 
@@ -442,6 +480,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
     */
   	instructions.add(new Instr(Operator.CONST, lit, null, result));
+
+    reserveSpace ++;
     return result;
   }
 
@@ -452,15 +492,22 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	  instructions.add(new Instr(Operator.CONST, "1", null, result));
     else 
       instructions.add(new Instr(Operator.CONST, "0", null, result));
+
+    reserveSpace ++;        
     return result;
   }
   
 // visit locations  
   public Integer visit(VarLocation loc)   {
-    return loc.getOffSet();
+    int os = loc.getOffSet();
+    if (os >=  0) 
+      return (os + 1) * (-4);
+    else 
+      return os;
   }
 
   public Integer visit(ArrayLocation loc)  {
     return loc.getOffSet();
   }
 }
+

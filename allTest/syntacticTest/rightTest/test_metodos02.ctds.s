@@ -3,133 +3,125 @@
 .globl	alo
 .type	alo, @function 
 alo: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 6), $0 
 
-movl 	$1, 0(%rbp)
+movl 	$1, -8(%rbp)
 
-movl		0(%rbp), %eax
-cmpl 	4(%rbp), %eax
+mov		-8(%rbp), %r10
+cmp 	1(%rbp), %r10
 
 jne 		.falseCond0
 
-movl 	$1, -4(%rbp)
+movl 	$1, -12(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-4(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -8(%rbp)
+mov		0(%rbp), %r10 
+mov		-12(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -16(%rbp)
 
-movl		-8(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, 0(%rbp)
 
 jmp 		.endIf1
 
 .falseCond0: 
 
-movl 	$1, -12(%rbp)
+movl 	$1, -20(%rbp)
 
-movl		-12(%rbp), %eax 
-movl		0(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -16(%rbp)
+mov		-20(%rbp), %r10 
+mov		0(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -24(%rbp)
 
-movl		-16(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, 0(%rbp)
 
 .endIf1: 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 
 .globl	Alo
 .type	Alo, @function 
 Alo: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 1), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 
 .globl	alo2
 .type	alo2, @function 
 alo2: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 6), $0 
 
-movl		0(%rbp), %edi
-movl	 	%edi, 0(%rsp)
-
-movl 	$1, -4(%rbp)
-
-movl		-4(%rbp), %edi
-movl	 	%edi, -8(%rsp)
-
-call 	alo
+mov		0(%rbp), %r10
+mov	 	%r10, %rdi
 
 movl 	$1, -12(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-12(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -16(%rbp)
+mov		-12(%rbp), %r10
+mov	 	%r10, %rsi
 
-movl		-16(%rbp), %eax
-movl		%eax, 0(%rbp)
+call 	alo
 
-movl		0(%rbp), %eax
+movl 	$1, -20(%rbp)
+
+mov		0(%rbp), %r10 
+mov		-20(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -24(%rbp)
+
+mov		-24(%rbp), %rax
+mov		%rax, 0(%rbp)
+
+mov		0(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 1), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 11), $0 
 
-movl 	$7, -1(%rbp)
+movl 	$7, -12(%rbp)
 
-movl		-1(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-12(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$8.0, -5(%rbp)
+movl 	$8.0, -16(%rbp)
 
-movl		-5(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -9(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	alo2
-movl 	%eax, -13(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-13(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$3, -21(%rbp)
+movl 	$3, -32(%rbp)
 
-movl		-21(%rbp), %eax 
-movl		-4(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -25(%rbp)
+mov		-32(%rbp), %r10 
+mov		-8(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -36(%rbp)
 
-movl		-25(%rbp), %edi
-movl	 	%edi, -29(%rsp)
+mov		-36(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl 	$0, -33(%rbp)
+movl 	$0, -44(%rbp)
 
-movl		-33(%rbp), %edi
-movl	 	%edi, -37(%rsp)
+mov		-44(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	alo
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

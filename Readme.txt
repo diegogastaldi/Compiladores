@@ -15,6 +15,6 @@ Nota:
   - diferencia entre 64 y 32()
   - DOCUMENTACION
 
-llamadas externas en aassembler  (Parametros en registros -> Llamadas internas). 
 float.
-Reservas de memoria en los metodos (corregir variables declaradas y agregar variables temporales)
+variables globales.
+error raro(enter)

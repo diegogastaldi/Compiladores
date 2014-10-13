@@ -20,17 +20,14 @@ import ir.ast.Type;
 import java.util.LinkedList;
 public class completeFunction extends functionSymbol {
   private Block block;
-  /* Espacio necesario para las variables locales */
-  private int local;
-  public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b, int reserve){
+
+  public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b){
   	super(name, type, parameters);
     block = b;
-    local = reserve;
 	}
-  public completeFunction(functionSymbol f, Block b, int reserve){
+  public completeFunction(functionSymbol f, Block b){
     super(f.getName(), f.getType(), f.getParameters());
     block = b;
-    local = reserve;
   }
   public void setBlock (Block b) {
     block = b;
@@ -40,11 +37,8 @@ public class completeFunction extends functionSymbol {
     return block;
   }
   
- public String toString(){
+  public String toString(){
     return super.toString() + " , Block: " + block.toString();
-  }
-  public int getReserve() {
-    return local;
   }
 
 }  

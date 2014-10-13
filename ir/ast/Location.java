@@ -15,4 +15,8 @@ public abstract class Location extends Expression {
 	public Integer getOffSet() {
 		return offset;
 	}
+
+	public void setOffSet(Integer i) {
+		offset = i;
+	}	
 }

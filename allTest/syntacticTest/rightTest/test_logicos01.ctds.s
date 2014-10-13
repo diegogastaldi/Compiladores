@@ -3,88 +3,84 @@
 .globl	pruebaLogica
 .type	pruebaLogica, @function 
 pruebaLogica: 
-enter   $(4 * 1), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 10), $0 
 
-movl 	$1, -1(%rbp)
+movl 	$1, -12(%rbp)
 
-movl		-1(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-12(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl 	$0, -5(%rbp)
+movl 	$0, -16(%rbp)
 
-cmpl		$0, -5(%rbp)
+cmpl		$0, -16(%rbp)
 jne 		.0
-cmpl		$0, 0(%rbp)
+cmpl		$0, -4(%rbp)
 je 		.1
 .0: 
-movl		$1, %eax
+mov		$1, %r10
 jmp 		.2
 .1:
-movl		$0, %eax
+mov		$0, %r10
 .2:
-movl		%eax, -9(%rbp)
+mov		%r10, -20(%rbp)
 
-movl 	$1, -13(%rbp)
+movl 	$1, -24(%rbp)
 
-cmpl		$0, -13(%rbp) 
+cmpl		$0, -24(%rbp) 
 sete		%al 
-movzbl	%al, %eax 
-movl		%eax, -17(%rbp) 
+movzb	%al, %rax 
+mov		%rax, -28(%rbp) 
 
-cmpl		$0, -9(%rbp)
+cmpl		$0, -20(%rbp)
 je 		.3
-cmpl		$0, -17(%rbp)
+cmpl		$0, -28(%rbp)
 je 		.3
-movl		$1, %eax
+mov		$1, %r10
 jmp		.4
 .3:
-movl		$0, %eax
+mov		$0, %r10
 .4:
-movl		%eax, -21(%rbp)
+mov		%r11, -32(%rbp)
 
 cmpl		$0, 0(%rbp) 
 sete		%al 
-movzbl	%al, %eax 
-movl		%eax, -25(%rbp) 
+movzb	%al, %rax 
+mov		%rax, -36(%rbp) 
 
-cmpl		$0, -21(%rbp)
+cmpl		$0, -32(%rbp)
 je 		.5
-cmpl		$0, -25(%rbp)
+cmpl		$0, -36(%rbp)
 je 		.5
-movl		$1, %eax
+mov		$1, %r10
 jmp		.6
 .5:
-movl		$0, %eax
+mov		$0, %r10
 .6:
-movl		%eax, -29(%rbp)
+mov		%r11, -40(%rbp)
 
-movl		-29(%rbp), %eax
+mov		-40(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 5), $0 
 
-movl 	$0, 0(%rbp)
+movl 	$0, -8(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	pruebaLogica
-movl 	%eax, -8(%rbp) 
+mov 	%rax, -16(%rbp) 
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -16(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

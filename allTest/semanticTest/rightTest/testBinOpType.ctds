@@ -1,5 +1,5 @@
 class clase {
-    float x;
+
     
     float inc(float x) {
         return x + 1.0;
@@ -7,6 +7,7 @@ class clase {
     
     void main() {
         float y;
+        float x;
         x = inc(x) + y;
         return;
     }

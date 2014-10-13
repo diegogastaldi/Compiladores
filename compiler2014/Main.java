@@ -54,7 +54,7 @@ public class Main {
       methodMainCheck(par.getAST());
       /* Genera el codigo intermedio solo si el coddigo fuente no tiene errores */
       if (!hasErrors) {
-        List<Instr> ic = instCodeGen(par.getAST());
+        List<Instr> ic = instCodeGen(par.getAST(), par.getGlobals());
   //    System.out.println("Intermedite Code : " + ic.toString());
         String assembly = genAssemblyCode.gACode(ic);
   //      System.out.println("Assembly code: " + assembly.toString());
@@ -161,8 +161,10 @@ public class Main {
   }
 
   /* A partir del arbol sintactico genera el codigo intermedio y lo retorna */
-  public static List<Instr> instCodeGen(List<completeFunction> ast) {
+  public static List<Instr> instCodeGen(List<completeFunction> ast, List<Global> globals) {
     InstCodeGenVisitor icg = new InstCodeGenVisitor();
+
+    icg.globalVar(globals);
 
     for (completeFunction c : ast) {
       icg.blockCode(c);

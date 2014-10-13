@@ -3,62 +3,58 @@
 .globl	pruMult
 .type	pruMult, @function 
 pruMult: 
-enter   $(4 * 2), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 9), $0 
 
-movl 	$5, -2(%rbp)
+movl 	$5, -16(%rbp)
 
-movl		-2(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-16(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-movl 	$2000, -6(%rbp)
+movl 	$2000, -20(%rbp)
 
-movl		-6(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$1000, -10(%rbp)
+movl 	$1000, -24(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-4(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -14(%rbp)
+mov		0(%rbp), %r10 
+mov		-8(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -28(%rbp)
 
-movl		-10(%rbp), %eax 
-movl		-14(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -18(%rbp)
+mov		-24(%rbp), %r10 
+mov		-28(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -32(%rbp)
 
-movl		0(%rbp), %eax 
-movl		-18(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -22(%rbp)
+mov		-4(%rbp), %r10 
+mov		-32(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -36(%rbp)
 
-movl		-22(%rbp), %eax
+mov		-36(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 5), $0 
 
-movl 	$2, 0(%rbp)
+movl 	$2, -8(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	pruMult
-movl 	%eax, -8(%rbp) 
+mov 	%rax, -16(%rbp) 
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -16(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

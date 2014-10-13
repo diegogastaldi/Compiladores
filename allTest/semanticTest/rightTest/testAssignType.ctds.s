@@ -1,25 +1,26 @@
 .text
 
+.comm y, 4
+
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 
 .globl	main2
 .type	main2, @function 
 main2: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 1), $0 
+mov 		%rdi, -4(%rbp) 
 
-movl		-8(%rbp), %eax
-movl		%eax, -12(%rbp)
+mov		-4(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

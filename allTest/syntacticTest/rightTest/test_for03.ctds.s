@@ -6,88 +6,84 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(4 * 1), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 10), $0 
 
-movl 	$2, -1(%rbp)
+movl 	$2, -12(%rbp)
 
-movl 	$0, -5(%rbp)
+movl 	$0, -16(%rbp)
 
-movl 	-1, %ebx 
-movl 	-5, %edx 
-movl 	%ebx, 0(%rbp, %rdx, 4) 
+mov 		-12, %rbx 
+mov 		-16, %rdx 
+mov 		%rbx, -4(%rbp, %rdx, 4) 
 
-movl		0(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
-movl 	$1, -9(%rbp)
+movl 	$1, -20(%rbp)
 
-movl 	$5, -13(%rbp)
+movl 	$5, -24(%rbp)
 
-movl 	$10, -17(%rbp)
+movl 	$10, -28(%rbp)
 
-movl		-17(%rbp), %eax 
-negl		%eax 
-movl		%eax, -21(%rbp) 
+mov		-28(%rbp), %rax 
+neg		%rax 
+mov		%rax, -32(%rbp) 
 
 jmp 		.endFor0
 
 .beginFor1: 
 
-movl 	$2, -25(%rbp)
+movl 	$2, -36(%rbp)
 
-movl		-284(%rbp), %eax 
-movl		-25(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -29(%rbp)
+mov		-288(%rbp), %r10 
+mov		-36(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -40(%rbp)
 
-movl 	-29, %ebx 
-movl 	-284, %edx 
-movl 	%ebx, 0(%rbp, %rdx, 4) 
+mov 		-40, %rbx 
+mov 		-288, %rdx 
+mov 		%rbx, -4(%rbp, %rdx, 4) 
 
-movl		-13(%rbp), %eax 
-movl		-9(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -13(%rbp)
+mov		-24(%rbp), %r10 
+mov		-20(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -24(%rbp)
 
 .endFor0: 
 
-movl		-21(%rbp), %eax
-cmpl 	-13(%rbp), %eax
-
-jle 		.beginFor1
+mov		-32(%rbp), %r10
+cmp 	-24(%rbp), %r10
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 8), $0 
 
-movl 	$8, 0(%rbp)
+jle 		.beginFor1
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+movl 	$8, -8(%rbp)
 
-movl 	$4, -8(%rbp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -12(%rsp)
+movl 	$4, -16(%rbp)
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruArreglos
-movl 	%eax, -16(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-16(%rbp), %edi
-movl	 	%edi, -24(%rsp)
+mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L02, %edi
-movl	 	%edi, -28(%rsp)
+mov		$.L02, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

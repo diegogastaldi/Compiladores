@@ -19,7 +19,7 @@ public class Labels {
 	/* Modificador para label */
 	private int label;
 	/* Modificador para variables */	
-  public int temp;
+  private int temp;
   /* Posicion base para definir las variables locales */
   public int globalParam;
   /* Indica si ya se cargaron las variables globales */
@@ -30,7 +30,6 @@ public class Labels {
     temp = 0;
     param = 0;
     label = 0;
-    globalParam = 0;
     global = false;
   }
 
@@ -39,34 +38,29 @@ public class Labels {
 	}
 
   public int getOffSet() {
-    int result = temp;
     temp -= 4;
-    return result;
+    return temp;
   }  
 
   public int getOffSet(int space) {
-    int result = temp;
+    int result = temp - 4;
     temp -= (4 * space);
     return result;
   }  
 
-  public int getOffSetParam() {
-    int result = param;
-    param += 4;
-    return result;
+  public int getNumParam() {
+    temp -= 4;
+    return param++;
   }  
 
-  public void restartGlobal () {
-    if (!global) {
-      globalParam = temp;
-      global = true;
-    } else       
-      temp = globalParam;
-    param = 0;
+  public void restart(int value) {
+    temp = (-4) * value;
+    param = 0;    
   }
 
-  public void restart(int value) {
-    temp = - value;
+  public void restart() {
+    temp = 0;
+    param = 0;
   }
 
 } 

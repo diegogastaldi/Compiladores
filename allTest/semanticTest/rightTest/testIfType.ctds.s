@@ -3,45 +3,44 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 6), $0 
+mov 		%rdi, -4(%rbp) 
 
-movl 	$0, -12(%rbp)
+movl 	$0, -8(%rbp)
 
-movl		-8(%rbp), %eax
-cmpl		-12(%rbp), %eax
+mov		-4(%rbp), %rax
+cmp		-8(%rbp), %rax
 setle 	%al
-movzbl %al, %eax
-movl		%eax, -16(%rbp)
+movzb  %al, %rax
+mov		%rax, -12(%rbp)
 
-movl 	$1, -20(%rbp)
+movl 	$1, -16(%rbp)
 
-movl		-20(%rbp), %eax
-cmpl 	-16(%rbp), %eax
+mov		-16(%rbp), %r10
+cmp 	-12(%rbp), %r10
 
-jne 		.falseCond1
+jne 		.falseCond0
 
-movl 	$0, -28(%rbp)
+movl 	$0, -20(%rbp)
 
-movl		-24(%rbp), %eax
-cmpl		-28(%rbp), %eax
+mov		-4(%rbp), %rax
+cmp		-20(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -32(%rbp)
+movzb	%al, %rax
+mov		%rax, -24(%rbp)
 
-movl		-32(%rbp), %eax
+mov		-24(%rbp), %rax
 leave
 ret
 
-.falseCond1: 
+.falseCond0: 
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

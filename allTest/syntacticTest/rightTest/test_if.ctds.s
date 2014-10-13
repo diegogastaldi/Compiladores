@@ -3,138 +3,134 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(4 * 1), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 10), $0 
 
-movl		4(%rbp), %eax
-cmpl		0(%rbp), %eax
+mov		1(%rbp), %rax
+cmp		0(%rbp), %rax
 setg		%al
-movzbl	%al, %eax
-movl		%eax, -1(%rbp)
+movzb	%al, %rax
+mov		%rax, -12(%rbp)
 
-movl 	$1, -5(%rbp)
+movl 	$1, -16(%rbp)
 
-movl		-5(%rbp), %eax
-cmpl 	-1(%rbp), %eax
+mov		-16(%rbp), %r10
+cmp 	-12(%rbp), %r10
 
 jne 		.falseCond0
 
-movl		0(%rbp), %eax 
-movl		4(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -9(%rbp)
+mov		0(%rbp), %r10 
+mov		1(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -20(%rbp)
 
-movl		-9(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 .falseCond0: 
 
-movl 	4(%rbp), %eax
-cmpl		0(%rbp), %eax
+mov 		1(%rbp), %rax
+cmp		0(%rbp), %rax
 sete		%al
-movzbl	%al, %eax
-movl		%eax, -13(%rbp)
+movzb	%al, %rax
+mov		%rax, -24(%rbp)
 
-movl 	$1, -17(%rbp)
+movl 	$1, -28(%rbp)
 
-movl		-17(%rbp), %eax
-cmpl 	-13(%rbp), %eax
+mov		-28(%rbp), %r10
+cmp 	-24(%rbp), %r10
 
 jne 		.falseCond1
 
-movl 	$5, -21(%rbp)
+movl 	$5, -32(%rbp)
 
-movl		4(%rbp), %eax 
-movl		-21(%rbp), %edx 
-imull	%eax, %edx 
-movl		%edx, -25(%rbp)
+mov		1(%rbp), %r10 
+mov		-32(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -36(%rbp)
 
-movl		-25(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-36(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 jmp 		.endIf2
 
 .falseCond1: 
 
-movl		4(%rbp), %eax 
-movl		0(%rbp), %edx 
-subl		%eax, %edx 
-movl		%edx, -29(%rbp)
+mov		1(%rbp), %r10 
+mov		0(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -40(%rbp)
 
-movl		-29(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-40(%rbp), %rax
+mov		%rax, -4(%rbp)
 
 .endIf2: 
 
-movl		0(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 19), $0 
 
-movl 	$8, 0(%rbp)
+movl 	$8, -8(%rbp)
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl 	$4, -8(%rbp)
+movl 	$4, -16(%rbp)
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -12(%rsp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruAritmetica
-movl 	%eax, -16(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-16(%rbp), %edi
-movl	 	%edi, -24(%rsp)
-
-call 	printf
+mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-movl 	$4, -28(%rbp)
-
-movl		-28(%rbp), %edi
-movl	 	%edi, -32(%rsp)
+call 	printf
 
 movl 	$4, -36(%rbp)
 
-movl		-36(%rbp), %edi
-movl	 	%edi, -40(%rsp)
+mov		-36(%rbp), %r10
+mov	 	%r10, %rdi
+
+movl 	$4, -44(%rbp)
+
+mov		-44(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruAritmetica
-movl 	%eax, -44(%rbp) 
+mov 	%rax, -52(%rbp) 
 
-movl		-44(%rbp), %edi
-movl	 	%edi, -52(%rsp)
+mov		-52(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-movl 	$5, -56(%rbp)
+movl 	$5, -64(%rbp)
 
-movl		-56(%rbp), %edi
-movl	 	%edi, -60(%rsp)
+mov		-64(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl 	$8, -64(%rbp)
+movl 	$8, -72(%rbp)
 
-movl		-64(%rbp), %edi
-movl	 	%edi, -68(%rsp)
+mov		-72(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruAritmetica
-movl 	%eax, -72(%rbp) 
+mov 	%rax, -80(%rbp) 
 
-movl		-72(%rbp), %edi
-movl	 	%edi, -80(%rsp)
+mov		-80(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

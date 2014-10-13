@@ -3,60 +3,58 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 5), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 12), $0 
 
-movl 	$1, -5(%rbp)
+movl 	$1, -28(%rbp)
 
-movl		-5(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-28(%rbp), %rax
+mov		%rax, -4(%rbp)
 
-cmpl		$0, 0(%rbp) 
+cmpl		$0, -4(%rbp) 
 sete		%al 
-movzbl	%al, %eax 
-movl		%eax, -9(%rbp) 
+movzb	%al, %rax 
+mov		%rax, -32(%rbp) 
 
-movl		-9(%rbp), %eax
-movl		%eax, -8(%rbp)
+mov		-32(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-cmpl		$0, 0(%rbp)
+cmpl		$0, -4(%rbp)
 je 		.0
-cmpl		$0, -8(%rbp)
+cmpl		$0, -12(%rbp)
 je 		.0
-movl		$1, %eax
+mov		$1, %r10
 jmp		.1
 .0:
-movl		$0, %eax
+mov		$0, %r10
 .1:
-movl		%eax, -13(%rbp)
+mov		%r11, -36(%rbp)
 
-cmpl		$0, -8(%rbp) 
+cmpl		$0, -12(%rbp) 
 sete		%al 
-movzbl	%al, %eax 
-movl		%eax, -17(%rbp) 
+movzb	%al, %rax 
+mov		%rax, -40(%rbp) 
 
-cmpl		$0, -13(%rbp)
+cmpl		$0, -36(%rbp)
 jne 		.2
-cmpl		$0, -17(%rbp)
+cmpl		$0, -40(%rbp)
 je 		.3
 .2: 
-movl		$1, %eax
+mov		$1, %r10
 jmp 		.4
 .3:
-movl		$0, %eax
+mov		$0, %r10
 .4:
-movl		%eax, -21(%rbp)
+mov		%r10, -44(%rbp)
 
-movl		-21(%rbp), %eax
-movl		%eax, -4(%rbp)
+mov		-44(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -25(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

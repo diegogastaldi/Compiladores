@@ -3,22 +3,20 @@
 .globl	a
 .type	a, @function 
 a: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 1), $0 
 
 movl 	$0, -4(%rbp)
 
-movl		-4(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 0), $0 
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

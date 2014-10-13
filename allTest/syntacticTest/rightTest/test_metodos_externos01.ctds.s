@@ -9,91 +9,85 @@
 .globl	alo
 .type	alo, @function 
 alo: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 3), $0 
 
-movl 	$1, 0(%rbp)
+movl 	$1, -8(%rbp)
 
-movl		0(%rbp), %eax 
-movl		0(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -4(%rbp)
+mov		0(%rbp), %r10 
+mov		-8(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -12(%rbp)
 
-movl		-4(%rbp), %eax
-movl		%eax, 0(%rbp)
+mov		-12(%rbp), %rax
+mov		%rax, 0(%rbp)
 
-movl		0(%rbp), %eax
+mov		0(%rbp), %rax
 leave
 ret
 
 .globl	alo_2
 .type	alo_2, @function 
 alo_2: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
-
-movl 	$1, 0(%rbp)
-
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
-
-call 	alo
+enter   $(4 * 8), $0 
 
 movl 	$1, -8(%rbp)
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -12(%rsp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	alo
-movl 	%eax, -16(%rbp) 
 
-movl 	$1, -24(%rbp)
+movl 	$1, -16(%rbp)
 
-movl		-16(%rbp), %eax 
-movl		-24(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -28(%rbp)
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		-28(%rbp), %eax
-movl		%eax, 0(%rbp)
+call 	alo
+mov 	%rax, -24(%rbp) 
 
-mov 		$0, %eax
-leave
-ret
+movl 	$1, -32(%rbp)
+
+mov		-24(%rbp), %r10 
+mov		-32(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -36(%rbp)
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 7), $0 
 
-movl		$.L00, %edi
-movl	 	%edi, 0(%rsp)
+mov		-36(%rbp), %rax
+mov		%rax, 0(%rbp)
+
+mov 		$0, %rax
+leave
+ret
+
+mov		$.L00, %r10
+mov	 	%r10, %rdi
 
 call 	printf
 
-movl 	$5, -4(%rbp)
+movl 	$5, -12(%rbp)
 
-movl		-4(%rbp), %edi
-movl	 	%edi, -8(%rsp)
+mov		-12(%rbp), %r10
+mov	 	%r10, %rdi
 
 call 	alo
-movl 	%eax, -12(%rbp) 
+mov 	%rax, -20(%rbp) 
 
-movl		-12(%rbp), %edi
-movl	 	%edi, -20(%rsp)
+mov		-20(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L01, %edi
-movl	 	%edi, -24(%rsp)
+mov		$.L01, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
 call 	/home/programas/primer_primo_par
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 

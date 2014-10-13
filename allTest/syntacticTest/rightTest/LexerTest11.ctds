@@ -1,7 +1,7 @@
 
 class program {
 
-void inc (int x, int y, int a , int b, int c, int d, int e, int f, int g, int h, int i, int j, int k , int l) {
+int inc (int x, int y, int a , int b, int c, int d, int e, int f, int g, int h, int i, int j, int k , int l) {
 	x = 0;
 	y = 0;
 	a = 0;
@@ -16,7 +16,7 @@ void inc (int x, int y, int a , int b, int c, int d, int e, int f, int g, int h,
 	j = 0;
 	k = 0;
 	l = 0;
-	return;
+	return l;
 }
 
 void main () {
@@ -34,7 +34,9 @@ void main () {
 	int j ;
 	int k ;
 	int l ;
-    inc(x, y, a, b, c, d, e, f, g, h, i, j, k, l);
+	int m ; 
+    m = inc(x, y, a, b, c, d, e, f, g, h, i, j, k, l);
+    externinvk("printf", void, m);
     return ;
 }
 }

@@ -6,106 +6,100 @@
 .globl	par
 .type	par, @function 
 par: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 2), $0 
 
-movl 	$15, 0(%rbp)
+movl 	$15, -8(%rbp)
 
-movl		0(%rbp), %eax
+mov		-8(%rbp), %rax
 leave
 ret
 
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(4 * 1), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 11), $0 
 
-movl 	$2, -1(%rbp)
+movl 	$2, -12(%rbp)
 
-movl 	$0, -5(%rbp)
+movl 	$0, -16(%rbp)
 
-movl 	-1, %ebx 
-movl 	-5, %edx 
-movl 	%ebx, 0(%rbp, %rdx, 4) 
+mov 		-12, %rbx 
+mov 		-16, %rdx 
+mov 		%rbx, -4(%rbp, %rdx, 4) 
 
-movl		0(%rbp), %eax
+mov		-4(%rbp), %rax
 leave
 ret
 
-movl 	$1, -9(%rbp)
+movl 	$1, -20(%rbp)
 
 call 	par
-movl 	%eax, -13(%rbp) 
+mov 	%rax, -24(%rbp) 
 
 call 	par
-movl 	%eax, -21(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-movl 	$5, -29(%rbp)
+movl 	$5, -40(%rbp)
 
-movl		-21(%rbp), %eax 
-movl		-29(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -33(%rbp)
+mov		-32(%rbp), %r10 
+mov		-40(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -44(%rbp)
 
 jmp 		.endFor0
 
 .beginFor1: 
 
-movl 	$2, -37(%rbp)
+movl 	$2, -48(%rbp)
 
-movl		-284(%rbp), %eax 
-movl		-37(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -41(%rbp)
+mov		-288(%rbp), %r10 
+mov		-48(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -52(%rbp)
 
-movl 	-41, %ebx 
-movl 	-284, %edx 
-movl 	%ebx, 0(%rbp, %rdx, 4) 
+mov 		-52, %rbx 
+mov 		-288, %rdx 
+mov 		%rbx, -4(%rbp, %rdx, 4) 
 
-movl		-13(%rbp), %eax 
-movl		-9(%rbp), %edx 
-addl		%eax, %edx 
-movl		%edx, -13(%rbp)
+mov		-24(%rbp), %r10 
+mov		-20(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -24(%rbp)
 
 .endFor0: 
 
-movl		-33(%rbp), %eax
-cmpl 	-13(%rbp), %eax
-
-jle 		.beginFor1
+mov		-44(%rbp), %r10
+cmp 	-24(%rbp), %r10
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
-pushq	%rbp
-movq		%rsp, %rbp
+enter   $(4 * 8), $0 
 
-movl 	$8, 0(%rbp)
+jle 		.beginFor1
 
-movl		0(%rbp), %edi
-movl	 	%edi, -4(%rsp)
+movl 	$8, -8(%rbp)
 
-movl 	$4, -8(%rbp)
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		-8(%rbp), %edi
-movl	 	%edi, -12(%rsp)
+movl 	$4, -16(%rbp)
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rsi
 
 call 	pruArreglos
-movl 	%eax, -16(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-movl		-16(%rbp), %edi
-movl	 	%edi, -24(%rsp)
+mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
 
-movl		$.L02, %edi
-movl	 	%edi, -28(%rsp)
+mov		$.L02, %r10
+mov	 	%r10, %rsi
 
 call 	printf
 
-mov 		$0, %eax
+mov 		$0, %rax
 leave
 ret
 
