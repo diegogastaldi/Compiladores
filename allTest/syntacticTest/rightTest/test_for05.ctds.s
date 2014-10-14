@@ -1,12 +1,18 @@
-.L02: 
+.L0L2: 
 		.string "%d resultado : " 
 
 .text
 
+.comm A, 20
+
+.comm B, 224
+
+.comm C, 40
+
 .globl	par
 .type	par, @function 
 par: 
-enter   $(4 * 2), $0 
+enter   $(4 * 1), $0 
 
 movl 	$15, -8(%rbp)
 
@@ -17,66 +23,68 @@ ret
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(4 * 11), $0 
+enter   $(4 * 15), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-movl 	$2, -12(%rbp)
+movl 	$2, -16(%rbp)
 
-movl 	$0, -16(%rbp)
+movl 	$0, -20(%rbp)
 
-mov 		-12, %rbx 
-mov 		-16, %rdx 
-mov 		%rbx, -4(%rbp, %rdx, 4) 
+mov 		-16, %rbx 
+mov 		-20, %rdx 
+mov 		%rbx, null(%rbp, %rdx, 4) 
 
-mov		-4(%rbp), %rax
+mov 		$0, %rax
 leave
 ret
 
-movl 	$1, -20(%rbp)
+movl 	$1, -24(%rbp)
 
 call 	par
-mov 	%rax, -24(%rbp) 
+mov 	%rax, -28(%rbp) 
 
 call 	par
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -36(%rbp) 
 
-movl 	$5, -40(%rbp)
+movl 	$5, -44(%rbp)
 
-mov		-32(%rbp), %r10 
-mov		-40(%rbp), %r11 
+mov		-36(%rbp), %r10 
+mov		-44(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -44(%rbp)
+mov		%r11, -48(%rbp)
 
-jmp 		.endFor0
+jmp 		.endForL0
 
-.beginFor1: 
+.beginForL1: 
 
-movl 	$2, -48(%rbp)
+movl 	$2, -52(%rbp)
 
-mov		-288(%rbp), %r10 
-mov		-48(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-52(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -52(%rbp)
+mov		%r11, -56(%rbp)
 
-mov 		-52, %rbx 
-mov 		-288, %rdx 
-mov 		%rbx, -4(%rbp, %rdx, 4) 
+mov 		-56, %rbx 
+mov 		-16, %rdx 
+mov 		%rbx, null(%rbp, %rdx, 4) 
 
-mov		-24(%rbp), %r10 
-mov		-20(%rbp), %r11 
+mov		-28(%rbp), %r10 
+mov		-24(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -24(%rbp)
+mov		%r11, -28(%rbp)
 
-.endFor0: 
+.endForL0: 
 
-mov		-44(%rbp), %r10
-cmp 	-24(%rbp), %r10
+mov		-48(%rbp), %r10
+cmp 	-28(%rbp), %r10
+
+jle 		.beginForL1
 
 .globl	main
 .type	main, @function 
 main: 
 enter   $(4 * 8), $0 
-
-jle 		.beginFor1
 
 movl 	$8, -8(%rbp)
 
@@ -94,7 +102,7 @@ mov 	%rax, -24(%rbp)
 mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L02, %r10
+mov		$.L0L2, %r10
 mov	 	%r10, %rsi
 
 call 	printf

@@ -31,7 +31,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   private List<String> labelsStack;
   /* Generador de direcciones de memoria y labes que no se repiten */
   private Labels genLabels;
-
+  /* Indica el lugar donde va la "Cabecera del metodo" para reservar los lugares del stack necesarios */
   private Integer posMethodLabel;
 
   //Constructor
@@ -43,6 +43,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions.add(new Instr(Operator.TEXT, null, null, ".text\n"));
   }
 
+  /* Crea las instrucciones para las variables globales */
   public void globalVar( List<Global> globals) {
     for (Global g : globals) {
       instructions.add(new Instr(Operator.GLOBAL, g.getId(), g.getSize(), null));
@@ -51,11 +52,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   public void blockCode(completeFunction c) {
     posMethodLabel = instructions.size();
-
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
+    /* Calcula el espacio a reservar */
     int reserveSpace = c.getParameters().size() + (-genLabels.getOffSet()/4)-2;
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
@@ -94,6 +95,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer loc = stmt.getLocation().accept(this);
     /* Label donde guardara el resultado */    
     Integer result = genLabels.getOffSet();
+    /* Label donde guardara un resultado parcial */    
     Integer op = genLabels.getOffSet();
     instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
     instructions.add(new Instr(Operator.MINUS, expr, op, result));
@@ -125,6 +127,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   
   public Integer visit(ReturnStmt stmt) {
   	Integer e = null;
+  	/* Genera instrucciones para la expresion */
     if (stmt.getExpression() != null) {
         e = stmt.getExpression().accept(this);
     }
@@ -191,7 +194,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
 
-     
   	return null;
   }
   
@@ -241,7 +243,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Actualizacion del stack */
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
-
      
   	return null;
   }
@@ -252,6 +253,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   public Integer visit(Block stmt){
+  	/* Genera codigo para todas las sentencias del bloque */
     for (Statement s : stmt.getStatements()) {
         s.accept(this);
     }
@@ -266,7 +268,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       parameter = a.accept(this);
       /* Apila paramatros en memoria */
       instructions.add(new Instr(Operator.PARAM, parameter, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));
-       
     }
     /* Realiza la llamada a la funcion */
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
@@ -283,12 +284,11 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
         instructions.add(new Instr(Operator.PARAM, parameter, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));
-         
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
+        posMethodLabel ++;
         instructions.add(new Instr(Operator.PARAM, "$.L0"+label, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));        
-         
       }
     }
     /* Realiza la llamada a la funcion */
@@ -302,7 +302,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
 	  instructions.add(new Instr(Operator.UNARYMINUS, operand, null, result));
 
-     
     return result;
   }
 
@@ -311,7 +310,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer result = genLabels.getOffSet();
 
 	  instructions.add(new Instr(Operator.NOT, operand, null, result));
-
      
     return result;
   }
@@ -338,7 +336,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 				break;
 	  }
 	  instructions.add(new Instr(op, leftOperand, rightOperand, result));
-
          
     return result;
   }
@@ -368,7 +365,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	}
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(op, leftOperand, rightOperand, result));
-
      
     return result;
   }
@@ -395,7 +391,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
                   instructions.add(new Instr(Operator.OR, labels, operand, result));
   								break;
   	}
-
          
     return result;
   }
@@ -414,7 +409,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     							break;
   	}
      
-
     return result;
   }
 
@@ -435,7 +429,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
 
-     
     return result;
   } 
   
@@ -451,13 +444,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
+        posMethodLabel ++;
         instructions.add(new Instr(Operator.PARAM, "$.L0"+label, expr.getParameters().size()- 1- i, genLabels.getOffSet()));        
           
       }
     }
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
-
              
     return result;
   }
@@ -480,7 +473,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     */
   	instructions.add(new Instr(Operator.CONST, lit, null, result));
 
-     
     return result;
   }
 

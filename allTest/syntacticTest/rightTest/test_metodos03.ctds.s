@@ -1,75 +1,80 @@
 .text
 
+.comm res, 4
+
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 3), $0 
+enter   $(4 * 4), $0 
+mov 		%rdi, -8(%rbp) 
 
-movl 	$1, -8(%rbp)
+movl 	$1, -12(%rbp)
 
-mov		0(%rbp), %r10 
-mov		-8(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		-12(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -12(%rbp)
+mov		%r11, -16(%rbp)
 
-mov		-12(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
 .globl	resto
 .type	resto, @function 
 resto: 
-enter   $(4 * 11), $0 
+enter   $(4 * 13), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-movl 	$3, -12(%rbp)
+movl 	$3, -16(%rbp)
 
-movl 	$2, -16(%rbp)
+movl 	$2, -20(%rbp)
 
-mov		-12(%rbp), %r10 
-mov		-16(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-20(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -20(%rbp)
+mov		%r10, -24(%rbp)
 
-mov		1(%rbp), %rax
-cmp		-20(%rbp), %rax
+mov		-12(%rbp), %rax
+cmp		-24(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -24(%rbp)
+mov		%rax, -28(%rbp)
 
-movl 	$1, -28(%rbp)
+movl 	$1, -32(%rbp)
 
-mov		-28(%rbp), %r10
-cmp 	-24(%rbp), %r10
+mov		-32(%rbp), %r10
+cmp 	-28(%rbp), %r10
 
-jne 		.falseCond0
+jne 		.falseCondL0
 
-movl 	$3, -32(%rbp)
+movl 	$3, -36(%rbp)
 
-mov		1(%rbp), %rax 
+mov		-12(%rbp), %rax 
 cltd
-idivl	-32(%rbp) 
-mov		%rax, -36(%rbp)
+idivl	-36(%rbp) 
+mov		%rax, -40(%rbp)
 
-mov		-36(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-40(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-jmp 		.endIf1
+jmp 		.endIfL1
 
-.falseCond0: 
+.falseCondL0: 
 
-movl 	$2, -40(%rbp)
+movl 	$2, -44(%rbp)
 
-mov		-40(%rbp), %rax 
+mov		-44(%rbp), %rax 
 cltd
-idivl	1(%rbp)
-mov		%rax, -44(%rbp)
+idivl	-12(%rbp)
+mov		%rax, -48(%rbp)
 
-mov		-44(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-48(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-.endIf1: 
+.endIfL1: 
 
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
@@ -78,34 +83,34 @@ ret
 main: 
 enter   $(4 * 11), $0 
 
-movl 	$0, -12(%rbp)
+movl 	$0, -8(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, null(%rbp)
 
-movl 	$10.2, -16(%rbp)
+movl 	$10.2, -12(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$5, -24(%rbp)
+movl 	$5, -20(%rbp)
 
-mov		-24(%rbp), %r10
+mov		-20(%rbp), %r10
 mov	 	%r10, %rdi
 
 call 	inc
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -28(%rbp) 
 
-mov		-32(%rbp), %r10
+mov		-28(%rbp), %r10
 mov	 	%r10, %rsi
 
 call 	resto
-mov 	%rax, -44(%rbp) 
+mov 	%rax, -40(%rbp) 
 
-movl 	$0, -52(%rbp)
+movl 	$0, -48(%rbp)
 
-mov 		-44, %rbx 
-mov 		-52, %rdx 
+mov 		-40, %rbx 
+mov 		-48, %rdx 
 mov 		%rbx, -8(%rbp, %rdx, 4) 
 
 mov 		$0, %rax

@@ -1,3 +1,17 @@
+/* Taller de Diseño de software 2014
+
+   Proyecto: Compilador
+   
+  - Integrantes:
+    - Coria, Gaston
+    - Gastaldi, Diego
+    
+  *************************************
+
+	Clase que guarda los registros usados 
+	para el pasaje de parametros  
+*/
+
 package assemblyCode;
 
 public class paramRegister {

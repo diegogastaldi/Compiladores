@@ -295,17 +295,18 @@ public class genAssemblyCode {
 	}
 
 	public static void paramMethod(Instr instr) {
+		/* Guarda el parametro en r10 */
 		if (instr.getOperand1() instanceof String ) 
 			result += "mov		" + instr.getOperand1() + ", %r10\n";
 		else
 			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
 		Integer numOperand = (Integer)instr.getOperand2();
 		String destRegister;
+		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
 		if (numOperand < 6)  
 			destRegister = paramRegister.registers [numOperand];		
 		else 
 			destRegister = instr.getResult() + "(%rbp)";
-		
 		result += "mov	 	%r10, " + destRegister + "\n";
 	}
 
@@ -327,6 +328,8 @@ public class genAssemblyCode {
 		result += ".type	" + instr.getResult() + ", @function \n";			
 		result += instr.getResult() + ": \n";		
 		result += "enter   $(4 * " + instr.getOperand1() + "), $0 \n";
+
+		/* Guarda parametros en memoria reservada del metodo actual */
 		for (int i = 0 ; i < ((Integer)instr.getOperand2()); i++) {
 			if (i < paramRegister.registers.length)
 				result += "mov 		" + paramRegister.registers[i] + ", " + ((i+2) * (-4)) + "(%rbp) \n";

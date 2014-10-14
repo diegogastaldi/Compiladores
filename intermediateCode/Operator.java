@@ -43,7 +43,8 @@ public enum Operator {
  	, TEXT			/* Tercer parametro: texto a escribir en el codigo*/
  	, STRING 		/* Primer parametro: string a definir
  								 Segundo parametro: Label para definir el string*/
- 	, GLOBAL;
+ 	, GLOBAL;		/* Primer parametro: Nombre de la variable global 
+ 								 Segundo parametro: tamaño de la varibale global*/
 	@Override
 	public String toString() {
 		switch(this) {

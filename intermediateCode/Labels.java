@@ -24,13 +24,11 @@ public class Labels {
   public int globalParam;
   /* Indica si ya se cargaron las variables globales */
   private int param;
-  private boolean global;
 
   public Labels() {
     temp = -4;
     param = 0;
     label = 0;
-    global = false;
   }
 
 	public String getLabel() {

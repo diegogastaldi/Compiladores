@@ -3,34 +3,36 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(4 * 4), $0 
+enter   $(4 * 6), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-mov		1(%rbp), %rax
-cmp		0(%rbp), %rax
+mov		-12(%rbp), %rax
+cmp		-8(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -12(%rbp)
+mov		%rax, -16(%rbp)
 
-movl 	$1, -16(%rbp)
+movl 	$1, -20(%rbp)
 
-mov		-16(%rbp), %r10
-cmp 	-12(%rbp), %r10
+mov		-20(%rbp), %r10
+cmp 	-16(%rbp), %r10
 
-jne 		.falseCond0
+jne 		.falseCondL0
 
-mov		1(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-12(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-jmp 		.endIf1
+jmp 		.endIfL1
 
-.falseCond0: 
+.falseCondL0: 
 
-mov		0(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-.endIf1: 
+.endIfL1: 
 
-mov		-4(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 

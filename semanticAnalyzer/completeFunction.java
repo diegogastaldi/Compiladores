@@ -42,6 +42,3 @@ public class completeFunction extends functionSymbol {
   }
 
 }  
-
-
-

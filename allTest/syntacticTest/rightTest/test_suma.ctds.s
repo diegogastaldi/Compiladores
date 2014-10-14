@@ -3,66 +3,68 @@
 .globl	suma
 .type	suma, @function 
 suma: 
-enter   $(4 * 8), $0 
+enter   $(4 * 11), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-movl 	$0, -8(%rbp)
+movl 	$0, -16(%rbp)
 
-mov 		1(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov 		-12(%rbp), %rax
+cmp		-16(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -12(%rbp)
+mov		%rax, -20(%rbp)
 
-movl 	$1, -16(%rbp)
+movl 	$1, -24(%rbp)
 
-mov		-16(%rbp), %r10
-cmp 	-12(%rbp), %r10
+mov		-24(%rbp), %r10
+cmp 	-20(%rbp), %r10
 
-jne 		.falseCond0
+jne 		.falseCondL0
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
-jmp 		.endIf1
+jmp 		.endIfL1
 
-.falseCond0: 
+.falseCondL0: 
 
-movl 	$0, -20(%rbp)
+movl 	$0, -28(%rbp)
 
-mov 		0(%rbp), %rax
-cmp		-20(%rbp), %rax
+mov 		-8(%rbp), %rax
+cmp		-28(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -24(%rbp)
+mov		%rax, -32(%rbp)
 
-movl 	$1, -28(%rbp)
+movl 	$1, -36(%rbp)
 
-mov		-28(%rbp), %r10
-cmp 	-24(%rbp), %r10
+mov		-36(%rbp), %r10
+cmp 	-32(%rbp), %r10
 
-jne 		.falseCond2
+jne 		.falseCondL2
 
-mov		1(%rbp), %rax
+mov		-12(%rbp), %rax
 leave
 ret
 
-jmp 		.endIf3
+jmp 		.endIfL3
 
-.falseCond2: 
+.falseCondL2: 
 
-mov		1(%rbp), %r10 
-mov		0(%rbp), %r11 
+mov		-12(%rbp), %r10 
+mov		-8(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -32(%rbp)
+mov		%r11, -40(%rbp)
 
-mov		-32(%rbp), %rax
+mov		-40(%rbp), %rax
 leave
 ret
 
-.endIf3: 
+.endIfL3: 
 
-.endIf1: 
+.endIfL1: 
 
 .globl	main
 .type	main, @function 

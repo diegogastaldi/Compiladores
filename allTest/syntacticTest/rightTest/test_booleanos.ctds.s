@@ -3,110 +3,115 @@
 .globl	neg
 .type	neg, @function 
 neg: 
-enter   $(4 * 2), $0 
+enter   $(4 * 3), $0 
+mov 		%rdi, -8(%rbp) 
 
-cmpl		$0, 0(%rbp) 
+cmpl		$0, -8(%rbp) 
 sete		%al 
 movzb	%al, %rax 
-mov		%rax, -8(%rbp) 
+mov		%rax, -12(%rbp) 
 
-mov		-8(%rbp), %rax
+mov		-12(%rbp), %rax
 leave
 ret
 
 .globl	and
 .type	and, @function 
 and: 
-enter   $(4 * 2), $0 
+enter   $(4 * 5), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-cmpl		$0, 1(%rbp)
-je 		.0
-cmpl		$0, 0(%rbp)
-je 		.0
+cmpl		$0, -12(%rbp)
+je 		.L0
+cmpl		$0, -8(%rbp)
+je 		.L0
 mov		$1, %r10
-jmp		.1
-.0:
+jmp		.L1
+.L0:
 mov		$0, %r10
-.1:
-mov		%r11, -8(%rbp)
+.L1:
+mov		%r10, -16(%rbp)
 
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
 .globl	or
 .type	or, @function 
 or: 
-enter   $(4 * 2), $0 
+enter   $(4 * 5), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-cmpl		$0, 1(%rbp)
-jne 		.2
-cmpl		$0, 0(%rbp)
-je 		.3
-.2: 
+cmpl		$0, -12(%rbp)
+jne 		.L2
+cmpl		$0, -8(%rbp)
+je 		.L3
+.L2: 
 mov		$1, %r10
-jmp 		.4
-.3:
+jmp 		.L4
+.L3:
 mov		$0, %r10
-.4:
-mov		%r10, -8(%rbp)
+.L4:
+mov		%r10, -16(%rbp)
 
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 19), $0 
+enter   $(4 * 17), $0 
 
-movl 	$1, -28(%rbp)
+movl 	$1, -8(%rbp)
 
-mov		-28(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$0, -32(%rbp)
+movl 	$0, -12(%rbp)
 
-mov		-32(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-12(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-mov		-4(%rbp), %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
 call 	neg
-mov 	%rax, -40(%rbp) 
+mov 	%rax, -20(%rbp) 
 
-mov		-40(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-mov		-12(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 call 	neg
-mov 	%rax, -52(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-mov		-52(%rbp), %r10
+mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-12(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-4(%rbp), %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rsi
 
 call 	and
-mov 	%rax, -72(%rbp) 
+mov 	%rax, -52(%rbp) 
 
-mov		-72(%rbp), %r10
+mov		-52(%rbp), %r10
 mov	 	%r10, %rsi
 
 call 	or
-mov 	%rax, -84(%rbp) 
+mov 	%rax, -64(%rbp) 
 
-mov		-84(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-64(%rbp), %rax
+mov		%rax, -12(%rbp)
 
-mov		-8(%rbp), %r10
+mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
 call 	printf

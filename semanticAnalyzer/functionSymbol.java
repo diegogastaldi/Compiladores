@@ -27,21 +27,21 @@ public class functionSymbol extends absSymbol {
 	}
 
 	public String toString(){
-	    Iterator<absSymbol> it = parameters.iterator();
-	    String string = new String();
-	    int i = 1;
-	    while (it.hasNext()) {
-	        string = "parametro "+i+": "+it.next().toString();
-	        i++;
-	    }
-        return super.toString() + (", parameters: "+string);
+    Iterator<absSymbol> it = parameters.iterator();
+    String string = new String();
+    int i = 1;
+    while (it.hasNext()) {
+      string = "parametro "+i+": "+it.next().toString();
+      i++;
     }
+    return super.toString() + (", parameters: "+string);
+  }
 
-    public LinkedList<absSymbol> getParameters() {
-    	return parameters;
-    }
+  public LinkedList<absSymbol> getParameters() {
+  	return parameters;
+  }
 
-    public void setParameters(LinkedList<absSymbol> p) {
-    	parameters = p;
-    }
+  public void setParameters(LinkedList<absSymbol> p) {
+   	parameters = p;
+  }
 } 

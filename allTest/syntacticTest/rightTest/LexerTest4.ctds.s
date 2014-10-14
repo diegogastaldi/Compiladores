@@ -1,7 +1,7 @@
-.L03: 
+.L0L3: 
 		.string "y==%d\n" 
 
-.L01: 
+.L0L1: 
 		.string "y==1\n" 
 
 .text
@@ -9,69 +9,70 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 3), $0 
+enter   $(4 * 4), $0 
+mov 		%rdi, -8(%rbp) 
 
-movl 	$1, -8(%rbp)
+movl 	$1, -12(%rbp)
 
 .globl	main
 .type	main, @function 
 main: 
 enter   $(4 * 11), $0 
 
-mov		0(%rbp), %r10 
-mov		-8(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		-12(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -12(%rbp)
+mov		%r11, -16(%rbp)
 
-mov		-12(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
 call 	get_int
-mov 	%rax, -12(%rbp) 
+mov 	%rax, -8(%rbp) 
 
-mov		-12(%rbp), %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
 call 	inc
-mov 	%rax, -24(%rbp) 
+mov 	%rax, -20(%rbp) 
 
-mov		-24(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-20(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$1, -32(%rbp)
+movl 	$1, -28(%rbp)
 
-mov 		-4(%rbp), %rax
-cmp		-32(%rbp), %rax
+mov 		-8(%rbp), %rax
+cmp		-28(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -36(%rbp)
+mov		%rax, -32(%rbp)
 
-movl 	$1, -40(%rbp)
+movl 	$1, -36(%rbp)
 
-mov		-40(%rbp), %r10
-cmp 	-36(%rbp), %r10
+mov		-36(%rbp), %r10
+cmp 	-32(%rbp), %r10
 
-jne 		.falseCond0
+jne 		.falseCondL0
 
-mov		$.L01, %r10
+mov		$.L0L1, %r10
 mov	 	%r10, %rdi
 
 call 	printf
 
-jmp 		.endIf2
+jmp 		.endIfL2
 
-.falseCond0: 
+.falseCondL0: 
 
-mov		-4(%rbp), %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L03, %r10
+mov		$.L0L3, %r10
 mov	 	%r10, %rsi
 
 call 	printf
 
-.endIf2: 
+.endIfL2: 
 
 mov 		$0, %rax
 leave

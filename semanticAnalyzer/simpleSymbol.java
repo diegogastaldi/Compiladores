@@ -21,7 +21,7 @@ public class simpleSymbol extends absSymbol{
 	private Object value;
 	/* Posicion en la memoria con respecto al registro rbp de donde fue declarado */
   private Integer offset;
-
+  /* Indica si el simbolo es global */
   private Boolean isGlobal;
   
 	public simpleSymbol(String name, Object value, Type type, Integer offset, Boolean isGlobal){

@@ -3,21 +3,21 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(4 * 5), $0 
+enter   $(4 * 3), $0 
 
-movl 	$90, -12(%rbp)
+movl 	$90, -8(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-movl 	$7, -16(%rbp)
+movl 	$7, -12(%rbp)
 
-mov		-16(%rbp), %rax 
+mov		-12(%rbp), %rax 
 cltd
-idivl	-4(%rbp)
-mov		%rax, -20(%rbp)
+idivl	-8(%rbp)
+mov		%rax, -16(%rbp)
 
-mov		-20(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 

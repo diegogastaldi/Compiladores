@@ -3,46 +3,48 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(4 * 8), $0 
+enter   $(4 * 10), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-mov		0(%rbp), %rax
-cmp		1(%rbp), %rax
+mov		-8(%rbp), %rax
+cmp		-12(%rbp), %rax
 setle 	%al
 movzb  %al, %rax
-mov		%rax, -12(%rbp)
-
-movl 	$1, -16(%rbp)
-
-mov		-16(%rbp), %r10
-cmp 	-12(%rbp), %r10
-
-jne 		.falseCond0
+mov		%rax, -16(%rbp)
 
 movl 	$1, -20(%rbp)
 
-movl 	$1.0, -24(%rbp)
+mov		-20(%rbp), %r10
+cmp 	-16(%rbp), %r10
 
-mov 		1(%rbp), %rax
-cmp		-24(%rbp), %rax
+jne 		.falseCondL0
+
+movl 	$1, -24(%rbp)
+
+movl 	$1.0, -28(%rbp)
+
+mov 		-12(%rbp), %rax
+cmp		-28(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -28(%rbp)
+mov		%rax, -32(%rbp)
 
-cmpl		$0, -20(%rbp)
-je 		.1
-cmpl		$0, -28(%rbp)
-je 		.1
+cmpl		$0, -24(%rbp)
+je 		.L1
+cmpl		$0, -32(%rbp)
+je 		.L1
 mov		$1, %r10
-jmp		.2
-.1:
+jmp		.L2
+.L1:
 mov		$0, %r10
-.2:
-mov		%r11, -32(%rbp)
+.L2:
+mov		%r10, -36(%rbp)
 
-mov		-32(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-36(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-.falseCond0: 
+.falseCondL0: 
 
 mov 		$0, %rax
 leave
@@ -51,7 +53,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 1), $0 
+enter   $(4 * 0), $0 
 
 mov 		$0, %rax
 leave

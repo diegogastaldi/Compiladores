@@ -3,76 +3,78 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(4 * 10), $0 
+enter   $(4 * 12), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-mov		1(%rbp), %rax
-cmp		0(%rbp), %rax
+mov		-12(%rbp), %rax
+cmp		-8(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -12(%rbp)
+mov		%rax, -16(%rbp)
 
-movl 	$1, -16(%rbp)
+movl 	$1, -20(%rbp)
 
-mov		-16(%rbp), %r10
-cmp 	-12(%rbp), %r10
+mov		-20(%rbp), %r10
+cmp 	-16(%rbp), %r10
 
-jne 		.falseCond0
+jne 		.falseCondL0
 
-mov		0(%rbp), %r10 
-mov		1(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		-12(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -20(%rbp)
+mov		%r11, -24(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-24(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-.falseCond0: 
+.falseCondL0: 
 
-mov 		1(%rbp), %rax
-cmp		0(%rbp), %rax
+mov 		-12(%rbp), %rax
+cmp		-8(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -24(%rbp)
+mov		%rax, -28(%rbp)
 
-movl 	$1, -28(%rbp)
+movl 	$1, -32(%rbp)
 
-mov		-28(%rbp), %r10
-cmp 	-24(%rbp), %r10
+mov		-32(%rbp), %r10
+cmp 	-28(%rbp), %r10
 
-jne 		.falseCond1
+jne 		.falseCondL1
 
-movl 	$5, -32(%rbp)
+movl 	$5, -36(%rbp)
 
-mov		1(%rbp), %r10 
-mov		-32(%rbp), %r11 
+mov		-12(%rbp), %r10 
+mov		-36(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -36(%rbp)
-
-mov		-36(%rbp), %rax
-mov		%rax, -4(%rbp)
-
-jmp 		.endIf2
-
-.falseCond1: 
-
-mov		1(%rbp), %r10 
-mov		0(%rbp), %r11 
-sub		%r10, %r11 
-mov		%r11, -40(%rbp)
+mov		%r10, -40(%rbp)
 
 mov		-40(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		%rax, -16(%rbp)
 
-.endIf2: 
+jmp 		.endIfL2
 
-mov		-4(%rbp), %rax
+.falseCondL1: 
+
+mov		-12(%rbp), %r10 
+mov		-8(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -44(%rbp)
+
+mov		-44(%rbp), %rax
+mov		%rax, -16(%rbp)
+
+.endIfL2: 
+
+mov		-16(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 19), $0 
+enter   $(4 * 21), $0 
 
 movl 	$8, -8(%rbp)
 

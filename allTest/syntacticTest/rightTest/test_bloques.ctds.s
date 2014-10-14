@@ -1,4 +1,4 @@
-.L04: 
+.L0L4: 
 		.string "%f resultado : " 
 
 .text
@@ -7,17 +7,18 @@
 .type	breaks, @function 
 breaks: 
 enter   $(4 * 11), $0 
+mov 		%rdi, -8(%rbp) 
 
 movl 	$0, -12(%rbp)
 
 mov		-12(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		%rax, -12(%rbp)
 
-.beginWhile1: 
+.beginWhileL1: 
 
 movl 	$10, -16(%rbp)
 
-mov		-4(%rbp), %rax
+mov		-12(%rbp), %rax
 cmp		-16(%rbp), %rax
 setl		%al
 movzb %al, %rax
@@ -28,21 +29,21 @@ movl 	$1, -24(%rbp)
 mov		-24(%rbp), %r10
 cmp 	-20(%rbp), %r10
 
-jne 		.endWhile0
+jne 		.endWhileL0
 
 movl 	$1, -28(%rbp)
 
-mov		-4(%rbp), %r10 
+mov		-12(%rbp), %r10 
 mov		-28(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -32(%rbp)
 
 mov		-32(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		%rax, -12(%rbp)
 
 movl 	$0, -36(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-36(%rbp), %rax
 setl		%al
 movzb %al, %rax
@@ -53,30 +54,30 @@ movl 	$1, -44(%rbp)
 mov		-44(%rbp), %r10
 cmp 	-40(%rbp), %r10
 
-jne 		.falseCond2
+jne 		.falseCondL2
 
-jmp 		.endWhile0
+jmp 		.endWhileL0
 
-jmp 		.endIf3
+jmp 		.endIfL3
 
-.falseCond2: 
+.falseCondL2: 
 
-jmp 		.beginWhile1
+jmp 		.beginWhileL1
 
-.endIf3: 
+.endIfL3: 
 
-jmp 		.beginWhile1
+jmp 		.beginWhileL1
 
-.endWhile0: 
+.endWhileL0: 
+
+mov		-12(%rbp), %rax
+leave
+ret
 
 .globl	main
 .type	main, @function 
 main: 
 enter   $(4 * 6), $0 
-
-mov		-4(%rbp), %rax
-leave
-ret
 
 movl 	$1, -8(%rbp)
 
@@ -89,7 +90,7 @@ mov 	%rax, -16(%rbp)
 mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L04, %r10
+mov		$.L0L4, %r10
 mov	 	%r10, %rsi
 
 call 	printf

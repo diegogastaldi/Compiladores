@@ -13,7 +13,7 @@ Compilacion y ejecucion de codigos:
 
 Nota:
 							DOCUMENTACION
-comentarios
+
 							float.
 variables globales.
-formato para el print
+ver funciones con print ------> lexertest4 in syntaxis..

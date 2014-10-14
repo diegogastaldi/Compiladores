@@ -22,7 +22,7 @@ public class arraySymbol extends absSymbol {
 	private LinkedList<Object> values;
 	/* Posicion del primer elemento del arreglo con respecto al registro rbp donde fue declarado */
 	private Integer offset;
-
+	/* Indica si el simbolo es global */
 	private Boolean isGlobal;
 
 	public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values, Integer offset, Boolean isGlobal){

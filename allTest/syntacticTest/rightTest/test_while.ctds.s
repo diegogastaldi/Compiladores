@@ -1,4 +1,4 @@
-.L06: 
+.L0L6: 
 		.string "%dMcd" 
 
 .text
@@ -7,114 +7,116 @@
 .type	maxcomdiv, @function 
 maxcomdiv: 
 enter   $(4 * 19), $0 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -12(%rbp) 
 
-movl 	$1, -20(%rbp)
+movl 	$1, -16(%rbp)
+
+mov		-16(%rbp), %rax
+mov		%rax, -20(%rbp)
+
+.beginWhileL1: 
+
+movl 	$0, -20(%rbp)
 
 mov		-20(%rbp), %rax
-mov		%rax, -8(%rbp)
-
-.beginWhile1: 
-
-movl 	$0, -24(%rbp)
-
-mov		-8(%rbp), %rax
-cmp		-24(%rbp), %rax
+cmp		-20(%rbp), %rax
 setne 	%al
 movzb %al, %rax
-mov		%rax, -28(%rbp)
+mov		%rax, -24(%rbp)
 
-movl 	$1, -32(%rbp)
+movl 	$1, -28(%rbp)
 
-mov		-32(%rbp), %r10
-cmp 	-28(%rbp), %r10
+mov		-28(%rbp), %r10
+cmp 	-24(%rbp), %r10
 
-jne 		.endWhile0
+jne 		.endWhileL0
 
-mov		-12(%rbp), %rax 
+mov		-24(%rbp), %rax 
 cltd
-idivl	-4(%rbp)
-mov		%rax, -36(%rbp)
+idivl	-16(%rbp)
+mov		%rax, -32(%rbp)
 
 mov		$1, %rax
-mov		%rax, -44(%rbp)
+mov		%rax, -40(%rbp)
 
-mov		-36(%rbp), %r10 
-mov		-44(%rbp), %r11 
+mov		-32(%rbp), %r10 
+mov		-40(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -40(%rbp)
+mov		%r11, -36(%rbp)
 
-mov		-40(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-36(%rbp), %rax
+mov		%rax, -20(%rbp)
 
 mov		$1, %rax
-mov		%rax, -52(%rbp)
+mov		%rax, -48(%rbp)
 
-mov		-52(%rbp), %r10 
-mov		-12(%rbp), %r11 
+mov		-48(%rbp), %r10 
+mov		-24(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -48(%rbp)
+mov		%r11, -44(%rbp)
 
-mov		-48(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-44(%rbp), %rax
+mov		%rax, -16(%rbp)
 
-jmp 		.beginWhile1
+jmp 		.beginWhileL1
 
-jmp 		.beginWhile1
+jmp 		.beginWhileL1
 
-.endWhile0: 
+.endWhileL0: 
 
-.beginWhile3: 
+.beginWhileL3: 
 
-movl 	$0, -56(%rbp)
+movl 	$0, -52(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-56(%rbp), %rax
+mov		-20(%rbp), %rax
+cmp		-52(%rbp), %rax
 setne 	%al
 movzb %al, %rax
-mov		%rax, -60(%rbp)
+mov		%rax, -56(%rbp)
 
-movl 	$1, -64(%rbp)
+movl 	$1, -60(%rbp)
 
-mov		-64(%rbp), %r10
-cmp 	-60(%rbp), %r10
+mov		-60(%rbp), %r10
+cmp 	-56(%rbp), %r10
 
-jne 		.endWhile2
+jne 		.endWhileL2
 
-jmp 		.endWhile2
+jmp 		.endWhileL2
 
-jmp 		.beginWhile3
+jmp 		.beginWhileL3
 
-.endWhile2: 
+.endWhileL2: 
 
-.beginWhile5: 
+.beginWhileL5: 
 
-movl 	$0, -68(%rbp)
+movl 	$0, -64(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-68(%rbp), %rax
+mov		-20(%rbp), %rax
+cmp		-64(%rbp), %rax
 setne 	%al
 movzb %al, %rax
-mov		%rax, -72(%rbp)
+mov		%rax, -68(%rbp)
 
-movl 	$1, -76(%rbp)
+movl 	$1, -72(%rbp)
 
-mov		-76(%rbp), %r10
-cmp 	-72(%rbp), %r10
+mov		-72(%rbp), %r10
+cmp 	-68(%rbp), %r10
 
-jne 		.endWhile4
+jne 		.endWhileL4
 
-jmp 		.beginWhile5
+jmp 		.beginWhileL5
 
-.endWhile4: 
+.endWhileL4: 
+
+mov		-16(%rbp), %rax
+leave
+ret
 
 .globl	main
 .type	main, @function 
 main: 
 enter   $(4 * 8), $0 
-
-mov		-4(%rbp), %rax
-leave
-ret
 
 movl 	$9, -8(%rbp)
 
@@ -132,7 +134,7 @@ mov 	%rax, -24(%rbp)
 mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L06, %r10
+mov		$.L0L6, %r10
 mov	 	%r10, %rsi
 
 call 	printf
