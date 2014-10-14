@@ -5,24 +5,14 @@
 a: 
 enter   $(4 * 4), $0 
 
-movl 	$1, -4(%rbp)
-
 movl 	$1, -8(%rbp)
 
-mov		-8(%rbp), %r10
-cmp 	-4(%rbp), %r10
+movl 	$1, -12(%rbp)
 
-jne 		.falseCond0
+mov		-12(%rbp), %r10
+cmp 	-8(%rbp), %r10
 
-movl 	$0, -12(%rbp)
-
-mov		-12(%rbp), %rax
-leave
-ret
-
-jmp 		.endIf1
-
-.falseCond0: 
+jne 		.falseCondL0
 
 movl 	$0, -16(%rbp)
 
@@ -30,7 +20,17 @@ mov		-16(%rbp), %rax
 leave
 ret
 
-.endIf1: 
+jmp 		.endIfL1
+
+.falseCondL0: 
+
+movl 	$0, -20(%rbp)
+
+mov		-20(%rbp), %rax
+leave
+ret
+
+.endIfL1: 
 
 .globl	main
 .type	main, @function 

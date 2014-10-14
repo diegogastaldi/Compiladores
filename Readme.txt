@@ -12,9 +12,8 @@ Compilacion y ejecucion de codigos:
       
 
 Nota:
-  - diferencia entre 64 y 32()
-  - DOCUMENTACION
-
-float.
+							DOCUMENTACION
+comentarios
+							float.
 variables globales.
-error raro(enter)
+formato para el print

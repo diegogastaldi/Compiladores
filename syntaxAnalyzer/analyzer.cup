@@ -63,23 +63,29 @@ parser code {:
     report_error(message, info);
     System.exit(1);
   }
-  
+	/* Retorna el arbol sintactico */  
   public LinkedList<completeFunction> getAST() {
     return CUP$parser$actions.setAst;
   }
 
+  /* Retorna variables Globales */
   public LinkedList<Global> getGlobals() {
     return CUP$parser$actions.globals;
   }
-
 :}
 
 action code {:
+	/* Variable para comprobar si los simbolos son globales */
   static boolean isGlobal = true;
+  /* Tabla de simbolos */
   static symbolTable table = new symbolTable();
+  /* Lista que almacena lista globales */
   public static LinkedList<Global> globals = new LinkedList<Global>();
+  /* Arbol sintactico */
   public static LinkedList<completeFunction> setAst = new LinkedList<completeFunction>();  
+  /* Genera labels y direcciones de memoria */
   private Labels offset;
+  /* Cambia el tipo de una lista de simbolos */
   private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, Type type) {
     for (int i = 0 ; i < symbolList.size() ; i++) {
         symbolList.get(i).setType(type);
@@ -134,7 +140,7 @@ precedence left NOT;
 start with program;
 
 program     	  ::= WCLASS {:table.insertLevel();:} 
-                    ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED, 0)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
+                    ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED, 0, false)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
                     LLL {:offset = new Labels();:}set_decl {:table.deleteLevel();:} 
                     RLL;
 
@@ -142,9 +148,9 @@ set_decl			  ::= field_decl SEMICOLON set_decl
                     |   set_method_decl ;
 
 
-field_decl		  ::= type:t ID:i LC INT:il RC {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null, offset.getOffSet(il.getValue()))) == null) parser.report_fatal_error("ID ya difinido: ",i);if (isGlobal) globals.add(new Global(i, 4*il.getValue())); :}     
+field_decl		  ::= type:t ID:i LC INT:il RC {:if (table.insertSymbol(new arraySymbol(i, t, il.getValue(), null, offset.getOffSet(il.getValue()), isGlobal)) == null) parser.report_fatal_error("ID ya difinido: ",i);if (isGlobal) globals.add(new Global(i, 4*il.getValue())); :}     
                         set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
-                    |   type:t ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, t, offset.getOffSet())) == null) parser.report_fatal_error("ID ya difinido: ",i);if (isGlobal) globals.add(new Global(i, 4));:} 
+                    |   type:t ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, t, offset.getOffSet(), isGlobal)) == null) parser.report_fatal_error("ID ya difinido: ",i);if (isGlobal) globals.add(new Global(i, 4));:} 
                         set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:};
                                                         
 set_field_decl	::= field_decl SEMICOLON set_field_decl
@@ -160,14 +166,14 @@ set_method_decl	::= type:t ID:i {:isGlobal = false; functionSymbol f = new funct
                         set_method_decl
                     |   /*Lambda*/;
     
-set_complete_id ::= COMMA ID:i set_complete_id:s {:s.add(new simpleSymbol(i, null, Type.UNDEFINED, offset.getOffSet())); if (isGlobal) globals.add(new Global(i, 4)); RESULT = s;:} 
-                    |   COMMA ID:i LC INT:il RC set_complete_id:s {:s.add(new arraySymbol(i,Type.UNDEFINED,il.getValue(), null, offset.getOffSet(il.getValue())));if (isGlobal) globals.add(new Global(i, 4*il.getValue())); RESULT = s;:} 
+set_complete_id ::= COMMA ID:i set_complete_id:s {:s.add(new simpleSymbol(i, null, Type.UNDEFINED, offset.getOffSet(), isGlobal)); if (isGlobal) globals.add(new Global(i, 4)); RESULT = s;:} 
+                    |   COMMA ID:i LC INT:il RC set_complete_id:s {:s.add(new arraySymbol(i,Type.UNDEFINED,il.getValue(), null, offset.getOffSet(il.getValue()), isGlobal));if (isGlobal) globals.add(new Global(i, 4*il.getValue())); RESULT = s;:} 
                     |   /* LAMBDA */ {:RESULT = new LinkedList<absSymbol>();:};
 
-parameters 		  ::= type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getNumParam())); RESULT = s;:} 
+parameters 		  ::= type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getNumParam(), isGlobal)); RESULT = s;:} 
                     |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
 
-set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getNumParam())); RESULT = s;:} 
+set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getNumParam(), isGlobal)); RESULT = s;:} 
                     |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
 
 
@@ -224,8 +230,8 @@ arg_invoc 		  ::= COMMA externinvk_arg:ea arg_invoc:ai {:ai.add(0, ea); RESULT=a
 externinvk_arg  ::= expr:e {:RESULT = new ArgInvocExpr(e);:}
                     |   STRING_LITERAL:s {:RESULT = new ArgInvocSL(s);:};
 
-location        ::= ID:i {:simpleSymbol a = (simpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT=new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet());:}
-                    |   ID:i LC expr:e RC {:arraySymbol a = (arraySymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else RESULT=new ArrayLocation(i,a.getType(),table.getBlockId(),e,ileft+1,iright+1, a.getOffSet());:};
+location        ::= ID:i {:simpleSymbol a = (simpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT=new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet(), a.getIsGlobal());:}
+                    |   ID:i LC expr:e RC {:arraySymbol a = (arraySymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else RESULT=new ArrayLocation(i,a.getType(),table.getBlockId(),e,ileft+1,iright+1, a.getOffSet(), a.getIsGlobal());:};
 
 type        		::= WFLOAT:f {:RESULT = f;:}
                     |   WBOOLEAN:b {:RESULT = b;:}

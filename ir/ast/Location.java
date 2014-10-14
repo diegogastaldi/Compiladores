@@ -3,6 +3,7 @@ package ir.ast;
 public abstract class Location extends Expression {
 	protected String id;
 	protected Integer offset;
+	protected Boolean isGlobal;
 
 	public void setId(String id) {
 		this.id = id;
@@ -19,4 +20,8 @@ public abstract class Location extends Expression {
 	public void setOffSet(Integer i) {
 		offset = i;
 	}	
+
+	public Boolean getIsGlobal() {
+		return isGlobal;
+	}
 }

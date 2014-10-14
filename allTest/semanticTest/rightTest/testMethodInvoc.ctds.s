@@ -3,12 +3,12 @@
 .globl	method1
 .type	method1, @function 
 method1: 
-enter   $(4 * 2), $0 
-mov 		%rdi, -4(%rbp) 
+enter   $(4 * 3), $0 
+mov 		%rdi, -8(%rbp) 
 
-movl 	$1.0, -8(%rbp)
+movl 	$1.0, -12(%rbp)
 
-mov		-8(%rbp), %rax
+mov		-12(%rbp), %rax
 leave
 ret
 
@@ -26,12 +26,12 @@ ret
 method3: 
 enter   $(4 * 1), $0 
 
-movl 	$2.0, -4(%rbp)
+movl 	$2.0, -8(%rbp)
 
-mov		-4(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, -8(%rbp)
 
-mov		-4(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
@@ -41,23 +41,23 @@ main:
 enter   $(4 * 7), $0 
 
 call 	method3
-mov 	%rax, -4(%rbp) 
+mov 	%rax, -8(%rbp) 
 
-movl 	$2, -12(%rbp)
+movl 	$2, -16(%rbp)
 
-mov		-12(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 call 	method1
-mov 	%rax, -20(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-mov		-4(%rbp), %r10 
-mov		-20(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		-24(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -28(%rbp)
+mov		%r11, -32(%rbp)
 
-mov		-28(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-32(%rbp), %rax
+mov		%rax, -8(%rbp)
 
 call 	method2
 

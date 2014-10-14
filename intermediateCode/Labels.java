@@ -27,14 +27,14 @@ public class Labels {
   private boolean global;
 
   public Labels() {
-    temp = 0;
+    temp = -4;
     param = 0;
     label = 0;
     global = false;
   }
 
 	public String getLabel() {
-		return ""+(label++);
+		return "L"+(label++);
 	}
 
   public int getOffSet() {
@@ -54,12 +54,12 @@ public class Labels {
   }  
 
   public void restart(int value) {
-    temp = (-4) * value;
+    temp = (-4) * (value + 1);
     param = 0;    
   }
 
   public void restart() {
-    temp = 0;
+    temp = -4;
     param = 0;
   }
 

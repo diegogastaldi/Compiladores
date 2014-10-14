@@ -14,11 +14,11 @@ ret
 .globl	main2
 .type	main2, @function 
 main2: 
-enter   $(4 * 1), $0 
-mov 		%rdi, -4(%rbp) 
+enter   $(4 * 2), $0 
+mov 		%rdi, -8(%rbp) 
 
-mov		-4(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, null(%rbp)
 
 mov 		$0, %rax
 leave

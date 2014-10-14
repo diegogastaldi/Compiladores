@@ -7,19 +7,19 @@
 method: 
 enter   $(4 * 1), $0 
 
-cmpl		$0, -4(%rbp)
-je 		.0
-cmpl		$0, -4(%rbp)
-je 		.0
+cmpl		$0, -8(%rbp)
+je 		.L0
+cmpl		$0, null(%rbp)
+je 		.L0
 mov		$1, %r10
-jmp		.1
-.0:
+jmp		.L1
+.L0:
 mov		$0, %r10
-.1:
-mov		%r11, -4(%rbp)
+.L1:
+mov		%r10, -8(%rbp)
 
-mov		-4(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, -8(%rbp)
 
 mov 		$0, %rax
 leave

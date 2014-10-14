@@ -192,7 +192,7 @@ public class genAssemblyCode {
 		result += "." + label1 + ":\n";
 		result += "mov		$0, %r10\n";
 		result += "." + label2 + ":\n";
-		result += "mov		%r11, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void orMethod(Instr instr) {
@@ -328,7 +328,12 @@ public class genAssemblyCode {
 		result += instr.getResult() + ": \n";		
 		result += "enter   $(4 * " + instr.getOperand1() + "), $0 \n";
 		for (int i = 0 ; i < ((Integer)instr.getOperand2()); i++) {
-			result += "mov 		" + paramRegister.registers[i] + ", " + ((i+1) * (-4)) + "(%rbp) \n";
+			if (i < paramRegister.registers.length)
+				result += "mov 		" + paramRegister.registers[i] + ", " + ((i+2) * (-4)) + "(%rbp) \n";
+			else {
+				result += "mov 		" + (((i+1)-paramRegister.registers.length) * 4) + "(%rbp), %r10\n";
+				result += "mov 		%r10, " + ((i+2) * (-4)) + "(%rbp) \n";
+			}
 		}
 	}
 
@@ -343,9 +348,6 @@ public class genAssemblyCode {
 		switch (op2) {
 			case "adress" :	result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
 											break;
-			case "register" : String op = paramRegister.registers [(Integer)instr.getOperand1()];
-												result += "mov		" + op + ", %rax\n";
-												break;
 			case "const" : 	result += "mov		" + instr.getOperand1() + ", %rax\n";
 											break;
 		}

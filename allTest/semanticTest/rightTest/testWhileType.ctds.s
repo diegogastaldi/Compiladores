@@ -3,59 +3,59 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 11), $0 
-mov 		%rdi, -4(%rbp) 
+enter   $(4 * 12), $0 
+mov 		%rdi, -8(%rbp) 
 
-.beginWhile1: 
+.beginWhileL1: 
 
-movl 	$4, -8(%rbp)
+movl 	$4, -12(%rbp)
 
-mov		-4(%rbp), %r10 
-mov		-8(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		-12(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -12(%rbp)
+mov		%r11, -16(%rbp)
 
-movl 	$2, -16(%rbp)
+movl 	$2, -20(%rbp)
 
-mov		-12(%rbp), %rax
-cmp		-16(%rbp), %rax
+mov		-16(%rbp), %rax
+cmp		-20(%rbp), %rax
 setl		%al
 movzb %al, %rax
-mov		%rax, -20(%rbp)
-
-movl 	$1, -24(%rbp)
-
-mov		-24(%rbp), %r10
-cmp 	-20(%rbp), %r10
-
-jne 		.endWhile0
+mov		%rax, -24(%rbp)
 
 movl 	$1, -28(%rbp)
 
-mov		-4(%rbp), %r10 
-mov		-28(%rbp), %r11 
+mov		-28(%rbp), %r10
+cmp 	-24(%rbp), %r10
+
+jne 		.endWhileL0
+
+movl 	$1, -32(%rbp)
+
+mov		-8(%rbp), %r10 
+mov		-32(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -32(%rbp)
+mov		%r11, -36(%rbp)
 
-movl 	$2, -36(%rbp)
+movl 	$2, -40(%rbp)
 
-mov		-32(%rbp), %rax
-cmp		-36(%rbp), %rax
+mov		-36(%rbp), %rax
+cmp		-40(%rbp), %rax
 setl		%al
 movzb %al, %rax
-mov		%rax, -40(%rbp)
+mov		%rax, -44(%rbp)
 
-mov		-40(%rbp), %rax
+mov		-44(%rbp), %rax
 leave
 ret
 
-jmp 		.beginWhile1
+jmp 		.beginWhileL1
 
-.endWhile0: 
+.endWhileL0: 
 
-movl 	$1, -44(%rbp)
+movl 	$1, -48(%rbp)
 
-mov		-44(%rbp), %rax
+mov		-48(%rbp), %rax
 leave
 ret
 

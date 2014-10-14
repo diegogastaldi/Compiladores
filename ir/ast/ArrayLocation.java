@@ -4,9 +4,9 @@ import ir.ASTVisitor;
 
 public class ArrayLocation extends Location {
 	private int blockId;
-    private Expression exp;
+  private Expression exp;
 	
-	public ArrayLocation(String id, Type t, int block, Expression exp, int line, int col, int os) {
+	public ArrayLocation(String id, Type t, int block, Expression exp, int line, int col, int os, Boolean ig) {
 		this.id = id;
 		this.blockId = block;
 		this.exp = exp;
@@ -15,6 +15,7 @@ public class ArrayLocation extends Location {
 		this.type = t;
 		/* Ubicacion en memoria respecto al regristro rbp de donde fue declarado */
 		offset = os;
+		isGlobal = ig;
 	}
 	
 	public int getBlockId() {

@@ -22,10 +22,13 @@ public class simpleSymbol extends absSymbol{
 	/* Posicion en la memoria con respecto al registro rbp de donde fue declarado */
   private Integer offset;
 
-	public simpleSymbol(String name, Object value, Type type, Integer offset){
+  private Boolean isGlobal;
+  
+	public simpleSymbol(String name, Object value, Type type, Integer offset, Boolean isGlobal){
 	  super(name, type);
   	this.value = value;
     this.offset = offset;      
+    this.isGlobal = isGlobal;
 	}
   
 	public String toString(){
@@ -39,6 +42,10 @@ public class simpleSymbol extends absSymbol{
 
   public Integer getOffSet() {
     return offset;
+  }
+
+  public Boolean getIsGlobal() {
+    return isGlobal;
   }
 
 }

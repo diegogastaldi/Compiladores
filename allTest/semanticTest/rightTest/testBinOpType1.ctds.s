@@ -7,13 +7,13 @@
 method: 
 enter   $(4 * 1), $0 
 
-mov		-4(%rbp), %r10 
-mov		-4(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		null(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -4(%rbp)
+mov		%r11, -8(%rbp)
 
-mov		-4(%rbp), %rax
-mov		%rax, -4(%rbp)
+mov		-8(%rbp), %rax
+mov		%rax, -8(%rbp)
 
 mov 		$0, %rax
 leave

@@ -3,42 +3,42 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 5), $0 
-mov 		%rdi, -4(%rbp) 
+enter   $(4 * 6), $0 
+mov 		%rdi, -8(%rbp) 
 
-movl 	$1, -8(%rbp)
+movl 	$1, -12(%rbp)
 
-jmp 		.endFor0
+jmp 		.endForL0
 
-.beginFor1: 
+.beginForL1: 
 
-movl 	$2, -12(%rbp)
+movl 	$2, -16(%rbp)
 
-mov 		-4(%rbp), %rax
-cmp		-12(%rbp), %rax
+mov 		-8(%rbp), %rax
+cmp		-16(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -16(%rbp)
+mov		%rax, -20(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-20(%rbp), %rax
 leave
 ret
 
-mov		-4(%rbp), %r10 
-mov		-8(%rbp), %r11 
+mov		-8(%rbp), %r10 
+mov		-12(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -4(%rbp)
+mov		%r11, -8(%rbp)
 
-.endFor0: 
+.endForL0: 
 
-mov		-4(%rbp), %r10
-cmp 	-4(%rbp), %r10
+mov		-8(%rbp), %r10
+cmp 	-8(%rbp), %r10
 
-jle 		.beginFor1
+jle 		.beginForL1
 
-movl 	$1, -20(%rbp)
+movl 	$1, -24(%rbp)
 
-mov		-20(%rbp), %rax
+mov		-24(%rbp), %rax
 leave
 ret
 

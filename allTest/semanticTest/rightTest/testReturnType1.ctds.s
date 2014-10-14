@@ -5,9 +5,9 @@
 a: 
 enter   $(4 * 1), $0 
 
-movl 	$0, -4(%rbp)
+movl 	$0, -8(%rbp)
 
-mov		-4(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 

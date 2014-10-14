@@ -1,14 +1,14 @@
 class clase {
 
     
-    float inc(float x) {
+    float inc(float x, float y , float w, float z, float p, float q, float r, float o) {
         return x + 1.0;
     }
     
     void main() {
         float y;
         float x;
-        x = inc(x) + y;
+        x = inc(x,x,x,x,x,x,x,x) + y;
         return;
     }
     

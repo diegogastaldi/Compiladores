@@ -23,11 +23,14 @@ public class arraySymbol extends absSymbol {
 	/* Posicion del primer elemento del arreglo con respecto al registro rbp donde fue declarado */
 	private Integer offset;
 
-	public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values, Integer offset){
+	private Boolean isGlobal;
+
+	public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values, Integer offset, Boolean isGlobal){
 		super(name, type);
 		this.size = size;
 		this.values = values;
 		this.offset = offset;
+		this.isGlobal = isGlobal;
 	} 
 
 	public Integer getSize() {
@@ -46,6 +49,9 @@ public class arraySymbol extends absSymbol {
 		return offset;
 	}
 
+  public Boolean getIsGlobal() {
+    return isGlobal;
+  }
 } 
 
 

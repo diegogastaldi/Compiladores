@@ -33,7 +33,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   private Labels genLabels;
 
   private Integer posMethodLabel;
-  private Integer reserveSpace;
 
   //Constructor
   public InstCodeGenVisitor(){
@@ -52,12 +51,12 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   public void blockCode(completeFunction c) {
     posMethodLabel = instructions.size();
-    reserveSpace = c.getParameters().size();
 
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
+    int reserveSpace = c.getParameters().size() + (-genLabels.getOffSet()/4)-2;
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
   }
@@ -84,7 +83,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       ArrayLocation a = (ArrayLocation) stmt.getLocation();
       instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
     }
-    reserveSpace += 2;
+     
     return null;
   }
   
@@ -105,7 +104,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       ArrayLocation a = (ArrayLocation) stmt.getLocation();
       instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
     }
-    reserveSpace += 2;    
+         
     return null;
   }
   
@@ -160,7 +159,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     	/* Pone label al que se saltara si este if no tiene un bloque else y 
     		la condidion del mismo es falsa */
 	    instructions.add(new Instr(Operator.LABEL, null, null, labelElse));
-    reserveSpace ++;
+     
   	return null;
   }
   
@@ -192,7 +191,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
 
-    reserveSpace ++;
+     
   	return null;
   }
   
@@ -243,7 +242,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
 
-    reserveSpace ++;
+     
   	return null;
   }
   
@@ -267,7 +266,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       parameter = a.accept(this);
       /* Apila paramatros en memoria */
       instructions.add(new Instr(Operator.PARAM, parameter, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));
-      reserveSpace++;
+       
     }
     /* Realiza la llamada a la funcion */
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
@@ -284,12 +283,12 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
         instructions.add(new Instr(Operator.PARAM, parameter, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));
-        reserveSpace ++;
+         
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
         instructions.add(new Instr(Operator.PARAM, "$.L0"+label, stmt.getParameters().size()- 1- i, genLabels.getOffSet()));        
-        reserveSpace ++;
+         
       }
     }
     /* Realiza la llamada a la funcion */
@@ -303,7 +302,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
 	  instructions.add(new Instr(Operator.UNARYMINUS, operand, null, result));
 
-    reserveSpace ++;
+     
     return result;
   }
 
@@ -313,7 +312,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
 	  instructions.add(new Instr(Operator.NOT, operand, null, result));
 
-    reserveSpace ++;
+     
     return result;
   }
 
@@ -340,7 +339,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	  }
 	  instructions.add(new Instr(op, leftOperand, rightOperand, result));
 
-    reserveSpace ++;    
+         
     return result;
   }
 
@@ -370,7 +369,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(op, leftOperand, rightOperand, result));
 
-    reserveSpace ++;
+     
     return result;
   }
 
@@ -397,7 +396,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   								break;
   	}
 
-    reserveSpace ++;    
+         
     return result;
   }
 
@@ -414,7 +413,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	
     							break;
   	}
-    reserveSpace ++;
+     
 
     return result;
   }
@@ -430,13 +429,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       a = expr.getParameters().get(i);
       parameter = a.accept(this);
       instructions.add(new Instr(Operator.PARAM, parameter, expr.getParameters().size()- 1- i, genLabels.getOffSet()));
-      reserveSpace ++;
+       
     }
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
 
-    reserveSpace += 2;
+     
     return result;
   } 
   
@@ -448,27 +447,27 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
         instructions.add(new Instr(Operator.PARAM, parameter, expr.getParameters().size()- 1- i, genLabels.getOffSet()));        
-        reserveSpace ++;
+         
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
         instructions.add(new Instr(Operator.PARAM, "$.L0"+label, expr.getParameters().size()- 1- i, genLabels.getOffSet()));        
-        reserveSpace ++; 
+          
       }
     }
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
 
-    reserveSpace += 2;        
+             
     return result;
   }
   
 // visit literals
   public Integer visit(IntLiteral lit)   {
+    /* Guarda el literal en una direccion de memoria */
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(Operator.CONST, lit, null, result));
-
-    reserveSpace ++;        
+             
     return result;
   }
 
@@ -481,33 +480,43 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     */
   	instructions.add(new Instr(Operator.CONST, lit, null, result));
 
-    reserveSpace ++;
+     
     return result;
   }
 
   public Integer visit(BoolLiteral lit)   {
   	Integer result = genLabels.getOffSet();
-  	/*  */
+  	/* Los valores booleanos se representan mediante unos y ceros */
     if (lit.getValue())
   	  instructions.add(new Instr(Operator.CONST, "1", null, result));
     else 
       instructions.add(new Instr(Operator.CONST, "0", null, result));
-
-    reserveSpace ++;        
     return result;
   }
   
 // visit locations  
   public Integer visit(VarLocation loc)   {
-    int os = loc.getOffSet();
-    if (os >=  0) 
-      return (os + 1) * (-4);
-    else 
-      return os;
+    /* si la variable es global retorna null porque importa
+      su id, no su offset (se reserva igual!!) */
+    if (!loc.getIsGlobal()) {
+      int os = loc.getOffSet();
+      /* Si el numero es mayor a cero es porque es un parametro, los cuales
+        tiene su lugar reservado al principio del stack */
+      if (os >=  0) 
+        return (os + 2) * (-4);
+      else 
+        return os;
+    } else 
+      return null;
   }
 
   public Integer visit(ArrayLocation loc)  {
-    return loc.getOffSet();
+    /* si la variable es global retorna null porque importa
+      su id, no su offset (se reserva igual!!) */
+    if (!loc.getIsGlobal()) 
+      return loc.getOffSet();
+    else 
+      return null;
   }
 }
 
