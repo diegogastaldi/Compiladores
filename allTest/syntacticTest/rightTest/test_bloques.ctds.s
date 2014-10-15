@@ -79,20 +79,22 @@ ret
 main: 
 enter   $(4 * 6), $0 
 
-movl 	$1, -8(%rbp)
-
-mov		-8(%rbp), %r10
-mov	 	%r10, %rdi
-
-call 	breaks
-mov 	%rax, -16(%rbp) 
-
-mov		-16(%rbp), %r10
-mov	 	%r10, %rdi
-
 mov		$.L0L4, %r10
+mov	 	%r10, %rdi
+
+movl 	$1, -12(%rbp)
+
+mov		-12(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov 		$0, %rax 
+call 	breaks
+mov 	%rax, -20(%rbp) 
+
+mov		-20(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

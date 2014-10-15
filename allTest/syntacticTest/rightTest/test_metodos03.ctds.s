@@ -88,22 +88,24 @@ movl 	$0, -8(%rbp)
 mov		-8(%rbp), %rax
 mov		%rax, null(%rbp)
 
-movl 	$10.2, -12(%rbp)
+movl 	$5, -12(%rbp)
 
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$5, -20(%rbp)
+mov 		$0, %rax 
+call 	inc
+mov 	%rax, -20(%rbp) 
 
 mov		-20(%rbp), %r10
 mov	 	%r10, %rdi
 
-call 	inc
-mov 	%rax, -28(%rbp) 
+movl 	$10.2, -32(%rbp)
 
-mov		-28(%rbp), %r10
+mov		-32(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	resto
 mov 	%rax, -40(%rbp) 
 

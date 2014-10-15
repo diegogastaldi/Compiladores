@@ -311,6 +311,7 @@ public class genAssemblyCode {
 	}
 
 	public static void callmethodMethod(Instr instr) {
+		result += "mov 		$0, %rax \n";
   	result += "call 	" + instr.getOperand1() + "\n";		
   	if (instr.getResult() != null)
   		result += "mov 	%rax, " + instr.getResult() + "(%rbp) \n";		

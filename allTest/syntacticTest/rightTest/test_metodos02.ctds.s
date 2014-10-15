@@ -63,14 +63,15 @@ alo2:
 enter   $(4 * 7), $0 
 mov 		%rdi, -8(%rbp) 
 
-mov		-8(%rbp), %r10
+movl 	$1, -12(%rbp)
+
+mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$1, -16(%rbp)
-
-mov		-16(%rbp), %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	alo
 
 movl 	$1, -24(%rbp)
@@ -105,27 +106,29 @@ mov		%rax, null(%rbp)
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo2
 mov 	%rax, -20(%rbp) 
 
 mov		-20(%rbp), %rax
 mov		%rax, -8(%rbp)
 
-movl 	$3, -28(%rbp)
+movl 	$0, -28(%rbp)
 
-mov		-28(%rbp), %r10 
-mov		-8(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -32(%rbp)
-
-mov		-32(%rbp), %r10
+mov		-28(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$0, -40(%rbp)
+movl 	$3, -36(%rbp)
+
+mov		-36(%rbp), %r10 
+mov		-8(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -40(%rbp)
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	alo
 
 mov 		$0, %rax

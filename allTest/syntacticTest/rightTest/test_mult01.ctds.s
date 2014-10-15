@@ -47,12 +47,14 @@ movl 	$2, -8(%rbp)
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	pruMult
 mov 	%rax, -16(%rbp) 
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

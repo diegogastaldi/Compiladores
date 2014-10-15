@@ -39,6 +39,7 @@ movl 	$1, -12(%rbp)
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo
 
 movl 	$1, -20(%rbp)
@@ -46,6 +47,7 @@ movl 	$1, -20(%rbp)
 mov		-20(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo
 mov 	%rax, -28(%rbp) 
 
@@ -71,24 +73,28 @@ enter   $(4 * 7), $0
 mov		$.L0L0, %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
-
-movl 	$5, -12(%rbp)
-
-mov		-12(%rbp), %r10
-mov	 	%r10, %rdi
-
-call 	alo
-mov 	%rax, -20(%rbp) 
-
-mov		-20(%rbp), %r10
-mov	 	%r10, %rdi
 
 mov		$.L0L1, %r10
+mov	 	%r10, %rdi
+
+movl 	$5, -16(%rbp)
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov 		$0, %rax 
+call 	alo
+mov 	%rax, -24(%rbp) 
+
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	printf
 
+mov 		$0, %rax 
 call 	/home/programas/primer_primo_par
 
 mov 		$0, %rax

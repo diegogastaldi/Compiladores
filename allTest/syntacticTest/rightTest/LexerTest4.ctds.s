@@ -14,11 +14,6 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$1, -12(%rbp)
 
-.globl	main
-.type	main, @function 
-main: 
-enter   $(4 * 11), $0 
-
 mov		-8(%rbp), %r10 
 mov		-12(%rbp), %r11 
 add		%r10, %r11 
@@ -28,12 +23,19 @@ mov		-16(%rbp), %rax
 leave
 ret
 
-call 	get_int
+.globl	main
+.type	main, @function 
+main: 
+enter   $(4 * 11), $0 
+
+mov 		$2, %rax 
+
 mov 	%rax, -8(%rbp) 
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	inc
 mov 	%rax, -20(%rbp) 
 
@@ -58,18 +60,20 @@ jne 		.falseCondL0
 mov		$.L0L1, %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 jmp 		.endIfL2
 
 .falseCondL0: 
 
-mov		-8(%rbp), %r10
+mov		$.L0L3, %r10
 mov	 	%r10, %rdi
 
-mov		$.L0L3, %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	printf
 
 .endIfL2: 

@@ -80,24 +80,27 @@ ret
 main: 
 enter   $(4 * 21), $0 
 
-movl 	$8, -8(%rbp)
+movl 	$4, -8(%rbp)
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$4, -16(%rbp)
+movl 	$8, -16(%rbp)
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	pruAritmetica
 mov 	%rax, -24(%rbp) 
 
 mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
+mov 		$0, %rax 
 call 	printf
 
 movl 	$4, -36(%rbp)
@@ -110,30 +113,34 @@ movl 	$4, -44(%rbp)
 mov		-44(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	pruAritmetica
 mov 	%rax, -52(%rbp) 
 
 mov		-52(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
-movl 	$5, -64(%rbp)
+movl 	$8, -64(%rbp)
 
 mov		-64(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$8, -72(%rbp)
+movl 	$5, -72(%rbp)
 
 mov		-72(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	pruAritmetica
 mov 	%rax, -80(%rbp) 
 
 mov		-80(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

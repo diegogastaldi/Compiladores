@@ -52,6 +52,7 @@ mov		%rax, -12(%rbp)
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

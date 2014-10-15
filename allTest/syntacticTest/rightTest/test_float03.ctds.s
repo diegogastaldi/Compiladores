@@ -604,42 +604,45 @@ mov		%rax, -28(%rbp)
 mov		-28(%rbp), %rax
 mov		%rax, null(%rbp)
 
-movl 	$2, -32(%rbp)
-
-mov		-32(%rbp), %r10
+mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-12(%rbp), %r10
+movl 	$2, -36(%rbp)
+
+mov		-36(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	potencia
 mov 	%rax, -44(%rbp) 
 
 mov		-44(%rbp), %rax
 mov		%rax, -8(%rbp)
 
-movl 	$2.0, -52(%rbp)
-
-mov		-8(%rbp), %r10 
-mov		-52(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -56(%rbp)
-
-mov		-56(%rbp), %r10
+mov		$.L0L27, %r10
 mov	 	%r10, %rdi
 
 mov		-12(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	multiples
-mov 	%rax, -68(%rbp) 
-
-mov		-68(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L0L27, %r10
+movl 	$2.0, -60(%rbp)
+
+mov		-8(%rbp), %r10 
+mov		-60(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -64(%rbp)
+
+mov		-64(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
+call 	multiples
+mov 	%rax, -72(%rbp) 
+
+mov		-72(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

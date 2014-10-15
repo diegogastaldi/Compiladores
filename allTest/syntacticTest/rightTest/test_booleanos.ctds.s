@@ -78,33 +78,37 @@ mov		%rax, -16(%rbp)
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	neg
 mov 	%rax, -20(%rbp) 
 
 mov		-20(%rbp), %rax
 mov		%rax, -16(%rbp)
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rdi
-
-call 	neg
-mov 	%rax, -32(%rbp) 
-
-mov		-32(%rbp), %r10
-mov	 	%r10, %rdi
-
-mov		-16(%rbp), %r10
-mov	 	%r10, %rdi
-
 mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	and
+mov 	%rax, -36(%rbp) 
+
+mov		-36(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov 		$0, %rax 
+call 	neg
 mov 	%rax, -52(%rbp) 
 
 mov		-52(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	or
 mov 	%rax, -64(%rbp) 
 
@@ -114,6 +118,7 @@ mov		%rax, -12(%rbp)
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

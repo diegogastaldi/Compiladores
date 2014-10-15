@@ -242,35 +242,38 @@ movl 	$80.0, -28(%rbp)
 mov		-28(%rbp), %rax
 mov		%rax, -12(%rbp)
 
-movl 	$2, -32(%rbp)
-
-mov		-32(%rbp), %r10
+mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-12(%rbp), %r10
+movl 	$2, -36(%rbp)
+
+mov		-36(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	potencia
 mov 	%rax, -44(%rbp) 
 
 mov		-44(%rbp), %rax
 mov		%rax, -8(%rbp)
 
-mov		-8(%rbp), %r10
+mov		$.L0L8, %r10
 mov	 	%r10, %rdi
 
 mov		null(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	multRepeat
-mov 	%rax, -60(%rbp) 
-
-mov		-60(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L0L8, %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
+call 	multRepeat
+mov 	%rax, -64(%rbp) 
+
+mov		-64(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

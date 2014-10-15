@@ -75,39 +75,43 @@ movl 	$3.5698, -20(%rbp)
 mov		-20(%rbp), %rax
 mov		%rax, -12(%rbp)
 
-mov		-12(%rbp), %r10
-mov	 	%r10, %rdi
-
-mov		-8(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	div
-mov 	%rax, -32(%rbp) 
-
-mov		-32(%rbp), %r10
-mov	 	%r10, %rdi
-
-mov		-8(%rbp), %r10
+mov		$.L0L0, %r10
 mov	 	%r10, %rdi
 
 mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	resta
-mov 	%rax, -52(%rbp) 
-
-mov		-52(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	sum
-mov 	%rax, -64(%rbp) 
-
-mov		-64(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		$.L0L0, %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
+call 	resta
+mov 	%rax, -36(%rbp) 
+
+mov		-36(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-8(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-12(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	div
+mov 	%rax, -56(%rbp) 
+
+mov		-56(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	sum
+mov 	%rax, -68(%rbp) 
+
+mov		-68(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

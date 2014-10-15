@@ -26,12 +26,14 @@ ret
 main: 
 enter   $(4 * 3), $0 
 
+mov 		$0, %rax 
 call 	pruAritmetica
 mov 	%rax, -8(%rbp) 
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

@@ -70,25 +70,27 @@ jle 		.beginForL1
 main: 
 enter   $(4 * 8), $0 
 
-movl 	$8, -8(%rbp)
-
-mov		-8(%rbp), %r10
-mov	 	%r10, %rdi
-
-movl 	$4, -16(%rbp)
-
-mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	pruArreglos
-mov 	%rax, -24(%rbp) 
-
-mov		-24(%rbp), %r10
-mov	 	%r10, %rdi
-
 mov		$.L0L2, %r10
+mov	 	%r10, %rdi
+
+movl 	$4, -12(%rbp)
+
+mov		-12(%rbp), %r10
+mov	 	%r10, %rdi
+
+movl 	$8, -20(%rbp)
+
+mov		-20(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
+call 	pruArreglos
+mov 	%rax, -28(%rbp) 
+
+mov		-28(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

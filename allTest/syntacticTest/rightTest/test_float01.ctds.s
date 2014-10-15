@@ -147,26 +147,28 @@ movl 	$8.0, -8(%rbp)
 mov		-8(%rbp), %rax
 mov		%rax, -12(%rbp)
 
-movl 	$2, -12(%rbp)
-
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-12(%rbp), %r10
+movl 	$2, -16(%rbp)
+
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	potencia
 mov 	%rax, -24(%rbp) 
 
 mov		-24(%rbp), %rax
 mov		%rax, -8(%rbp)
 
-mov		-8(%rbp), %r10
+mov		$.L0L5, %r10
 mov	 	%r10, %rdi
 
-mov		$.L0L5, %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

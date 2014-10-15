@@ -31,6 +31,7 @@ mov 		%rdi, -8(%rbp)
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo
 
 movl 	$1, -16(%rbp)
@@ -65,6 +66,7 @@ mov		%rax, null(%rbp)
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo2
 mov 	%rax, -20(%rbp) 
 
@@ -81,6 +83,7 @@ mov		%r10, -32(%rbp)
 mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo2
 mov 	%rax, -40(%rbp) 
 

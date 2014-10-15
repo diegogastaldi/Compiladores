@@ -148,18 +148,20 @@ ret
 main: 
 enter   $(4 * 5), $0 
 
-mov		-12(%rbp), %r10
+mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-8(%rbp), %r10
+mov		-12(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	pruContinue
 mov 	%rax, -16(%rbp) 
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

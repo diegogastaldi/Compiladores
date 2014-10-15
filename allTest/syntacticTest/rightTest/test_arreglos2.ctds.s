@@ -162,46 +162,48 @@ mov 		-76, %rbx
 mov 		-80, %rdx 
 mov 		%rbx, null(%rbp, %rdx, 4) 
 
-movl 	$8, -84(%rbp)
-
-movl 	$6, -88(%rbp)
-
-mov		-84(%rbp), %r10 
-mov		-88(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -92(%rbp)
-
-movl 	$7, -96(%rbp)
-
-movl 	$2, -100(%rbp)
-
-mov		-100(%rbp), %rax 
-cltd
-idivl	-96(%rbp)
-mov		%rax, -104(%rbp)
-
-mov		-92(%rbp), %rax 
-cltd
-idivl	-104(%rbp) 
-mov		%rax, -108(%rbp)
-
-mov		-108(%rbp), %r10
-mov	 	%r10, %rdi
-
-movl 	$4, -116(%rbp)
-
-mov		-116(%rbp), %r10
-mov	 	%r10, %rsi
-
-call 	pruArreglos
-mov 	%rax, -124(%rbp) 
-
-mov		-124(%rbp), %r10
-mov	 	%r10, %rdi
-
 mov		$.L0L3, %r10
+mov	 	%r10, %rdi
+
+movl 	$4, -88(%rbp)
+
+mov		-88(%rbp), %r10
+mov	 	%r10, %rdi
+
+movl 	$8, -96(%rbp)
+
+movl 	$6, -100(%rbp)
+
+mov		-96(%rbp), %r10 
+mov		-100(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -104(%rbp)
+
+movl 	$7, -108(%rbp)
+
+movl 	$2, -112(%rbp)
+
+mov		-112(%rbp), %rax 
+cltd
+idivl	-108(%rbp)
+mov		%rax, -116(%rbp)
+
+mov		-104(%rbp), %rax 
+cltd
+idivl	-116(%rbp) 
+mov		%rax, -120(%rbp)
+
+mov		-120(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
+call 	pruArreglos
+mov 	%rax, -128(%rbp) 
+
+mov		-128(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

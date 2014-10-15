@@ -213,30 +213,32 @@ ret
 main: 
 enter   $(4 * 10), $0 
 
-movl 	$10.0, -8(%rbp)
-
-mov		-8(%rbp), %r10
+mov		$.L0L14, %r10
 mov	 	%r10, %rdi
 
-movl 	$0.66, -16(%rbp)
+movl 	$3.3, -12(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-12(%rbp), %r10
+mov	 	%r10, %rdi
+
+movl 	$0.66, -20(%rbp)
+
+mov		-20(%rbp), %r10
 mov	 	%r10, %rsi
 
-movl 	$3.3, -24(%rbp)
+movl 	$10.0, -28(%rbp)
 
-mov		-24(%rbp), %r10
+mov		-28(%rbp), %r10
 mov	 	%r10, %rdx
 
+mov 		$0, %rax 
 call 	promedio
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -36(%rbp) 
 
-mov		-32(%rbp), %r10
-mov	 	%r10, %rdi
-
-mov		$.L0L14, %r10
+mov		-36(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax

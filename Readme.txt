@@ -16,4 +16,3 @@ Nota:
 
 							float.
 variables globales.
-ver funciones con print ------> lexertest4 in syntaxis..

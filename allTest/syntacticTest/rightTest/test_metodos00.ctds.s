@@ -33,6 +33,7 @@ movl 	$1, -12(%rbp)
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	alo
 
 movl 	$1, -20(%rbp)

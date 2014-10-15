@@ -71,22 +71,24 @@ ret
 main: 
 enter   $(4 * 7), $0 
 
-movl 	$9, -8(%rbp)
+movl 	$4, -8(%rbp)
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$4, -16(%rbp)
+movl 	$9, -16(%rbp)
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
+mov 		$0, %rax 
 call 	suma
 mov 	%rax, -24(%rbp) 
 
 mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
+mov 		$0, %rax 
 call 	printf
 
 mov 		$0, %rax
