@@ -100,8 +100,8 @@ mov		%rax, -8(%rbp)
 
 movl 	$8.0, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, c(%rip)
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi

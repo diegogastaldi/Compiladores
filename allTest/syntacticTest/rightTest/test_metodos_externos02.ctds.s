@@ -130,7 +130,7 @@ idivl	-52(%rbp)
 mov		%rax, -56(%rbp)
 
 mov		-56(%rbp), %r10 
-mov		null(%rbp), %r11 
+mov		-8(%rbp), %r11 
 sub		%r10, %r11 
 mov		%r11, -60(%rbp)
 

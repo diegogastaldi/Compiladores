@@ -30,6 +30,12 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+				case VARASSIGNGLOBAL:
+					varassignglobalMethod(instr);				
+					break;
+				case ARRAYASSIGNGLOBAL:
+					arrayassignglobalMethod(instr);
+					break;		
 			  case GLOBAL: 
 			   	globalMethod(instr);
 			   	break;								
@@ -365,4 +371,14 @@ public class genAssemblyCode {
 	public static void globalMethod(Instr instr) {
 		result += ".comm " + instr.getOperand1() + ", " + instr.getOperand2() + "\n";
 	}
+
+	public static void varassignglobalMethod(Instr instr) {
+		result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rip)\n";
+	}
+
+	public static void arrayassignglobalMethod(Instr instr) {
+		result += "mov 		" + instr.getOperand1() + "(%rbp)" + ", %rbx \n";
+		result += "mov 		%rbx, " + instr.getResult() + instr.getOperand2() + "(%rip) \n";				
+	}	
 }

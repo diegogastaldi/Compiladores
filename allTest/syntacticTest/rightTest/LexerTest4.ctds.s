@@ -28,8 +28,8 @@ ret
 main: 
 enter   $(4 * 11), $0 
 
-mov 		$2, %rax 
-
+mov 		$0, %rax 
+call 	get_int
 mov 	%rax, -8(%rbp) 
 
 mov		-8(%rbp), %r10

@@ -20,11 +20,10 @@ movl 	$2, -16(%rbp)
 
 movl 	$0, -20(%rbp)
 
-mov 		-16, %rbx 
-mov 		-20, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-16(%rbp), %rbx 
+mov 		%rbx, A-80(%rip) 
 
-mov 		$0, %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
@@ -63,9 +62,8 @@ mov		-56(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -60(%rbp)
 
-mov 		-60, %rbx 
-mov 		-16, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-60(%rbp), %rbx 
+mov 		%rbx, A-64(%rip) 
 
 mov		-28(%rbp), %r10 
 mov		-24(%rbp), %r11 

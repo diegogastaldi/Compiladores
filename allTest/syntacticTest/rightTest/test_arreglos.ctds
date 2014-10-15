@@ -28,7 +28,7 @@ int pruArreglos(int b, int c ){
         }
         i=0;
         while i <= (5 *9)-40 {
-           C[i] = A[i*2 + 8] > B[i] ;
+           C[i] += A[i*2 + 8] > B[i] ;
            i = i + 1;
         }
 	return res[0];

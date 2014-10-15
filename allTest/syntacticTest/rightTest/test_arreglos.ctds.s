@@ -9,7 +9,7 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(4 * 46), $0 
+enter   $(4 * 48), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -12(%rbp) 
 
@@ -118,9 +118,8 @@ mov		-84(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -88(%rbp)
 
-mov 		-88, %rbx 
-mov 		-48, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-88(%rbp), %rbx 
+mov 		%rbx, A-192(%rip) 
 
 movl 	$1, -92(%rbp)
 
@@ -163,14 +162,13 @@ jne 		.endWhileL5
 
 movl 	$3, -120(%rbp)
 
-mov		null(%rbp), %r10 
+mov		-8(%rbp), %r10 
 mov		-120(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -124(%rbp)
 
-mov 		-124, %rbx 
-mov 		-48, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-124(%rbp), %rbx 
+mov 		%rbx, B-192(%rip) 
 
 movl 	$1, -128(%rbp)
 
@@ -225,24 +223,31 @@ cmp 	-164(%rbp), %r10
 
 jne 		.endWhileL7
 
-mov		null(%rbp), %rax
-cmp		null(%rbp), %rax
+mov		-8(%rbp), %rax
+cmp		-2364(%rbp), %rax
 setg		%al
 movzb	%al, %rax
 mov		%rax, -172(%rbp)
 
-mov 		-172, %rbx 
-mov 		-48, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov		$1, %rax
+mov		%rax, -180(%rbp)
 
-movl 	$1, -176(%rbp)
+mov		-172(%rbp), %r10 
+mov		-180(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -176(%rbp)
+
+mov 		-176(%rbp), %rbx 
+mov 		%rbx, C-192(%rip) 
+
+movl 	$1, -184(%rbp)
 
 mov		-48(%rbp), %r10 
-mov		-176(%rbp), %r11 
+mov		-184(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -180(%rbp)
+mov		%r11, -188(%rbp)
 
-mov		-180(%rbp), %rax
+mov		-188(%rbp), %rax
 mov		%rax, -48(%rbp)
 
 jmp 		.beginWhileL8

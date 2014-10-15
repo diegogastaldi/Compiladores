@@ -27,9 +27,8 @@ movl 	$4, -20(%rbp)
 
 movl 	$0, -24(%rbp)
 
-mov 		-20, %rbx 
-mov 		-24, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-20(%rbp), %rbx 
+mov 		%rbx, A-96(%rip) 
 
 movl 	$2.6, -28(%rbp)
 
@@ -40,9 +39,8 @@ mov		%r11, -32(%rbp)
 
 movl 	$55, -36(%rbp)
 
-mov 		-32, %rbx 
-mov 		-36, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-32(%rbp), %rbx 
+mov 		%rbx, B-144(%rip) 
 
 mov		-12(%rbp), %rax
 cmp		-8(%rbp), %rax
@@ -52,9 +50,8 @@ mov		%rax, -40(%rbp)
 
 movl 	$0, -44(%rbp)
 
-mov 		-40, %rbx 
-mov 		-44, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-40(%rbp), %rbx 
+mov 		%rbx, C-176(%rip) 
 
 mov		-12(%rbp), %rax
 cmp		-8(%rbp), %rax
@@ -64,11 +61,10 @@ mov		%rax, -48(%rbp)
 
 movl 	$1, -52(%rbp)
 
-mov 		-48, %rbx 
-mov 		-52, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-48(%rbp), %rbx 
+mov 		%rbx, C-208(%rip) 
 
-mov 		$0, %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
@@ -79,8 +75,8 @@ enter   $(4 * 33), $0
 
 movl 	$1, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, y(%rip)
 
 movl 	$58, -12(%rbp)
 
@@ -97,9 +93,8 @@ mov		%r11, -24(%rbp)
 
 movl 	$1, -28(%rbp)
 
-mov 		-24, %rbx 
-mov 		-28, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-24(%rbp), %rbx 
+mov 		%rbx, A-112(%rip) 
 
 movl 	$2.6, -32(%rbp)
 
@@ -109,9 +104,8 @@ mov		%rax, -36(%rbp)
 
 movl 	$0, -40(%rbp)
 
-mov 		-36, %rbx 
-mov 		-40, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-36(%rbp), %rbx 
+mov 		%rbx, B-160(%rip) 
 
 movl 	$4, -44(%rbp)
 
@@ -130,14 +124,13 @@ mov		%rax, -56(%rbp)
 
 movl 	$2, -60(%rbp)
 
-mov 		-56, %rbx 
-mov 		-60, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-56(%rbp), %rbx 
+mov 		%rbx, C-240(%rip) 
 
 movl 	$5, -64(%rbp)
 
 mov		-64(%rbp), %rax
-cmp		null(%rbp), %rax
+cmp		-8(%rbp), %rax
 setge 	%al
 movzb %al, %rax
 mov		%rax, -68(%rbp)
@@ -158,9 +151,8 @@ mov		%r10, -76(%rbp)
 
 movl 	$3, -80(%rbp)
 
-mov 		-76, %rbx 
-mov 		-80, %rdx 
-mov 		%rbx, null(%rbp, %rdx, 4) 
+mov 		-76(%rbp), %rbx 
+mov 		%rbx, C-320(%rip) 
 
 mov		$.L0L3, %r10
 mov	 	%r10, %rdi

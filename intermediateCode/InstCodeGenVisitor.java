@@ -67,60 +67,101 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   public Integer visit(IncrementAssign stmt)   {
-  	/* Genera instrucciones para la expresion*/
-    Integer expr = stmt.getExpression().accept(this);
-    /* Genera instrucciones para el Location*/
-    Integer loc = stmt.getLocation().accept(this);
+    /* Genera instrucciones para la expresion*/
+    Integer expr = stmt.getExpression().accept(this);    
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
     instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
     /* Realiza el incremento */
     instructions.add(new Instr(Operator.PLUS, expr, op, result));
-    /* Realiza la asigancion */
-    if (stmt.getLocation() instanceof VarLocation) 
-      instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
-    else {
-      ArrayLocation a = (ArrayLocation) stmt.getLocation();
-      instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+
+    Location location = stmt.getLocation();
+
+    if (!location.getIsGlobal()) {
+      /* Genera instrucciones para el Location*/
+      Integer loc = stmt.getLocation().accept(this);
+
+      /* Realiza la asigancion */
+      if (stmt.getLocation() instanceof VarLocation) 
+        instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
+      else {
+        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+      }
+    } else {
+      /* Realiza la asigancion */
+      if (stmt.getLocation() instanceof VarLocation) 
+        instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
+      else {
+        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this)*4, location.getId()));
+      }
+      
     }
-     
     return null;
   }
   
   public Integer visit(DecrementAssign stmt)   {
-  	/* Genera instrucciones para la expresion*/  	
-    Integer expr = stmt.getExpression().accept(this);
-    /* Genera instrucciones para el Location*/
-    Integer loc = stmt.getLocation().accept(this);
-    /* Label donde guardara el resultado */    
+    /* Genera instrucciones para la expresion*/
+    Integer expr = stmt.getExpression().accept(this);    
+    /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
-    /* Label donde guardara un resultado parcial */    
     Integer op = genLabels.getOffSet();
     instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
+    /* Realiza el incremento */
     instructions.add(new Instr(Operator.MINUS, expr, op, result));
-    /* Realiza la asigancion */
-    if (stmt.getLocation() instanceof VarLocation) 
-      instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
-    else {
-      ArrayLocation a = (ArrayLocation) stmt.getLocation();
-      instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+
+    Location location = stmt.getLocation();
+
+    if (!location.getIsGlobal()) {
+      /* Genera instrucciones para el Location*/
+      Integer loc = stmt.getLocation().accept(this);
+
+      /* Realiza la asigancion */
+      if (stmt.getLocation() instanceof VarLocation) 
+        instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
+      else {
+        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+      }
+    } else {
+      /* Realiza la asigancion */
+      if (stmt.getLocation() instanceof VarLocation) 
+        instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
+      else {
+        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this)*4, location.getId()));
+      }
+      
     }
-         
     return null;
   }
   
   public Integer visit(SimpleAssign stmt)   {
-  	/* Genera instrucciones para la expresion*/  	
-    Integer expr = stmt.getExpression().accept(this);
-    /* Genera instrucciones para el Location*/
-    Integer loc = stmt.getLocation().accept(this);    
-    /* Realiza la asigancion */
-    if (stmt.getLocation() instanceof VarLocation) 
-      instructions.add(new Instr(Operator.VARASSIGN, expr, "adress", loc));
-    else {
-      ArrayLocation a = (ArrayLocation) stmt.getLocation();
-      instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), loc));
+    /* Genera instrucciones para la expresion*/
+    Integer expr = stmt.getExpression().accept(this);    
+    Location location = stmt.getLocation();    
+    if (!location.getIsGlobal()) {
+      /* Genera instrucciones para el Location*/
+      Integer loc = stmt.getLocation().accept(this);
+
+      /* Realiza la asigancion */
+      if (stmt.getLocation() instanceof VarLocation) 
+        instructions.add(new Instr(Operator.VARASSIGN, expr, "adress", loc));
+      else {
+        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), loc));
+      }
+    } else {
+      /* Realiza la asigancion */
+      if (stmt.getLocation() instanceof VarLocation) 
+        instructions.add(new Instr(Operator.VARASSIGNGLOBAL, expr, null, location.getId()));
+      else {
+        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, expr, (Integer)a.getExpression().accept(this)*4, location.getId()));
+      }
+      
     }
     return null;
   }
@@ -405,7 +446,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   		case CEQ : 	instructions.add(new Instr(Operator.CEQ, leftOperand, rightOperand, result));
   								break;
   		case NEQ : 	instructions.add(new Instr(Operator.NEQ, leftOperand, rightOperand, result));
-  	
     							break;
   	}
      
@@ -446,7 +486,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
         posMethodLabel ++;
         instructions.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
-          
       }
     }
     Integer result = genLabels.getOffSet();
@@ -488,27 +527,17 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   
 // visit locations  
   public Integer visit(VarLocation loc)   {
-    /* si la variable es global retorna null porque importa
-      su id, no su offset (se reserva igual!!) */
-    if (!loc.getIsGlobal()) {
-      int os = loc.getOffSet();
-      /* Si el numero es mayor a cero es porque es un parametro, los cuales
-        tiene su lugar reservado al principio del stack */
-      if (os >=  0) 
-        return (os + 2) * (-4);
-      else 
-        return os;
-    } else 
-      return null;
+    int os = loc.getOffSet();
+    /* Si el numero es mayor a cero es porque es un parametro, los cuales
+      tiene su lugar reservado al principio del stack */
+    if (os >=  0) 
+      return (os + 2) * (-4);
+    else 
+      return os;
   }
 
   public Integer visit(ArrayLocation loc)  {
-    /* si la variable es global retorna null porque importa
-      su id, no su offset (se reserva igual!!) */
-    if (!loc.getIsGlobal()) 
-      return loc.getOffSet();
-    else 
-      return null;
+    return loc.getOffSet();
   }
 }
 

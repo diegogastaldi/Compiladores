@@ -85,8 +85,8 @@ enter   $(4 * 11), $0
 
 movl 	$0, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, res(%rip)
 
 movl 	$5, -12(%rbp)
 

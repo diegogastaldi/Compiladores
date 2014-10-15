@@ -220,13 +220,13 @@ mov		-8(%rbp), %rax
 neg		%rax 
 mov		%rax, -12(%rbp) 
 
-mov		-12(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, res(%rip)
 
 movl 	$4.3, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, w(%rip)
 
 movl 	$7.6, -20(%rbp)
 
@@ -234,8 +234,8 @@ mov		-20(%rbp), %rax
 neg		%rax 
 mov		%rax, -24(%rbp) 
 
-mov		-24(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, m(%rip)
 
 movl 	$80.0, -28(%rbp)
 
@@ -260,7 +260,7 @@ mov		%rax, -8(%rbp)
 mov		$.L0L8, %r10
 mov	 	%r10, %rdi
 
-mov		null(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov		-8(%rbp), %r10
