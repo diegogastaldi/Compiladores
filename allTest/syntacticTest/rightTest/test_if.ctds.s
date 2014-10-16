@@ -25,8 +25,8 @@ mov		-12(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .falseCondL0: 
 
@@ -50,8 +50,8 @@ mov		-36(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -40(%rbp)
 
-mov		-40(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.endIfL2
 
@@ -62,8 +62,8 @@ mov		-8(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -44(%rbp)
 
-mov		-44(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .endIfL2: 
 

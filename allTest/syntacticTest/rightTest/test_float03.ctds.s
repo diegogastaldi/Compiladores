@@ -18,18 +18,18 @@ mov 		%rsi, -12(%rbp)
 
 movl 	$0, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$1, -20(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$1.0, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$0, -28(%rbp)
 
@@ -50,13 +50,13 @@ mov		-8(%rbp), %rax
 neg		%rax 
 mov		%rax, -40(%rbp) 
 
-mov		-40(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$1, -44(%rbp)
 
-mov		-44(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 .falseCondL0: 
 
@@ -105,8 +105,8 @@ mov		-68(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -72(%rbp)
 
-mov		-72(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$1, -76(%rbp)
 
@@ -115,8 +115,8 @@ mov		-76(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -80(%rbp)
 
-mov		-80(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL2
 
@@ -183,8 +183,8 @@ mov		-16(%rbp), %rax
 neg		%rax 
 mov		%rax, -20(%rbp) 
 
-mov		-20(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$2, -24(%rbp)
 
@@ -192,8 +192,8 @@ mov		-24(%rbp), %rax
 neg		%rax 
 mov		%rax, -28(%rbp) 
 
-mov		-28(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-28(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$3.0, -32(%rbp)
 
@@ -201,8 +201,8 @@ mov		-32(%rbp), %rax
 neg		%rax 
 mov		%rax, -36(%rbp) 
 
-mov		-36(%rbp), %rax
-mov		%rax, -28(%rbp)
+mov		-36(%rbp), %r10
+mov		%r10, -28(%rbp)
 
 movl 	$3.0, -40(%rbp)
 
@@ -210,8 +210,8 @@ mov		-40(%rbp), %rax
 neg		%rax 
 mov		%rax, -44(%rbp) 
 
-mov		-44(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 mov		-28(%rbp), %r10 
 mov		-20(%rbp), %r11 
@@ -223,28 +223,28 @@ mov		-48(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -52(%rbp)
 
-mov		-52(%rbp), %rax
-mov		%rax, -32(%rbp)
+mov		-52(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 movl 	$0, -56(%rbp)
 
-mov		-56(%rbp), %rax
-mov		%rax, -40(%rbp)
+mov		-56(%rbp), %r10
+mov		%r10, -40(%rbp)
 
 movl 	$0, -60(%rbp)
 
-mov		-60(%rbp), %rax
-mov		%rax, -52(%rbp)
+mov		-60(%rbp), %r10
+mov		%r10, -52(%rbp)
 
 movl 	$0, -64(%rbp)
 
-mov		-64(%rbp), %rax
-mov		%rax, -48(%rbp)
+mov		-64(%rbp), %r10
+mov		%r10, -48(%rbp)
 
 movl 	$5, -68(%rbp)
 
-mov		-68(%rbp), %rax
-mov		%rax, -44(%rbp)
+mov		-68(%rbp), %r10
+mov		%r10, -44(%rbp)
 
 mov		-12(%rbp), %rax
 cmp		-8(%rbp), %rax
@@ -272,15 +272,15 @@ cmp 	-80(%rbp), %r10
 
 jne 		.falseCondL9
 
-mov		-12(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 jmp 		.endIfL10
 
 .falseCondL9: 
 
-mov		-8(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 .endIfL10: 
 
@@ -373,8 +373,8 @@ mov		-132(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -136(%rbp)
 
-mov		-136(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-136(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 jmp 		.endIfL22
 
@@ -394,23 +394,22 @@ mov		-36(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -152(%rbp)
 
-mov		-152(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-152(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 .endIfL22: 
 
 movl 	$1, -156(%rbp)
 
-mov		$1, %rax
-mov		%rax, -164(%rbp)
+movl 	$1, -164(%rbp)
 
 mov		-156(%rbp), %r10 
 mov		-164(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -160(%rbp)
 
-mov		-160(%rbp), %rax
-mov		%rax, -48(%rbp)
+mov		-160(%rbp), %r10
+mov		%r10, -48(%rbp)
 
 jmp 		.beginWhileL17
 
@@ -469,8 +468,8 @@ mov		-204(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -208(%rbp)
 
-mov		-208(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-208(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 jmp 		.endIfL26
 
@@ -490,8 +489,8 @@ mov		-212(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -224(%rbp)
 
-mov		-224(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-224(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 .endIfL26: 
 
@@ -502,8 +501,8 @@ mov		-228(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -232(%rbp)
 
-mov		-232(%rbp), %rax
-mov		%rax, -52(%rbp)
+mov		-232(%rbp), %r10
+mov		%r10, -52(%rbp)
 
 jmp 		.beginWhileL15
 
@@ -544,8 +543,8 @@ mov		-264(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -268(%rbp)
 
-mov		-268(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-268(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 movl 	$1, -272(%rbp)
 
@@ -554,8 +553,8 @@ mov		-272(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -276(%rbp)
 
-mov		-276(%rbp), %rax
-mov		%rax, -40(%rbp)
+mov		-276(%rbp), %r10
+mov		%r10, -40(%rbp)
 
 jmp 		.beginWhileL13
 
@@ -578,8 +577,8 @@ enter   $(4 * 19), $0
 
 movl 	$80.0, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$15.0, -12(%rbp)
 
@@ -616,8 +615,8 @@ mov 		$0, %rax
 call 	potencia
 mov 	%rax, -44(%rbp) 
 
-mov		-44(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov		$.L0L27, %r10
 mov	 	%r10, %rdi

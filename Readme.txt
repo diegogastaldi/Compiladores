@@ -15,4 +15,5 @@ Nota:
 							DOCUMENTACION
 
 							float.
-variables globales.
+
+ciclos -> no andan

@@ -55,6 +55,7 @@ mov	 	%r10, -32(%rbp)
 mov		-12(%rbp), %r10
 mov	 	%r10, -36(%rbp)
 
+mov 		$0, %rax 
 call 	inc
 mov 	%rax, -40(%rbp) 
 
@@ -63,8 +64,8 @@ mov		-8(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -48(%rbp)
 
-mov		-48(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-48(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov 		$0, %rax
 leave

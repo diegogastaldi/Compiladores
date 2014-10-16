@@ -17,8 +17,8 @@ main2:
 enter   $(4 * 2), $0 
 mov 		%rdi, -8(%rbp) 
 
-mov		-8(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, y(%rip)
 
 mov 		$0, %rax
 leave

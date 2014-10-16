@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.LinkedList;
 import ir.ast.*;
 import ir.ASTVisitor;
-import semanticAnalyzer.completeFunction;
+import semanticAnalyzer.*;
 
 public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   /* Instrucciones generadas a partir del los bloques */
@@ -44,20 +44,23 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   /* Crea las instrucciones para las variables globales */
-  public void globalVar( List<Global> globals) {
-    for (Global g : globals) {
-      instructions.add(new Instr(Operator.GLOBAL, g.getId(), g.getSize(), null));
+  public void globalVar( List<absSymbol> globals) {
+    for (absSymbol g : globals) {
+      if (g instanceof arraySymbol)
+        instructions.add(new Instr(Operator.GLOBAL, g.getName(), ((arraySymbol)g).getSize()*8, null));
+      else 
+        instructions.add(new Instr(Operator.GLOBAL, g.getName(), 8, null));
     }
   }
 
   public void blockCode(completeFunction c) {
     posMethodLabel = instructions.size();
     /* Reinicia labels */
-    genLabels.restart(c.getParameters().size());
+    genLabels.restart(c.getParameters().size()+ c.getLocalVars());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
-    int reserveSpace = c.getParameters().size() + (-genLabels.getOffSet()/4)-2;
+    int reserveSpace = (-genLabels.getOffSet()/8)-1;
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
   }
@@ -72,22 +75,23 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
+    instructions.add(new Instr(Operator.CONST, "1", null, op));    
     /* Realiza el incremento */
     instructions.add(new Instr(Operator.PLUS, expr, op, result));
 
     Location location = stmt.getLocation();
 
     if (!location.getIsGlobal()) {
-      /* Genera instrucciones para el Location*/
-      Integer loc = stmt.getLocation().accept(this);
-
       /* Realiza la asigancion */
-      if (stmt.getLocation() instanceof VarLocation) 
-        instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
+      if (stmt.getLocation() instanceof VarLocation) {
+        /* Genera instrucciones para el Location*/
+        Integer loc = stmt.getLocation().accept(this);
+
+        instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+      }
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
       }
     } else {
       /* Realiza la asigancion */
@@ -95,9 +99,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this)*4, location.getId()));
-      }
-      
+        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
+      }      
     }
     return null;
   }
@@ -108,22 +111,23 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
     Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.VARASSIGN, "$1", "const", op));
+    instructions.add(new Instr(Operator.CONST, "1", null, op));
     /* Realiza el incremento */
     instructions.add(new Instr(Operator.MINUS, expr, op, result));
 
     Location location = stmt.getLocation();
 
     if (!location.getIsGlobal()) {
-      /* Genera instrucciones para el Location*/
-      Integer loc = stmt.getLocation().accept(this);
-
       /* Realiza la asigancion */
-      if (stmt.getLocation() instanceof VarLocation) 
-        instructions.add(new Instr(Operator.VARASSIGN, result, "adress", loc));
+      if (stmt.getLocation() instanceof VarLocation) {
+        /* Genera instrucciones para el Location*/
+        Integer loc = stmt.getLocation().accept(this);
+
+        instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+      }
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), loc));
+        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
       }
     } else {
       /* Realiza la asigancion */
@@ -131,9 +135,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this)*4, location.getId()));
+        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
       }
-      
     }
     return null;
   }
@@ -143,15 +146,15 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer expr = stmt.getExpression().accept(this);    
     Location location = stmt.getLocation();    
     if (!location.getIsGlobal()) {
-      /* Genera instrucciones para el Location*/
-      Integer loc = stmt.getLocation().accept(this);
-
       /* Realiza la asigancion */
-      if (stmt.getLocation() instanceof VarLocation) 
-        instructions.add(new Instr(Operator.VARASSIGN, expr, "adress", loc));
+      if (stmt.getLocation() instanceof VarLocation) {
+        /* Genera instrucciones para el Location*/
+        Integer loc = stmt.getLocation().accept(this);
+        instructions.add(new Instr(Operator.VARASSIGN, expr, null, loc));
+      }
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), loc));
+        instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), a.getOffSet()));
       }
     } else {
       /* Realiza la asigancion */
@@ -159,7 +162,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         instructions.add(new Instr(Operator.VARASSIGNGLOBAL, expr, null, location.getId()));
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, expr, (Integer)a.getExpression().accept(this)*4, location.getId()));
+        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, expr, (Integer)a.getExpression().accept(this), location.getId()));
       }
       
     }
@@ -262,22 +265,24 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labelsStack.add(labelsStack.size(), labelEndFor);
 
   	/* Genera codigo para la primer expresion */
-    Integer expr1 = stmt.getCondition().accept(this);
+    Integer expr1 = stmt.getAssignExpr().accept(this);
   	/* Genera codigo para la segunda expresion */    
-    Integer expr2 = stmt.getAssignExpr().accept(this);
-
+		Integer expr2 = stmt.getCondition().accept(this);
     /* Salta a evaluar las condiciones */
     instructions.add(new Instr(Operator.JMP, null, null, labelEndFor));
     /* Pone la etiqueta de inicio del for */
-	  instructions.add(new Instr(Operator.LABEL, null, null, labelBeginFor));        
+	  instructions.add(new Instr(Operator.LABEL, null, null, labelBeginFor));
     /* Genera las instrucciones para el bloque */
     Integer block = stmt.getBlock().accept(this);
     /* Incrementa el contador */
     instructions.add(new Instr(Operator.PLUS, expr1, incrementValue, expr1));
+
+		instructions.add(new Instr(Operator.VARASSIGN, expr1, null, stmt.getLocation().accept(this)));
+
     /* Pone la etique de fin del for */
     instructions.add(new Instr(Operator.LABEL, null, null, labelEndFor));    
     /* Compara las expresiones */
-	  instructions.add(new Instr(Operator.CMP, expr1, expr2, null));
+	  instructions.add(new Instr(Operator.CMP, expr2, expr1, null));
 	  /* Si la primera es menor que la segunda no salta*/
 	  instructions.add(new Instr(Operator.JLE, null, null, labelBeginFor));
 
@@ -304,12 +309,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit(InternInvkStmt stmt){
   	Integer parameter;
     Expression a;
+    List<Instr> param = new LinkedList<Instr>();
     for (int i = 0; i < stmt.getParameters().size(); i++) {
       a = stmt.getParameters().get(i);
       parameter = a.accept(this);
       /* Apila paramatros en memoria */
-      instructions.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
+      param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
     }
+    instructions.addAll(param);
     /* Realiza la llamada a la funcion */
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
 
@@ -317,23 +324,24 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }	
   
   public Integer visit(ExternInvkStmt stmt){
-    Integer parameter;
+    Integer parameter;    
     ArgInvoc a;
+    List<Instr> param = new LinkedList<Instr>();
     for (int i = 0; i < stmt.getParameters().size(); i++) {
       a = stmt.getParameters().get(i);
-			/* Apila paramatros en memoria */        
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
+        param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));                
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
         posMethodLabel ++;
-        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
+        param.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
       }
     }
-    /* Realiza la llamada a la funcion */
-    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
+    instructions.addAll(param);
+    Integer result = genLabels.getOffSet();
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), genLabels.getOffSet(), result));
   	return null; 
   }
 
@@ -342,7 +350,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer result = genLabels.getOffSet();
 
 	  instructions.add(new Instr(Operator.UNARYMINUS, operand, null, result));
-
     return result;
   }
 
@@ -351,7 +358,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer result = genLabels.getOffSet();
 
 	  instructions.add(new Instr(Operator.NOT, operand, null, result));
-     
     return result;
   }
 
@@ -431,8 +437,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   		case OR : 	labels.add(genLabels.getLabel());
                   instructions.add(new Instr(Operator.OR, labels, operand, result));
   								break;
-  	}
-         
+  	}    
     return result;
   }
 
@@ -448,7 +453,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   		case NEQ : 	instructions.add(new Instr(Operator.NEQ, leftOperand, rightOperand, result));
     							break;
   	}
-     
     return result;
   }
 
@@ -459,35 +463,36 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit (InternInvkExpr expr){
   	Integer parameter;
     Expression a;
+    List<Instr> param = new LinkedList<Instr>();
     for (int i = 0; i < expr.getParameters().size(); i++) {
       a = expr.getParameters().get(i);
       parameter = a.accept(this);
-      instructions.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
-       
+      param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
     }
+    instructions.addAll(param);
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
-
     return result;
   } 
   
   public Integer visit (ExternInvkExpr expr){
     Integer parameter;    
     ArgInvoc a;
+    List<Instr> param = new LinkedList<Instr>();
     for (int i = 0; i < expr.getParameters().size(); i++) {
       a = expr.getParameters().get(i);
       if (!(a instanceof ArgInvocSL)) {
         parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        instructions.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));        
-         
+        param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));                
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
         posMethodLabel ++;
-        instructions.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
+        param.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
       }
     }
+    instructions.addAll(param);
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
              
@@ -527,17 +532,33 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   
 // visit locations  
   public Integer visit(VarLocation loc)   {
-    int os = loc.getOffSet();
-    /* Si el numero es mayor a cero es porque es un parametro, los cuales
-      tiene su lugar reservado al principio del stack */
-    if (os >=  0) 
-      return (os + 2) * (-4);
-    else 
-      return os;
+    if (!loc.getIsGlobal()) {
+      int os = loc.getOffSet();
+      /* Si el numero es mayor a cero es porque es un parametro, los cuales
+        tiene su lugar reservado al principio del stack */
+      if (os >=  0) 
+        return (os + 2) * (-8);
+      else 
+        return os;
+    } else {
+      Integer result = genLabels.getOffSet();
+      instructions.add(new Instr(Operator.GLOBALVALUEVAR, loc.getId(), null, result));
+      return result;
+    }
   }
 
   public Integer visit(ArrayLocation loc)  {
-    return loc.getOffSet();
+    if (!loc.getIsGlobal()) {
+      Integer expr = loc.getExpression().accept(this);
+      Integer result = genLabels.getOffSet();
+      instructions.add(new Instr(Operator.VALUEARRAY, loc.getOffSet(), expr, result));
+      return result;
+    }
+    else {
+      Integer expr = loc.getExpression().accept(this);
+      Integer result = genLabels.getOffSet();
+      instructions.add(new Instr(Operator.GLOBALVALUEARRAY, loc.getId(), expr, result));
+      return result;
+    }
   }
 }
-

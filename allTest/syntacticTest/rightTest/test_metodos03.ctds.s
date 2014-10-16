@@ -55,8 +55,8 @@ cltd
 idivl	-36(%rbp) 
 mov		%rax, -40(%rbp)
 
-mov		-40(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.endIfL1
 
@@ -69,8 +69,8 @@ cltd
 idivl	-12(%rbp)
 mov		%rax, -48(%rbp)
 
-mov		-48(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-48(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .endIfL1: 
 

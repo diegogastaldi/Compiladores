@@ -1,94 +1,101 @@
+.L0L0: 
+		.string "%f" 
+
 .text
 
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(4 * 14), $0 
-mov 		%rdi, -8(%rbp) 
+enter   $(8 * 17), $0 
+mov 		%rdi, -16(%rbp) 
 
-movl 	$1, -12(%rbp)
+movq 	$1, -48(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-48(%rbp), %r10
+mov		%r10, -24(%rbp)
 
-movl 	$8, -16(%rbp)
+movq 	$8, -56(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-56(%rbp), %r10
+mov		%r10, -32(%rbp)
 
-movl 	$699, -20(%rbp)
+movq 	$699, -64(%rbp)
 
-mov		-20(%rbp), %r10 
-mov		-12(%rbp), %r11 
+mov		-64(%rbp), %r10 
+mov		-24(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -24(%rbp)
+mov		%r11, -72(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -24(%rbp)
 
-movl 	$2, -28(%rbp)
+movq 	$2, -80(%rbp)
 
-mov		-16(%rbp), %r10 
-mov		-28(%rbp), %r11 
+mov		-32(%rbp), %r10 
+mov		-80(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -32(%rbp)
+mov		%r11, -88(%rbp)
 
-mov		-32(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-88(%rbp), %r10
+mov		%r10, -32(%rbp)
 
-movl 	$2, -36(%rbp)
+movq 	$2, -96(%rbp)
+
+mov		-32(%rbp), %rax 
+cltd
+idivq	-96(%rbp) 
+mov		%rax, -104(%rbp)
 
 mov		-16(%rbp), %rax 
 cltd
-idivl	-36(%rbp) 
-mov		%rax, -40(%rbp)
+idivq	-104(%rbp) 
+mov		%rax, -112(%rbp)
 
-mov		-8(%rbp), %rax 
+mov		-24(%rbp), %rax 
 cltd
-idivl	-40(%rbp) 
-mov		%rax, -44(%rbp)
+idivq	-112(%rbp) 
+mov		%rax, -120(%rbp)
 
-mov		-12(%rbp), %rax 
+mov		-120(%rbp), %r10
+mov		%r10, -24(%rbp)
+
+movq 	$2, -128(%rbp)
+
+mov		-128(%rbp), %rax 
 cltd
-idivl	-44(%rbp) 
-mov		%rax, -48(%rbp)
+idivq	-24(%rbp)
+mov		%rax, -136(%rbp)
 
-mov		-48(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-136(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-movl 	$2, -52(%rbp)
-
-mov		-52(%rbp), %rax 
-cltd
-idivl	-12(%rbp)
-mov		%rax, -56(%rbp)
-
-mov		-56(%rbp), %rax
-mov		%rax, -8(%rbp)
-
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 5), $0 
+enter   $(8 * 9), $0 
 
-movl 	$3, -8(%rbp)
+movq 	$3, -24(%rbp)
 
-mov		-8(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	pruAritmetica
-mov 	%rax, -16(%rbp) 
+mov 	%rax, -40(%rbp) 
 
-mov		-16(%rbp), %r10
+mov		$.L0L0, %r10
 mov	 	%r10, %rdi
+
+mov		-40(%rbp), %r10
+mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
+mov 	%rax, -64(%rbp) 
 
 mov 		$0, %rax
 leave

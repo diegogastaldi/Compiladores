@@ -8,16 +8,16 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$100, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$0, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 .beginWhileL1: 
 
@@ -34,8 +34,8 @@ cmp 	-20(%rbp), %r10
 
 jne 		.endWhileL0
 
-mov		-8(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 .beginWhileL3: 
 
@@ -96,8 +96,8 @@ mov		-8(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -68(%rbp)
 
-mov		-68(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-68(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 jmp 		.endIfL8
 
@@ -110,8 +110,8 @@ mov		-72(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -76(%rbp)
 
-mov		-76(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-76(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 .endIfL8: 
 
@@ -172,8 +172,8 @@ mov		-104(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -108(%rbp)
 
-mov		-108(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-108(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 jmp 		.endIfL15
 
@@ -219,8 +219,8 @@ mov		-8(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -140(%rbp)
 
-mov		-140(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-140(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 .falseCondL16: 
 
@@ -230,8 +230,8 @@ jmp 		.beginWhileL10
 
 .endWhileL9: 
 
-mov		-20(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$1, -144(%rbp)
 
@@ -240,8 +240,8 @@ mov		-144(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -148(%rbp)
 
-mov		-148(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-148(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL1
 

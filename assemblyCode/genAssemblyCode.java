@@ -30,6 +30,12 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+				case GLOBALVALUEVAR:
+					globalvaluevarmethod(instr);
+					break;
+				case GLOBALVALUEARRAY:				
+					globalvaluearraymethod(instr);
+					break;
 				case VARASSIGNGLOBAL:
 					varassignglobalMethod(instr);				
 					break;
@@ -42,6 +48,9 @@ public class genAssemblyCode {
 			  case STRING: 
 			   	stringMethod(instr);
 			   	break;				
+			  case VALUEARRAY: 
+			   	valuearrayMethod(instr);
+			   	break;
 			  case ARRAYASSIGN: 
 			   	arrayassignMethod(instr);
 			   	break;
@@ -146,7 +155,7 @@ public class genAssemblyCode {
 	}
 
 	public static void constMethod(Instr instr) {
-	  result += "movl 	$" + instr.getOperand1() + ", " + instr.getResult() + "(%rbp)\n";
+	  result += "movq 	$" + instr.getOperand1() + ", " + instr.getResult() + "(%rbp)\n";
 	}
 
 	public static void cmpMethod(Instr instr) {
@@ -178,7 +187,7 @@ public class genAssemblyCode {
 	public static void modMethod(Instr instr) {
 		result += "mov		" + instr.getOperand2() + "(%rbp), %rax \n";
 		result += "cltd\n";
-		result += "idivl	" + instr.getOperand1() + "(%rbp)\n";
+		result += "idivq	" + instr.getOperand1() + "(%rbp)\n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
@@ -189,9 +198,9 @@ public class genAssemblyCode {
 		String label1 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
 		String label2 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
 
-		result += "cmpl		$0, " + operand1 + "(%rbp)\n";
+		result += "cmpq		$0, " + operand1 + "(%rbp)\n";
 		result += "je 		." + label1 + "\n";
-		result += "cmpl		$0, " + operand2 + "(%rbp)\n";
+		result += "cmpq		$0, " + operand2 + "(%rbp)\n";
 		result += "je 		." + label1 + "\n";
 		result += "mov		$1, %r10\n";
 		result += "jmp		." + label2 + "\n";
@@ -209,9 +218,9 @@ public class genAssemblyCode {
 		String label2 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
 		String label3 = ((LinkedList<String>)instr.getOperand1()).removeFirst();
 
-		result += "cmpl		$0, " + operand1 + "(%rbp)\n";
+		result += "cmpq		$0, " + operand1 + "(%rbp)\n";
 		result += "jne 		." + label1 + "\n";
-		result += "cmpl		$0, " + operand2 + "(%rbp)\n";
+		result += "cmpq		$0, " + operand2 + "(%rbp)\n";
 		result += "je 		." + label2 + "\n";
 		result += "." + label1 + ": \n";
 		result += "mov		$1, %r10\n";
@@ -239,7 +248,7 @@ public class genAssemblyCode {
 	}
 
 	public static void notMethod(Instr instr) {
-		result += "cmpl		$0, " + instr.getOperand1() + "(%rbp) \n";
+		result += "cmpq		$0, " + instr.getOperand1() + "(%rbp) \n";
 		result += "sete		%al \n";
 		result += "movzb	%al, %rax \n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp) \n";
@@ -326,7 +335,7 @@ public class genAssemblyCode {
 	public static void divideMethod(Instr instr) {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
 		result += "cltd\n";
-		result += "idivl	" + instr.getOperand2() + "(%rbp) \n";
+		result += "idivq	" + instr.getOperand2() + "(%rbp) \n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
@@ -334,34 +343,36 @@ public class genAssemblyCode {
 		result += ".globl	" + instr.getResult() + "\n";
 		result += ".type	" + instr.getResult() + ", @function \n";			
 		result += instr.getResult() + ": \n";		
-		result += "enter   $(4 * " + instr.getOperand1() + "), $0 \n";
+		result += "enter   $(8 * " + instr.getOperand1() + "), $0 \n";
 
 		/* Guarda parametros en memoria reservada del metodo actual */
 		for (int i = 0 ; i < ((Integer)instr.getOperand2()); i++) {
 			if (i < paramRegister.registers.length)
-				result += "mov 		" + paramRegister.registers[i] + ", " + ((i+2) * (-4)) + "(%rbp) \n";
+				result += "mov 		" + paramRegister.registers[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
 			else {
-				result += "mov 		" + (((i+1)-paramRegister.registers.length) * 4) + "(%rbp), %r10\n";
-				result += "mov 		%r10, " + ((i+2) * (-4)) + "(%rbp) \n";
+				result += "mov 		" + (((i+1)-paramRegister.registers.length) * 8) + "(%rbp), %r10\n";
+				result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";
 			}
 		}
 	}
 
 	public static void arrayassignMethod(Instr instr) {
-		result += "mov 		" + instr.getOperand1() + ", %rbx \n";
-		result += "mov 		" + instr.getOperand2() + ", %rdx \n";
-		result += "mov 		%rbx, " + instr.getResult() + "(%rbp, %rdx, 4) \n";		
+		result += "mov 		" + instr.getOperand1() + "(%rbp), %r10 \n";
+		result += "movq		" + instr.getOperand2() + "(%rbp), %edx \n";
+		result += "cltq \n";
+		result += "mov 		%r10, " + instr.getResult() + "(%rbp, %rdx, 8) \n";		
 	}
 
 	public static void varassignMethod(Instr instr) {
-		String op2 = (String)instr.getOperand2();
-		switch (op2) {
-			case "adress" :	result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
-											break;
-			case "const" : 	result += "mov		" + instr.getOperand1() + ", %rax\n";
-											break;
-		}
-		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
+	}
+
+	public static void valuearrayMethod(Instr instr) {
+		result += "movq		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "cltq \n";
+		result += "mov 		" + instr.getOperand1() + "(%rbp,%rdx,8) , %r11\n";
+		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void textMethod(Instr instr) {
@@ -378,7 +389,23 @@ public class genAssemblyCode {
 	}
 
 	public static void arrayassignglobalMethod(Instr instr) {
-		result += "mov 		" + instr.getOperand1() + "(%rbp)" + ", %rbx \n";
-		result += "mov 		%rbx, " + instr.getResult() + instr.getOperand2() + "(%rip) \n";				
+		result += "mov 		" + instr.getOperand1() + "(%rbp)" + ", %r10 \n";
+		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "imul		$8, %edx \n";
+		result += "cltq \n";
+		result += "mov 		%r10, " + instr.getResult() + "(, %edx, 8) \n";
 	}	
+
+	public static void globalvaluearraymethod(Instr instr) {
+		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "imul		$8, %edx \n";
+		result += "cltq \n";	
+		result += "mov 		" + instr.getOperand1() + "(,%edx,8) , %r11\n";
+		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void globalvaluevarmethod(Instr instr) {
+		result += "mov 		" + instr.getOperand1() + "(%rip), %r10 \n";
+		result += "mov		%r10, " + instr.getResult() + "(%rbp) \n";	
+	}
 }

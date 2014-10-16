@@ -12,7 +12,7 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(4 * 11), $0 
+enter   $(4 * 13), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -12(%rbp) 
 
@@ -21,41 +21,52 @@ movl 	$2, -16(%rbp)
 movl 	$0, -20(%rbp)
 
 mov 		-16(%rbp), %rbx 
-mov 		%rbx, A-80(%rip) 
-
-mov		-8(%rbp), %rax
-leave
-ret
+mov 		-20(%rbp), %r10 
+imul		$4, %r10 
+mov 		%rbx, A(, %r10, 4) 
 
 movl 	$1, -24(%rbp)
 
-movl 	$5, -28(%rbp)
+mov 		-24(%rbp), %r10 
+imul		$4, %r10 
+mov 		A(,%r10,4) , %r11
+mov 		%r11, -28(%rbp) 
 
-movl 	$10, -32(%rbp)
+mov		-28(%rbp), %rax
+leave
+ret
+
+movl 	$1, -32(%rbp)
+
+movl 	$5, -36(%rbp)
+
+movl 	$10, -40(%rbp)
 
 jmp 		.endForL0
 
 .beginForL1: 
 
-movl 	$2, -36(%rbp)
+movl 	$2, -44(%rbp)
 
 mov		-16(%rbp), %r10 
-mov		-36(%rbp), %r11 
+mov		-44(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -40(%rbp)
+mov		%r11, -48(%rbp)
 
-mov 		-40(%rbp), %rbx 
-mov 		%rbx, A-64(%rip) 
+mov 		-48(%rbp), %rbx 
+mov 		-16(%rbp), %r10 
+imul		$4, %r10 
+mov 		%rbx, A(, %r10, 4) 
 
-mov		-28(%rbp), %r10 
-mov		-24(%rbp), %r11 
+mov		-36(%rbp), %r10 
+mov		-32(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -28(%rbp)
+mov		%r11, -36(%rbp)
 
 .endForL0: 
 
-mov		-32(%rbp), %r10
-cmp 	-28(%rbp), %r10
+mov		-40(%rbp), %r10
+cmp 	-36(%rbp), %r10
 
 jle 		.beginForL1
 

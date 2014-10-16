@@ -12,18 +12,18 @@ mov 		%rsi, -12(%rbp)
 
 movl 	$0, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$1, -20(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$1.0, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$0, -28(%rbp)
 
@@ -44,16 +44,16 @@ mov		-8(%rbp), %rax
 neg		%rax 
 mov		%rax, -40(%rbp) 
 
-mov		-40(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 cmpl		$0, -20(%rbp) 
 sete		%al 
 movzb	%al, %rax 
 mov		%rax, -44(%rbp) 
 
-mov		-44(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 .falseCondL0: 
 
@@ -77,8 +77,8 @@ mov		-12(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -56(%rbp)
 
-mov		-56(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-56(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$1, -60(%rbp)
 
@@ -87,8 +87,8 @@ mov		-60(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -64(%rbp)
 
-mov		-64(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-64(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL2
 
@@ -144,8 +144,8 @@ enter   $(4 * 8), $0
 
 movl 	$8.0, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
@@ -159,8 +159,8 @@ mov 		$0, %rax
 call 	potencia
 mov 	%rax, -24(%rbp) 
 
-mov		-24(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov		$.L0L5, %r10
 mov	 	%r10, %rdi

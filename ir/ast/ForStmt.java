@@ -5,30 +5,30 @@ import ir.ASTVisitor;
 public class ForStmt extends CycleStmt {
 	private Expression assignExpr;
 	private Expression condition;
-	private String id;
+	private VarLocation loc;
 		
-	public ForStmt( String id, Expression cond, Expression ass, Block block) {
+	public ForStmt(VarLocation id, Expression cond, Expression ass, Block block) {
 		this.condition = cond;
 		this.block = block;
 		this.assignExpr = ass;
-		this.id = id;
+		this.loc = id;
 	}
 	 
-	public ForStmt(String id, Expression cond, Expression ass, Block block, int line, int col) {
+	public ForStmt(VarLocation id, Expression cond, Expression ass, Block block, int line, int col) {
 		this.condition = cond;
 		this.block = block;
 		this.assignExpr = ass;
-		this.id = id;
+		this.loc = id;
 	    lineNumber = line;
 	    colNumber = col;
 	} 
 	
-	public void setId(String id) {
-		this.id = id;
+	public void setLocation(VarLocation id) {
+		this.loc = id;
 	}
 	
-	public String getId() {
-		return id;
+	public VarLocation getLocation() {
+		return loc;
 	}
 
 	public Expression getCondition() {
@@ -49,7 +49,7 @@ public class ForStmt extends CycleStmt {
 	
 	@Override
 	public String toString() {
-		String forS = "for " + id + "=" + assignExpr + ", " + condition + '\n' + block.toString();
+		String forS = "for " + loc.getId() + "=" + assignExpr + ", " + condition + '\n' + block.toString();
 		
 		return forS;
 	}

@@ -67,13 +67,13 @@ enter   $(4 * 17), $0
 
 movl 	$1, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$0, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
@@ -82,8 +82,8 @@ mov 		$0, %rax
 call 	neg
 mov 	%rax, -20(%rbp) 
 
-mov		-20(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 mov		-8(%rbp), %r10
 mov	 	%r10, %rdi
@@ -112,8 +112,8 @@ mov 		$0, %rax
 call 	or
 mov 	%rax, -64(%rbp) 
 
-mov		-64(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-64(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi

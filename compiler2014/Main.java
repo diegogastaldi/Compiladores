@@ -161,7 +161,7 @@ public class Main {
   }
 
   /* A partir del arbol sintactico genera el codigo intermedio y lo retorna */
-  public static List<Instr> instCodeGen(List<completeFunction> ast, List<Global> globals) {
+  public static List<Instr> instCodeGen(List<completeFunction> ast, List<absSymbol> globals) {
     InstCodeGenVisitor icg = new InstCodeGenVisitor();
 
     icg.globalVar(globals);

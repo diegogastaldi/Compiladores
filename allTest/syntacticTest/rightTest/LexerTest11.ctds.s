@@ -29,73 +29,73 @@ mov 		%r10, -60(%rbp)
 
 movl 	$0, -64(%rbp)
 
-mov		-64(%rbp), %rax
-mov		%rax, -60(%rbp)
+mov		-64(%rbp), %r10
+mov		%r10, -60(%rbp)
 
 movl 	$0, -68(%rbp)
 
-mov		-68(%rbp), %rax
-mov		%rax, -56(%rbp)
+mov		-68(%rbp), %r10
+mov		%r10, -56(%rbp)
 
 movl 	$0, -72(%rbp)
 
-mov		-72(%rbp), %rax
-mov		%rax, -52(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -52(%rbp)
 
 movl 	$0, -76(%rbp)
 
-mov		-76(%rbp), %rax
-mov		%rax, -48(%rbp)
+mov		-76(%rbp), %r10
+mov		%r10, -48(%rbp)
 
 movl 	$0, -80(%rbp)
 
-mov		-80(%rbp), %rax
-mov		%rax, -44(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -44(%rbp)
 
 movl 	$0, -84(%rbp)
 
-mov		-84(%rbp), %rax
-mov		%rax, -40(%rbp)
+mov		-84(%rbp), %r10
+mov		%r10, -40(%rbp)
 
 movl 	$0, -88(%rbp)
 
-mov		-88(%rbp), %rax
-mov		%rax, -36(%rbp)
+mov		-88(%rbp), %r10
+mov		%r10, -36(%rbp)
 
 movl 	$0, -92(%rbp)
 
-mov		-92(%rbp), %rax
-mov		%rax, -32(%rbp)
+mov		-92(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 movl 	$0, -96(%rbp)
 
-mov		-96(%rbp), %rax
-mov		%rax, -28(%rbp)
+mov		-96(%rbp), %r10
+mov		%r10, -28(%rbp)
 
 movl 	$0, -100(%rbp)
 
-mov		-100(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-100(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$0, -104(%rbp)
 
-mov		-104(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-104(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$0, -108(%rbp)
 
-mov		-108(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-108(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$0, -112(%rbp)
 
-mov		-112(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-112(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$0, -116(%rbp)
 
-mov		-116(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-116(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov		-8(%rbp), %rax
 leave
@@ -152,8 +152,8 @@ mov 		$0, %rax
 call 	inc
 mov 	%rax, -64(%rbp) 
 
-mov		-64(%rbp), %rax
-mov		%rax, -64(%rbp)
+mov		-64(%rbp), %r10
+mov		%r10, -64(%rbp)
 
 mov		-64(%rbp), %r10
 mov	 	%r10, %rdi

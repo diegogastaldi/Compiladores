@@ -58,8 +58,8 @@ enter   $(4 * 18), $0
 
 movl 	$6.982, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$2.5, -12(%rbp)
 
@@ -67,13 +67,13 @@ mov		-12(%rbp), %rax
 neg		%rax 
 mov		%rax, -16(%rbp) 
 
-mov		-16(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$3.5698, -20(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov		$.L0L0, %r10
 mov	 	%r10, %rdi

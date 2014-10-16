@@ -26,7 +26,7 @@ public class Labels {
   private int param;
 
   public Labels() {
-    temp = -4;
+    temp = -8;
     param = 0;
     label = 0;
   }
@@ -36,28 +36,28 @@ public class Labels {
 	}
 
   public int getOffSet() {
-    temp -= 4;
+    temp -= 8;
     return temp;
   }  
 
   public int getOffSet(int space) {
-    int result = temp - 4;
-    temp -= (4 * space);
+    int result = temp - 8;
+    temp -= (8 * space);
     return result;
   }  
 
   public int getNumParam() {
-    temp -= 4;
+    temp -= 8;
     return param++;
   }  
 
   public void restart(int value) {
-    temp = (-4) * (value + 1);
+    temp = (-8) * (value + 1);
     param = 0;    
   }
 
   public void restart() {
-    temp = -4;
+    temp = -8;
     param = 0;
   }
 

@@ -41,8 +41,8 @@ mov		$0, %r10
 .L2:
 mov		%r10, -36(%rbp)
 
-mov		-36(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-36(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .falseCondL0: 
 

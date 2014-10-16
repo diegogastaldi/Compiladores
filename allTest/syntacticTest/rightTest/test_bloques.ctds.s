@@ -11,8 +11,8 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$0, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 .beginWhileL1: 
 
@@ -38,8 +38,8 @@ mov		-28(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -32(%rbp)
 
-mov		-32(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-32(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$0, -36(%rbp)
 

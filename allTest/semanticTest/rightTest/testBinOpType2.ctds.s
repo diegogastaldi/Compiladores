@@ -5,21 +5,24 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(4 * 1), $0 
+enter   $(4 * 2), $0 
+
+mov 		x(%rip), %r10 
+mov		%r10, -8(%rbp) 
 
 cmpl		$0, -8(%rbp)
 je 		.L0
-cmpl		$0, null(%rbp)
+cmpl		$0, -8(%rbp)
 je 		.L0
 mov		$1, %r10
 jmp		.L1
 .L0:
 mov		$0, %r10
 .L1:
-mov		%r10, -8(%rbp)
+mov		%r10, -12(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov 		$0, %rax
 leave

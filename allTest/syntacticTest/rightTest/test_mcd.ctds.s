@@ -23,28 +23,28 @@ cmp 	-16(%rbp), %r10
 
 jne 		.falseCondL0
 
-mov		-12(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 jmp 		.endIfL1
 
 .falseCondL0: 
 
-mov		-8(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 .endIfL1: 
 
 movl 	$1, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 .beginWhileL3: 
 
@@ -68,14 +68,14 @@ cltd
 idivl	-16(%rbp)
 mov		%rax, -40(%rbp)
 
-mov		-40(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -20(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 jmp 		.beginWhileL3
 

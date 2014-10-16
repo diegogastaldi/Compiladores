@@ -7,7 +7,7 @@
 method: 
 enter   $(4 * 1), $0 
 
-movl 	$2.0, -8(%rbp)
+movl 	$2, -8(%rbp)
 
 mov		-8(%rbp), %rax
 leave
@@ -19,6 +19,7 @@ main2:
 enter   $(4 * 5), $0 
 mov 		%rdi, -8(%rbp) 
 
+mov 		$0, %rax 
 call 	method
 mov 	%rax, -12(%rbp) 
 
@@ -27,8 +28,8 @@ mov		-12(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -20(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, null(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, y(%rip)
 
 mov 		$0, %rax
 leave

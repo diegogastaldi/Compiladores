@@ -13,18 +13,18 @@ mov		-16(%rbp), %rax
 neg		%rax 
 mov		%rax, -20(%rbp) 
 
-mov		-20(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$23, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$23.0, -28(%rbp)
 
-mov		-28(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-28(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .beginWhileL1: 
 
@@ -50,8 +50,8 @@ mov		-16(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -48(%rbp)
 
-mov		-48(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-48(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$2.0, -52(%rbp)
 
@@ -93,8 +93,8 @@ mov		-76(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -80(%rbp)
 
-mov		-80(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 .falseCondL3: 
 
@@ -117,8 +117,8 @@ mov		-92(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -96(%rbp)
 
-mov		-96(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-96(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 jmp 		.endWhileL0
 

@@ -8,13 +8,13 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$5, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$2000, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$1000, -20(%rbp)
 

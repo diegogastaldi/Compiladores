@@ -8,8 +8,8 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$50, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$0, -16(%rbp)
 
@@ -28,8 +28,8 @@ jne 		.falseCondL0
 
 movl 	$4, -28(%rbp)
 
-mov		-28(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-28(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$4, -32(%rbp)
 
@@ -87,8 +87,8 @@ mov		-20(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -72(%rbp)
 
-mov		-72(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$2, -76(%rbp)
 
@@ -97,8 +97,8 @@ mov		-76(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -80(%rbp)
 
-mov		-80(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL5
 
@@ -111,8 +111,8 @@ mov		-84(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -88(%rbp)
 
-mov		-88(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-88(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$2, -92(%rbp)
 
@@ -121,8 +121,8 @@ cltd
 idivl	-92(%rbp) 
 mov		%rax, -96(%rbp)
 
-mov		-96(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-96(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL3
 

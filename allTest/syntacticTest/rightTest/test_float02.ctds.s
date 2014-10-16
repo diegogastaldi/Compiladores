@@ -11,11 +11,11 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$0.0, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -12(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .beginWhileL1: 
 
@@ -74,30 +74,29 @@ mov		-16(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -52(%rbp)
 
-mov		-52(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-52(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 .falseCondL5: 
 
 movl 	$1.0, -56(%rbp)
 
-mov		$1, %rax
-mov		%rax, -64(%rbp)
+movl 	$1, -64(%rbp)
 
 mov		-64(%rbp), %r10 
 mov		-56(%rbp), %r11 
 sub		%r10, %r11 
 mov		%r11, -60(%rbp)
 
-mov		-60(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-60(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL1
 
 .endWhileL0: 
 
-mov		-12(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 mov		-20(%rbp), %rax
 leave
@@ -110,8 +109,8 @@ enter   $(4 * 6), $0
 
 movl 	$8.0, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
@@ -120,8 +119,8 @@ mov 		$0, %rax
 call 	sumatoria
 mov 	%rax, -16(%rbp) 
 
-mov		-16(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov		$.L0L6, %r10
 mov	 	%r10, %rdi

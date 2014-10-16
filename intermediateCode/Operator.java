@@ -45,11 +45,24 @@ public enum Operator {
  								 Segundo parametro: Label para definir el string*/
  	, GLOBAL		/* Primer parametro: Nombre de la variable global 
  								 Segundo parametro: tamaño de la varibale global*/
- 	, VARASSIGNGLOBAL
- 	, ARRAYASSIGNGLOBAL;
+ 	, VARASSIGNGLOBAL /* Primer parametro: valor a asignar 
+ 											 Tercer parametro: variable global a asignar*/
+ 	, ARRAYASSIGNGLOBAL /* Primer parametro: valor a asignar 
+ 												 Segundo parametro: arreglo a asignar*/
+ 	, GLOBALVALUEVAR	/* Primer parametro: id de la variable global
+ 											 Segundo parametro: variable a asignar */
+ 	, GLOBALVALUEARRAY /* Primer parametro: id de la arreglo global
+ 											 Segundo parametro: variable a asignar */
+ 	, VALUEARRAY;
 	@Override
 	public String toString() {
 		switch(this) {
+			case VALUEARRAY:
+				return"VALUEARRAY";
+			case GLOBALVALUEARRAY:
+				return"GLOBALVALUEARRAY";
+			case GLOBALVALUEVAR:
+				return"GLOBALVALUEVAR";				
 			case VARASSIGNGLOBAL:
 				return "VARASSIGNGLOBAL";
 			case ARRAYASSIGNGLOBAL:

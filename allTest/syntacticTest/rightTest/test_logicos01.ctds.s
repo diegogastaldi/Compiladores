@@ -8,8 +8,8 @@ mov 		%rdi, -8(%rbp)
 
 movl 	$1, -12(%rbp)
 
-mov		-12(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 movl 	$0, -16(%rbp)
 

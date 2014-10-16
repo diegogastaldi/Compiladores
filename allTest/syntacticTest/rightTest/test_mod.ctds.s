@@ -7,8 +7,8 @@ enter   $(4 * 3), $0
 
 movl 	$90, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$7, -12(%rbp)
 

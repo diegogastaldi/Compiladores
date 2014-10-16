@@ -29,7 +29,7 @@ main:
 enter   $(4 * 11), $0 
 
 mov 		$0, %rax 
-call 	get_int
+
 mov 	%rax, -8(%rbp) 
 
 mov		-8(%rbp), %r10
@@ -39,8 +39,8 @@ mov 		$0, %rax
 call 	inc
 mov 	%rax, -20(%rbp) 
 
-mov		-20(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$1, -28(%rbp)
 

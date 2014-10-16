@@ -15,7 +15,7 @@ int pruAritmetica(int c){
 }
 
 void main(){
-    externinvk("printf", int , pruAritmetica(3));
+    externinvk("printf", int , "%f", pruAritmetica(3));
     return ;
 }
 

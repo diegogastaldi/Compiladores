@@ -7,16 +7,16 @@ enter   $(4 * 6), $0
 
 movl 	$1, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 cmpl		$0, -8(%rbp) 
 sete		%al 
 movzb	%al, %rax 
 mov		%rax, -12(%rbp) 
 
-mov		-12(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 cmpl		$0, -8(%rbp)
 je 		.L0
@@ -46,8 +46,8 @@ mov		$0, %r10
 .L4:
 mov		%r10, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi

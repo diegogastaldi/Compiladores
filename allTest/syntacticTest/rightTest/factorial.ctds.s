@@ -19,8 +19,8 @@ mov		-8(%rbp), %r11
 sub		%r10, %r11 
 mov		%r11, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 mov		-16(%rbp), %rax
 leave

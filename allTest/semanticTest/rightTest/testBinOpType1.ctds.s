@@ -5,15 +5,18 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(4 * 1), $0 
+enter   $(4 * 2), $0 
+
+mov 		x(%rip), %r10 
+mov		%r10, -8(%rbp) 
 
 mov		-8(%rbp), %r10 
-mov		null(%rbp), %r11 
+mov		-8(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -8(%rbp)
+mov		%r11, -12(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-12(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov 		$0, %rax
 leave

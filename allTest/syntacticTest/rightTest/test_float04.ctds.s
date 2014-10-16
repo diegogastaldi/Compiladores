@@ -18,18 +18,18 @@ mov 		%rsi, -12(%rbp)
 
 movl 	$0, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 movl 	$1, -20(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 movl 	$1.0, -24(%rbp)
 
-mov		-24(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$0, -28(%rbp)
 
@@ -50,13 +50,13 @@ mov		-8(%rbp), %rax
 neg		%rax 
 mov		%rax, -40(%rbp) 
 
-mov		-40(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$1, -44(%rbp)
 
-mov		-44(%rbp), %rax
-mov		%rax, -20(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -20(%rbp)
 
 .falseCondL0: 
 
@@ -105,8 +105,8 @@ mov		-68(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -72(%rbp)
 
-mov		-72(%rbp), %rax
-mov		%rax, -24(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -24(%rbp)
 
 movl 	$1, -76(%rbp)
 
@@ -115,8 +115,8 @@ mov		-76(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -80(%rbp)
 
-mov		-80(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.beginWhileL2
 
@@ -202,8 +202,8 @@ mov		-28(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -32(%rbp)
 
-mov		-32(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-32(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 mov		-16(%rbp), %rax
 leave
@@ -212,7 +212,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 17), $0 
+enter   $(4 * 18), $0 
 
 movl 	$15.0, -8(%rbp)
 
@@ -239,8 +239,8 @@ mov		%r10, m(%rip)
 
 movl 	$80.0, -28(%rbp)
 
-mov		-28(%rbp), %rax
-mov		%rax, -12(%rbp)
+mov		-28(%rbp), %r10
+mov		%r10, -12(%rbp)
 
 mov		-12(%rbp), %r10
 mov	 	%r10, %rdi
@@ -254,13 +254,16 @@ mov 		$0, %rax
 call 	potencia
 mov 	%rax, -44(%rbp) 
 
-mov		-44(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-44(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov		$.L0L8, %r10
 mov	 	%r10, %rdi
 
-mov		-16(%rbp), %r10
+mov 		res(%rip), %r10 
+mov		%r10, -56(%rbp) 
+
+mov		-56(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov		-8(%rbp), %r10
@@ -268,9 +271,9 @@ mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	multRepeat
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -68(%rbp) 
 
-mov		-64(%rbp), %r10
+mov		-68(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 

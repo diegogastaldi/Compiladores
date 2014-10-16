@@ -15,8 +15,8 @@ mov		-12(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -16(%rbp)
 
-mov		-16(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-16(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov 		$0, %rax
 leave
@@ -41,8 +41,8 @@ mov		-16(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -20(%rbp)
 
-mov		-20(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov		-8(%rbp), %rax
 leave
@@ -55,8 +55,8 @@ enter   $(4 * 10), $0
 
 movl 	$7, -8(%rbp)
 
-mov		-8(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$8.0, -12(%rbp)
 
@@ -70,8 +70,8 @@ mov 		$0, %rax
 call 	alo2
 mov 	%rax, -20(%rbp) 
 
-mov		-20(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-20(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 movl 	$3, -28(%rbp)
 
@@ -87,8 +87,8 @@ mov 		$0, %rax
 call 	alo2
 mov 	%rax, -40(%rbp) 
 
-mov		-40(%rbp), %rax
-mov		%rax, -8(%rbp)
+mov		-40(%rbp), %r10
+mov		%r10, -8(%rbp)
 
 mov 		$0, %rax
 leave

@@ -27,15 +27,15 @@ mov		-24(%rbp), %r11
 add		%r10, %r11 
 mov		%r11, -28(%rbp)
 
-mov		-28(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-28(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 jmp 		.endIfL1
 
 .falseCondL0: 
 
-mov		-8(%rbp), %rax
-mov		%rax, -16(%rbp)
+mov		-8(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 .endIfL1: 
 
