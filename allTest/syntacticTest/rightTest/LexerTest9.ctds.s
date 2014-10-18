@@ -1,14 +1,14 @@
 .text
 
-.comm a, 4
+.comm a, 8
 
-.comm b, 4
+.comm b, 8
 
 .globl	method
 .type	method, @function 
 method: 
-enter   $(4 * 2), $0 
-mov 		%rdi, -8(%rbp) 
+enter   $(8 * 3), $0 
+mov 		%rdi, -16(%rbp) 
 
 mov 		$0, %rax
 leave
@@ -17,7 +17,7 @@ ret
 .globl	method2
 .type	method2, @function 
 method2: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave
@@ -26,7 +26,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave

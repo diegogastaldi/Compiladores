@@ -3,33 +3,33 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 7), $0 
-mov 		%rdi, -8(%rbp) 
+enter   $(8 * 8), $0 
+mov 		%rdi, -16(%rbp) 
 
-movl 	$0, -12(%rbp)
+movq 	$0, -32(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-12(%rbp), %rax
+mov		-16(%rbp), %rax
+cmp		-32(%rbp), %rax
 setle 	%al
 movzb  %al, %rax
-mov		%rax, -16(%rbp)
+mov		%rax, -40(%rbp)
 
-movl 	$1, -20(%rbp)
+movq 	$1, -48(%rbp)
 
-mov		-20(%rbp), %r10
-cmp 	-16(%rbp), %r10
+mov		-48(%rbp), %r10
+cmp 	-40(%rbp), %r10
 
 jne 		.falseCondL0
 
-movl 	$0, -24(%rbp)
+movq 	$0, -56(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-24(%rbp), %rax
+mov		-16(%rbp), %rax
+cmp		-56(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -28(%rbp)
+mov		%rax, -64(%rbp)
 
-mov		-28(%rbp), %rax
+mov		-64(%rbp), %rax
 leave
 ret
 
@@ -38,7 +38,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave

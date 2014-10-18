@@ -3,38 +3,39 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(4 * 3), $0 
+enter   $(8 * 5), $0 
 
-movl 	$90, -8(%rbp)
+movq 	$90, -24(%rbp)
 
-mov		-8(%rbp), %r10
-mov		%r10, -8(%rbp)
+mov		-24(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-movl 	$7, -12(%rbp)
+movq 	$7, -32(%rbp)
 
-mov		-12(%rbp), %rax 
+mov		-32(%rbp), %rax 
 cltd
-idivl	-8(%rbp)
-mov		%rax, -16(%rbp)
+idivq	-16(%rbp)
+mov		%rax, -40(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-40(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 3), $0 
+enter   $(8 * 6), $0 
 
 mov 		$0, %rax 
 call 	pruAritmetica
-mov 	%rax, -8(%rbp) 
+mov 	%rax, -16(%rbp) 
 
-mov		-8(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
+mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave

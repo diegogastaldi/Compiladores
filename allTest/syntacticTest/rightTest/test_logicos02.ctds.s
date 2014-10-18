@@ -6,203 +6,203 @@
 .globl	promedio
 .type	promedio, @function 
 promedio: 
-enter   $(4 * 33), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -12(%rbp) 
-mov 		%rdx, -16(%rbp) 
+enter   $(8 * 34), $0 
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -24(%rbp) 
+mov 		%rdx, -32(%rbp) 
 
-mov		-16(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov		-32(%rbp), %rax
+cmp		-16(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -20(%rbp)
+mov		%rax, -64(%rbp)
 
-mov		-12(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov		-24(%rbp), %rax
+cmp		-16(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -24(%rbp)
+mov		%rax, -72(%rbp)
 
-cmpl		$0, -20(%rbp)
+cmpq		$0, -64(%rbp)
 je 		.L0
-cmpl		$0, -24(%rbp)
+cmpq		$0, -72(%rbp)
 je 		.L0
 mov		$1, %r10
 jmp		.L1
 .L0:
 mov		$0, %r10
 .L1:
-mov		%r10, -28(%rbp)
+mov		%r10, -80(%rbp)
 
-movl 	$1, -32(%rbp)
+movq 	$1, -88(%rbp)
 
-mov		-32(%rbp), %r10
-cmp 	-28(%rbp), %r10
+mov		-88(%rbp), %r10
+cmp 	-80(%rbp), %r10
 
 jne 		.falseCondL2
 
-mov		-16(%rbp), %r10 
-mov		-12(%rbp), %r11 
+mov		-32(%rbp), %r10 
+mov		-24(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -36(%rbp)
+mov		%r11, -96(%rbp)
 
-movl 	$2.0, -40(%rbp)
+movq 	$2.0, -104(%rbp)
 
-mov		-36(%rbp), %rax 
+mov		-96(%rbp), %rax 
 cltd
-idivl	-40(%rbp) 
-mov		%rax, -44(%rbp)
+idivq	-104(%rbp) 
+mov		%rax, -112(%rbp)
 
-mov		-44(%rbp), %rax
+mov		-112(%rbp), %rax
 leave
 ret
 
 .falseCondL2: 
 
+mov		-32(%rbp), %rax
+cmp		-24(%rbp), %rax
+setg		%al
+movzb	%al, %rax
+mov		%rax, -120(%rbp)
+
 mov		-16(%rbp), %rax
-cmp		-12(%rbp), %rax
+cmp		-24(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -48(%rbp)
+mov		%rax, -128(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-12(%rbp), %rax
-setg		%al
-movzb	%al, %rax
-mov		%rax, -52(%rbp)
-
-cmpl		$0, -48(%rbp)
+cmpq		$0, -120(%rbp)
 je 		.L3
-cmpl		$0, -52(%rbp)
+cmpq		$0, -128(%rbp)
 je 		.L3
 mov		$1, %r10
 jmp		.L4
 .L3:
 mov		$0, %r10
 .L4:
-mov		%r10, -56(%rbp)
+mov		%r10, -136(%rbp)
 
-movl 	$1, -60(%rbp)
+movq 	$1, -144(%rbp)
 
-mov		-60(%rbp), %r10
-cmp 	-56(%rbp), %r10
+mov		-144(%rbp), %r10
+cmp 	-136(%rbp), %r10
 
 jne 		.falseCondL5
 
-mov		-16(%rbp), %r10 
-mov		-8(%rbp), %r11 
+mov		-32(%rbp), %r10 
+mov		-16(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -64(%rbp)
+mov		%r11, -152(%rbp)
 
-movl 	$2.0, -68(%rbp)
+movq 	$2.0, -160(%rbp)
 
-mov		-64(%rbp), %rax 
+mov		-152(%rbp), %rax 
 cltd
-idivl	-68(%rbp) 
-mov		%rax, -72(%rbp)
+idivq	-160(%rbp) 
+mov		%rax, -168(%rbp)
 
-mov		-72(%rbp), %rax
+mov		-168(%rbp), %rax
 leave
 ret
 
 .falseCondL5: 
 
-mov		-12(%rbp), %rax
-cmp		-16(%rbp), %rax
+mov		-24(%rbp), %rax
+cmp		-32(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -76(%rbp)
+mov		%rax, -176(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-16(%rbp), %rax
+mov		-16(%rbp), %rax
+cmp		-32(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -80(%rbp)
+mov		%rax, -184(%rbp)
 
-cmpl		$0, -76(%rbp)
+cmpq		$0, -176(%rbp)
 je 		.L6
-cmpl		$0, -80(%rbp)
+cmpq		$0, -184(%rbp)
 je 		.L6
 mov		$1, %r10
 jmp		.L7
 .L6:
 mov		$0, %r10
 .L7:
-mov		%r10, -84(%rbp)
+mov		%r10, -192(%rbp)
 
-movl 	$1, -88(%rbp)
+movq 	$1, -200(%rbp)
 
-mov		-88(%rbp), %r10
-cmp 	-84(%rbp), %r10
+mov		-200(%rbp), %r10
+cmp 	-192(%rbp), %r10
 
 jne 		.falseCondL8
 
-mov		-8(%rbp), %r10 
-mov		-12(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-24(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -92(%rbp)
+mov		%r11, -208(%rbp)
 
-movl 	$2.0, -96(%rbp)
+movq 	$2.0, -216(%rbp)
 
-mov		-92(%rbp), %rax 
+mov		-208(%rbp), %rax 
 cltd
-idivl	-96(%rbp) 
-mov		%rax, -100(%rbp)
+idivq	-216(%rbp) 
+mov		%rax, -224(%rbp)
 
-mov		-100(%rbp), %rax
+mov		-224(%rbp), %rax
 leave
 ret
 
 .falseCondL8: 
 
-mov 		-16(%rbp), %rax
-cmp		-12(%rbp), %rax
+mov 		-32(%rbp), %rax
+cmp		-24(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -104(%rbp)
+mov		%rax, -232(%rbp)
 
-mov 		-16(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov 		-32(%rbp), %rax
+cmp		-16(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -108(%rbp)
+mov		%rax, -240(%rbp)
 
-mov 		-12(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov 		-24(%rbp), %rax
+cmp		-16(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -112(%rbp)
+mov		%rax, -248(%rbp)
 
-cmpl		$0, -108(%rbp)
+cmpq		$0, -240(%rbp)
 je 		.L9
-cmpl		$0, -112(%rbp)
+cmpq		$0, -248(%rbp)
 je 		.L9
 mov		$1, %r10
 jmp		.L10
 .L9:
 mov		$0, %r10
 .L10:
-mov		%r10, -116(%rbp)
+mov		%r10, -256(%rbp)
 
-cmpl		$0, -104(%rbp)
+cmpq		$0, -232(%rbp)
 je 		.L11
-cmpl		$0, -116(%rbp)
+cmpq		$0, -256(%rbp)
 je 		.L11
 mov		$1, %r10
 jmp		.L12
 .L11:
 mov		$0, %r10
 .L12:
-mov		%r10, -120(%rbp)
+mov		%r10, -264(%rbp)
 
-movl 	$1, -124(%rbp)
+movq 	$1, -272(%rbp)
 
-mov		-124(%rbp), %r10
-cmp 	-120(%rbp), %r10
+mov		-272(%rbp), %r10
+cmp 	-264(%rbp), %r10
 
 jne 		.falseCondL13
 
-mov		-16(%rbp), %rax
+mov		-32(%rbp), %rax
 leave
 ret
 
@@ -211,35 +211,36 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 10), $0 
+enter   $(8 * 13), $0 
 
-mov		$.L0L14, %r10
+movq 	$3.3, -24(%rbp)
+
+movq 	$0.66, -40(%rbp)
+
+movq 	$10.0, -56(%rbp)
+
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$3.3, -12(%rbp)
-
-mov		-12(%rbp), %r10
-mov	 	%r10, %rdi
-
-movl 	$0.66, -20(%rbp)
-
-mov		-20(%rbp), %r10
+mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
 
-movl 	$10.0, -28(%rbp)
-
-mov		-28(%rbp), %r10
+mov		-56(%rbp), %r10
 mov	 	%r10, %rdx
 
 mov 		$0, %rax 
 call 	promedio
-mov 	%rax, -36(%rbp) 
+mov 	%rax, -72(%rbp) 
 
-mov		-36(%rbp), %r10
+mov		$.L0L14, %r10
+mov	 	%r10, %rdi
+
+mov		-72(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
+mov 	%rax, -96(%rbp) 
 
 mov 		$0, %rax
 leave

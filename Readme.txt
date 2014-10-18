@@ -16,4 +16,4 @@ Nota:
 
 							float.
 
-ciclos -> no andan
+asignacionacion a variables globales

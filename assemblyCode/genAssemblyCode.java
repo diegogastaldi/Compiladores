@@ -358,7 +358,7 @@ public class genAssemblyCode {
 
 	public static void arrayassignMethod(Instr instr) {
 		result += "mov 		" + instr.getOperand1() + "(%rbp), %r10 \n";
-		result += "movq		" + instr.getOperand2() + "(%rbp), %edx \n";
+		result += "movl		" + instr.getOperand2() + "(%rbp), %edx \n";
 		result += "cltq \n";
 		result += "mov 		%r10, " + instr.getResult() + "(%rbp, %rdx, 8) \n";		
 	}
@@ -369,7 +369,7 @@ public class genAssemblyCode {
 	}
 
 	public static void valuearrayMethod(Instr instr) {
-		result += "movq		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "movl		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
 		result += "cltq \n";
 		result += "mov 		" + instr.getOperand1() + "(%rbp,%rdx,8) , %r11\n";
 		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
@@ -391,16 +391,14 @@ public class genAssemblyCode {
 	public static void arrayassignglobalMethod(Instr instr) {
 		result += "mov 		" + instr.getOperand1() + "(%rbp)" + ", %r10 \n";
 		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
-		result += "imul		$8, %edx \n";
 		result += "cltq \n";
-		result += "mov 		%r10, " + instr.getResult() + "(, %edx, 8) \n";
+		result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
 	}	
 
 	public static void globalvaluearraymethod(Instr instr) {
 		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
-		result += "imul		$8, %edx \n";
 		result += "cltq \n";	
-		result += "mov 		" + instr.getOperand1() + "(,%edx,8) , %r11\n";
+		result += "mov 		" + instr.getOperand1() + "(,%rdx,8) , %r11\n";
 		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
 	}
 

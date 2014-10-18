@@ -9,51 +9,51 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 4), $0 
-mov 		%rdi, -8(%rbp) 
+enter   $(8 * 5), $0 
+mov 		%rdi, -16(%rbp) 
 
-movl 	$1, -12(%rbp)
+movq 	$1, -32(%rbp)
 
-mov		-8(%rbp), %r10 
-mov		-12(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-32(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -16(%rbp)
+mov		%r11, -40(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-40(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 11), $0 
+enter   $(8 * 17), $0 
 
 mov 		$0, %rax 
+call 	get_int
+mov 	%rax, -24(%rbp) 
 
-mov 	%rax, -8(%rbp) 
-
-mov		-8(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	inc
-mov 	%rax, -20(%rbp) 
+mov 	%rax, -48(%rbp) 
 
-mov		-20(%rbp), %r10
-mov		%r10, -8(%rbp)
+mov		-48(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-movl 	$1, -28(%rbp)
+movq 	$1, -64(%rbp)
 
-mov 		-8(%rbp), %rax
-cmp		-28(%rbp), %rax
+mov 		-16(%rbp), %rax
+cmp		-64(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -32(%rbp)
+mov		%rax, -72(%rbp)
 
-movl 	$1, -36(%rbp)
+movq 	$1, -80(%rbp)
 
-mov		-36(%rbp), %r10
-cmp 	-32(%rbp), %r10
+mov		-80(%rbp), %r10
+cmp 	-72(%rbp), %r10
 
 jne 		.falseCondL0
 
@@ -62,6 +62,7 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
+mov 	%rax, -96(%rbp) 
 
 jmp 		.endIfL2
 
@@ -70,11 +71,12 @@ jmp 		.endIfL2
 mov		$.L0L3, %r10
 mov	 	%r10, %rdi
 
-mov		-8(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
+mov 	%rax, -128(%rbp) 
 
 .endIfL2: 
 

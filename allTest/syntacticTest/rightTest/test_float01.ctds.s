@@ -6,114 +6,114 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(4 * 23), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -12(%rbp) 
+enter   $(8 * 27), $0 
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -24(%rbp) 
 
-movl 	$0, -16(%rbp)
+movq 	$0, -72(%rbp)
 
-mov		-16(%rbp), %r10
-mov		%r10, -20(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -40(%rbp)
 
-movl 	$1, -20(%rbp)
+movq 	$1, -80(%rbp)
 
-mov		-20(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -32(%rbp)
 
-movl 	$1.0, -24(%rbp)
+movq 	$1.0, -88(%rbp)
 
-mov		-24(%rbp), %r10
-mov		%r10, -24(%rbp)
+mov		-88(%rbp), %r10
+mov		%r10, -48(%rbp)
 
-movl 	$0, -28(%rbp)
+movq 	$0, -96(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-28(%rbp), %rax
+mov		-16(%rbp), %rax
+cmp		-96(%rbp), %rax
 setl		%al
 movzb %al, %rax
-mov		%rax, -32(%rbp)
+mov		%rax, -104(%rbp)
 
-movl 	$1, -36(%rbp)
+movq 	$1, -112(%rbp)
 
-mov		-36(%rbp), %r10
-cmp 	-32(%rbp), %r10
+mov		-112(%rbp), %r10
+cmp 	-104(%rbp), %r10
 
 jne 		.falseCondL0
 
-mov		-8(%rbp), %rax 
+mov		-16(%rbp), %rax 
 neg		%rax 
-mov		%rax, -40(%rbp) 
+mov		%rax, -120(%rbp) 
 
-mov		-40(%rbp), %r10
-mov		%r10, -8(%rbp)
+mov		-120(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-cmpl		$0, -20(%rbp) 
+cmpq		$0, -40(%rbp) 
 sete		%al 
 movzb	%al, %rax 
-mov		%rax, -44(%rbp) 
+mov		%rax, -128(%rbp) 
 
-mov		-44(%rbp), %r10
-mov		%r10, -20(%rbp)
+mov		-128(%rbp), %r10
+mov		%r10, -40(%rbp)
 
 .falseCondL0: 
 
 .beginWhileL2: 
 
-mov		-16(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov		-32(%rbp), %rax
+cmp		-16(%rbp), %rax
 setle 	%al
 movzb  %al, %rax
-mov		%rax, -48(%rbp)
+mov		%rax, -136(%rbp)
 
-movl 	$1, -52(%rbp)
+movq 	$1, -144(%rbp)
 
-mov		-52(%rbp), %r10
-cmp 	-48(%rbp), %r10
+mov		-144(%rbp), %r10
+cmp 	-136(%rbp), %r10
 
 jne 		.endWhileL1
 
-mov		-24(%rbp), %r10 
-mov		-12(%rbp), %r11 
+mov		-48(%rbp), %r10 
+mov		-24(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -56(%rbp)
+mov		%r10, -152(%rbp)
 
-mov		-56(%rbp), %r10
-mov		%r10, -24(%rbp)
+mov		-152(%rbp), %r10
+mov		%r10, -48(%rbp)
 
-movl 	$1, -60(%rbp)
+movq 	$1, -160(%rbp)
 
-mov		-16(%rbp), %r10 
-mov		-60(%rbp), %r11 
+mov		-32(%rbp), %r10 
+mov		-160(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -64(%rbp)
+mov		%r11, -168(%rbp)
 
-mov		-64(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		-168(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL2
 
 .endWhileL1: 
 
-cmpl		$0, -20(%rbp) 
+cmpq		$0, -40(%rbp) 
 sete		%al 
 movzb	%al, %rax 
-mov		%rax, -68(%rbp) 
+mov		%rax, -176(%rbp) 
 
-movl 	$1, -72(%rbp)
+movq 	$1, -184(%rbp)
 
-mov		-72(%rbp), %r10
-cmp 	-68(%rbp), %r10
+mov		-184(%rbp), %r10
+cmp 	-176(%rbp), %r10
 
 jne 		.falseCondL3
 
-movl 	$1.0, -76(%rbp)
+movq 	$1.0, -192(%rbp)
 
-mov		-76(%rbp), %rax 
+mov		-192(%rbp), %rax 
 cltd
-idivl	-24(%rbp) 
-mov		%rax, -80(%rbp)
+idivq	-48(%rbp) 
+mov		%rax, -200(%rbp)
 
-mov		-80(%rbp), %rax
+mov		-200(%rbp), %rax
 leave
 ret
 
@@ -121,55 +121,56 @@ jmp 		.endIfL4
 
 .falseCondL3: 
 
-mov		-24(%rbp), %rax
+mov		-48(%rbp), %rax
 leave
 ret
 
 .endIfL4: 
 
-movl 	$100.1, -84(%rbp)
+movq 	$100.1, -208(%rbp)
 
-mov		-84(%rbp), %rax 
+mov		-208(%rbp), %rax 
 neg		%rax 
-mov		%rax, -88(%rbp) 
+mov		%rax, -216(%rbp) 
 
-mov		-88(%rbp), %rax
+mov		-216(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 8), $0 
+enter   $(8 * 13), $0 
 
-movl 	$8.0, -8(%rbp)
+movq 	$8.0, -32(%rbp)
 
-mov		-8(%rbp), %r10
-mov		%r10, -12(%rbp)
+mov		-32(%rbp), %r10
+mov		%r10, -24(%rbp)
 
-mov		-12(%rbp), %r10
+movq 	$2, -48(%rbp)
+
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$2, -16(%rbp)
+mov		-48(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	potencia
+mov 	%rax, -64(%rbp) 
+
+mov		-64(%rbp), %r10
+mov		%r10, -16(%rbp)
+
+mov		$.L0L5, %r10
+mov	 	%r10, %rdi
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	potencia
-mov 	%rax, -24(%rbp) 
-
-mov		-24(%rbp), %r10
-mov		%r10, -8(%rbp)
-
-mov		$.L0L5, %r10
-mov	 	%r10, %rdi
-
-mov		-8(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
 call 	printf
+mov 	%rax, -96(%rbp) 
 
 mov 		$0, %rax
 leave

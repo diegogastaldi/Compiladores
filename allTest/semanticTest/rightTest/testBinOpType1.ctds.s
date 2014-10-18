@@ -1,22 +1,22 @@
 .text
 
-.comm x, 4
+.comm x, 8
 
 .globl	method
 .type	method, @function 
 method: 
-enter   $(4 * 2), $0 
+enter   $(8 * 4), $0 
 
 mov 		x(%rip), %r10 
-mov		%r10, -8(%rbp) 
+mov		%r10, -24(%rbp) 
 
-mov		-8(%rbp), %r10 
-mov		-8(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-24(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -12(%rbp)
+mov		%r11, -32(%rbp)
 
-mov		-12(%rbp), %r10
-mov		%r10, -8(%rbp)
+mov		-32(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 mov 		$0, %rax
 leave
@@ -25,7 +25,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave

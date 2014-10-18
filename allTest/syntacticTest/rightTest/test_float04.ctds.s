@@ -3,80 +3,80 @@
 
 .text
 
-.comm w, 4
+.comm w, 8
 
-.comm m, 4
+.comm m, 8
 
-.comm res, 4
+.comm res, 8
 
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(4 * 28), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -12(%rbp) 
+enter   $(8 * 32), $0 
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -24(%rbp) 
 
-movl 	$0, -16(%rbp)
+movq 	$0, -72(%rbp)
 
-mov		-16(%rbp), %r10
-mov		%r10, -20(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -40(%rbp)
 
-movl 	$1, -20(%rbp)
+movq 	$1, -80(%rbp)
 
-mov		-20(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		-80(%rbp), %r10
+mov		%r10, -32(%rbp)
 
-movl 	$1.0, -24(%rbp)
+movq 	$1.0, -88(%rbp)
 
-mov		-24(%rbp), %r10
-mov		%r10, -24(%rbp)
+mov		-88(%rbp), %r10
+mov		%r10, -48(%rbp)
 
-movl 	$0, -28(%rbp)
+movq 	$0, -96(%rbp)
 
-mov		-8(%rbp), %rax
-cmp		-28(%rbp), %rax
+mov		-16(%rbp), %rax
+cmp		-96(%rbp), %rax
 setl		%al
 movzb %al, %rax
-mov		%rax, -32(%rbp)
+mov		%rax, -104(%rbp)
 
-movl 	$1, -36(%rbp)
+movq 	$1, -112(%rbp)
 
-mov		-36(%rbp), %r10
-cmp 	-32(%rbp), %r10
+mov		-112(%rbp), %r10
+cmp 	-104(%rbp), %r10
 
 jne 		.falseCondL0
 
-mov		-8(%rbp), %rax 
+mov		-16(%rbp), %rax 
 neg		%rax 
-mov		%rax, -40(%rbp) 
+mov		%rax, -120(%rbp) 
 
-mov		-40(%rbp), %r10
-mov		%r10, -8(%rbp)
+mov		-120(%rbp), %r10
+mov		%r10, -16(%rbp)
 
-movl 	$1, -44(%rbp)
+movq 	$1, -128(%rbp)
 
-mov		-44(%rbp), %r10
-mov		%r10, -20(%rbp)
+mov		-128(%rbp), %r10
+mov		%r10, -40(%rbp)
 
 .falseCondL0: 
 
 .beginWhileL2: 
 
-mov		-16(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov		-32(%rbp), %rax
+cmp		-16(%rbp), %rax
 setl		%al
 movzb %al, %rax
-mov		%rax, -48(%rbp)
+mov		%rax, -136(%rbp)
 
-mov 		-16(%rbp), %rax
-cmp		-8(%rbp), %rax
+mov 		-32(%rbp), %rax
+cmp		-16(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -52(%rbp)
+mov		%rax, -144(%rbp)
 
-cmpl		$0, -48(%rbp)
+cmpq		$0, -136(%rbp)
 jne 		.L3
-cmpl		$0, -52(%rbp)
+cmpq		$0, -144(%rbp)
 je 		.L4
 .L3: 
 mov		$1, %r10
@@ -84,69 +84,69 @@ jmp 		.L5
 .L4:
 mov		$0, %r10
 .L5:
-mov		%r10, -56(%rbp)
+mov		%r10, -152(%rbp)
 
-movl 	$1, -60(%rbp)
+movq 	$1, -160(%rbp)
 
-mov		-60(%rbp), %r10
-cmp 	-56(%rbp), %r10
+mov		-160(%rbp), %r10
+cmp 	-152(%rbp), %r10
 
 jne 		.endWhileL1
 
-movl 	$2.0, -64(%rbp)
-
-mov		-12(%rbp), %r10 
-mov		-64(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -68(%rbp)
+movq 	$2.0, -168(%rbp)
 
 mov		-24(%rbp), %r10 
-mov		-68(%rbp), %r11 
+mov		-168(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -72(%rbp)
+mov		%r10, -176(%rbp)
 
-mov		-72(%rbp), %r10
-mov		%r10, -24(%rbp)
+mov		-48(%rbp), %r10 
+mov		-176(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -184(%rbp)
 
-movl 	$1, -76(%rbp)
+mov		-184(%rbp), %r10
+mov		%r10, -48(%rbp)
 
-mov		-16(%rbp), %r10 
-mov		-76(%rbp), %r11 
+movq 	$1, -192(%rbp)
+
+mov		-32(%rbp), %r10 
+mov		-192(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -80(%rbp)
+mov		%r11, -200(%rbp)
 
-mov		-80(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		-200(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL2
 
 .endWhileL1: 
 
-cmpl		$0, -20(%rbp) 
+cmpq		$0, -40(%rbp) 
 sete		%al 
 movzb	%al, %rax 
-mov		%rax, -84(%rbp) 
+mov		%rax, -208(%rbp) 
 
-cmpl		$0, -84(%rbp) 
+cmpq		$0, -208(%rbp) 
 sete		%al 
 movzb	%al, %rax 
-mov		%rax, -88(%rbp) 
+mov		%rax, -216(%rbp) 
 
-movl 	$1, -92(%rbp)
+movq 	$1, -224(%rbp)
 
-mov		-92(%rbp), %r10
-cmp 	-88(%rbp), %r10
+mov		-224(%rbp), %r10
+cmp 	-216(%rbp), %r10
 
 jne 		.falseCondL6
 
-movl 	$1.0, -96(%rbp)
+movq 	$1.0, -232(%rbp)
 
-mov		-96(%rbp), %rax 
+mov		-232(%rbp), %rax 
 cltd
-idivl	-24(%rbp) 
-mov		%rax, -100(%rbp)
+idivq	-48(%rbp) 
+mov		%rax, -240(%rbp)
 
-mov		-100(%rbp), %rax
+mov		-240(%rbp), %rax
 leave
 ret
 
@@ -154,130 +154,131 @@ jmp 		.endIfL7
 
 .falseCondL6: 
 
-mov		-24(%rbp), %rax
+mov		-48(%rbp), %rax
 leave
 ret
 
 .endIfL7: 
 
-movl 	$100.1, -104(%rbp)
+movq 	$100.1, -248(%rbp)
 
-mov		-104(%rbp), %rax 
+mov		-248(%rbp), %rax 
 neg		%rax 
-mov		%rax, -108(%rbp) 
+mov		%rax, -256(%rbp) 
 
-mov		-108(%rbp), %rax
+mov		-256(%rbp), %rax
 leave
 ret
 
 .globl	multRepeat
 .type	multRepeat, @function 
 multRepeat: 
-enter   $(4 * 9), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -12(%rbp) 
+enter   $(8 * 11), $0 
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -24(%rbp) 
 
-mov		-12(%rbp), %r10 
-mov		-8(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -16(%rbp)
-
-mov		-12(%rbp), %r10 
+mov		-24(%rbp), %r10 
 mov		-16(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -20(%rbp)
+mov		%r10, -56(%rbp)
 
-mov		-12(%rbp), %r10 
-mov		-20(%rbp), %r11 
+mov		-24(%rbp), %r10 
+mov		-56(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -24(%rbp)
+mov		%r10, -64(%rbp)
 
-mov		-8(%rbp), %r10 
-mov		-24(%rbp), %r11 
+mov		-24(%rbp), %r10 
+mov		-64(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -28(%rbp)
+mov		%r10, -72(%rbp)
 
-mov		-8(%rbp), %r10 
-mov		-28(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-72(%rbp), %r11 
 imul		%r11, %r10 
+mov		%r10, -80(%rbp)
+
+mov		-16(%rbp), %r10 
+mov		-80(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -88(%rbp)
+
+mov		-88(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-mov		-32(%rbp), %r10
-mov		%r10, -16(%rbp)
-
-mov		-16(%rbp), %rax
+mov		-32(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 18), $0 
+enter   $(8 * 23), $0 
 
-movl 	$15.0, -8(%rbp)
+movq 	$15.0, -32(%rbp)
 
-mov		-8(%rbp), %rax 
+mov		-32(%rbp), %rax 
 neg		%rax 
-mov		%rax, -12(%rbp) 
+mov		%rax, -40(%rbp) 
 
-mov		-12(%rbp), %r10
+mov		-40(%rbp), %r10
 mov		%r10, res(%rip)
 
-movl 	$4.3, -16(%rbp)
+movq 	$4.3, -48(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-48(%rbp), %r10
 mov		%r10, w(%rip)
 
-movl 	$7.6, -20(%rbp)
+movq 	$7.6, -56(%rbp)
 
-mov		-20(%rbp), %rax 
+mov		-56(%rbp), %rax 
 neg		%rax 
-mov		%rax, -24(%rbp) 
+mov		%rax, -64(%rbp) 
 
-mov		-24(%rbp), %r10
+mov		-64(%rbp), %r10
 mov		%r10, m(%rip)
 
-movl 	$80.0, -28(%rbp)
+movq 	$80.0, -72(%rbp)
 
-mov		-28(%rbp), %r10
-mov		%r10, -12(%rbp)
+mov		-72(%rbp), %r10
+mov		%r10, -24(%rbp)
 
-mov		-12(%rbp), %r10
+movq 	$2, -88(%rbp)
+
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
-movl 	$2, -36(%rbp)
-
-mov		-36(%rbp), %r10
+mov		-88(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	potencia
-mov 	%rax, -44(%rbp) 
+mov 	%rax, -104(%rbp) 
 
-mov		-44(%rbp), %r10
-mov		%r10, -8(%rbp)
-
-mov		$.L0L8, %r10
-mov	 	%r10, %rdi
+mov		-104(%rbp), %r10
+mov		%r10, -16(%rbp)
 
 mov 		res(%rip), %r10 
-mov		%r10, -56(%rbp) 
+mov		%r10, -128(%rbp) 
 
-mov		-56(%rbp), %r10
+mov		-128(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-8(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	multRepeat
-mov 	%rax, -68(%rbp) 
+mov 	%rax, -152(%rbp) 
 
-mov		-68(%rbp), %r10
+mov		$.L0L8, %r10
+mov	 	%r10, %rdi
+
+mov		-152(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
+mov 	%rax, -176(%rbp) 
 
 mov 		$0, %rax
 leave

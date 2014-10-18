@@ -3,20 +3,20 @@
 .globl	a
 .type	a, @function 
 a: 
-enter   $(4 * 4), $0 
+enter   $(8 * 5), $0 
 
-movl 	$1, -8(%rbp)
+movq 	$1, -16(%rbp)
 
-movl 	$1, -12(%rbp)
+movq 	$1, -24(%rbp)
 
-mov		-12(%rbp), %r10
-cmp 	-8(%rbp), %r10
+mov		-24(%rbp), %r10
+cmp 	-16(%rbp), %r10
 
 jne 		.falseCondL0
 
-movl 	$0, -16(%rbp)
+movq 	$0, -32(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-32(%rbp), %rax
 leave
 ret
 
@@ -24,9 +24,9 @@ jmp 		.endIfL1
 
 .falseCondL0: 
 
-movl 	$0, -20(%rbp)
+movq 	$0, -40(%rbp)
 
-mov		-20(%rbp), %rax
+mov		-40(%rbp), %rax
 leave
 ret
 
@@ -35,7 +35,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave

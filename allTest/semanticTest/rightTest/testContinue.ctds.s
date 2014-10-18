@@ -3,19 +3,19 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(4 * 4), $0 
-mov 		%rdi, -8(%rbp) 
+enter   $(8 * 5), $0 
+mov 		%rdi, -16(%rbp) 
 
 .beginWhileL1: 
 
-movl 	$1, -12(%rbp)
+movq 	$1, -32(%rbp)
 
-mov		-12(%rbp), %r10
-cmp 	-8(%rbp), %r10
+mov		-32(%rbp), %r10
+cmp 	-16(%rbp), %r10
 
 jne 		.endWhileL0
 
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
@@ -25,16 +25,16 @@ jmp 		.beginWhileL1
 
 .endWhileL0: 
 
-movl 	$1, -16(%rbp)
+movq 	$1, -40(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-40(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave

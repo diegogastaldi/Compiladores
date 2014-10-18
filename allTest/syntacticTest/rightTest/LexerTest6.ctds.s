@@ -1,13 +1,13 @@
 .text
 
-.comm a, 4
+.comm a, 8
 
-.comm b, 4
+.comm b, 8
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(4 * 0), $0 
+enter   $(8 * 1), $0 
 
 mov 		$0, %rax
 leave

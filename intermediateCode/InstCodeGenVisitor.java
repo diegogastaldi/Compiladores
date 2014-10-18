@@ -74,10 +74,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer expr = stmt.getExpression().accept(this);    
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
-    Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CONST, "1", null, op));    
-    /* Realiza el incremento */
-    instructions.add(new Instr(Operator.PLUS, expr, op, result));
 
     Location location = stmt.getLocation();
 
@@ -86,18 +82,26 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (stmt.getLocation() instanceof VarLocation) {
         /* Genera instrucciones para el Location*/
         Integer loc = stmt.getLocation().accept(this);
-
+    		/* Realiza el incremento */
+    		instructions.add(new Instr(Operator.PLUS, expr, loc, result));
         instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
       }
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        /* Realiza el incremento */
+    		instructions.add(new Instr(Operator.PLUS, expr, a.getOffSet(), result));
         instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
       }
     } else {
       /* Realiza la asigancion */
-      if (stmt.getLocation() instanceof VarLocation) 
+      if (stmt.getLocation() instanceof VarLocation) {
+      	/* Realiza el incremento */
+    		instructions.add(new Instr(Operator.PLUS, expr, location.accept(this), result));
         instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
+      }
       else {
+      	/* Realiza el incremento */
+    		instructions.add(new Instr(Operator.PLUS, expr, location.accept(this), result));      	
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
         instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
       }      
@@ -110,10 +114,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer expr = stmt.getExpression().accept(this);    
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
-    Integer op = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CONST, "1", null, op));
-    /* Realiza el incremento */
-    instructions.add(new Instr(Operator.MINUS, expr, op, result));
 
     Location location = stmt.getLocation();
 
@@ -122,14 +122,19 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (stmt.getLocation() instanceof VarLocation) {
         /* Genera instrucciones para el Location*/
         Integer loc = stmt.getLocation().accept(this);
-
+		    /* Realiza el decremento */
+    		instructions.add(new Instr(Operator.MINUS, expr, loc, result));
         instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
       }
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
+    		/* Realiza el decremento */
+    		instructions.add(new Instr(Operator.MINUS, expr, a.getOffSet(), result));      	        
         instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
       }
     } else {
+    	/* Realiza el decremento */
+    	instructions.add(new Instr(Operator.MINUS, expr, location.accept(this), result));      	
       /* Realiza la asigancion */
       if (stmt.getLocation() instanceof VarLocation) 
         instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
