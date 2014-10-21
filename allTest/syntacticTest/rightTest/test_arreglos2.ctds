@@ -5,14 +5,14 @@ float B [56];
 boolean C[10];
 boolean y;
 
-int pruArreglos(int b, int c ){
+int pruArreglos(int b, float c ){
          float y;
          y = 8.87;
 
          A[0] = 4; 
          B[55] = 2.6 + y;
-         C[0] = ((b < c)) ;
-         C[1] = b >= c;
+
+
 	return A[0]; 
 
 }

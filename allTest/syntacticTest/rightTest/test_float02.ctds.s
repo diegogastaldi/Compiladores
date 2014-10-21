@@ -9,6 +9,15 @@ sumatoria:
 enter   $(8 * 19), $0 
 mov 		%rdi, -16(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq		$0, %r10
+mov		%r10, -32(%rbp)
+
 movq 	$0.0, -56(%rbp)
 
 mov		-56(%rbp), %r10
@@ -50,7 +59,7 @@ mov		%r10, -96(%rbp)
 movq 	$1, -104(%rbp)
 
 mov		-104(%rbp), %r10
-cmp 	-96(%rbp), %r10
+cmp 		-96(%rbp), %r10
 
 jne 		.endWhileL0
 
@@ -65,7 +74,7 @@ mov		%rax, -120(%rbp)
 movq 	$1, -128(%rbp)
 
 mov		-128(%rbp), %r10
-cmp 	-120(%rbp), %r10
+cmp 		-120(%rbp), %r10
 
 jne 		.falseCondL5
 
@@ -104,6 +113,12 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 11), $0 
+
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
+movq		$0, %r10
+mov		%r10, -16(%rbp)
 
 movq 	$8.0, -32(%rbp)
 

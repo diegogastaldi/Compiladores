@@ -14,6 +14,15 @@ ret
 met: 
 enter   $(8 * 5), $0 
 
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
 mov		-24(%rbp), %r10 
 mov		-16(%rbp), %r11 
 sub		%r10, %r11 

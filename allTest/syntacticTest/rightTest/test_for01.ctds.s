@@ -16,6 +16,9 @@ enter   $(8 * 16), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
 movq 	$2, -56(%rbp)
 
 movq 	$0, -64(%rbp)
@@ -74,7 +77,7 @@ mov		%r10, -32(%rbp)
 .endForL0: 
 
 mov		-96(%rbp), %r10
-cmp 	-112(%rbp), %r10
+cmp 		-112(%rbp), %r10
 
 jle 		.beginForL1
 

@@ -37,7 +37,7 @@ mov		%r10, -80(%rbp)
 movq 	$1, -88(%rbp)
 
 mov		-88(%rbp), %r10
-cmp 	-80(%rbp), %r10
+cmp 		-80(%rbp), %r10
 
 jne 		.falseCondL2
 
@@ -85,7 +85,7 @@ mov		%r10, -136(%rbp)
 movq 	$1, -144(%rbp)
 
 mov		-144(%rbp), %r10
-cmp 	-136(%rbp), %r10
+cmp 		-136(%rbp), %r10
 
 jne 		.falseCondL5
 
@@ -133,7 +133,7 @@ mov		%r10, -192(%rbp)
 movq 	$1, -200(%rbp)
 
 mov		-200(%rbp), %r10
-cmp 	-192(%rbp), %r10
+cmp 		-192(%rbp), %r10
 
 jne 		.falseCondL8
 
@@ -198,7 +198,7 @@ mov		%r10, -264(%rbp)
 movq 	$1, -272(%rbp)
 
 mov		-272(%rbp), %r10
-cmp 	-264(%rbp), %r10
+cmp 		-264(%rbp), %r10
 
 jne 		.falseCondL13
 

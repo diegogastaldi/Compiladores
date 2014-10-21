@@ -106,6 +106,51 @@ ret
 main: 
 enter   $(8 * 35), $0 
 
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq		$0, %r10
+mov		%r10, -32(%rbp)
+
+movq		$0, %r10
+mov		%r10, -40(%rbp)
+
+movq		$0, %r10
+mov		%r10, -48(%rbp)
+
+movq		$0, %r10
+mov		%r10, -56(%rbp)
+
+movq		$0, %r10
+mov		%r10, -64(%rbp)
+
+movq		$0, %r10
+mov		%r10, -72(%rbp)
+
+movq		$0, %r10
+mov		%r10, -80(%rbp)
+
+movq		$0, %r10
+mov		%r10, -88(%rbp)
+
+movq		$0, %r10
+mov		%r10, -96(%rbp)
+
+movq		$0, %r10
+mov		%r10, -104(%rbp)
+
+movq		$0, %r10
+mov		%r10, -112(%rbp)
+
+movq		$0, %r10
+mov		%r10, -120(%rbp)
+
 mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 

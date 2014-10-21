@@ -13,7 +13,7 @@ movq 	$3, -40(%rbp)
 mov		-32(%rbp), %rax
 cmp		-40(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -48(%rbp)
 
 movq 	$0, -56(%rbp)

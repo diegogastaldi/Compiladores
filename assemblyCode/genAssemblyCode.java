@@ -30,11 +30,14 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+				case INITLOCAL:
+					initlocalMethod(instr);
+					break;
 				case GLOBALVALUEVAR:
-					globalvaluevarmethod(instr);
+					globalvaluevarMethod(instr);
 					break;
 				case GLOBALVALUEARRAY:				
-					globalvaluearraymethod(instr);
+					globalvaluearrayMethod(instr);
 					break;
 				case VARASSIGNGLOBAL:
 					varassignglobalMethod(instr);				
@@ -141,28 +144,35 @@ public class genAssemblyCode {
 		return result;
 	}
 
+	/* Constante string, es importante que esta instruccion sea colocada 
+		 al principio del archivo */
 	public static void stringMethod(Instr instr) {
 		result += "." + instr.getOperand2() + ": \n";		
 		result += "		.string \""+ instr.getOperand1() + "\" \n";
 	}
 
+	/* Salto por menor o igual */
 	public static void jleMethod(Instr instr) {
 		result += "jle 		." + instr.getResult() + "\n";
 	}
 
+	/* Salto por desigualdad */
 	public static void jneMethod(Instr instr) {
 	  result += "jne 		." + instr.getResult() + "\n";
 	}
 
+	/* Asignacion de una constante a una direccion de memoria */
 	public static void constMethod(Instr instr) {
 	  result += "movq 	$" + instr.getOperand1() + ", " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Compara el contenido de dos direcciones de memoria */
 	public static void cmpMethod(Instr instr) {
 		result += "mov		" + instr.getOperand2() + "(%rbp), %r10\n";
-		result += "cmp 	" + instr.getOperand1() + "(%rbp), %r10\n";
+		result += "cmp 		" + instr.getOperand1() + "(%rbp), %r10\n";
 	}
 
+	/* Suma el contenido de dos direcciones de memoria */
 	public static void plusMethod(Instr instr) {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %r10 \n";
 		result += "mov		" + instr.getOperand2() + "(%rbp), %r11 \n";					
@@ -170,6 +180,7 @@ public class genAssemblyCode {
 		result += "mov		%r11, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Multiplica el contenido de dos direcciones de memoria */
 	public static void multiplyMethod(Instr instr) {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %r10 \n";
 		result += "mov		" + instr.getOperand2() + "(%rbp), %r11 \n";					
@@ -177,6 +188,7 @@ public class genAssemblyCode {
 		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Resta el contenido de dos direcciones de memoria */
 	public static void minusMethod(Instr instr) {
 		result += "mov		" + instr.getOperand2() + "(%rbp), %r10 \n";
 		result += "mov		" + instr.getOperand1() + "(%rbp), %r11 \n";					
@@ -184,6 +196,15 @@ public class genAssemblyCode {
 		result += "mov		%r11, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Divide el contenido de dos direcciones de memoria */
+	public static void divideMethod(Instr instr) {
+		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
+		result += "cltd\n";
+		result += "idivq	" + instr.getOperand2() + "(%rbp) \n";
+		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
+	}
+
+	/* Mod del contenido de dos direcciones de memoria */
 	public static void modMethod(Instr instr) {
 		result += "mov		" + instr.getOperand2() + "(%rbp), %rax \n";
 		result += "cltd\n";
@@ -191,6 +212,7 @@ public class genAssemblyCode {
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la operacion AND entre el contenido de dos direcciones de memoria */
 	public static void andMethod(Instr instr) {
 		Integer operand1 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
 		Integer operand2 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
@@ -210,6 +232,7 @@ public class genAssemblyCode {
 		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la operacion OR entre el contenido de dos direcciones de memoria */
 	public static void orMethod(Instr instr) {
 		Integer operand1 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
 		Integer operand2 = ((LinkedList<Integer>)instr.getOperand2()).removeFirst();
@@ -231,6 +254,7 @@ public class genAssemblyCode {
 		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la operacion == entre el contenido de dos direcciones de memoria */
 	public static void ceqMethod(Instr instr) {
 	  result += "mov 		" + instr.getOperand1() + "(%rbp), %rax\n";
 		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
@@ -239,14 +263,16 @@ public class genAssemblyCode {
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la operacion != entre el contenido de dos direcciones de memoria */
 	public static void neqMethod(Instr instr) {
 	  result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
 		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setne 	%al\n";
-		result += "movzb %al, %rax\n";
+		result += "movzb 	%al, %rax\n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la operacion NOT entre el contenido de dos direcciones de memoria */
 	public static void notMethod(Instr instr) {
 		result += "cmpq		$0, " + instr.getOperand1() + "(%rbp) \n";
 		result += "sete		%al \n";
@@ -254,20 +280,24 @@ public class genAssemblyCode {
 		result += "mov		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* Realiza el menos unario del contenido de una direcciones de memoria */
 	public static void unaryminusMethod(Instr instr) {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
 		result += "neg		%rax \n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* Coloca un label */
 	public static void labelMethod(Instr instr) {
 		result += "." + instr.getResult() + ": \n";		
 	}
 
+	/* Realiza un salto incondicional */
 	public static void jmpMethod(Instr instr) {
 		result += "jmp 		."+ instr.getResult() + "\n";		
 	}
 
+	/* Realiza el retorno de un metodo */
 	public static void returnMethod(Instr instr) {
 	 	if (instr.getResult() != null) 
 	 		result += "mov		" + instr.getResult() + "(%rbp), %rax\n";
@@ -277,14 +307,16 @@ public class genAssemblyCode {
 		result += "ret\n";
 	}
 
+	/* Realiza la comparacion < entre el contenido de dos direcciones de memoria */
 	public static void leMethod(Instr instr) {
     result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
 		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setl		%al\n";
-		result += "movzb %al, %rax\n";
+		result += "movzb 	%al, %rax\n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";		
 	}
 
+	/* Realiza la comparacion <= entre el contenido de dos direcciones de memoria */
 	public static void leqMethod(Instr instr) {
     result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
 		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
@@ -293,6 +325,7 @@ public class genAssemblyCode {
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la comparacion > entre el contenido de dos direcciones de memoria */
 	public static void geMethod(Instr instr) {
     result += "mov		" + instr.getOperand1() +"(%rbp), %rax\n";
 		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
@@ -301,14 +334,17 @@ public class genAssemblyCode {
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Realiza la comparacion >= entre el contenido de dos direcciones de memoria */
 	public static void geqMethod(Instr instr) {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %rax\n";
 		result += "cmp		" + instr.getOperand2() + "(%rbp), %rax\n";
 		result += "setge 	%al\n";
-		result += "movzb %al, %rax\n";
+		result += "movzb 	%al, %rax\n";
 		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";		
 	}
 
+	/* Apila los parametros previo a una llamada a un metodo, usando para los primeros parametros 
+	los registros adecuados y para los siguientes, direcciones de memoria */
 	public static void paramMethod(Instr instr) {
 		/* Guarda el parametro en r10 */
 		if (instr.getOperand1() instanceof String ) 
@@ -325,6 +361,7 @@ public class genAssemblyCode {
 		result += "mov	 	%r10, " + destRegister + "\n";
 	}
 
+	/* Realiza el llamado a un metodo */
 	public static void callmethodMethod(Instr instr) {
 		result += "mov 		$0, %rax \n";
   	result += "call 	" + instr.getOperand1() + "\n";		
@@ -332,13 +369,8 @@ public class genAssemblyCode {
   		result += "mov 	%rax, " + instr.getResult() + "(%rbp) \n";		
 	}
 
-	public static void divideMethod(Instr instr) {
-		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
-		result += "cltd\n";
-		result += "idivq	" + instr.getOperand2() + "(%rbp) \n";
-		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
-	}
-
+	/* Coloca un label para una funcion, reserva la memoria correspondiente para esta
+		y apila los parametros en variables locales */
 	public static void methodlabelMethod(Instr instr) {
 		result += ".globl	" + instr.getResult() + "\n";
 		result += ".type	" + instr.getResult() + ", @function \n";			
@@ -356,6 +388,7 @@ public class genAssemblyCode {
 		}
 	}
 
+	/* Asigna el contenido de una direccion de memoria a un arreglo local al metodo */
 	public static void arrayassignMethod(Instr instr) {
 		result += "mov 		" + instr.getOperand1() + "(%rbp), %r10 \n";
 		result += "movl		" + instr.getOperand2() + "(%rbp), %edx \n";
@@ -363,11 +396,27 @@ public class genAssemblyCode {
 		result += "mov 		%r10, " + instr.getResult() + "(%rbp, %rdx, 8) \n";		
 	}
 
+	/* Asigna el contenido de una direccion de memoria a una variable local al metodo */
 	public static void varassignMethod(Instr instr) {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
 		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Asigna el contenido de una direccion de memoria a un arreglo global */
+	public static void arrayassignglobalMethod(Instr instr) {
+		result += "mov 		" + instr.getOperand1() + "(%rbp)" + ", %r10 \n";
+		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "cltq \n";
+		result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
+	}
+
+	/* Asigna el contenido de una direccion de memoria a una variable global */
+	public static void varassignglobalMethod(Instr instr) {
+		result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rip)\n";
+	}
+
+	/* Recupera el valor de un arreglo local */
 	public static void valuearrayMethod(Instr instr) {
 		result += "movl		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
 		result += "cltq \n";
@@ -375,35 +424,32 @@ public class genAssemblyCode {
 		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
 	}
 
-	public static void textMethod(Instr instr) {
-		result += instr.getResult();
-	}
-
-	public static void globalMethod(Instr instr) {
-		result += ".comm " + instr.getOperand1() + ", " + instr.getOperand2() + "\n";
-	}
-
-	public static void varassignglobalMethod(Instr instr) {
-		result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
-		result += "mov		%r10, " + instr.getResult() + "(%rip)\n";
-	}
-
-	public static void arrayassignglobalMethod(Instr instr) {
-		result += "mov 		" + instr.getOperand1() + "(%rbp)" + ", %r10 \n";
-		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
-		result += "cltq \n";
-		result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
-	}	
-
-	public static void globalvaluearraymethod(Instr instr) {
+	/* Recupera el valor de un arreglo global */
+	public static void globalvaluearrayMethod(Instr instr) {
 		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
 		result += "cltq \n";	
 		result += "mov 		" + instr.getOperand1() + "(,%rdx,8) , %r11\n";
 		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
 	}
 
-	public static void globalvaluevarmethod(Instr instr) {
+	/* Recupera el valor de una variable global */	
+	public static void globalvaluevarMethod(Instr instr) {
 		result += "mov 		" + instr.getOperand1() + "(%rip), %r10 \n";
 		result += "mov		%r10, " + instr.getResult() + "(%rbp) \n";	
+	}
+
+	/* Indica el comienzo de codigo */
+	public static void textMethod(Instr instr) {
+		result += instr.getResult();
+	}
+
+	/* Declaracion de variables globales */
+	public static void globalMethod(Instr instr) {
+		result += ".comm " + instr.getOperand1() + ", " + instr.getOperand2() + "\n";
+	}	
+
+	public static void initlocalMethod(Instr instr) {
+		result += "movq		$" + instr.getOperand1() + ", %r10\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 }

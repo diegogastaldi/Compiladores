@@ -28,6 +28,9 @@ ret
 main: 
 enter   $(8 * 17), $0 
 
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
 mov 		$0, %rax 
 call 	get_int
 mov 	%rax, -24(%rbp) 
@@ -53,7 +56,7 @@ mov		%rax, -72(%rbp)
 movq 	$1, -80(%rbp)
 
 mov		-80(%rbp), %r10
-cmp 	-72(%rbp), %r10
+cmp 		-72(%rbp), %r10
 
 jne 		.falseCondL0
 

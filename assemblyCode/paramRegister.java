@@ -9,7 +9,7 @@
   *************************************
 
 	Clase que guarda los registros usados 
-	para el pasaje de parametros  
+	para el pasaje de parametros  en orden
 */
 
 package assemblyCode;

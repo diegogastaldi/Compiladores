@@ -19,6 +19,33 @@ enter   $(8 * 22), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq		$0, %r10
+mov		%r10, -32(%rbp)
+
+movq		$0, %r10
+mov		%r10, -40(%rbp)
+
+movq		$0, %r10
+mov		%r10, -48(%rbp)
+
+movq		$0, %r10
+mov		%r10, -56(%rbp)
+
+movq		$0, %r10
+mov		%r10, -64(%rbp)
+
+movq		$0, %r10
+mov		%r10, -72(%rbp)
+
+movq		$0, %r10
+mov		%r10, -80(%rbp)
+
+movq		$0, %r10
+mov		%r10, -88(%rbp)
+
 movq 	$0, -120(%rbp)
 
 mov		-120(%rbp), %r10
@@ -55,7 +82,7 @@ mov		%r10, -96(%rbp)
 .endForL0: 
 
 mov		-136(%rbp), %r10
-cmp 	-144(%rbp), %r10
+cmp 		-144(%rbp), %r10
 
 jle 		.beginForL1
 

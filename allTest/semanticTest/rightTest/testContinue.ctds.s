@@ -11,7 +11,7 @@ mov 		%rdi, -16(%rbp)
 movq 	$1, -32(%rbp)
 
 mov		-32(%rbp), %r10
-cmp 	-16(%rbp), %r10
+cmp 		-16(%rbp), %r10
 
 jne 		.endWhileL0
 

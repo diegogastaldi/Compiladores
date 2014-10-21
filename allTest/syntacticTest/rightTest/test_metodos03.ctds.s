@@ -22,9 +22,12 @@ ret
 .globl	resto
 .type	resto, @function 
 resto: 
-enter   $(8 * 15), $0 
+enter   $(8 * 14), $0 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq 	$3, -56(%rbp)
 
@@ -44,7 +47,7 @@ mov		%rax, -80(%rbp)
 movq 	$1, -88(%rbp)
 
 mov		-88(%rbp), %r10
-cmp 	-80(%rbp), %r10
+cmp 		-80(%rbp), %r10
 
 jne 		.falseCondL0
 
@@ -62,14 +65,9 @@ jmp 		.endIfL1
 
 .falseCondL0: 
 
-movq 	$2, -112(%rbp)
+movq 	$2.0, -112(%rbp)
 
-mov		-112(%rbp), %rax 
-cltd
-idivq	-24(%rbp)
-mov		%rax, -120(%rbp)
-
-mov		-120(%rbp), %r10
+mov		-112(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .endIfL1: 
@@ -82,6 +80,9 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 13), $0 
+
+movq		$0, %r10
+mov		%r10, -8(%rbp)
 
 movq 	$0, -24(%rbp)
 

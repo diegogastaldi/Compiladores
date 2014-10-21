@@ -6,6 +6,18 @@ id:
 enter   $(8 * 42), $0 
 mov 		%rdi, -16(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq		$0, %r10
+mov		%r10, -32(%rbp)
+
+movq		$0, %r10
+mov		%r10, -40(%rbp)
+
 movq 	$100, -64(%rbp)
 
 mov		-64(%rbp), %r10
@@ -24,13 +36,13 @@ mov		%r10, -40(%rbp)
 mov		-32(%rbp), %rax
 cmp		-24(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -80(%rbp)
 
 movq 	$1, -88(%rbp)
 
 mov		-88(%rbp), %r10
-cmp 	-80(%rbp), %r10
+cmp 		-80(%rbp), %r10
 
 jne 		.endWhileL0
 
@@ -52,7 +64,7 @@ movq 	$0, -112(%rbp)
 mov		-16(%rbp), %rax
 cmp		-112(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -120(%rbp)
 
 cmpq		$0, -104(%rbp)
@@ -70,7 +82,7 @@ mov		%r10, -128(%rbp)
 movq 	$1, -136(%rbp)
 
 mov		-136(%rbp), %r10
-cmp 	-128(%rbp), %r10
+cmp 		-128(%rbp), %r10
 
 jne 		.endWhileL2
 
@@ -85,7 +97,7 @@ mov		%rax, -152(%rbp)
 movq 	$1, -160(%rbp)
 
 mov		-160(%rbp), %r10
-cmp 	-152(%rbp), %r10
+cmp 		-152(%rbp), %r10
 
 jne 		.falseCondL7
 
@@ -124,7 +136,7 @@ jmp 		.beginWhileL3
 mov		-16(%rbp), %rax
 cmp		-48(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -200(%rbp)
 
 mov		-16(%rbp), %rax
@@ -148,20 +160,20 @@ mov		%r10, -216(%rbp)
 movq 	$1, -224(%rbp)
 
 mov		-224(%rbp), %r10
-cmp 	-216(%rbp), %r10
+cmp 		-216(%rbp), %r10
 
 jne 		.endWhileL9
 
 mov		-16(%rbp), %rax
 cmp		-48(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -232(%rbp)
 
 movq 	$1, -240(%rbp)
 
 mov		-240(%rbp), %r10
-cmp 	-232(%rbp), %r10
+cmp 		-232(%rbp), %r10
 
 jne 		.falseCondL14
 
@@ -188,7 +200,7 @@ mov		%rax, -264(%rbp)
 movq 	$1, -272(%rbp)
 
 mov		-272(%rbp), %r10
-cmp 	-264(%rbp), %r10
+cmp 		-264(%rbp), %r10
 
 jne 		.falseCondL16
 

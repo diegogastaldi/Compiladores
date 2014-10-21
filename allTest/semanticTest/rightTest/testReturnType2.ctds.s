@@ -10,7 +10,7 @@ movq 	$1, -16(%rbp)
 movq 	$1, -24(%rbp)
 
 mov		-24(%rbp), %r10
-cmp 	-16(%rbp), %r10
+cmp 		-16(%rbp), %r10
 
 jne 		.falseCondL0
 

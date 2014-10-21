@@ -20,13 +20,13 @@ movq 	$2, -48(%rbp)
 mov		-40(%rbp), %rax
 cmp		-48(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -56(%rbp)
 
 movq 	$1, -64(%rbp)
 
 mov		-64(%rbp), %r10
-cmp 	-56(%rbp), %r10
+cmp 		-56(%rbp), %r10
 
 jne 		.endWhileL0
 
@@ -42,7 +42,7 @@ movq 	$2, -88(%rbp)
 mov		-80(%rbp), %rax
 cmp		-88(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -96(%rbp)
 
 mov		-96(%rbp), %rax

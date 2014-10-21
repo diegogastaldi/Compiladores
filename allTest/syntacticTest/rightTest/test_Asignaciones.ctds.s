@@ -9,7 +9,13 @@ pruAritmetica:
 enter   $(8 * 17), $0 
 mov 		%rdi, -16(%rbp) 
 
-movq 	$1, -48(%rbp)
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq 	$1.0, -48(%rbp)
 
 mov		-48(%rbp), %r10
 mov		%r10, -24(%rbp)
@@ -19,7 +25,7 @@ movq 	$8, -56(%rbp)
 mov		-56(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$699, -64(%rbp)
+movq 	$699.0, -64(%rbp)
 
 mov		-64(%rbp), %r10 
 mov		-24(%rbp), %r11 
@@ -78,7 +84,7 @@ ret
 main: 
 enter   $(8 * 9), $0 
 
-movq 	$3, -24(%rbp)
+movq 	$3.0, -24(%rbp)
 
 mov		-24(%rbp), %r10
 mov	 	%r10, %rdi

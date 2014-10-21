@@ -159,7 +159,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     switch(operator){
       case DIVIDE: case MINUS: case MULTIPLY: case PLUS: case CEQ: case NEQ:
       case AND: case OR: case MOD:
-				    addError(expr,"Error interno:  Al Crear una operacion Relacional");  
+		    addError(expr,"Error interno:  Al Crear una operacion Relacional");  
       default: expr.setType(Type.BOOLEAN); return Type.BOOLEAN;
     }
   }
@@ -169,26 +169,15 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     Type rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
     if  (leftOperand != rightOperand && leftOperand == Type.BOOLEAN) {
-    addError(expr,"Los operando de una expresion aritmetica no peden ser Bool ni distintos");
+      addError(expr,"Los operando de una expresion aritmetica no peden ser Bool ni distintos");
     } 
     switch(operator){
-      case LE: case LEQ: case GE: case GEQ: case CEQ: case NEQ:
-      case AND: case OR:
-
-      case DIVIDE: case MOD:
-        if(!(leftOperand == rightOperand)){
-				    addError(expr,"Error de tipos en operacion aritmetica");  
-         }else {
-            expr.setType(leftOperand);
-            return leftOperand; 
-         }
-      case PLUS: case MINUS: case MULTIPLY:
-        if(!(leftOperand == rightOperand)){
-            addError(expr,"Error de tipos en operacion aritmetica");  
-         }else {
-            expr.setType(leftOperand);
-            return leftOperand; 
-         }
+      case DIVIDE: 
+        expr.setType(Type.FLOAT);
+        return Type.FLOAT;
+      case PLUS: case MINUS: case MULTIPLY: case MOD:
+        expr.setType(leftOperand);
+        return leftOperand;
     }
     return null;
   }

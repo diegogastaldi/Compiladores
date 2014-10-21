@@ -7,6 +7,12 @@ enter   $(8 * 14), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq		$0, %r10
+mov		%r10, -32(%rbp)
+
 movq 	$0.0, -64(%rbp)
 
 mov		-64(%rbp), %r10
@@ -22,13 +28,13 @@ mov		%r10, -40(%rbp)
 mov		-40(%rbp), %rax
 cmp		-16(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -80(%rbp)
 
 movq 	$1, -88(%rbp)
 
 mov		-88(%rbp), %r10
-cmp 	-80(%rbp), %r10
+cmp 		-80(%rbp), %r10
 
 jne 		.endWhileL0
 

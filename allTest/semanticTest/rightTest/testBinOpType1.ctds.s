@@ -7,6 +7,9 @@
 method: 
 enter   $(8 * 4), $0 
 
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
 mov 		x(%rip), %r10 
 mov		%r10, -24(%rbp) 
 

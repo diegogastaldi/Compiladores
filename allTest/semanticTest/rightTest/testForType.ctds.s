@@ -35,7 +35,7 @@ mov		%r10, -16(%rbp)
 .endForL0: 
 
 mov		-16(%rbp), %r10
-cmp 	-16(%rbp), %r10
+cmp 		-16(%rbp), %r10
 
 jle 		.beginForL1
 

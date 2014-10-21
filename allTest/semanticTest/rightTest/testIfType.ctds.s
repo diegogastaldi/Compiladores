@@ -17,7 +17,7 @@ mov		%rax, -40(%rbp)
 movq 	$1, -48(%rbp)
 
 mov		-48(%rbp), %r10
-cmp 	-40(%rbp), %r10
+cmp 		-40(%rbp), %r10
 
 jne 		.falseCondL0
 

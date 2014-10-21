@@ -12,7 +12,7 @@ mov 		%rsi, -24(%rbp)
 movq 	$1, -48(%rbp)
 
 mov		-48(%rbp), %r10
-cmp 	-24(%rbp), %r10
+cmp 		-24(%rbp), %r10
 
 jne 		.falseCondL0
 
@@ -92,6 +92,9 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 12), $0 
+
+movq		$0, %r10
+mov		%r10, -8(%rbp)
 
 movq 	$7, -24(%rbp)
 

@@ -9,6 +9,9 @@ breaks:
 enter   $(8 * 13), $0 
 mov 		%rdi, -16(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
 movq 	$0, -40(%rbp)
 
 mov		-40(%rbp), %r10
@@ -21,13 +24,13 @@ movq 	$10, -48(%rbp)
 mov		-24(%rbp), %rax
 cmp		-48(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -56(%rbp)
 
 movq 	$1, -64(%rbp)
 
 mov		-64(%rbp), %r10
-cmp 	-56(%rbp), %r10
+cmp 		-56(%rbp), %r10
 
 jne 		.endWhileL0
 
@@ -46,13 +49,13 @@ movq 	$0, -88(%rbp)
 mov		-16(%rbp), %rax
 cmp		-88(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -96(%rbp)
 
 movq 	$1, -104(%rbp)
 
 mov		-104(%rbp), %r10
-cmp 	-96(%rbp), %r10
+cmp 		-96(%rbp), %r10
 
 jne 		.falseCondL2
 

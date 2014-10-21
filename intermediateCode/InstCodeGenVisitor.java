@@ -57,12 +57,22 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     posMethodLabel = instructions.size();
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size()+ c.getLocalVars());
+    /* Inicializo variables locales con valores por defecto */
+    initLocalVar(c.getParameters().size(), c.getLocalVars());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
     int reserveSpace = (-genLabels.getOffSet()/8)-1;
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
+  }
+
+  private void initLocalVar(int begin, int amount) {
+  	int i = begin + 1;
+  	while (i <= amount) { 
+  		instructions.add(new Instr(Operator.INITLOCAL, "0", null,i * (-8)));
+  		i++;	
+  	}
   }
 
   public List<Instr> getInst() {
@@ -515,11 +525,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
  public Integer visit(FloatLiteral lit)   {
     Integer result = genLabels.getOffSet();
-    /*
-
-			VEER COMOOO TRATAAR LOS FLOAAT
-
-    */
   	instructions.add(new Instr(Operator.CONST, lit, null, result));
 
     return result;

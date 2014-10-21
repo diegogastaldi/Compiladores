@@ -6,6 +6,21 @@ prueba:
 enter   $(8 * 21), $0 
 mov 		%rdi, -16(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
+movq		$0, %r10
+mov		%r10, -32(%rbp)
+
+movq		$0, %r10
+mov		%r10, -40(%rbp)
+
+movq		$0, %r10
+mov		%r10, -48(%rbp)
+
 movq 	$4, -72(%rbp)
 
 mov		-72(%rbp), %r10
@@ -63,7 +78,7 @@ mov		%rax, -144(%rbp)
 movq 	$1, -152(%rbp)
 
 mov		-152(%rbp), %r10
-cmp 	-144(%rbp), %r10
+cmp 		-144(%rbp), %r10
 
 jne 		.falseCondL0
 

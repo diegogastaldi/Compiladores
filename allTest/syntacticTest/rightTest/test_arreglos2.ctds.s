@@ -14,9 +14,12 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(8 * 18), $0 
+enter   $(8 * 14), $0 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq 	$8.87, -56(%rbp)
 
@@ -46,40 +49,14 @@ mov 		-96(%rbp), %edx
 cltq 
 mov 		%r10, B(, %rdx, 8) 
 
-mov		-24(%rbp), %rax
-cmp		-16(%rbp), %rax
-setl		%al
-movzb %al, %rax
-mov		%rax, -104(%rbp)
+movq 	$0, -104(%rbp)
 
-movq 	$0, -112(%rbp)
-
-mov 		-104(%rbp), %r10 
-mov 		-112(%rbp), %edx 
-cltq 
-mov 		%r10, C(, %rdx, 8) 
-
-mov		-24(%rbp), %rax
-cmp		-16(%rbp), %rax
-setge 	%al
-movzb %al, %rax
-mov		%rax, -120(%rbp)
-
-movq 	$1, -128(%rbp)
-
-mov 		-120(%rbp), %r10 
-mov 		-128(%rbp), %edx 
-cltq 
-mov 		%r10, C(, %rdx, 8) 
-
-movq 	$0, -136(%rbp)
-
-mov 		-136(%rbp), %edx 
+mov 		-104(%rbp), %edx 
 cltq 
 mov 		A(,%rdx,8) , %r11
-mov 		%r11, -144(%rbp) 
+mov 		%r11, -112(%rbp) 
 
-mov		-144(%rbp), %rax
+mov		-112(%rbp), %rax
 leave
 ret
 
@@ -133,7 +110,7 @@ movq 	$6, -96(%rbp)
 mov		-88(%rbp), %rax
 cmp		-96(%rbp), %rax
 setl		%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -104(%rbp)
 
 cmpq		$0, -104(%rbp) 
@@ -174,7 +151,7 @@ mov 		%r11, -176(%rbp)
 mov		-128(%rbp), %rax
 cmp		-176(%rbp), %rax
 setge 	%al
-movzb %al, %rax
+movzb 	%al, %rax
 mov		%rax, -184(%rbp)
 
 movq 	$1, -192(%rbp)

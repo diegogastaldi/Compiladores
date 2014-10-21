@@ -15,5 +15,4 @@ Nota:
 							DOCUMENTACION
 
 							float.
-
-asignacionacion a variables globales
+              inicializar variables globales

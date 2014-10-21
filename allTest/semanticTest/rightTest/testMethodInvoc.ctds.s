@@ -26,6 +26,9 @@ ret
 method3: 
 enter   $(8 * 3), $0 
 
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
 movq 	$2.0, -24(%rbp)
 
 mov		-24(%rbp), %r10
@@ -39,6 +42,9 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 9), $0 
+
+movq		$0, %r10
+mov		%r10, -8(%rbp)
 
 mov 		$0, %rax 
 call 	method3
