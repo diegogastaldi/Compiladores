@@ -6,9 +6,6 @@ pruebaLogica:
 enter   $(8 * 12), $0 
 mov 		%rdi, -16(%rbp) 
 
-movq		$0, %r10
-mov		%r10, -16(%rbp)
-
 movq 	$1, -40(%rbp)
 
 mov		-40(%rbp), %r10

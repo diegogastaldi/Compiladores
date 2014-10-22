@@ -7,9 +7,6 @@ enter   $(8 * 42), $0
 mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
-mov		%r10, -16(%rbp)
-
-movq		$0, %r10
 mov		%r10, -24(%rbp)
 
 movq		$0, %r10

@@ -16,9 +16,6 @@ enter   $(8 * 16), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-movq		$0, %r10
-mov		%r10, -24(%rbp)
-
 movq 	$2, -56(%rbp)
 
 movq 	$0, -64(%rbp)
@@ -84,6 +81,21 @@ jle 		.beginForL1
 .type	main, @function 
 main: 
 enter   $(8 * 11), $0 
+
+mov 		$0, %r10 
+mov 		$5, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+
+mov 		$0, %r10 
+mov 		$56, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+
+mov 		$0, %r10 
+mov 		$10, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
 
 movq 	$4, -24(%rbp)
 

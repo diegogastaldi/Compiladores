@@ -16,9 +16,6 @@ mov 		%rdi, -16(%rbp)
 mov 		%rsi, -24(%rbp) 
 
 movq		$0, %r10
-mov		%r10, -24(%rbp)
-
-movq		$0, %r10
 mov		%r10, -32(%rbp)
 
 movq		$0, %r10
@@ -103,6 +100,9 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 20), $0 
+
+mov		$0, %r10
+mov		%r10, a(%rip)
 
 movq 	$6, -32(%rbp)
 

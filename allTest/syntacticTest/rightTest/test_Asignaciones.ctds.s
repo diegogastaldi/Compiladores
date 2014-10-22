@@ -10,9 +10,6 @@ enter   $(8 * 17), $0
 mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
-mov		%r10, -16(%rbp)
-
-movq		$0, %r10
 mov		%r10, -24(%rbp)
 
 movq 	$1.0, -48(%rbp)

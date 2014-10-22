@@ -17,14 +17,13 @@ int pruArreglos(int b, int c ){
   }
   i= 0;
   while (i < 589){
-    A[i] = 1;
+    externinvk("printf", int , "entro al while con %d", i);
+    A[i] = i;
     i += 1;
   }
-  i=8;
 
-  i=0;
 
-	return A[i];
+	return A[i-1];
 }
 
 void main(){

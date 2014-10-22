@@ -167,7 +167,11 @@ public class Main {
     icg.globalVar(globals);
 
     for (completeFunction c : ast) {
-      icg.blockCode(c);
+      if (c.getName().equals("main"))
+        /* Si la funcion es main, inicializa las vars globales */
+        icg.blockCode(c, globals);
+      else
+        icg.blockCode(c);
     }
     return icg.getInst();
   }

@@ -57,9 +57,6 @@ main:
 enter   $(8 * 24), $0 
 
 movq		$0, %r10
-mov		%r10, -8(%rbp)
-
-movq		$0, %r10
 mov		%r10, -16(%rbp)
 
 movq		$0, %r10

@@ -17,9 +17,6 @@ mov 		%rdi, -16(%rbp)
 mov 		%rsi, -24(%rbp) 
 
 movq		$0, %r10
-mov		%r10, -24(%rbp)
-
-movq		$0, %r10
 mov		%r10, -32(%rbp)
 
 movq		$0, %r10
@@ -186,9 +183,6 @@ enter   $(8 * 11), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-movq		$0, %r10
-mov		%r10, -24(%rbp)
-
 mov		-24(%rbp), %r10 
 mov		-16(%rbp), %r11 
 imul		%r11, %r10 
@@ -227,10 +221,16 @@ main:
 enter   $(8 * 23), $0 
 
 movq		$0, %r10
-mov		%r10, -8(%rbp)
-
-movq		$0, %r10
 mov		%r10, -16(%rbp)
+
+mov		$0, %r10
+mov		%r10, w(%rip)
+
+mov		$0, %r10
+mov		%r10, m(%rip)
+
+mov		$0, %r10
+mov		%r10, res(%rip)
 
 movq 	$15.0, -32(%rbp)
 

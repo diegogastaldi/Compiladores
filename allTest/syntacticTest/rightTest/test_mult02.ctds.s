@@ -5,9 +5,6 @@
 pruMult: 
 enter   $(8 * 5), $0 
 
-movq		$0, %r10
-mov		%r10, -8(%rbp)
-
 movq 	$5, -24(%rbp)
 
 mov		-24(%rbp), %r10

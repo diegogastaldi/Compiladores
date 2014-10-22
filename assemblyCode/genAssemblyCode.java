@@ -30,6 +30,12 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+				case INITGLOBALVAR:
+					initglobalvarMethod(instr);
+					break;
+				case INITGLOBALARRAY:
+					initglobalarrayMethod(instr);
+					break;
 				case INITLOCAL:
 					initlocalMethod(instr);
 					break;
@@ -418,7 +424,7 @@ public class genAssemblyCode {
 
 	/* Recupera el valor de un arreglo local */
 	public static void valuearrayMethod(Instr instr) {
-		result += "movl		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "movl		" + instr.getOperand2() + "(%rbp), %edx \n";
 		result += "cltq \n";
 		result += "mov 		" + instr.getOperand1() + "(%rbp,%rdx,8) , %r11\n";
 		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
@@ -426,7 +432,7 @@ public class genAssemblyCode {
 
 	/* Recupera el valor de un arreglo global */
 	public static void globalvaluearrayMethod(Instr instr) {
-		result += "mov 		" + instr.getOperand2() + "(%rbp)" + ", %edx \n";
+		result += "mov 		" + instr.getOperand2() + "(%rbp), %edx \n";
 		result += "cltq \n";	
 		result += "mov 		" + instr.getOperand1() + "(,%rdx,8) , %r11\n";
 		result += "mov 		%r11, "+ instr.getResult() + "(%rbp) \n";
@@ -452,4 +458,16 @@ public class genAssemblyCode {
 		result += "movq		$" + instr.getOperand1() + ", %r10\n";
 		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
+
+	public static void initglobalvarMethod(Instr instr) {
+		result += "mov		$" + instr.getOperand1() + ", %r10\n";
+		result += "mov		%r10, " + instr.getResult() + "(%rip)\n";
+	}
+
+	public static void initglobalarrayMethod(Instr instr) {
+		result += "mov 		$" + instr.getOperand1() + ", %r10 \n";
+		result += "mov 		$" + instr.getOperand2() + ", %edx \n";
+		result += "cltq \n";
+		result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
+	}		
 }

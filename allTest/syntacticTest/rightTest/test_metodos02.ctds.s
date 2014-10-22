@@ -93,8 +93,8 @@ ret
 main: 
 enter   $(8 * 12), $0 
 
-movq		$0, %r10
-mov		%r10, -8(%rbp)
+mov		$0, %r10
+mov		%r10, c(%rip)
 
 movq 	$7, -24(%rbp)
 

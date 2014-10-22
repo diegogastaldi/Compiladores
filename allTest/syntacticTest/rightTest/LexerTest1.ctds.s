@@ -20,9 +20,6 @@ mov 		%rdi, -16(%rbp)
 mov 		%rsi, -24(%rbp) 
 
 movq		$0, %r10
-mov		%r10, -24(%rbp)
-
-movq		$0, %r10
 mov		%r10, -32(%rbp)
 
 movq		$0, %r10
@@ -94,6 +91,21 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 11), $0 
+
+mov 		$0, %r10 
+mov 		$589, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+
+mov 		$0, %r10 
+mov 		$56, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+
+mov 		$0, %r10 
+mov 		$5, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
 
 movq 	$2, -24(%rbp)
 

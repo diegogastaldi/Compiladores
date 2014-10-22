@@ -44,7 +44,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   /* Crea las instrucciones para las variables globales */
-  public void globalVar( List<absSymbol> globals) {
+  public void globalVar(List<absSymbol> globals) {
     for (absSymbol g : globals) {
       if (g instanceof arraySymbol)
         instructions.add(new Instr(Operator.GLOBAL, g.getName(), ((arraySymbol)g).getSize()*8, null));
@@ -53,12 +53,30 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     }
   }
 
+  /* Crea las instrucciones para el metodo main */ 
+  public void blockCode(completeFunction c, List<absSymbol> globals) {
+    posMethodLabel = instructions.size();
+    /* Reinicia labels */
+    genLabels.restart(c.getParameters().size()+ c.getLocalVars());
+    /* Inicializo variables locales con valores por defecto */
+    initLocalVar(c.getParameters().size()+1, c.getLocalVars());
+    /* Inicializo variables globales con valores por defecto */
+    initGlobalVar(globals);    
+    /* Genera instrucciones assembler */
+    c.getBlock().accept(this);
+    /* Calcula el espacio a reservar */
+    int reserveSpace = (-genLabels.getOffSet()/8)-1;
+    /* Label de inicio de funcion */
+    instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
+  }
+
+  /* Crea instrucciones para todas las funciones distintas del main */
   public void blockCode(completeFunction c) {
     posMethodLabel = instructions.size();
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size()+ c.getLocalVars());
     /* Inicializo variables locales con valores por defecto */
-    initLocalVar(c.getParameters().size(), c.getLocalVars());
+    initLocalVar(c.getParameters().size()+1, c.getLocalVars());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
@@ -72,6 +90,15 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	while (i <= amount) { 
   		instructions.add(new Instr(Operator.INITLOCAL, "0", null,i * (-8)));
   		i++;	
+  	}
+  }
+
+  private void initGlobalVar(List<absSymbol> globals) {
+  	for (absSymbol abs : globals) {
+  		if (abs instanceof simpleSymbol)
+  			instructions.add(new Instr(Operator.INITGLOBALVAR, "0", null, abs.getName()));
+  		else
+  			instructions.add(new Instr(Operator.INITGLOBALARRAY, "0", ((arraySymbol)abs).getSize(), abs.getName()));
   	}
   }
 

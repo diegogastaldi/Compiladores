@@ -1,5 +1,8 @@
-.L0L5: 
+.L0L6: 
 		.string "%d" 
+
+.L0L5: 
+		.string "entro al while con %d" 
 
 .text
 
@@ -12,12 +15,9 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(8 * 37), $0 
+enter   $(8 * 40), $0 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
-
-movq		$0, %r10
-mov		%r10, -24(%rbp)
 
 movq		$0, %r10
 mov		%r10, -32(%rbp)
@@ -144,43 +144,48 @@ cmp 		-240(%rbp), %r10
 
 jne 		.endWhileL3
 
-movq 	$1, -256(%rbp)
+mov		$.L0L5, %r10
+mov	 	%r10, %rdi
 
-mov 		-256(%rbp), %r10 
+mov		-96(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	printf
+mov 	%rax, -272(%rbp) 
+
+mov 		-96(%rbp), %r10 
 mov 		-96(%rbp), %edx 
 cltq 
 mov 		%r10, A(, %rdx, 8) 
 
-movq 	$1, -264(%rbp)
+movq 	$1, -288(%rbp)
 
-mov		-264(%rbp), %r10 
+mov		-288(%rbp), %r10 
 mov		-96(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -272(%rbp)
+mov		%r11, -296(%rbp)
 
-mov		-272(%rbp), %r10
+mov		-296(%rbp), %r10
 mov		%r10, -96(%rbp)
 
 jmp 		.beginWhileL4
 
 .endWhileL3: 
 
-movq 	$8, -280(%rbp)
+movq 	$1, -304(%rbp)
 
-mov		-280(%rbp), %r10
-mov		%r10, -96(%rbp)
+mov		-304(%rbp), %r10 
+mov		-96(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -312(%rbp)
 
-movq 	$0, -288(%rbp)
-
-mov		-288(%rbp), %r10
-mov		%r10, -96(%rbp)
-
-mov 		-96(%rbp), %edx 
+mov 		-312(%rbp), %edx 
 cltq 
 mov 		A(,%rdx,8) , %r11
-mov 		%r11, -296(%rbp) 
+mov 		%r11, -320(%rbp) 
 
-mov		-296(%rbp), %rax
+mov		-320(%rbp), %rax
 leave
 ret
 
@@ -188,6 +193,21 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 11), $0 
+
+mov 		$0, %r10 
+mov 		$589, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+
+mov 		$0, %r10 
+mov 		$56, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+
+mov 		$0, %r10 
+mov 		$5, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
 
 movq 	$4, -24(%rbp)
 
@@ -203,7 +223,7 @@ mov 		$0, %rax
 call 	pruArreglos
 mov 	%rax, -56(%rbp) 
 
-mov		$.L0L5, %r10
+mov		$.L0L6, %r10
 mov	 	%r10, %rdi
 
 mov		-56(%rbp), %r10

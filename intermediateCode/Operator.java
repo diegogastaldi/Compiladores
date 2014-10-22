@@ -17,7 +17,9 @@
 
 package intermediateCode;
 public enum Operator {
-	INITLOCAL
+	INITGLOBALARRAY
+	, INITGLOBALVAR
+	, INITLOCAL
  	, CALLMETHOD /*Primer parametro: Nombre del metodo, 
  							 Segundo parametro: Cantidad de parametros, 
  							 Tercer parametro: Variable para resultado */
@@ -58,6 +60,10 @@ public enum Operator {
 	@Override
 	public String toString() {
 		switch(this) {
+			case INITGLOBALARRAY:
+				return "INITGLOBALARRAY";
+			case INITGLOBALVAR:
+				return "INITGLOBALVAR";
 			case INITLOCAL:
 				return"INITLOCAL";			
 			case VALUEARRAY:

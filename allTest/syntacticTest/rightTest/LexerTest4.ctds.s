@@ -28,9 +28,6 @@ ret
 main: 
 enter   $(8 * 17), $0 
 
-movq		$0, %r10
-mov		%r10, -8(%rbp)
-
 mov 		$0, %rax 
 call 	get_int
 mov 	%rax, -24(%rbp) 

@@ -26,9 +26,6 @@ enter   $(8 * 14), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-movq		$0, %r10
-mov		%r10, -24(%rbp)
-
 movq 	$3, -56(%rbp)
 
 movq 	$2, -64(%rbp)
@@ -81,8 +78,8 @@ ret
 main: 
 enter   $(8 * 13), $0 
 
-movq		$0, %r10
-mov		%r10, -8(%rbp)
+mov		$0, %r10
+mov		%r10, res(%rip)
 
 movq 	$0, -24(%rbp)
 
