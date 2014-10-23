@@ -14,5 +14,4 @@ Compilacion y ejecucion de codigos:
 Nota:
 							DOCUMENTACION
 
-							float.
-              inicializar variables globales
+implementar metodos en generateAssemblyCode -> Ver donde busco los parametros

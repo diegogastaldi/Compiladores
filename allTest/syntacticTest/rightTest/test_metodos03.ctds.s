@@ -1,3 +1,9 @@
+.FL3: 
+		.float 10.2 
+
+.FL2: 
+		.float 2.0 
+
 .text
 
 .comm res, 8
@@ -50,10 +56,9 @@ jne 		.falseCondL0
 
 movq 	$3, -96(%rbp)
 
-mov		-24(%rbp), %rax 
-cltd
-idivq	-96(%rbp) 
-mov		%rax, -104(%rbp)
+movss		-24(%rbp), %xmm0 
+divss		-96(%rbp), %xmm0 
+movss		%xmm0, -104(%rbp) 
 
 mov		-104(%rbp), %r10
 mov		%r10, -32(%rbp)
@@ -62,21 +67,22 @@ jmp 		.endIfL1
 
 .falseCondL0: 
 
-movq 	$2.0, -112(%rbp)
+mov	.FL2(%rip), %r10
+mov	%r10, -112(%rbp)
 
 mov		-112(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .endIfL1: 
 
-mov		-32(%rbp), %rax
+movss		-32(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 13), $0 
+enter   $(8 * 10), $0 
 
 mov		$0, %r10
 mov		%r10, res(%rip)
@@ -93,24 +99,24 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	inc
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -40(%rbp) 
 
-movq 	$10.2, -72(%rbp)
+mov	.FL3(%rip), %r10
+mov	%r10, -56(%rbp)
 
-mov		-48(%rbp), %r10
+mov		-40(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-72(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-56, %xmm1
 
 mov 		$0, %rax 
 call 	resto
-mov 	%rax, -88(%rbp) 
+mov 	%rax, -64(%rbp) 
 
-movq 	$0, -104(%rbp)
+movq 	$0, -80(%rbp)
 
-mov 		-88(%rbp), %r10 
-movl		-104(%rbp), %edx 
+mov 		-64(%rbp), %r10 
+movl		-80(%rbp), %edx 
 cltq 
 mov 		%r10, -16(%rbp, %rdx, 8) 
 

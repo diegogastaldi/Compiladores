@@ -58,6 +58,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
   public Type visit(ReturnStmt stmt) {
     if (stmt.getExpression() != null) {
         Type e = stmt.getExpression().accept(this);
+        stmt.getExpression().setType(e);
     }
   	return null;
   }
@@ -132,11 +133,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     if (operand == Type.BOOLEAN){
     addError(expr,"La expresion luego del - no puede ser de tipo Bool");
     }
-    if (operand == Type.FLOAT)
-      expr.setType(Type.FLOAT);
-    else 
-      expr.setType(Type.INT);
-
+    expr.setType(operand);
     return operand;
   }
 
@@ -168,15 +165,19 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     Type leftOperand = expr.getLeftOperand().accept(this);
     Type rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
-    if  (leftOperand != rightOperand && leftOperand == Type.BOOLEAN) {
+    if  (leftOperand != rightOperand && leftOperand == Type.BOOLEAN) 
       addError(expr,"Los operando de una expresion aritmetica no peden ser Bool ni distintos");
-    } 
     switch(operator){
       case DIVIDE: 
         expr.setType(Type.FLOAT);
         return Type.FLOAT;
-      case PLUS: case MINUS: case MULTIPLY: case MOD:
+      case PLUS: case MINUS: case MULTIPLY: 
         expr.setType(leftOperand);
+        return leftOperand;
+      case MOD:
+        if (leftOperand == Type.FLOAT)
+          addError(expr,"La operacion Mod no puede aplicarse con operandos de tipo float");
+          expr.setType(leftOperand);
         return leftOperand;
     }
     return null;
@@ -254,9 +255,10 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
 
   public Type visit(ArrayLocation loc)  {
     Type expression = loc.getExpression().accept(this); 
-    if (expression == Type.BOOLEAN){
+    if (expression != Type.INT)
 	    addError(loc,"La expresion del ArrayLocation debe ser entera");  
-    }
+    else 
+      loc.getExpression().setType(Type.INT);
     return loc.getType();
   }
 

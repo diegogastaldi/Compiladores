@@ -46,28 +46,28 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 movq 	$4, -16(%rbp)
 
-movq 	$8, -32(%rbp)
+movq 	$8, -24(%rbp)
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	pruAritmetica
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-mov		-48(%rbp), %r10
+mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -72(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

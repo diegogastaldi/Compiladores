@@ -1,3 +1,6 @@
+.FL1: 
+		.float 1.0 
+
 .text
 
 .globl	method
@@ -7,11 +10,11 @@ enter   $(8 * 12), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-mov		-16(%rbp), %rax
-cmp		-24(%rbp), %rax
-setle 	%al
-movzb  %al, %rax
-mov		%rax, -56(%rbp)
+movss		-16(%rbp), %xmm0 
+ucomiss		-24(%rbp), %xmm0 
+setae		%al 
+movzb		%al, %rax 
+mov 		%rax, -56(%rbp) 
 
 movq 	$1, -64(%rbp)
 
@@ -22,23 +25,19 @@ jne 		.falseCondL0
 
 movq 	$1, -72(%rbp)
 
-movq 	$1.0, -80(%rbp)
+mov	.FL1(%rip), %r10
+mov	%r10, -80(%rbp)
 
-mov 		-24(%rbp), %rax
-cmp		-80(%rbp), %rax
-sete		%al
-movzb	%al, %rax
-mov		%rax, -88(%rbp)
 
 cmpq		$0, -72(%rbp)
-je 		.L1
+je 		.L2
 cmpq		$0, -88(%rbp)
-je 		.L1
+je 		.L2
 mov		$1, %r10
-jmp		.L2
-.L1:
-mov		$0, %r10
+jmp		.L3
 .L2:
+mov		$0, %r10
+.L3:
 mov		%r10, -96(%rbp)
 
 mov		-96(%rbp), %r10

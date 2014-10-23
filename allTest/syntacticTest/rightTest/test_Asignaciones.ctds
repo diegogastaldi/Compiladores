@@ -10,7 +10,7 @@ float pruAritmetica(float c){
 		a = 699.0 + a ;
 		b = b + 2; 
 		a =  a / c / b / 2 ;
-		c = a % 2;
+
 		return c;	
 }
 

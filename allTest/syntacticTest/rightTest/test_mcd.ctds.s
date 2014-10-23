@@ -47,14 +47,14 @@ mov		%r10, -48(%rbp)
 
 .endIfL1: 
 
-movq 	$1.0, -88(%rbp)
+movq 	$1, -88(%rbp)
 
 mov		-88(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 .beginWhileL3: 
 
-movq 	$0.0, -96(%rbp)
+movq 	$0, -96(%rbp)
 
 mov		-40(%rbp), %rax
 cmp		-96(%rbp), %rax
@@ -94,31 +94,31 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 11), $0 
+enter   $(8 * 9), $0 
 
-movq 	$6.0, -24(%rbp)
+movq 	$6, -24(%rbp)
 
-movq 	$9.0, -40(%rbp)
+movq 	$9, -32(%rbp)
 
 mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-32(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	maxcomdiv
+mov 	%rax, -40(%rbp) 
+
+mov		$.L0L4, %r10
 mov	 	%r10, %rdi
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	maxcomdiv
-mov 	%rax, -56(%rbp) 
-
-mov		$.L0L4, %r10
-mov	 	%r10, %rdi
-
-mov		-56(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
 call 	printf
-mov 	%rax, -80(%rbp) 
+mov 	%rax, -64(%rbp) 
 
 mov 		$0, %rax
 leave

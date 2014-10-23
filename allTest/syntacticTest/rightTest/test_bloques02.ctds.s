@@ -1,5 +1,8 @@
-.L0L4: 
+.L0L5: 
 		.string "%f resultado : " 
+
+.FL2: 
+		.float 2.3 
 
 .text
 
@@ -44,7 +47,8 @@ mov		%r11, -88(%rbp)
 mov		-88(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-movq 	$2.3, -96(%rbp)
+mov	.FL2(%rip), %r10
+mov	%r10, -96(%rbp)
 
 mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
@@ -62,17 +66,17 @@ movq 	$1, -120(%rbp)
 mov		-120(%rbp), %r10
 cmp 		-112(%rbp), %r10
 
-jne 		.falseCondL2
+jne 		.falseCondL3
 
 jmp 		.endWhileL0
 
-jmp 		.endIfL3
+jmp 		.endIfL4
 
-.falseCondL2: 
+.falseCondL3: 
 
 jmp 		.beginWhileL1
 
-.endIfL3: 
+.endIfL4: 
 
 jmp 		.beginWhileL1
 
@@ -85,7 +89,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 8), $0 
 
 movq 	$1, -24(%rbp)
 
@@ -94,17 +98,17 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	breaks
-mov 	%rax, -40(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-mov		$.L0L4, %r10
+mov		$.L0L5, %r10
 mov	 	%r10, %rdi
 
-mov		-40(%rbp), %r10
+mov		-32(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

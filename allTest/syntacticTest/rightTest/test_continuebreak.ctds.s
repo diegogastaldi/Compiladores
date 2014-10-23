@@ -1,3 +1,36 @@
+.FL15: 
+		.float 0 
+
+.FL14: 
+		.float 2.0 
+
+.FL13: 
+		.float 6752.0 
+
+.FL12: 
+		.float 0 
+
+.FL11: 
+		.float 1000.2343 
+
+.FL8: 
+		.float 0.0 
+
+.FL6: 
+		.float 2.0 
+
+.FL5: 
+		.float 1.0 
+
+.FL2: 
+		.float 23.0 
+
+.FL1: 
+		.float 0 
+
+.FL0: 
+		.float 1.0 
+
 .text
 
 .globl	pruContinue
@@ -13,11 +46,13 @@ mov		%r10, -32(%rbp)
 movq		$0, %r10
 mov		%r10, -40(%rbp)
 
-movq 	$1.0, -72(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -72(%rbp)
 
-mov		-72(%rbp), %rax 
-neg		%rax 
-mov		%rax, -80(%rbp) 
+movss		-72(%rbp), %xmm1 
+movss		.FL1(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -80(%rbp) 
 
 mov		-80(%rbp), %r10
 mov		%r10, -48(%rbp)
@@ -27,152 +62,148 @@ movq 	$23, -88(%rbp)
 mov		-88(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-movq 	$23.0, -96(%rbp)
+mov	.FL2(%rip), %r10
+mov	%r10, -96(%rbp)
 
 mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-.beginWhileL1: 
+.beginWhileL4: 
 
 movq 	$0, -104(%rbp)
 
-mov		-32(%rbp), %rax
-cmp		-104(%rbp), %rax
-setge 	%al
-movzb 	%al, %rax
-mov		%rax, -112(%rbp)
+movss		-104(%rbp), %xmm0 
+ucomiss		-32(%rbp), %xmm0 
+setae		%al 
+movzb		%al, %rax 
+mov 		%rax, -112(%rbp) 
 
 movq 	$1, -120(%rbp)
 
 mov		-120(%rbp), %r10
 cmp 		-112(%rbp), %r10
 
-jne 		.endWhileL0
+jne 		.endWhileL3
 
-movq 	$1.0, -128(%rbp)
+mov	.FL5(%rip), %r10
+mov	%r10, -128(%rbp)
 
-mov		-128(%rbp), %r10 
-mov		-32(%rbp), %r11 
-sub		%r10, %r11 
-mov		%r11, -136(%rbp)
+movss		-32(%rbp), %xmm0 
+subss		-128(%rbp), %xmm0 
+movss		%xmm0, -136(%rbp) 
 
 mov		-136(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$2.0, -144(%rbp)
+mov	.FL6(%rip), %r10
+mov	%r10, -144(%rbp)
 
-mov		-24(%rbp), %rax
-cmp		-144(%rbp), %rax
-setl		%al
-movzb 	%al, %rax
-mov		%rax, -152(%rbp)
+movss		-24(%rbp), %xmm0 
+ucomiss		-144(%rbp), %xmm0 
+seta			%al 
+movzb		%al, %rax 
+mov 		%rax, -152(%rbp) 
 
 movq 	$1, -160(%rbp)
 
 mov		-160(%rbp), %r10
 cmp 		-152(%rbp), %r10
 
-jne 		.falseCondL2
+jne 		.falseCondL7
 
-movq 	$0.0, -168(%rbp)
+mov	.FL8(%rip), %r10
+mov	%r10, -168(%rbp)
 
-mov		-32(%rbp), %rax
-cmp		-168(%rbp), %rax
-setne 	%al
-movzb 	%al, %rax
-mov		%rax, -176(%rbp)
 
 movq 	$1, -184(%rbp)
 
 mov		-184(%rbp), %r10
 cmp 		-176(%rbp), %r10
 
-jne 		.falseCondL3
+jne 		.falseCondL9
 
-mov		-24(%rbp), %r10 
-mov		-16(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -192(%rbp)
+movss		-24(%rbp), %xmm0 
+mulss		-16(%rbp), %xmm0 
+movss		%xmm0, -192(%rbp) 
 
-mov		-48(%rbp), %r10 
-mov		-192(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -200(%rbp)
+movss		-48(%rbp), %xmm0 
+mulss		-192(%rbp), %xmm0 
+movss		%xmm0, -200(%rbp) 
 
 mov		-200(%rbp), %r10
 mov		%r10, -48(%rbp)
 
-.falseCondL3: 
+.falseCondL9: 
 
-jmp 		.beginWhileL1
+jmp 		.beginWhileL4
 
-jmp 		.endIfL4
+jmp 		.endIfL10
 
-.falseCondL2: 
+.falseCondL7: 
 
-movq 	$1000.2343, -208(%rbp)
+mov	.FL11(%rip), %r10
+mov	%r10, -208(%rbp)
 
-mov		-208(%rbp), %rax 
-neg		%rax 
-mov		%rax, -216(%rbp) 
+movss		-208(%rbp), %xmm1 
+movss		.FL12(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -216(%rbp) 
 
-movq 	$6752.0, -224(%rbp)
+mov	.FL13(%rip), %r10
+mov	%r10, -224(%rbp)
 
-mov		-216(%rbp), %r10 
-mov		-224(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -232(%rbp)
+movss		-216(%rbp), %xmm0 
+addss		-224(%rbp), %xmm0 
+movss		%xmm0, -232(%rbp) 
 
 mov		-232(%rbp), %r10
 mov		%r10, -48(%rbp)
 
-jmp 		.endWhileL0
+jmp 		.endWhileL3
 
-.endIfL4: 
+.endIfL10: 
 
-jmp 		.beginWhileL1
+jmp 		.beginWhileL4
 
-.endWhileL0: 
+.endWhileL3: 
 
-movq 	$2.0, -240(%rbp)
+mov	.FL14(%rip), %r10
+mov	%r10, -240(%rbp)
 
-mov		-240(%rbp), %r10 
-mov		-48(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -248(%rbp)
+movss		-240(%rbp), %xmm0 
+mulss		-48(%rbp), %xmm0 
+movss		%xmm0, -248(%rbp) 
 
-mov		-248(%rbp), %rax 
-neg		%rax 
-mov		%rax, -256(%rbp) 
+movss		-248(%rbp), %xmm1 
+movss		.FL15(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -256(%rbp) 
 
-mov		-256(%rbp), %rax
+movss		-256(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-16, %xmm0
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-24, %xmm1
 
 mov 		$0, %rax 
 call 	pruContinue
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-mov		-48(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-32, %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -72(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

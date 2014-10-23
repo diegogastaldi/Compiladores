@@ -85,6 +85,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
   }
 
+  /* Crea las instrucciones para la inicializacion de las variables locales 
+  	entre los espacios de memoria pasados como parametros */
   private void initLocalVar(int begin, int amount) {
   	int i = begin + 1;
   	while (i <= amount) { 
@@ -93,6 +95,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	}
   }
 
+  /* Crea las instrucciones para la inicializacion de las variables globales */
   private void initGlobalVar(List<absSymbol> globals) {
   	for (absSymbol abs : globals) {
   		if (abs instanceof simpleSymbol)
@@ -102,47 +105,56 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	}
   }
 
+  /* Retorna las instrucciones generadas */
   public List<Instr> getInst() {
     return instructions;
   }
+
+  /*-----------------------------------------------------------------------------------------------------------------------------------*/
 
   public Integer visit(IncrementAssign stmt)   {
     /* Genera instrucciones para la expresion*/
     Integer expr = stmt.getExpression().accept(this);    
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
-
     Location location = stmt.getLocation();
 
-    if (!location.getIsGlobal()) {
-      /* Realiza la asigancion */
-      if (stmt.getLocation() instanceof VarLocation) {
-        /* Genera instrucciones para el Location*/
-        Integer loc = stmt.getLocation().accept(this);
-    		/* Realiza el incremento */
-    		instructions.add(new Instr(Operator.PLUS, expr, loc, result));
-        instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
-      }
-      else {
-        ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        /* Realiza el incremento */
-    		instructions.add(new Instr(Operator.PLUS, expr, a.getOffSet(), result));
-        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
-      }
-    } else {
-      /* Realiza la asigancion */
-      if (stmt.getLocation() instanceof VarLocation) {
-      	/* Realiza el incremento */
-    		instructions.add(new Instr(Operator.PLUS, expr, location.accept(this), result));
-        instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
-      }
-      else {
-      	/* Realiza el incremento */
-    		instructions.add(new Instr(Operator.PLUS, expr, location.accept(this), result));      	
-        ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
-      }      
-    }
+		/* Selecciona el incremento correcto segun el tipo */
+		Operator plus;
+		if (!(stmt.getExpression().getType() == Type.FLOAT)) 
+			plus = Operator.PLUS;
+		else 
+ 			plus = Operator.FPLUS;
+
+	  if (!location.getIsGlobal()) {
+	    /* Realiza la asigancion */
+	    if (stmt.getLocation() instanceof VarLocation) {
+	      /* Genera instrucciones para el Location*/
+	      Integer loc = stmt.getLocation().accept(this);
+	  		/* Realiza el incremento */
+	  		instructions.add(new Instr(plus, expr, loc, result));
+	      instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
+	    }
+	    else {
+	      ArrayLocation a = (ArrayLocation) stmt.getLocation();
+	      /* Realiza el incremento */
+	  		instructions.add(new Instr(plus, expr, a.getOffSet(), result));
+	      instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
+	    }
+	  } else {
+	    /* Realiza la asigancion */
+	    if (stmt.getLocation() instanceof VarLocation) {
+	    	/* Realiza el incremento */
+	  		instructions.add(new Instr(plus, expr, location.accept(this), result));
+	      instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
+	    }
+	    else {
+	    	/* Realiza el incremento */
+	  		instructions.add(new Instr(plus, expr, location.accept(this), result));      	
+	      ArrayLocation a = (ArrayLocation) stmt.getLocation();
+	      instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
+	    }      
+	  }
     return null;
   }
   
@@ -151,32 +163,37 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer expr = stmt.getExpression().accept(this);    
     /* Label donde guardara el resultado */
     Integer result = genLabels.getOffSet();
-
     Location location = stmt.getLocation();
+		/* Selecciona el decremento correcto segun el tipo */
+		Operator minus;
+		if (!(stmt.getExpression().getType() == Type.FLOAT)) 
+			minus = Operator.MINUS;
+		else 
+ 			minus = Operator.FMINUS;
 
     if (!location.getIsGlobal()) {
       /* Realiza la asigancion */
       if (stmt.getLocation() instanceof VarLocation) {
         /* Genera instrucciones para el Location*/
-        Integer loc = stmt.getLocation().accept(this);
-		    /* Realiza el decremento */
-    		instructions.add(new Instr(Operator.MINUS, expr, loc, result));
+        Integer loc = location.accept(this);
+ 	    /* Realiza el decremento */
+    		instructions.add(new Instr(minus, expr, loc, result));
         instructions.add(new Instr(Operator.VARASSIGN, result, null, loc));
       }
       else {
-        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        ArrayLocation a = (ArrayLocation) location;
     		/* Realiza el decremento */
-    		instructions.add(new Instr(Operator.MINUS, expr, a.getOffSet(), result));      	        
+    		instructions.add(new Instr(minus, expr, a.getOffSet(), result));      	        
         instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
       }
     } else {
     	/* Realiza el decremento */
-    	instructions.add(new Instr(Operator.MINUS, expr, location.accept(this), result));      	
+    	instructions.add(new Instr(minus, expr, location.accept(this), result));      	
       /* Realiza la asigancion */
       if (stmt.getLocation() instanceof VarLocation) 
         instructions.add(new Instr(Operator.VARASSIGNGLOBAL, result, null, location.getId()));
       else {
-        ArrayLocation a = (ArrayLocation) stmt.getLocation();
+        ArrayLocation a = (ArrayLocation) location;
         instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
       }
     }
@@ -206,18 +223,30 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
         instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, expr, (Integer)a.getExpression().accept(this), location.getId()));
       }
-      
     }
     return null;
   }
   
   public Integer visit(ReturnStmt stmt) {
   	Integer e = null;
-  	/* Genera instrucciones para la expresion */
-    if (stmt.getExpression() != null) {
-        e = stmt.getExpression().accept(this);
-    }
-    instructions.add(new Instr(Operator.RETURN, null, null, e));
+  	Expression expr = stmt.getExpression();
+	  /* Genera instrucciones para la expresion */
+	  if (expr != null) {
+	    e = expr.accept(this);
+
+      switch (expr.getType()) {
+        case INT: case BOOLEAN:
+  	    	instructions.add(new Instr(Operator.RETURN, null, null, e));
+          break;
+        case FLOAT:
+	    	  instructions.add(new Instr(Operator.FRETURN, null, null, e));	  	
+          break;
+        default: 
+          System.out.println("La expresion del return no tiene tipo asignado");
+          break;
+      }
+	  } else 
+  		instructions.add(new Instr(Operator.RETURN, null, null, null));	  
   	return null;
   }
   
@@ -355,8 +384,24 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     for (int i = 0; i < stmt.getParameters().size(); i++) {
       a = stmt.getParameters().get(i);
       parameter = a.accept(this);
-      /* Apila paramatros en memoria */
-      param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
+      Operator op = null;
+
+      switch (a.getType()) {
+        case FLOAT: 
+          op = Operator.FPARAM;
+          break;
+        case INT: case BOOLEAN:
+          op = Operator.PARAM;
+          break;
+        default: 
+          System.out.println("Stmt: El parametro de la llamada interna no tiene tipo asignado");
+          break;
+      }
+
+      if (i < 6)
+      	param.add(new Instr(op, parameter, i, null));
+      else 
+      	param.add(new Instr(op, parameter, i, genLabels.getOffSet()));
     }
     instructions.addAll(param);
     /* Realiza la llamada a la funcion */
@@ -372,8 +417,20 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     for (int i = 0; i < stmt.getParameters().size(); i++) {
       a = stmt.getParameters().get(i);
       if (!(a instanceof ArgInvocSL)) {
-        parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));                
+      	parameter = ((ArgInvocExpr) a).getExpression().accept(this);
+
+        switch (((ArgInvocExpr) a).getExpression().getType()) {
+          case FLOAT:  
+            param.add(new Instr(Operator.FPARAM, parameter, i, genLabels.getOffSet()));
+            break;
+          case INT: case BOOLEAN:
+            param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
+            break;
+          default: 
+            System.out.println("Stmt: El parametro de la llamada externa no tiene tipo asignado");
+            break;
+        }
+
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
@@ -390,8 +447,22 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   public Integer visit (NegativeExpr expr)   {
     Integer operand = expr.getExpression().accept(this);
     Integer result = genLabels.getOffSet();
+ 
+    switch (expr.getType()) {
+      case INT:
+	  	  instructions.add(new Instr(Operator.UNARYMINUS, operand, null, result));
+        break;
+      case FLOAT:
+  	  	String label = genLabels.getLabel();
+  	  	instructions.add(0, new Instr(Operator.FLOAT, 0, "F"+label, null));
+    		posMethodLabel ++;
+  	  	instructions.add(new Instr(Operator.FUNARYMINUS, operand, "F"+label, result));
+        break;
+      default: 
+        System.out.println("La expresion Negativa no tiene tipo asignado");
+        break;
 
-	  instructions.add(new Instr(Operator.UNARYMINUS, operand, null, result));
+	  }
     return result;
   }
 
@@ -410,22 +481,45 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   	Integer result = genLabels.getOffSet();
   	Operator op = null;
-  	switch (operator) {
-		case LE:
-				op = Operator.LE;
-				break;
-		case GE:
-				op = Operator.GE;
-				break;
-		case GEQ:
-				op = Operator.GEQ;
-				break;
-		case LEQ:
-				op = Operator.LEQ;
-				break;
-	  }
+
+	  switch (expr.getLeftOperand().getType()) {
+      case INT:
+      	switch (operator) {
+  			case LE:
+  				op = Operator.LE;
+  				break;
+  			case GE:
+  				op = Operator.GE;
+  				break;
+  			case GEQ:
+  				op = Operator.GEQ;
+  				break;
+  			case LEQ:
+  				op = Operator.LEQ;
+  				break;
+  		  }
+        break;
+		  case FLOAT:
+  	  	switch (operator) {
+  			case LE:
+  				op = Operator.FLE;
+  				break;
+  			case GE:
+  				op = Operator.FGE;
+  				break;
+  			case GEQ:
+  				op = Operator.FGEQ;
+  				break;
+  			case LEQ:
+  				op = Operator.FLEQ;
+  				break;
+  		  }
+        break;
+      default: 
+        System.out.println("El parametro de La expresion relacional no tiene tipo asignado");
+        break;
+		}
 	  instructions.add(new Instr(op, leftOperand, rightOperand, result));
-         
     return result;
   }
 
@@ -433,25 +527,48 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer leftOperand = expr.getLeftOperand().accept(this);
     Integer rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
-
   	Operator op = null;
-  	switch (operator) {
-		case PLUS:
-				op = Operator.PLUS;
-				break;
-		case MINUS:
-				op = Operator.MINUS;
-				break;
-		case MULTIPLY:
-				op = Operator.MULTIPLY;
-				break;
-		case DIVIDE:
-				op = Operator.DIVIDE;
-				break;
-		case MOD:
-				op = Operator.MOD;		
-				break;
-  	}
+
+    switch (expr.getType()) {
+      case INT:
+  	  	switch (operator) {
+    			case PLUS:
+    				op = Operator.PLUS;
+    				break;
+    			case MINUS:
+    				op = Operator.MINUS;
+    				break;
+    			case MULTIPLY:
+    				op = Operator.MULTIPLY;
+    				break;
+    			case DIVIDE:
+    				op = Operator.DIVIDE;
+    				break;
+    			case MOD:
+    				op = Operator.MOD;		
+    				break;
+    	  }
+        break;
+      case FLOAT:
+  	  	switch (operator) {
+    			case PLUS:
+    				op = Operator.FPLUS;
+    				break;
+    			case MINUS:
+    				op = Operator.FMINUS;
+    				break;
+    			case MULTIPLY:
+    				op = Operator.FMULTIPLY;
+    				break;
+    			case DIVIDE:
+    				op = Operator.FDIVIDE;
+    				break;
+    	 	}			
+        break;
+      default : 
+        System.out.println("La expresion de aritmetica no tiene tipo asignado");
+        break;              
+		}  	
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(op, leftOperand, rightOperand, result));
      
@@ -474,11 +591,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     labels.add(genLabels.getLabel());
 
   	switch (operator) {
-  		case AND : 	instructions.add(new Instr(Operator.AND, labels, operand, result));
-  								break;
-  		case OR : 	labels.add(genLabels.getLabel());
-                  instructions.add(new Instr(Operator.OR, labels, operand, result));
-  								break;
+  		case AND : 	
+        instructions.add(new Instr(Operator.AND, labels, operand, result));
+  			break;
+  		case OR : 	
+        labels.add(genLabels.getLabel());
+        instructions.add(new Instr(Operator.OR, labels, operand, result));
+  			break;
   	}    
     return result;
   }
@@ -488,13 +607,36 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
 
+  	Operator op = null;
+
+    switch (expr.getLeftOperand().getType()) {
+      case INT: case BOOLEAN:
+  	  	switch (operator) {
+    			case CEQ:
+    				op = Operator.CEQ;
+    				break;
+    			case NEQ:
+    				op = Operator.NEQ;
+    				break;
+    	  }
+        break;
+      case FLOAT:
+  	  	switch (operator) {
+    			case CEQ:
+    				op = Operator.FCEQ;
+    				break;
+    			case NEQ:
+    				op = Operator.FNEQ;
+    				break;
+    	  }
+        break;
+      default : 
+        System.out.println("Los parametros de la expresion de equivalencia no tiene tipo asignado");
+        break;      
+  	}  	
     Integer result = genLabels.getOffSet();
-  	switch (operator) {
-  		case CEQ : 	instructions.add(new Instr(Operator.CEQ, leftOperand, rightOperand, result));
-  								break;
-  		case NEQ : 	instructions.add(new Instr(Operator.NEQ, leftOperand, rightOperand, result));
-    							break;
-  	}
+  	instructions.add(new Instr(op, leftOperand, rightOperand, result));
+     
     return result;
   }
 
@@ -509,7 +651,23 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     for (int i = 0; i < expr.getParameters().size(); i++) {
       a = expr.getParameters().get(i);
       parameter = a.accept(this);
-      param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
+      Operator op = null;
+      switch (a.getType()) {
+        case FLOAT: 
+      	  op = Operator.FPARAM;
+          break;
+        case INT: case BOOLEAN:
+      	  op = Operator.PARAM;
+          break;
+        default: 
+          System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
+          break;
+      }
+      if (i < 6)
+      	param.add(new Instr(op, parameter, i, null));
+      else 
+      	param.add(new Instr(op, parameter, i, genLabels.getOffSet()));
+
     }
     instructions.addAll(param);
     /* Llama al metodo */
@@ -519,19 +677,30 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   } 
   
   public Integer visit (ExternInvkExpr expr){
-    Integer parameter;    
+    Integer parameter;  	
     ArgInvoc a;
     List<Instr> param = new LinkedList<Instr>();
     for (int i = 0; i < expr.getParameters().size(); i++) {
       a = expr.getParameters().get(i);
       if (!(a instanceof ArgInvocSL)) {
-        parameter = ((ArgInvocExpr)a).getExpression().accept(this);
-        param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));                
+				parameter = ((ArgInvocExpr) a).getExpression().accept(this);
+        
+        switch (((ArgInvocExpr) a).getExpression().getType()) {
+          case FLOAT:  
+            param.add(new Instr(Operator.FPARAM, parameter, i, genLabels.getOffSet()));
+            break;
+        	case INT: case BOOLEAN:
+            param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
+            break;
+          default: 
+            System.out.println("expr: El parametro de la llamada externa no tiene tipo asignado");
+            break;
+        }
       } else {
         String label = genLabels.getLabel();
-        instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
+        instructions.add(0, new Instr(Operator.STRING, a.toString(), "S"+label, null));
         posMethodLabel ++;
-        param.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
+        param.add(new Instr(Operator.PARAM, "$.S"+label, i, genLabels.getOffSet()));        
       }
     }
     instructions.addAll(param);
@@ -552,8 +721,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
  public Integer visit(FloatLiteral lit)   {
     Integer result = genLabels.getOffSet();
-  	instructions.add(new Instr(Operator.CONST, lit, null, result));
-
+    String label = genLabels.getLabel();
+  	instructions.add(0, new Instr(Operator.FLOAT, lit, "F"+label, null));
+  	posMethodLabel ++;
+  	instructions.add(new Instr(Operator.ASSIGNFLOAT, "F"+label, null, result));
     return result;
   }
 
@@ -570,7 +741,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 // visit locations  
   public Integer visit(VarLocation loc)   {
     if (!loc.getIsGlobal()) {
-      int os = loc.getOffSet();
+      Integer os = loc.getOffSet();
       /* Si el numero es mayor a cero es porque es un parametro, los cuales
         tiene su lugar reservado al principio del stack */
       if (os >=  0) 
@@ -578,24 +749,21 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       else 
         return os;
     } else {
-      Integer result = genLabels.getOffSet();
-      instructions.add(new Instr(Operator.GLOBALVALUEVAR, loc.getId(), null, result));
-      return result;
+      Integer result = genLabels.getOffSet();    	
+     	instructions.add(new Instr(Operator.GLOBALVALUEVAR, loc.getId(), null, result));
+      return result;      
     }
   }
 
   public Integer visit(ArrayLocation loc)  {
-    if (!loc.getIsGlobal()) {
-      Integer expr = loc.getExpression().accept(this);
-      Integer result = genLabels.getOffSet();
+  	/* Este metodo no es llamado en caso que se le quiera asignar algo a un arreglo, 
+  		solo se llama si se requiere el valor del mismo en algun indice */
+    Integer expr = loc.getExpression().accept(this);
+    Integer result = genLabels.getOffSet();
+    if (!loc.getIsGlobal()) 
       instructions.add(new Instr(Operator.VALUEARRAY, loc.getOffSet(), expr, result));
-      return result;
-    }
-    else {
-      Integer expr = loc.getExpression().accept(this);
-      Integer result = genLabels.getOffSet();
+    else 
       instructions.add(new Instr(Operator.GLOBALVALUEARRAY, loc.getId(), expr, result));
-      return result;
-    }
+    return result;    
   }
 }

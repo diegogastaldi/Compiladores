@@ -1,5 +1,17 @@
-.L0L0: 
+.L0L4: 
 		.string "anidandofuncionesflotantes" 
+
+.FL3: 
+		.float 3.5698 
+
+.FL2: 
+		.float 0 
+
+.FL1: 
+		.float 2.5 
+
+.FL0: 
+		.float 6.982 
 
 .text
 
@@ -10,12 +22,11 @@ enter   $(8 * 6), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-mov		-24(%rbp), %rax 
-cltd
-idivq	-16(%rbp) 
-mov		%rax, -48(%rbp)
+movss		-24(%rbp), %xmm0 
+divss		-16(%rbp), %xmm0 
+movss		%xmm0, -48(%rbp) 
 
-mov		-48(%rbp), %rax
+movss		-48(%rbp), %xmm0
 leave
 ret
 
@@ -26,12 +37,11 @@ enter   $(8 * 6), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-mov		-16(%rbp), %r10 
-mov		-24(%rbp), %r11 
-sub		%r10, %r11 
-mov		%r11, -48(%rbp)
+movss		-24(%rbp), %xmm0 
+subss		-16(%rbp), %xmm0 
+movss		%xmm0, -48(%rbp) 
 
-mov		-48(%rbp), %rax
+movss		-48(%rbp), %xmm0
 leave
 ret
 
@@ -42,19 +52,18 @@ enter   $(8 * 6), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-mov		-24(%rbp), %r10 
-mov		-16(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -48(%rbp)
+movss		-24(%rbp), %xmm0 
+addss		-16(%rbp), %xmm0 
+movss		%xmm0, -48(%rbp) 
 
-mov		-48(%rbp), %rax
+movss		-48(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 24), $0 
+enter   $(8 * 18), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -62,64 +71,61 @@ mov		%r10, -16(%rbp)
 movq		$0, %r10
 mov		%r10, -24(%rbp)
 
-movq 	$6.982, -40(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -40(%rbp)
 
 mov		-40(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-movq 	$2.5, -48(%rbp)
+mov	.FL1(%rip), %r10
+mov	%r10, -48(%rbp)
 
-mov		-48(%rbp), %rax 
-neg		%rax 
-mov		%rax, -56(%rbp) 
+movss		-48(%rbp), %xmm1 
+movss		.FL2(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -56(%rbp) 
 
 mov		-56(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$3.5698, -64(%rbp)
+mov	.FL3(%rip), %r10
+mov	%r10, -64(%rbp)
 
 mov		-64(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		-32(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-32, %xmm0
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-16, %xmm1
 
 mov 		$0, %rax 
 call 	resta
-mov 	%rax, -96(%rbp) 
+mov 	%rax, -80(%rbp) 
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-16, %xmm0
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-24, %xmm1
 
 mov 		$0, %rax 
 call 	div
-mov 	%rax, -136(%rbp) 
+mov 	%rax, -96(%rbp) 
 
-mov		-96(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-80, %xmm0
 
-mov		-136(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-96, %xmm1
 
 mov 		$0, %rax 
 call 	sum
-mov 	%rax, -160(%rbp) 
+mov 	%rax, -112(%rbp) 
 
-mov		$.L0L0, %r10
+mov		$.L0L4, %r10
 mov	 	%r10, %rdi
 
-mov		-160(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-112, %xmm1
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -184(%rbp) 
+mov 	%rax, -136(%rbp) 
 
 mov 		$0, %rax
 leave

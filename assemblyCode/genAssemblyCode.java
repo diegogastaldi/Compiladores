@@ -143,7 +143,52 @@ public class genAssemblyCode {
 			   	break;
 			  case TEXT:
 			  	textMethod(instr);
-			   	break;			   	
+			   	break;
+			  case FPARAM:
+			  	fparamMethod(instr);
+			  	break;
+			  case ASSIGNFLOAT:
+			  	assignfloatMethod(instr);
+			  	break;
+			  case FRETURN:
+			  	freturnMethod(instr);
+			  	break;
+			  case FLOAT:
+			  	floatMethod(instr);
+			  	break;
+				case FPLUS:
+					fplusMethod(instr);
+					break;
+				case FMINUS:
+					fminusMethod(instr);
+					break;
+			  case FMULTIPLY:
+			    fmultiplyMethod(instr);
+			    break;
+			  case FDIVIDE:
+			    fdivideMethod(instr);
+			    break;
+			  case FLE:
+			    fleMethod(instr);
+			    break;
+			  case FLEQ:
+			    fleqMethod(instr);
+			    break;
+			  case FGE:
+			    fgeMethod(instr);
+			    break;
+			  case FGEQ:
+			    fgeqMethod(instr);
+			    break;
+				case FUNARYMINUS:
+			    funaryminusMethod(instr);
+			    break;
+			  case FCEQ:
+			    fceqMethod(instr);
+			    break;
+			  case FNEQ:
+			    fneqMethod(instr);
+			    break;
 			}
 			result+="\n";
 		}
@@ -360,8 +405,8 @@ public class genAssemblyCode {
 		Integer numOperand = (Integer)instr.getOperand2();
 		String destRegister;
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
-		if (numOperand < 6)  
-			destRegister = paramRegister.registers [numOperand];		
+		if (numOperand < paramRegister.registersInt.length)  
+			destRegister = paramRegister.registersInt [numOperand];		
 		else 
 			destRegister = instr.getResult() + "(%rbp)";
 		result += "mov	 	%r10, " + destRegister + "\n";
@@ -385,10 +430,10 @@ public class genAssemblyCode {
 
 		/* Guarda parametros en memoria reservada del metodo actual */
 		for (int i = 0 ; i < ((Integer)instr.getOperand2()); i++) {
-			if (i < paramRegister.registers.length)
-				result += "mov 		" + paramRegister.registers[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
+			if (i < paramRegister.registersInt.length)
+				result += "mov 		" + paramRegister.registersInt[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
 			else {
-				result += "mov 		" + (((i+1)-paramRegister.registers.length) * 8) + "(%rbp), %r10\n";
+				result += "mov 		" + (((i+1)-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
 				result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";
 			}
 		}
@@ -454,20 +499,138 @@ public class genAssemblyCode {
 		result += ".comm " + instr.getOperand1() + ", " + instr.getOperand2() + "\n";
 	}	
 
+	/* Inicializa la variable local en la direccion pasada como resultado en la instr */
 	public static void initlocalMethod(Instr instr) {
 		result += "movq		$" + instr.getOperand1() + ", %r10\n";
 		result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 	}
 
+	/* Inicializa la variable global con la etiqueta como resultado en la instr */
 	public static void initglobalvarMethod(Instr instr) {
 		result += "mov		$" + instr.getOperand1() + ", %r10\n";
 		result += "mov		%r10, " + instr.getResult() + "(%rip)\n";
 	}
 
+	/* Inicializa el arreglo global con la etiqueta como resultado en la instr */
 	public static void initglobalarrayMethod(Instr instr) {
 		result += "mov 		$" + instr.getOperand1() + ", %r10 \n";
 		result += "mov 		$" + instr.getOperand2() + ", %edx \n";
 		result += "cltq \n";
 		result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
 	}		
+
+	/* Apila los parametros de tipo float previo a una llamada a un metodo, 
+		usando para los primeros parametros los registros adecuados y para 
+		los siguientes, direcciones de memoria */
+	public static void fparamMethod(Instr instr) {
+		Integer numOperand = (Integer)instr.getOperand2();
+		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
+		if (numOperand < paramRegister.registersFloat.length)  
+			result += "movss		" + instr.getOperand1() + ", " + paramRegister.registersFloat [numOperand] + "\n";	
+		else {
+			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";			
+			result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
+		}
+	}
+
+	public static void assignfloatMethod(Instr instr) {
+		result += "mov	." + instr.getOperand1() + "(%rip), %r10\n";
+		result += "mov	%r10, " + instr.getResult() + "(%rbp)\n";
+
+	}
+
+	/* Genera las instrucciones para el retorno de un metodo con tipo float */
+	public static void freturnMethod(Instr instr) {
+	 	result += "movss		" + instr.getResult() + "(%rbp), %xmm0\n";
+	 	result += "leave\n";
+		result += "ret\n";		
+	}
+
+	/* Genera la etiqueta para un float literal */
+	public static void floatMethod(Instr instr) {
+		result += "." + instr.getOperand2() + ": \n";		
+		result += "		.float " + instr.getOperand1() + " \n";
+	}
+
+	public static void fplusMethod(Instr instr) {
+		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "addss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fminusMethod(Instr instr) {
+		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "subss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fmultiplyMethod(Instr instr) {
+		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result +=	"mulss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fdivideMethod(Instr instr) {
+		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result +=	"divss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fleMethod(Instr instr) {
+		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "seta			%al \n";
+		result += "movzb		%al, %rax \n";
+		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fleqMethod(Instr instr) {
+		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "setae		%al \n";
+		result += "movzb		%al, %rax \n";
+		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fgeMethod(Instr instr) {
+		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "seta			%al \n";
+		result += "movzb		%al, %rax \n";
+		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fgeqMethod(Instr instr) {
+		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "setae		%al \n";
+		result += "movzb		%al, %rax \n";
+		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void funaryminusMethod(Instr instr) {
+		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm1 \n";
+		result += "movss		." + instr.getOperand2() + "(%rip), %xmm0 \n";
+		result += "xorps		%xmm1, %xmm0 \n";
+		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
+	}
+
+	public static void fceqMethod(Instr instr) {
+/*		movss	-12(%rbp), %xmm0
+		ucomiss	-8(%rbp), %xmm0
+		jp	.L2
+		movss	-12(%rbp), %xmm0
+		ucomiss	-8(%rbp), %xmm0
+		jne	.L2
+		movl	.LC2(%rip), %eax
+		jmp	.L4
+	.L2:
+		movl	.LC3(%rip), %eax
+	.L4:
+		movl	%eax, -4(%rbp)*/
+	}
+
+	public static void fneqMethod(Instr instr) {
+
+	}
 }

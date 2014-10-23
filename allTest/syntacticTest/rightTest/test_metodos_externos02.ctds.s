@@ -99,48 +99,47 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 20), $0 
+enter   $(8 * 18), $0 
 
 mov		$0, %r10
 mov		%r10, a(%rip)
 
 movq 	$6, -32(%rbp)
 
-movq 	$9, -48(%rbp)
+movq 	$9, -40(%rbp)
 
 mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-48(%rbp), %r10
+mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	maxcomdiv
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -48(%rbp) 
 
-movq 	$3, -88(%rbp)
+movq 	$3, -72(%rbp)
 
 mov 		a(%rip), %r10 
-mov		%r10, -96(%rbp) 
+mov		%r10, -80(%rbp) 
 
-movq 	$7, -104(%rbp)
+movq 	$7, -88(%rbp)
 
-movq 	$6, -112(%rbp)
+movq 	$6, -96(%rbp)
 
-mov		-104(%rbp), %rax 
-cltd
-idivq	-112(%rbp) 
-mov		%rax, -120(%rbp)
+movss		-88(%rbp), %xmm0 
+divss		-96(%rbp), %xmm0 
+movss		%xmm0, -104(%rbp) 
 
-mov		-120(%rbp), %r10 
-mov		-96(%rbp), %r11 
+mov		-104(%rbp), %r10 
+mov		-80(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -128(%rbp)
+mov		%r11, -112(%rbp)
 
-mov		-88(%rbp), %r10 
-mov		-128(%rbp), %r11 
+mov		-72(%rbp), %r10 
+mov		-112(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -136(%rbp)
+mov		%r10, -120(%rbp)
 
 mov		$.L0L4, %r10
 mov	 	%r10, %rdi
@@ -148,15 +147,15 @@ mov	 	%r10, %rdi
 mov		$.L0L5, %r10
 mov	 	%r10, %rsi
 
-mov		-64(%rbp), %r10
+mov		-48(%rbp), %r10
 mov	 	%r10, %rdx
 
-mov		-136(%rbp), %r10
+mov		-120(%rbp), %r10
 mov	 	%r10, %rcx
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -152(%rbp) 
+mov 	%rax, -136(%rbp) 
 
 mov 		$0, %rax
 leave

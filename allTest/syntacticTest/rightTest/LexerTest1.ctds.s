@@ -90,7 +90,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 11), $0 
+enter   $(8 * 9), $0 
 
 mov 		$0, %r10 
 mov 		$589, %edx 
@@ -109,27 +109,27 @@ mov 		%r10, C(, %rdx, 8)
 
 movq 	$2, -24(%rbp)
 
-movq 	$3, -40(%rbp)
+movq 	$3, -32(%rbp)
 
 mov		-24(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov		-32(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	pruArreglos
+mov 	%rax, -40(%rbp) 
+
+mov		$.L0L3, %r10
 mov	 	%r10, %rdi
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	pruArreglos
-mov 	%rax, -56(%rbp) 
-
-mov		$.L0L3, %r10
-mov	 	%r10, %rdi
-
-mov		-56(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
 call 	printf
-mov 	%rax, -80(%rbp) 
+mov 	%rax, -64(%rbp) 
 
 mov 		$0, %rax
 leave

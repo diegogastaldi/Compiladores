@@ -59,18 +59,17 @@ mov		%r10, -120(%rbp)
 mov		-120(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-mov		-24(%rbp), %rax 
-cltd
-idivq	-32(%rbp) 
-mov		%rax, -128(%rbp)
+movss		-24(%rbp), %xmm0 
+divss		-32(%rbp), %xmm0 
+movss		%xmm0, -128(%rbp) 
 
 movq 	$5, -136(%rbp)
 
-mov		-128(%rbp), %rax
-cmp		-136(%rbp), %rax
-setg		%al
-movzb	%al, %rax
-mov		%rax, -144(%rbp)
+movss		-136(%rbp), %xmm0 
+ucomiss		-128(%rbp), %xmm0 
+seta			%al 
+movzb		%al, %rax 
+mov 		%rax, -144(%rbp) 
 
 movq 	$1, -152(%rbp)
 
@@ -100,7 +99,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 7), $0 
 
 movq 	$6, -16(%rbp)
 
@@ -109,14 +108,14 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	prueba
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -56(%rbp) 
+mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

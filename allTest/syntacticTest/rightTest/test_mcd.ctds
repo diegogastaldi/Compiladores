@@ -1,7 +1,7 @@
 class test_maxcomdiv{
 
-float maxcomdiv (float a, float b){
-        float dividendo,divisor,resto;
+int maxcomdiv (int a, int b){
+        int dividendo,divisor,resto;
 	if(a > b){
 		dividendo = a;
 		divisor = b;
@@ -10,8 +10,8 @@ float maxcomdiv (float a, float b){
 		dividendo = b;
 		divisor = a;
 	}
-	resto = 1.0;
-	while ((resto != 0.0)){
+	resto = 1;
+	while ((resto != 0)){
 		resto = dividendo % divisor;
 		dividendo = divisor;
 		divisor = resto;
@@ -20,7 +20,7 @@ float maxcomdiv (float a, float b){
 }
 
 void main(){
-    externinvk("printf", float , "mcd%d", maxcomdiv(6.0,9.0 ));
+    externinvk("printf", int , "mcd%d", maxcomdiv(6,9 ));
     return ;
 }
 

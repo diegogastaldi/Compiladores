@@ -1,3 +1,9 @@
+.FL3: 
+		.float 6.0 
+
+.FL0: 
+		.float 0.0 
+
 .text
 
 .globl	sumx
@@ -10,7 +16,8 @@ mov 		%rsi, -24(%rbp)
 movq		$0, %r10
 mov		%r10, -32(%rbp)
 
-movq 	$0.0, -64(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -64(%rbp)
 
 mov		-64(%rbp), %r10
 mov		%r10, -32(%rbp)
@@ -20,7 +27,7 @@ movq 	$0, -72(%rbp)
 mov		-72(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-.beginWhileL1: 
+.beginWhileL2: 
 
 mov		-40(%rbp), %rax
 cmp		-16(%rbp), %rax
@@ -33,12 +40,11 @@ movq 	$1, -88(%rbp)
 mov		-88(%rbp), %r10
 cmp 		-80(%rbp), %r10
 
-jne 		.endWhileL0
+jne 		.endWhileL1
 
-mov		-32(%rbp), %r10 
-mov		-24(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -96(%rbp)
+movss		-32(%rbp), %xmm0 
+addss		-24(%rbp), %xmm0 
+movss		%xmm0, -96(%rbp) 
 
 mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
@@ -53,39 +59,38 @@ mov		%r11, -112(%rbp)
 mov		-112(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-jmp 		.beginWhileL1
+jmp 		.beginWhileL2
 
-.endWhileL0: 
+.endWhileL1: 
 
-mov		-32(%rbp), %rax
+movss		-32(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
-movq 	$6.0, -16(%rbp)
+mov	.FL3(%rip), %r10
+mov	%r10, -16(%rbp)
 
-movq 	$2, -32(%rbp)
+movq 	$2, -24(%rbp)
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-16, %xmm0
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	sumx
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-mov		-48(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-32, %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -72(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

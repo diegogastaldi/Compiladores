@@ -1,5 +1,20 @@
-.L0L5: 
+.L0L10: 
 		.string "%f" 
+
+.FL9: 
+		.float 8.0 
+
+.FL8: 
+		.float 0 
+
+.FL7: 
+		.float 100.1 
+
+.FL5: 
+		.float 1.0 
+
+.FL0: 
+		.float 1.0 
 
 .text
 
@@ -26,7 +41,8 @@ movq 	$1, -80(%rbp)
 mov		-80(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$1.0, -88(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -88(%rbp)
 
 mov		-88(%rbp), %r10
 mov		%r10, -48(%rbp)
@@ -44,7 +60,7 @@ movq 	$1, -112(%rbp)
 mov		-112(%rbp), %r10
 cmp 		-104(%rbp), %r10
 
-jne 		.falseCondL0
+jne 		.falseCondL1
 
 mov		-16(%rbp), %rax 
 neg		%rax 
@@ -61,9 +77,9 @@ mov		%rax, -128(%rbp)
 mov		-128(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-.falseCondL0: 
+.falseCondL1: 
 
-.beginWhileL2: 
+.beginWhileL3: 
 
 mov		-32(%rbp), %rax
 cmp		-16(%rbp), %rax
@@ -76,12 +92,11 @@ movq 	$1, -144(%rbp)
 mov		-144(%rbp), %r10
 cmp 		-136(%rbp), %r10
 
-jne 		.endWhileL1
+jne 		.endWhileL2
 
-mov		-48(%rbp), %r10 
-mov		-24(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -152(%rbp)
+movss		-48(%rbp), %xmm0 
+mulss		-24(%rbp), %xmm0 
+movss		%xmm0, -152(%rbp) 
 
 mov		-152(%rbp), %r10
 mov		%r10, -48(%rbp)
@@ -96,9 +111,9 @@ mov		%r11, -168(%rbp)
 mov		-168(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-jmp 		.beginWhileL2
+jmp 		.beginWhileL3
 
-.endWhileL1: 
+.endWhileL2: 
 
 cmpq		$0, -40(%rbp) 
 sete		%al 
@@ -110,76 +125,77 @@ movq 	$1, -184(%rbp)
 mov		-184(%rbp), %r10
 cmp 		-176(%rbp), %r10
 
-jne 		.falseCondL3
+jne 		.falseCondL4
 
-movq 	$1.0, -192(%rbp)
+mov	.FL5(%rip), %r10
+mov	%r10, -192(%rbp)
 
-mov		-192(%rbp), %rax 
-cltd
-idivq	-48(%rbp) 
-mov		%rax, -200(%rbp)
+movss		-192(%rbp), %xmm0 
+divss		-48(%rbp), %xmm0 
+movss		%xmm0, -200(%rbp) 
 
-mov		-200(%rbp), %rax
+movss		-200(%rbp), %xmm0
 leave
 ret
 
-jmp 		.endIfL4
+jmp 		.endIfL6
 
-.falseCondL3: 
+.falseCondL4: 
 
-mov		-48(%rbp), %rax
+movss		-48(%rbp), %xmm0
 leave
 ret
 
-.endIfL4: 
+.endIfL6: 
 
-movq 	$100.1, -208(%rbp)
+mov	.FL7(%rip), %r10
+mov	%r10, -208(%rbp)
 
-mov		-208(%rbp), %rax 
-neg		%rax 
-mov		%rax, -216(%rbp) 
+movss		-208(%rbp), %xmm1 
+movss		.FL8(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -216(%rbp) 
 
-mov		-216(%rbp), %rax
+movss		-216(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 13), $0 
+enter   $(8 * 11), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
 
-movq 	$8.0, -32(%rbp)
+mov	.FL9(%rip), %r10
+mov	%r10, -32(%rbp)
 
 mov		-32(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-movq 	$2, -48(%rbp)
+movq 	$2, -40(%rbp)
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-24, %xmm0
 
-mov		-48(%rbp), %r10
+mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	potencia
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -48(%rbp) 
 
-mov		-64(%rbp), %r10
+mov		-48(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.L0L5, %r10
+mov		$.L0L10, %r10
 mov	 	%r10, %rdi
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-16, %xmm1
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -96(%rbp) 
+mov 	%rax, -80(%rbp) 
 
 mov 		$0, %rax
 leave

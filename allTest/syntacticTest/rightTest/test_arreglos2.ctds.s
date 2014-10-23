@@ -1,5 +1,17 @@
-.L0L3: 
+.L0L7: 
 		.string "%d resultado : " 
+
+.FL3: 
+		.float 0 
+
+.FL2: 
+		.float 2.6 
+
+.FL1: 
+		.float 2.6 
+
+.FL0: 
+		.float 8.87 
 
 .text
 
@@ -18,7 +30,8 @@ enter   $(8 * 14), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
-movq 	$8.87, -56(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -56(%rbp)
 
 mov		-56(%rbp), %r10
 mov		%r10, -32(%rbp)
@@ -32,12 +45,12 @@ mov 		-72(%rbp), %edx
 cltq 
 mov 		%r10, A(, %rdx, 8) 
 
-movq 	$2.6, -80(%rbp)
+mov	.FL1(%rip), %r10
+mov	%r10, -80(%rbp)
 
-mov		-80(%rbp), %r10 
-mov		-32(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -88(%rbp)
+movss		-80(%rbp), %xmm0 
+addss		-32(%rbp), %xmm0 
+movss		%xmm0, -88(%rbp) 
 
 movq 	$55, -96(%rbp)
 
@@ -60,7 +73,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 42), $0 
+enter   $(8 * 40), $0 
 
 mov 		$0, %r10 
 mov 		$5, %edx 
@@ -105,11 +118,13 @@ mov 		-56(%rbp), %edx
 cltq 
 mov 		%r10, A(, %rdx, 8) 
 
-movq 	$2.6, -64(%rbp)
+mov	.FL2(%rip), %r10
+mov	%r10, -64(%rbp)
 
-mov		-64(%rbp), %rax 
-neg		%rax 
-mov		%rax, -72(%rbp) 
+movss		-64(%rbp), %xmm1 
+movss		.FL3(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -72(%rbp) 
 
 movq 	$0, -80(%rbp)
 
@@ -172,15 +187,15 @@ mov		%rax, -184(%rbp)
 movq 	$1, -192(%rbp)
 
 cmpq		$0, -184(%rbp)
-jne 		.L0
+jne 		.L4
 cmpq		$0, -192(%rbp)
-je 		.L1
-.L0: 
+je 		.L5
+.L4: 
 mov		$1, %r10
-jmp 		.L2
-.L1:
+jmp 		.L6
+.L5:
 mov		$0, %r10
-.L2:
+.L6:
 mov		%r10, -200(%rbp)
 
 movq 	$3, -208(%rbp)
@@ -192,48 +207,46 @@ mov 		%r10, C(, %rdx, 8)
 
 movq 	$4, -224(%rbp)
 
-movq 	$8, -240(%rbp)
+movq 	$8, -232(%rbp)
 
-movq 	$6, -248(%rbp)
+movq 	$6, -240(%rbp)
 
-mov		-240(%rbp), %r10 
-mov		-248(%rbp), %r11 
+mov		-232(%rbp), %r10 
+mov		-240(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -256(%rbp)
+mov		%r10, -248(%rbp)
 
-movq 	$7, -264(%rbp)
+movq 	$7, -256(%rbp)
 
-movq 	$2, -272(%rbp)
+movq 	$2, -264(%rbp)
 
-mov		-272(%rbp), %rax 
+mov		-264(%rbp), %rax 
 cltd
-idivq	-264(%rbp)
-mov		%rax, -280(%rbp)
+idivq	-256(%rbp)
+mov		%rax, -272(%rbp)
 
-mov		-256(%rbp), %rax 
-cltd
-idivq	-280(%rbp) 
-mov		%rax, -288(%rbp)
+movss		-248(%rbp), %xmm0 
+divss		-272(%rbp), %xmm0 
+movss		%xmm0, -280(%rbp) 
 
 mov		-224(%rbp), %r10
+mov	 	%r10, %rdi
+
+movss		-280, %xmm1
+
+mov 		$0, %rax 
+call 	pruArreglos
+mov 	%rax, -288(%rbp) 
+
+mov		$.L0L7, %r10
 mov	 	%r10, %rdi
 
 mov		-288(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	pruArreglos
-mov 	%rax, -304(%rbp) 
-
-mov		$.L0L3, %r10
-mov	 	%r10, %rdi
-
-mov		-304(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
 call 	printf
-mov 	%rax, -328(%rbp) 
+mov 	%rax, -312(%rbp) 
 
 mov 		$0, %rax
 leave
