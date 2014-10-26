@@ -1,14 +1,32 @@
-.FL20: 
+.FL32: 
 		.float 10.0 
 
-.FL19: 
+.FL31: 
 		.float 0.66 
 
-.FL18: 
+.FL30: 
 		.float 3.3 
 
-.L0L17: 
+.L0L29: 
 		.string "%f resultado : " 
+
+.FL21: 
+		.float 0 
+
+.FL20: 
+		.float 1 
+
+.FL17: 
+		.float 0 
+
+.FL16: 
+		.float 1 
+
+.FL13: 
+		.float 0 
+
+.FL12: 
+		.float 1 
 
 .FL11: 
 		.float 2.0 
@@ -25,9 +43,9 @@
 .type	promedio, @function 
 promedio: 
 enter   $(8 * 34), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
-mov 		%rdx, -32(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
+movss 		%xmm2, -32(%rbp) 
 
 movss		-16(%rbp), %xmm0 
 ucomiss		-32(%rbp), %xmm0 
@@ -170,29 +188,65 @@ ret
 
 .falseCondL10: 
 
+movss		-32(%rbp), %xmm0 
+ucomiss		-24(%rbp), %xmm0 
+jp	.L14 
+movss		-32(%rbp), %xmm0 
+ucomiss		-24(%rbp), %xmm0 
+jne	.L14 
+mov		FL12(%rip), %rax 
+jmp	.L15 
+.L14: 
+mov	.FL13, %rax 
+.L15: 
+mov	%rax, -232(%rbp) 
 
+movss		-32(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
+jp	.L18 
+movss		-32(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
+jne	.L18 
+mov		FL16(%rip), %rax 
+jmp	.L19 
+.L18: 
+mov	.FL17, %rax 
+.L19: 
+mov	%rax, -240(%rbp) 
 
+movss		-24(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
+jp	.L22 
+movss		-24(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
+jne	.L22 
+mov		FL20(%rip), %rax 
+jmp	.L23 
+.L22: 
+mov	.FL21, %rax 
+.L23: 
+mov	%rax, -248(%rbp) 
 
 cmpq		$0, -240(%rbp)
-je 		.L12
+je 		.L24
 cmpq		$0, -248(%rbp)
-je 		.L12
+je 		.L24
 mov		$1, %r10
-jmp		.L13
-.L12:
+jmp		.L25
+.L24:
 mov		$0, %r10
-.L13:
+.L25:
 mov		%r10, -256(%rbp)
 
 cmpq		$0, -232(%rbp)
-je 		.L14
+je 		.L26
 cmpq		$0, -256(%rbp)
-je 		.L14
+je 		.L26
 mov		$1, %r10
-jmp		.L15
-.L14:
+jmp		.L27
+.L26:
 mov		$0, %r10
-.L15:
+.L27:
 mov		%r10, -264(%rbp)
 
 movq 	$1, -272(%rbp)
@@ -200,42 +254,42 @@ movq 	$1, -272(%rbp)
 mov		-272(%rbp), %r10
 cmp 		-264(%rbp), %r10
 
-jne 		.falseCondL16
+jne 		.falseCondL28
 
 movss		-32(%rbp), %xmm0
 leave
 ret
 
-.falseCondL16: 
+.falseCondL28: 
 
 .globl	main
 .type	main, @function 
 main: 
 enter   $(8 * 10), $0 
 
-mov	.FL18(%rip), %r10
+mov	.FL30(%rip), %r10
 mov	%r10, -24(%rbp)
 
-mov	.FL19(%rip), %r10
+mov	.FL31(%rip), %r10
 mov	%r10, -32(%rbp)
 
-mov	.FL20(%rip), %r10
+mov	.FL32(%rip), %r10
 mov	%r10, -40(%rbp)
 
-movss		-24, %xmm0
+movss		-24(%rbp), %xmm0
 
-movss		-32, %xmm1
+movss		-32(%rbp), %xmm1
 
-movss		-40, %xmm2
+movss		-40(%rbp), %xmm2
 
 mov 		$0, %rax 
 call 	promedio
 mov 	%rax, -48(%rbp) 
 
-mov		$.L0L17, %r10
+mov		$.L0L29, %r10
 mov	 	%r10, %rdi
 
-movss		-48, %xmm1
+movss		-48(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf

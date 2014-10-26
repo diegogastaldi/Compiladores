@@ -1,3 +1,9 @@
+.FL3: 
+		.float 0 
+
+.FL2: 
+		.float 1 
+
 .FL1: 
 		.float 1.0 
 
@@ -7,8 +13,11 @@
 .type	method, @function 
 method: 
 enter   $(8 * 12), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movss		-16(%rbp), %xmm0 
 ucomiss		-24(%rbp), %xmm0 
@@ -28,16 +37,28 @@ movq 	$1, -72(%rbp)
 mov	.FL1(%rip), %r10
 mov	%r10, -80(%rbp)
 
+movss		-24(%rbp), %xmm0 
+ucomiss		-80(%rbp), %xmm0 
+jp	.L4 
+movss		-24(%rbp), %xmm0 
+ucomiss		-80(%rbp), %xmm0 
+jne	.L4 
+mov		FL2(%rip), %rax 
+jmp	.L5 
+.L4: 
+mov	.FL3, %rax 
+.L5: 
+mov	%rax, -88(%rbp) 
 
 cmpq		$0, -72(%rbp)
-je 		.L2
+je 		.L6
 cmpq		$0, -88(%rbp)
-je 		.L2
+je 		.L6
 mov		$1, %r10
-jmp		.L3
-.L2:
+jmp		.L7
+.L6:
 mov		$0, %r10
-.L3:
+.L7:
 mov		%r10, -96(%rbp)
 
 mov		-96(%rbp), %r10

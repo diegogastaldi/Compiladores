@@ -20,7 +20,7 @@ void main(){
     b= neg(a);
     c= or(and(a,b), neg(b) );
 
-    externinvk("printf", boolean , c);
+    externinvk("printf", boolean ,"%d", c);
     return;
 }
 

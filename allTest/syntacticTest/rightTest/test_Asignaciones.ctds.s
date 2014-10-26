@@ -16,7 +16,10 @@
 .type	pruAritmetica, @function 
 pruAritmetica: 
 enter   $(8 * 15), $0 
-mov 		%rdi, -16(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -16(%rbp)
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -81,7 +84,7 @@ enter   $(8 * 8), $0
 mov	.FL3(%rip), %r10
 mov	%r10, -24(%rbp)
 
-movss		-24, %xmm0
+movss		-24(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	pruAritmetica
@@ -90,7 +93,7 @@ mov 	%rax, -32(%rbp)
 mov		$.L0L2, %r10
 mov	 	%r10, %rdi
 
-movss		-32, %xmm1
+movss		-32(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf

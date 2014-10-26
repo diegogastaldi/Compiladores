@@ -1,5 +1,8 @@
+.FL8: 
+		.float 2.0 
+
 .L0L7: 
-		.string "%d resultado : " 
+		.string "%f resultado : " 
 
 .FL3: 
 		.float 0 
@@ -28,7 +31,10 @@
 pruArreglos: 
 enter   $(8 * 14), $0 
 mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm1, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 mov	.FL0(%rip), %r10
 mov	%r10, -56(%rbp)
@@ -73,7 +79,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 40), $0 
+enter   $(8 * 31), $0 
 
 mov 		$0, %r10 
 mov 		$5, %edx 
@@ -205,48 +211,17 @@ mov 		-208(%rbp), %edx
 cltq 
 mov 		%r10, C(, %rdx, 8) 
 
-movq 	$4, -224(%rbp)
-
-movq 	$8, -232(%rbp)
-
-movq 	$6, -240(%rbp)
-
-mov		-232(%rbp), %r10 
-mov		-240(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -248(%rbp)
-
-movq 	$7, -256(%rbp)
-
-movq 	$2, -264(%rbp)
-
-mov		-264(%rbp), %rax 
-cltd
-idivq	-256(%rbp)
-mov		%rax, -272(%rbp)
-
-movss		-248(%rbp), %xmm0 
-divss		-272(%rbp), %xmm0 
-movss		%xmm0, -280(%rbp) 
-
-mov		-224(%rbp), %r10
-mov	 	%r10, %rdi
-
-movss		-280, %xmm1
-
-mov 		$0, %rax 
-call 	pruArreglos
-mov 	%rax, -288(%rbp) 
+mov	.FL8(%rip), %r10
+mov	%r10, -224(%rbp)
 
 mov		$.L0L7, %r10
 mov	 	%r10, %rdi
 
-mov		-288(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-224(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -312(%rbp) 
+mov 	%rax, -240(%rbp) 
 
 mov 		$0, %rax
 leave

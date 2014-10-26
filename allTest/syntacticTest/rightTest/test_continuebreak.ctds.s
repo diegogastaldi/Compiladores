@@ -1,17 +1,29 @@
-.FL15: 
+.L0L22: 
+		.string "%f" 
+
+.FL21: 
 		.float 0 
 
-.FL14: 
+.FL20: 
+		.float 1.0 
+
+.FL19: 
 		.float 2.0 
 
-.FL13: 
+.FL18: 
 		.float 6752.0 
 
-.FL12: 
+.FL17: 
 		.float 0 
 
-.FL11: 
+.FL16: 
 		.float 1000.2343 
+
+.FL10: 
+		.float 0 
+
+.FL9: 
+		.float 1 
 
 .FL8: 
 		.float 0.0 
@@ -36,9 +48,12 @@
 .globl	pruContinue
 .type	pruContinue, @function 
 pruContinue: 
-enter   $(8 * 32), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+enter   $(8 * 34), $0 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq		$0, %r10
 mov		%r10, -32(%rbp)
@@ -114,13 +129,26 @@ jne 		.falseCondL7
 mov	.FL8(%rip), %r10
 mov	%r10, -168(%rbp)
 
+	movss		-32(%rbp), %xmm0 
+	ucomiss		-168(%rbp), %xmm0 
+	jp	.L11 
+	movss		-32(%rbp), %xmm0 
+	ucomiss		-168(%rbp), %xmm0 
+	je	.L12 
+.L11: 
+	mov		.FL9(%rip), %rax 
+	jmp	.L13 
+.L12: 
+	mov		.FL9(%rip), %rax 
+.L13: 
+	mov		%rax, -176(%rbp) 
 
 movq 	$1, -184(%rbp)
 
 mov		-184(%rbp), %r10
 cmp 		-176(%rbp), %r10
 
-jne 		.falseCondL9
+jne 		.falseCondL14
 
 movss		-24(%rbp), %xmm0 
 mulss		-16(%rbp), %xmm0 
@@ -133,23 +161,23 @@ movss		%xmm0, -200(%rbp)
 mov		-200(%rbp), %r10
 mov		%r10, -48(%rbp)
 
-.falseCondL9: 
+.falseCondL14: 
 
 jmp 		.beginWhileL4
 
-jmp 		.endIfL10
+jmp 		.endIfL15
 
 .falseCondL7: 
 
-mov	.FL11(%rip), %r10
+mov	.FL16(%rip), %r10
 mov	%r10, -208(%rbp)
 
 movss		-208(%rbp), %xmm1 
-movss		.FL12(%rip), %xmm0 
+movss		.FL17(%rip), %xmm0 
 xorps		%xmm1, %xmm0 
 movss		%xmm0, -216(%rbp) 
 
-mov	.FL13(%rip), %r10
+mov	.FL18(%rip), %r10
 mov	%r10, -224(%rbp)
 
 movss		-216(%rbp), %xmm0 
@@ -161,49 +189,59 @@ mov		%r10, -48(%rbp)
 
 jmp 		.endWhileL3
 
-.endIfL10: 
+.endIfL15: 
 
 jmp 		.beginWhileL4
 
 .endWhileL3: 
 
-mov	.FL14(%rip), %r10
+mov	.FL19(%rip), %r10
 mov	%r10, -240(%rbp)
 
-movss		-240(%rbp), %xmm0 
-mulss		-48(%rbp), %xmm0 
-movss		%xmm0, -248(%rbp) 
+mov	.FL20(%rip), %r10
+mov	%r10, -248(%rbp)
 
-movss		-248(%rbp), %xmm1 
-movss		.FL15(%rip), %xmm0 
-xorps		%xmm1, %xmm0 
+movss		-48(%rbp), %xmm0 
+addss		-248(%rbp), %xmm0 
 movss		%xmm0, -256(%rbp) 
 
-movss		-256(%rbp), %xmm0
+movss		-240(%rbp), %xmm0 
+mulss		-256(%rbp), %xmm0 
+movss		%xmm0, -264(%rbp) 
+
+movss		-264(%rbp), %xmm1 
+movss		.FL21(%rip), %xmm0 
+xorps		%xmm1, %xmm0 
+movss		%xmm0, -272(%rbp) 
+
+movss		-272(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 9), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
 
-movss		-16, %xmm0
+movss		-16(%rbp), %xmm0
 
-movss		-24, %xmm1
+movss		-24(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	pruContinue
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -40(%rbp) 
 
-movss		-32, %xmm0
+mov		$.L0L22, %r10
+mov	 	%r10, %rdi
+
+movss		-40(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -56(%rbp) 
+mov 	%rax, -64(%rbp) 
 
 mov 		$0, %rax
 leave

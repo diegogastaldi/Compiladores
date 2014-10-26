@@ -109,8 +109,11 @@
 .type	potencia, @function 
 potencia: 
 enter   $(8 * 32), $0 
-mov 		%rdi, -16(%rbp) 
+movss 		%xmm0, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq		$0, %r10
 mov		%r10, -32(%rbp)
@@ -278,8 +281,11 @@ ret
 .type	multiples, @function 
 multiples: 
 enter   $(8 * 81), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq		$0, %r10
 mov		%r10, -32(%rbp)
@@ -757,7 +763,7 @@ mov		%r10, m(%rip)
 
 movq 	$2, -80(%rbp)
 
-movss		-24, %xmm0
+movss		-24(%rbp), %xmm0
 
 mov		-80(%rbp), %r10
 mov	 	%r10, %rsi
@@ -776,9 +782,9 @@ movss		-16(%rbp), %xmm0
 addss		-112(%rbp), %xmm0 
 movss		%xmm0, -120(%rbp) 
 
-movss		-24, %xmm0
+movss		-24(%rbp), %xmm0
 
-movss		-120, %xmm1
+movss		-120(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	multiples
@@ -787,7 +793,7 @@ mov 	%rax, -128(%rbp)
 mov		$.L0L58, %r10
 mov	 	%r10, %rdi
 
-movss		-128, %xmm1
+movss		-128(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf

@@ -54,8 +54,10 @@ public enum Operator {
  	, FRETURN /* Tercer parametro: Variable con valor a retornar */ 	
  	, FLOAT
 
- 	, FGE, FLE, FLEQ, FGEQ, FAND, FOR, FCEQ, FNEQ /*Primer y Segundo parametro: operandos, 
- 																					Tercer parametro: Variable para resultado */ 	
+ 	, FGE, FLE, FLEQ, FGEQ, FAND, FOR
+ 	, FCEQ, FNEQ 	/* Primer operando: Lista con valor uno y cero en ese orden.
+			 						 Segundo operando: Lista con labels necesarios
+			 						 Tercer operando: Lista con operandos de la operacion y donde guardar el resultado*/
 	, FINITGLOBALARRAY
 	, FINITGLOBALVAR
 	, FINITLOCAL

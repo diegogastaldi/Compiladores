@@ -30,7 +30,10 @@ ret
 resto: 
 enter   $(8 * 14), $0 
 mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm1, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq 	$3, -56(%rbp)
 
@@ -107,7 +110,7 @@ mov	%r10, -56(%rbp)
 mov		-40(%rbp), %r10
 mov	 	%r10, %rdi
 
-movss		-56, %xmm1
+movss		-56(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	resto

@@ -67,7 +67,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Calcula el espacio a reservar */
     int reserveSpace = (-genLabels.getOffSet()/8)-1;
     /* Label de inicio de funcion */
-    instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
+    instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
 
   /* Crea instrucciones para todas las funciones distintas del main */
@@ -76,13 +76,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size()+ c.getLocalVars());
     /* Inicializo variables locales con valores por defecto */
-    initLocalVar(c.getParameters().size()+1, c.getLocalVars());
+    initLocalVar(c.getParameters().size(), c.getLocalVars());
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
     int reserveSpace = (-genLabels.getOffSet()/8)-1;
     /* Label de inicio de funcion */
-    instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters().size(), c.getName()));     
+    instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
 
   /* Crea las instrucciones para la inicializacion de las variables locales 
@@ -606,7 +606,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer leftOperand = expr.getLeftOperand().accept(this);
     Integer rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
-
+    Integer result = genLabels.getOffSet();
   	Operator op = null;
 
     switch (expr.getLeftOperand().getType()) {
@@ -619,23 +619,39 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     				op = Operator.NEQ;
     				break;
     	  }
+        instructions.add(new Instr(op, leftOperand, rightOperand, result));
         break;
       case FLOAT:
+        /* Operando 1 */
+        String label1 = "F"+genLabels.getLabel(), label2 = "F"+genLabels.getLabel();
+        instructions.add(0, new Instr(Operator.FLOAT, 1, label1, null));
+        instructions.add(0, new Instr(Operator.FLOAT, 0, label2, null));
+        posMethodLabel += 2;
+        LinkedList<String> labelfloat = new LinkedList<String>();
+        labelfloat.add(label1); labelfloat.add(label2);
+        /* Operando 2 */
+        label1 = genLabels.getLabel(); label2 = genLabels.getLabel();
+        LinkedList<String> labels = new LinkedList<String>();
+        labels.add(label1); labels.add(label2);
+        /* Operando 3 */
+        LinkedList<Integer> operands = new LinkedList<Integer>();
+        operands.add(leftOperand); operands.add(rightOperand); operands.add(result);
   	  	switch (operator) {
     			case CEQ:
     				op = Operator.FCEQ;
     				break;
     			case NEQ:
+            String label3 = genLabels.getLabel();
+            labels.add(label3);
     				op = Operator.FNEQ;
     				break;
     	  }
+        instructions.add(new Instr(op, labelfloat, labels, operands));
         break;
       default : 
         System.out.println("Los parametros de la expresion de equivalencia no tiene tipo asignado");
         break;      
-  	}  	
-    Integer result = genLabels.getOffSet();
-  	instructions.add(new Instr(op, leftOperand, rightOperand, result));
+  	}
      
     return result;
   }

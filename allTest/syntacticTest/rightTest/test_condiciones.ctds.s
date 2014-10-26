@@ -584,7 +584,7 @@ mov 		$0, %rax
 call 	dados
 mov 	%rax, -40(%rbp) 
 
-movss		-40, %xmm0
+movss		-40(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf

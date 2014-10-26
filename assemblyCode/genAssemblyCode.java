@@ -20,7 +20,7 @@ package assemblyCode;
 import java.util.List;
 import java.util.LinkedList;
 import intermediateCode.*;
-
+import semanticAnalyzer.absSymbol;
 public class genAssemblyCode {
 	/* Guarda codigo generado */
 	private static String result;
@@ -429,12 +429,25 @@ public class genAssemblyCode {
 		result += "enter   $(8 * " + instr.getOperand1() + "), $0 \n";
 
 		/* Guarda parametros en memoria reservada del metodo actual */
-		for (int i = 0 ; i < ((Integer)instr.getOperand2()); i++) {
-			if (i < paramRegister.registersInt.length)
-				result += "mov 		" + paramRegister.registersInt[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
-			else {
-				result += "mov 		" + (((i+1)-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
-				result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";
+		LinkedList<absSymbol> param = (LinkedList<absSymbol>) instr.getOperand2();
+		for (int i = 0 ; i < (param.size()); i++) {
+			switch (param.get(i).getType()) {
+				case INT : case BOOLEAN:
+					if (i < paramRegister.registersInt.length) 
+						result += "mov 		" + paramRegister.registersInt[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
+					else {
+						result += "mov 		" + (((i+1)-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";												
+					}
+					break;
+				case FLOAT: 
+					if (i < paramRegister.registersFloat.length) 					
+						result += "movss 		" + paramRegister.registersFloat[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
+					else {
+						result += "mov 		" + (((i+1)-paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";												
+					}						
+					break;					
 			}
 		}
 	}
@@ -526,7 +539,7 @@ public class genAssemblyCode {
 		Integer numOperand = (Integer)instr.getOperand2();
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
 		if (numOperand < paramRegister.registersFloat.length)  
-			result += "movss		" + instr.getOperand1() + ", " + paramRegister.registersFloat [numOperand] + "\n";	
+			result += "movss		" + instr.getOperand1() + "(%rbp), " + paramRegister.registersFloat [numOperand] + "\n";	
 		else {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";			
 			result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
@@ -616,21 +629,39 @@ public class genAssemblyCode {
 	}
 
 	public static void fceqMethod(Instr instr) {
-/*		movss	-12(%rbp), %xmm0
-		ucomiss	-8(%rbp), %xmm0
-		jp	.L2
-		movss	-12(%rbp), %xmm0
-		ucomiss	-8(%rbp), %xmm0
-		jne	.L2
-		movl	.LC2(%rip), %eax
-		jmp	.L4
-	.L2:
-		movl	.LC3(%rip), %eax
-	.L4:
-		movl	%eax, -4(%rbp)*/
+		LinkedList<String> op1 = (LinkedList<String>) instr.getOperand1();
+		LinkedList<String> op2 = (LinkedList<String>) instr.getOperand2();
+		LinkedList<Integer> op3 = (LinkedList<Integer>) instr.getResult();
+		result +=	"movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
+		result +=	"ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
+		result +=	"jp	." + op2.get(0) + " \n";
+		result +=	"movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
+		result +=	"ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
+		result +=	"jne	." + op2.get(0) + " \n";
+		result +=	"mov		" + op1.get(0) + "(%rip), %rax \n";
+		result +=	"jmp	." + op2.get(1) + " \n";
+		result += "." + op2.get(0) + ": \n";
+		result +=	"mov	." + op1.get(1) + ", %rax \n";
+		result += "." + op2.get(1) + ": \n";
+		result +=	"mov	%rax, " + op3.get(2) + "(%rbp) \n";
 	}
 
 	public static void fneqMethod(Instr instr) {
-
+		LinkedList<String> op1 = (LinkedList<String>) instr.getOperand1();
+		LinkedList<String> op2 = (LinkedList<String>) instr.getOperand2();
+		LinkedList<Integer> op3 = (LinkedList<Integer>) instr.getResult();
+ 		result += "	movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
+		result += "	ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
+		result += "	jp	." + op2.get(0) + " \n";
+		result += "	movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
+		result += "	ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
+		result += "	je	." + op2.get(1) + " \n";
+		result += "." + op2.get(0) + ": \n";
+		result += "	mov		." + op1.get(0) + "(%rip), %rax \n";
+		result += "	jmp	." + op2.get(2) + " \n";
+		result += "." + op2.get(1) + ": \n";
+		result += "	mov		." + op1.get(0) + "(%rip), %rax \n";
+		result += "." + op2.get(2) + ": \n";
+		result += "	mov		%rax, " + op3.get(2) + "(%rbp) \n";
 	}
 }

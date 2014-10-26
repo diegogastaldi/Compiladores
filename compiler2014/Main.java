@@ -85,9 +85,9 @@ public class Main {
     }    
   }
     
-    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
-    de retorno, tanto si no hay un return en cierto camino del programa, como si el tipo
-    retornado es erroneo, si es que hay este tipo de errores */
+  /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+  de retorno, tanto si no hay un return en cierto camino del programa, como si el tipo
+  retornado es erroneo, si es que hay este tipo de errores */
   private static void returnCheck(LinkedList<completeFunction> ast) {
     ReturnTypeCheckVisitor returnTypeCheckVisitor = new ReturnTypeCheckVisitor();
     Block currentBlock;
@@ -114,50 +114,50 @@ public class Main {
     }
   }
     
-    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
-    de ubicacion de las sentencias break y continue, si es que hay este tipo de errores */    
-    private static void breakContinueCheck(LinkedList<completeFunction> ast) {
-      BreakContCheckVisitor bcv = new BreakContCheckVisitor();
-      for (completeFunction c: ast) {
-        c.getBlock().accept(bcv);
-      }        
-      if (bcv.getErrors().size() > 0) {
-        System.out.println("------------ BREAK CONTINUE ERROR --------------");
-        System.out.println(bcv.getErrors().toString());
-        hasErrors = true;            
-      }           
-    }
-
-    /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
-    de invocacion a metodos que pueden tanto los tipos como la cantidad de los parametros en
-    la invocacion, si es que hay este tipo de errores */    
-    private static void methodInvocCheck(List<completeFunction> ast) {    
-      MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(ast);
-      for (completeFunction c: ast) {
-        c.getBlock().accept(bcv);
-      }        
-      if (bcv.getErrors().size() > 0) {
-        System.out.println("------------ METHOD INVOC ERROR --------------");
-        System.out.println(bcv.getErrors().toString());
-        hasErrors = true;            
-      }           
-    }    
-    
-    /* Toma el arbol de analisis sintatico y corrobora si hay un metodo que cumpla con las 
-    caracteristicas del metodo principal para iniciar la ejecucion del programa */
-    public static void methodMainCheck(List<completeFunction> ast) {
-      Boolean find = false;
-      for (completeFunction c : ast) {
-        if (c.getName().equals("main") && (c.getParameters().size()==0) && (c.getType() == Type.VOID)) {
-        find = true;
-      }
-    }
-    if (!find) {
-      System.out.println("------------MAIN METHOD ERROR --------------");
-      System.out.println((new Error(0, 0, "La clase debe tener un metodo main sin parametros y de tipo void")).toString());            
+  /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+  de ubicacion de las sentencias break y continue, si es que hay este tipo de errores */    
+  private static void breakContinueCheck(LinkedList<completeFunction> ast) {
+    BreakContCheckVisitor bcv = new BreakContCheckVisitor();
+    for (completeFunction c: ast) {
+      c.getBlock().accept(bcv);
+    }        
+    if (bcv.getErrors().size() > 0) {
+      System.out.println("------------ BREAK CONTINUE ERROR --------------");
+      System.out.println(bcv.getErrors().toString());
       hasErrors = true;            
-    }
-        
+    }           
+  }
+
+  /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+  de invocacion a metodos que pueden tanto los tipos como la cantidad de los parametros en
+  la invocacion, si es que hay este tipo de errores */    
+  private static void methodInvocCheck(List<completeFunction> ast) {    
+    MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(ast);
+    for (completeFunction c: ast) {
+      c.getBlock().accept(bcv);
+    }        
+    if (bcv.getErrors().size() > 0) {
+      System.out.println("------------ METHOD INVOC ERROR --------------");
+      System.out.println(bcv.getErrors().toString());
+      hasErrors = true;            
+    }           
+  }    
+    
+  /* Toma el arbol de analisis sintatico y corrobora si hay un metodo que cumpla con las 
+  caracteristicas del metodo principal para iniciar la ejecucion del programa */
+  public static void methodMainCheck(List<completeFunction> ast) {
+    Boolean find = false;
+    for (completeFunction c : ast) {
+      if (c.getName().equals("main") && (c.getParameters().size()==0) && (c.getType() == Type.VOID)) {
+      	find = true;
+      	break;
+   		}
+   	}
+   	if (!find) {
+     	System.out.println("------------MAIN METHOD ERROR --------------");
+     	System.out.println((new Error(0, 0, "La clase debe tener un metodo main sin parametros y de tipo void")).toString());            
+     	hasErrors = true;            
+    }    
   }
 
   /* A partir del arbol sintactico genera el codigo intermedio y lo retorna */

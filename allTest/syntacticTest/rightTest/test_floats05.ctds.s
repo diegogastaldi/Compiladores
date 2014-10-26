@@ -19,8 +19,8 @@
 .type	div, @function 
 div: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
 
 movss		-24(%rbp), %xmm0 
 divss		-16(%rbp), %xmm0 
@@ -34,8 +34,8 @@ ret
 .type	resta, @function 
 resta: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
 
 movss		-24(%rbp), %xmm0 
 subss		-16(%rbp), %xmm0 
@@ -49,8 +49,8 @@ ret
 .type	sum, @function 
 sum: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -24(%rbp) 
 
 movss		-24(%rbp), %xmm0 
 addss		-16(%rbp), %xmm0 
@@ -94,25 +94,25 @@ mov	%r10, -64(%rbp)
 mov		-64(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-movss		-32, %xmm0
+movss		-32(%rbp), %xmm0
 
-movss		-16, %xmm1
+movss		-16(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	resta
 mov 	%rax, -80(%rbp) 
 
-movss		-16, %xmm0
+movss		-16(%rbp), %xmm0
 
-movss		-24, %xmm1
+movss		-24(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	div
 mov 	%rax, -96(%rbp) 
 
-movss		-80, %xmm0
+movss		-80(%rbp), %xmm0
 
-movss		-96, %xmm1
+movss		-96(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	sum
@@ -121,7 +121,7 @@ mov 	%rax, -112(%rbp)
 mov		$.L0L4, %r10
 mov	 	%r10, %rdi
 
-movss		-112, %xmm1
+movss		-112(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf

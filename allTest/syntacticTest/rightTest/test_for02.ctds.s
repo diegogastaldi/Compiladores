@@ -16,6 +16,9 @@ enter   $(8 * 15), $0
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -24(%rbp)
+
 movq 	$2, -56(%rbp)
 
 movq 	$0, -64(%rbp)

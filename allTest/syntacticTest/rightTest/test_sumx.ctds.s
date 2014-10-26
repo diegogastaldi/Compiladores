@@ -10,8 +10,11 @@
 .type	sumx, @function 
 sumx: 
 enter   $(8 * 14), $0 
-mov 		%rdi, -16(%rbp) 
+movss 		%xmm0, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq		$0, %r10
 mov		%r10, -32(%rbp)
@@ -77,7 +80,7 @@ mov	%r10, -16(%rbp)
 
 movq 	$2, -24(%rbp)
 
-movss		-16, %xmm0
+movss		-16(%rbp), %xmm0
 
 mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
@@ -86,7 +89,7 @@ mov 		$0, %rax
 call 	sumx
 mov 	%rax, -32(%rbp) 
 
-movss		-32, %xmm0
+movss		-32(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf

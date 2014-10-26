@@ -1,3 +1,6 @@
+.L0L5: 
+		.string "%d" 
+
 .text
 
 .globl	neg
@@ -63,7 +66,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 19), $0 
+enter   $(8 * 20), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -127,12 +130,15 @@ mov 	%rax, -120(%rbp)
 mov		-120(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		-24(%rbp), %r10
+mov		$.L0L5, %r10
 mov	 	%r10, %rdi
+
+mov		-24(%rbp), %r10
+mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -144(%rbp) 
+mov 	%rax, -152(%rbp) 
 
 mov 		$0, %rax
 leave

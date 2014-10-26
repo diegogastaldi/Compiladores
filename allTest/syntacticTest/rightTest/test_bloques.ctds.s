@@ -9,6 +9,9 @@ breaks:
 enter   $(8 * 13), $0 
 mov 		%rdi, -16(%rbp) 
 
+movq		$0, %r10
+mov		%r10, -16(%rbp)
+
 movq 	$0, -40(%rbp)
 
 mov		-40(%rbp), %r10

@@ -22,8 +22,11 @@
 .type	potencia, @function 
 potencia: 
 enter   $(8 * 27), $0 
-mov 		%rdi, -16(%rbp) 
+movss 		%xmm0, -16(%rbp) 
 mov 		%rsi, -24(%rbp) 
+
+movq		$0, %r10
+mov		%r10, -24(%rbp)
 
 movq		$0, %r10
 mov		%r10, -32(%rbp)
@@ -176,7 +179,7 @@ mov		%r10, -24(%rbp)
 
 movq 	$2, -40(%rbp)
 
-movss		-24, %xmm0
+movss		-24(%rbp), %xmm0
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rsi
@@ -191,7 +194,7 @@ mov		%r10, -16(%rbp)
 mov		$.L0L10, %r10
 mov	 	%r10, %rdi
 
-movss		-16, %xmm1
+movss		-16(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	printf
