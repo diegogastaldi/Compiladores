@@ -16,9 +16,9 @@
 .type	dados, @function 
 dados: 
 enter   $(8 * 95), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
-mov 		%rdx, -32(%rbp) 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -16(%rbp) 
+mov 		%rdx, -24(%rbp) 
 
 movq 	$6, -64(%rbp)
 
@@ -563,7 +563,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 8), $0 
 
 movq 	$1, -16(%rbp)
 
@@ -588,7 +588,7 @@ movss		-40(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

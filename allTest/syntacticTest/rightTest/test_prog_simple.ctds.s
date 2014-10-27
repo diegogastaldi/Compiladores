@@ -6,7 +6,7 @@
 .type	alo, @function 
 alo: 
 enter   $(8 * 5), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 

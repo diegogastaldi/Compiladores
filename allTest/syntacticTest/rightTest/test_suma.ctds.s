@@ -4,8 +4,8 @@
 .type	suma, @function 
 suma: 
 enter   $(8 * 12), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -16(%rbp) 
 
 movq 	$0, -48(%rbp)
 
@@ -69,7 +69,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 7), $0 
 
 movq 	$4, -16(%rbp)
 
@@ -90,7 +90,7 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -56(%rbp) 
+mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

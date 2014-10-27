@@ -1,4 +1,4 @@
-.L0L4: 
+.SL4: 
 		.string "mcd%d" 
 
 .text
@@ -7,8 +7,8 @@
 .type	maxcomdiv, @function 
 maxcomdiv: 
 enter   $(8 * 15), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -97,31 +97,31 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 7), $0 
 
-movq 	$6, -24(%rbp)
+movq 	$6, -16(%rbp)
 
-movq 	$9, -32(%rbp)
+movq 	$9, -24(%rbp)
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov		-24(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+call 	maxcomdiv
+mov 	%rax, -32(%rbp) 
+
+mov		$.SL4, %r10
 mov	 	%r10, %rdi
 
 mov		-32(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	maxcomdiv
-mov 	%rax, -40(%rbp) 
-
-mov		$.L0L4, %r10
-mov	 	%r10, %rdi
-
-mov		-40(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
 call 	printf
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

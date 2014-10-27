@@ -13,8 +13,8 @@
 .type	method, @function 
 method: 
 enter   $(8 * 12), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)

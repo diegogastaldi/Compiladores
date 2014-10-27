@@ -1,4 +1,4 @@
-.L0L19: 
+.SL19: 
 		.string "%f" 
 
 .FL18: 
@@ -46,8 +46,8 @@
 .type	potencia, @function 
 potencia: 
 enter   $(8 * 32), $0 
-movss 		%xmm0, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -218,8 +218,8 @@ ret
 .type	multRepeat, @function 
 multRepeat: 
 enter   $(8 * 11), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -254,7 +254,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 19), $0 
+enter   $(8 * 17), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -307,7 +307,7 @@ movq 	$2, -80(%rbp)
 movss		-24(%rbp), %xmm0
 
 mov		-80(%rbp), %r10
-mov	 	%r10, %rsi
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	potencia
@@ -317,24 +317,24 @@ mov		-88(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov 		res(%rip), %r10 
-mov		%r10, -112(%rbp) 
+mov		%r10, -104(%rbp) 
 
-movss		-112(%rbp), %xmm0
+movss		-104(%rbp), %xmm0
 
 movss		-16(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	multRepeat
-mov 	%rax, -120(%rbp) 
+mov 	%rax, -112(%rbp) 
 
-mov		$.L0L19, %r10
+mov		$.SL19, %r10
 mov	 	%r10, %rdi
 
-movss		-120(%rbp), %xmm1
+movss		-112(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -144(%rbp) 
+mov 	%rax, -128(%rbp) 
 
 mov 		$0, %rax
 leave

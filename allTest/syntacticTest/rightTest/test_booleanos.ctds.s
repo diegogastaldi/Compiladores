@@ -1,4 +1,4 @@
-.L0L5: 
+.SL5: 
 		.string "%d" 
 
 .text
@@ -7,7 +7,7 @@
 .type	neg, @function 
 neg: 
 enter   $(8 * 4), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 cmpq		$0, -16(%rbp) 
 sete		%al 
@@ -22,8 +22,8 @@ ret
 .type	and, @function 
 and: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -16(%rbp) 
 
 cmpq		$0, -24(%rbp)
 je 		.L0
@@ -44,8 +44,8 @@ ret
 .type	or, @function 
 or: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -16(%rbp) 
 
 cmpq		$0, -24(%rbp)
 jne 		.L2
@@ -66,7 +66,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 20), $0 
+enter   $(8 * 18), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -130,7 +130,7 @@ mov 	%rax, -120(%rbp)
 mov		-120(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		$.L0L5, %r10
+mov		$.SL5, %r10
 mov	 	%r10, %rdi
 
 mov		-24(%rbp), %r10
@@ -138,7 +138,7 @@ mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -152(%rbp) 
+mov 	%rax, -136(%rbp) 
 
 mov 		$0, %rax
 leave

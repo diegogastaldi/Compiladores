@@ -6,7 +6,7 @@
 .type	alo, @function 
 alo: 
 enter   $(8 * 5), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
@@ -25,8 +25,8 @@ ret
 .globl	alo2
 .type	alo2, @function 
 alo2: 
-enter   $(8 * 7), $0 
-mov 		%rdi, -16(%rbp) 
+enter   $(8 * 9), $0 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
@@ -35,17 +35,18 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	alo
+mov 	%rax, -40(%rbp) 
 
-movq 	$1, -40(%rbp)
+movq 	$1, -56(%rbp)
 
-movq 	$1, -48(%rbp)
+movq 	$1, -64(%rbp)
 
-mov		-40(%rbp), %r10 
-mov		-48(%rbp), %r11 
+mov		-56(%rbp), %r10 
+mov		-64(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -56(%rbp)
+mov		%r11, -72(%rbp)
 
-mov		-56(%rbp), %r10
+mov		-72(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov 		$0, %rax

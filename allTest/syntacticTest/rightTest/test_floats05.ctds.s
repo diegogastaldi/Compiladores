@@ -1,4 +1,4 @@
-.L0L4: 
+.SL4: 
 		.string "anidandofuncionesflotantes" 
 
 .FL3: 
@@ -19,8 +19,8 @@
 .type	div, @function 
 div: 
 enter   $(8 * 6), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
 
 movss		-24(%rbp), %xmm0 
 divss		-16(%rbp), %xmm0 
@@ -34,8 +34,8 @@ ret
 .type	resta, @function 
 resta: 
 enter   $(8 * 6), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
 
 movss		-24(%rbp), %xmm0 
 subss		-16(%rbp), %xmm0 
@@ -49,8 +49,8 @@ ret
 .type	sum, @function 
 sum: 
 enter   $(8 * 6), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
 
 movss		-24(%rbp), %xmm0 
 addss		-16(%rbp), %xmm0 
@@ -63,7 +63,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 18), $0 
+enter   $(8 * 16), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -100,7 +100,7 @@ movss		-16(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	resta
-mov 	%rax, -80(%rbp) 
+mov 	%rax, -72(%rbp) 
 
 movss		-16(%rbp), %xmm0
 
@@ -108,24 +108,24 @@ movss		-24(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	div
-mov 	%rax, -96(%rbp) 
+mov 	%rax, -88(%rbp) 
 
-movss		-80(%rbp), %xmm0
+movss		-72(%rbp), %xmm0
 
-movss		-96(%rbp), %xmm1
+movss		-88(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	sum
-mov 	%rax, -112(%rbp) 
+mov 	%rax, -104(%rbp) 
 
-mov		$.L0L4, %r10
+mov		$.SL4, %r10
 mov	 	%r10, %rdi
 
-movss		-112(%rbp), %xmm1
+movss		-104(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -136(%rbp) 
+mov 	%rax, -120(%rbp) 
 
 mov 		$0, %rax
 leave

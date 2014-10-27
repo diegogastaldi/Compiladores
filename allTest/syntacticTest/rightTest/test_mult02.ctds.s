@@ -27,7 +27,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 5), $0 
 
 mov 		$0, %rax 
 call 	pruMult
@@ -38,7 +38,7 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -40(%rbp) 
+mov 	%rax, -32(%rbp) 
 
 mov 		$0, %rax
 leave

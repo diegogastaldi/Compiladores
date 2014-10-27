@@ -8,7 +8,7 @@ int pruArreglos(int b, int c ){
   int i;   
 i = 0;
   for  i = 0 , 10 {
-externinvk("printf", int, "entro al while  %d", i);
+externinvk("printf", int, "entro al for  %d", i);
   }
 	return i;
 }

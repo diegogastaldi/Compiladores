@@ -378,70 +378,78 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
     
   public Integer visit(InternInvkStmt stmt){
-  	Integer parameter;
-    Expression a;
+    Integer parameter;
+    Integer floatParam = 0;
+    Integer intParam = 0;
     List<Instr> param = new LinkedList<Instr>();
-    for (int i = 0; i < stmt.getParameters().size(); i++) {
-      a = stmt.getParameters().get(i);
-      parameter = a.accept(this);
-      Operator op = null;
-
+    for (Expression a : stmt.getParameters()) {
+      parameter = a.accept(this);      
       switch (a.getType()) {
         case FLOAT: 
-          op = Operator.FPARAM;
+          if (floatParam < 8) {
+            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            floatParam++;
+          } else 
+            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
-          op = Operator.PARAM;
+          if (intParam < 6) {
+            param.add(new Instr(Operator.PARAM, parameter, intParam, null));
+            intParam++;
+          } else 
+            param.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
           break;
         default: 
-          System.out.println("Stmt: El parametro de la llamada interna no tiene tipo asignado");
+          System.out.println("stmt: El parametro de la llamada interna no tiene tipo asignado");
           break;
       }
-
-      if (i < 6)
-      	param.add(new Instr(op, parameter, i, null));
-      else 
-      	param.add(new Instr(op, parameter, i, genLabels.getOffSet()));
     }
     instructions.addAll(param);
-    /* Realiza la llamada a la funcion */
-    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
-
+    /* Llama al metodo */
+    Integer result = genLabels.getOffSet();
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), genLabels.getOffSet(), result));
     return null;
   }	
   
   public Integer visit(ExternInvkStmt stmt){
     Integer parameter;    
-    ArgInvoc a;
+    Integer floatParam = 0;
+    Integer intParam = 0;    
     List<Instr> param = new LinkedList<Instr>();
-    for (int i = 0; i < stmt.getParameters().size(); i++) {
-      a = stmt.getParameters().get(i);
+    for (ArgInvoc a : stmt.getParameters()) {
       if (!(a instanceof ArgInvocSL)) {
-      	parameter = ((ArgInvocExpr) a).getExpression().accept(this);
-
+        parameter = ((ArgInvocExpr) a).getExpression().accept(this);
         switch (((ArgInvocExpr) a).getExpression().getType()) {
-          case FLOAT:  
-            param.add(new Instr(Operator.FPARAM, parameter, i, genLabels.getOffSet()));
-            break;
-          case INT: case BOOLEAN:
-            param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
-            break;
-          default: 
-            System.out.println("Stmt: El parametro de la llamada externa no tiene tipo asignado");
-            break;
+        case FLOAT: 
+          if (floatParam < 8) {
+            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            floatParam++;
+          } else 
+            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+          break;
+        case INT: case BOOLEAN:
+          if (intParam < 6) {
+            param.add(new Instr(Operator.PARAM, parameter, intParam, null));
+            intParam++;
+          } else 
+            param.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
+          break;
+        default: 
+          System.out.println("stmt: El parametro de la llamada interna no tiene tipo asignado");
+          break;
         }
-
       } else {
         String label = genLabels.getLabel();
-        instructions.add(0, new Instr(Operator.STRING, a.toString(), "L0"+label, null));
+        instructions.add(0, new Instr(Operator.STRING, a.toString(), "S"+label, null));
         posMethodLabel ++;
-        param.add(new Instr(Operator.PARAM, "$.L0"+label, i, genLabels.getOffSet()));        
+        param.add(new Instr(Operator.PARAM, "$.S"+label, intParam, null));
+        intParam++;
       }
     }
     instructions.addAll(param);
     Integer result = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), genLabels.getOffSet(), result));
-  	return null; 
+   	return null; 
   }
 
   public Integer visit (NegativeExpr expr)   {
@@ -662,28 +670,30 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 
   public Integer visit (InternInvkExpr expr){
   	Integer parameter;
-    Expression a;
+    Integer floatParam = 0;
+    Integer intParam = 0;
     List<Instr> param = new LinkedList<Instr>();
-    for (int i = 0; i < expr.getParameters().size(); i++) {
-      a = expr.getParameters().get(i);
-      parameter = a.accept(this);
-      Operator op = null;
+    for (Expression a : expr.getParameters()) {
+      parameter = a.accept(this);      
       switch (a.getType()) {
         case FLOAT: 
-      	  op = Operator.FPARAM;
+          if (floatParam < 8) {
+            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            floatParam++;
+          } else 
+            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
-      	  op = Operator.PARAM;
+          if (intParam < 6) {
+            param.add(new Instr(Operator.PARAM, parameter, intParam, null));
+            intParam++;
+          } else 
+            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
           break;
         default: 
           System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
           break;
       }
-      if (i < 6)
-      	param.add(new Instr(op, parameter, i, null));
-      else 
-      	param.add(new Instr(op, parameter, i, genLabels.getOffSet()));
-
     }
     instructions.addAll(param);
     /* Llama al metodo */
@@ -694,29 +704,37 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   
   public Integer visit (ExternInvkExpr expr){
     Integer parameter;  	
-    ArgInvoc a;
+    Integer floatParam = 0;
+    Integer intParam = 0;
     List<Instr> param = new LinkedList<Instr>();
-    for (int i = 0; i < expr.getParameters().size(); i++) {
-      a = expr.getParameters().get(i);
+    for (ArgInvoc a : expr.getParameters()) {
       if (!(a instanceof ArgInvocSL)) {
 				parameter = ((ArgInvocExpr) a).getExpression().accept(this);
-        
         switch (((ArgInvocExpr) a).getExpression().getType()) {
-          case FLOAT:  
-            param.add(new Instr(Operator.FPARAM, parameter, i, genLabels.getOffSet()));
-            break;
-        	case INT: case BOOLEAN:
-            param.add(new Instr(Operator.PARAM, parameter, i, genLabels.getOffSet()));
-            break;
-          default: 
-            System.out.println("expr: El parametro de la llamada externa no tiene tipo asignado");
-            break;
+        case FLOAT: 
+          if (floatParam < 8) {
+            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            floatParam++;
+          } else 
+            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+          break;
+        case INT: case BOOLEAN:
+          if (intParam < 6) {
+            param.add(new Instr(Operator.PARAM, parameter, intParam, null));
+            intParam++;
+          } else 
+            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+          break;
+        default: 
+          System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
+          break;
         }
       } else {
         String label = genLabels.getLabel();
         instructions.add(0, new Instr(Operator.STRING, a.toString(), "S"+label, null));
         posMethodLabel ++;
-        param.add(new Instr(Operator.PARAM, "$.S"+label, i, genLabels.getOffSet()));        
+        param.add(new Instr(Operator.PARAM, "$.S"+label, intParam, null));
+        intParam++;
       }
     }
     instructions.addAll(param);

@@ -1,4 +1,4 @@
-.L0L22: 
+.SL22: 
 		.string "%f" 
 
 .FL21: 
@@ -49,8 +49,8 @@
 .type	pruContinue, @function 
 pruContinue: 
 enter   $(8 * 34), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -221,7 +221,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 7), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -232,16 +232,16 @@ movss		-24(%rbp), %xmm1
 
 mov 		$0, %rax 
 call 	pruContinue
-mov 	%rax, -40(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-mov		$.L0L22, %r10
+mov		$.SL22, %r10
 mov	 	%r10, %rdi
 
-movss		-40(%rbp), %xmm1
+movss		-32(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -64(%rbp) 
+mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

@@ -1,4 +1,4 @@
-.L0L9: 
+.SL9: 
 		.string "%f" 
 
 .FL8: 
@@ -16,7 +16,7 @@
 .type	sumatoria, @function 
 sumatoria: 
 enter   $(8 * 19), $0 
-movss 		%xmm0, -16(%rbp) 
+movss 		%xmm0, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -121,7 +121,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -141,14 +141,14 @@ mov 	%rax, -40(%rbp)
 mov		-40(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.L0L9, %r10
+mov		$.SL9, %r10
 mov	 	%r10, %rdi
 
-movss		-16(%rbp), %xmm1
+movss		-16(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -72(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

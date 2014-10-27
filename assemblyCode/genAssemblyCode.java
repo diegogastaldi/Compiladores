@@ -402,14 +402,12 @@ public class genAssemblyCode {
 			result += "mov		" + instr.getOperand1() + ", %r10\n";
 		else
 			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
-		Integer numOperand = (Integer)instr.getOperand2();
-		String destRegister;
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
-		if (numOperand < paramRegister.registersInt.length)  
-			destRegister = paramRegister.registersInt [numOperand];		
-		else 
-			destRegister = instr.getResult() + "(%rbp)";
-		result += "mov	 	%r10, " + destRegister + "\n";
+		if (instr.getResult() == null)  {
+			Integer numOperand = (Integer)instr.getOperand2();			
+			result += "mov	 	%r10, " + paramRegister.registersInt [numOperand] + "\n";
+		}	else 
+			result += "mov	 	%r10, " + instr.getResult() + "(%rbp) \n";			
 	}
 
 	/* Realiza el llamado a un metodo */
@@ -428,27 +426,34 @@ public class genAssemblyCode {
 		result += instr.getResult() + ": \n";		
 		result += "enter   $(8 * " + instr.getOperand1() + "), $0 \n";
 
+		Integer floatParam = 0;
+		Integer intParam = 0;
+		Integer i = 0;
 		/* Guarda parametros en memoria reservada del metodo actual */
-		LinkedList<absSymbol> param = (LinkedList<absSymbol>) instr.getOperand2();
-		for (int i = 0 ; i < (param.size()); i++) {
-			switch (param.get(i).getType()) {
+		for (absSymbol param : (LinkedList<absSymbol>) instr.getOperand2()) {
+			switch (param.getType()) {
 				case INT : case BOOLEAN:
-					if (i < paramRegister.registersInt.length) 
-						result += "mov 		" + paramRegister.registersInt[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
+					if (intParam < paramRegister.registersInt.length) {
+						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
+						intParam++;
+					}
 					else {
 						result += "mov 		" + (((i+1)-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";												
+						result += "mov 		%r10, " + ((i+1) * (-8)) + "(%rbp) \n";												
 					}
 					break;
 				case FLOAT: 
-					if (i < paramRegister.registersFloat.length) 					
-						result += "movss 		" + paramRegister.registersFloat[i] + ", " + ((i+2) * (-8)) + "(%rbp) \n";
+					if (floatParam < paramRegister.registersFloat.length) {
+						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
+						floatParam++;
+					}
 					else {
 						result += "mov 		" + (((i+1)-paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + ((i+2) * (-8)) + "(%rbp) \n";												
+						result += "mov 		%r10, " + ((i+1) * (-8)) + "(%rbp) \n";												
 					}						
 					break;					
 			}
+			i++;
 		}
 	}
 
@@ -526,10 +531,14 @@ public class genAssemblyCode {
 
 	/* Inicializa el arreglo global con la etiqueta como resultado en la instr */
 	public static void initglobalarrayMethod(Instr instr) {
-		result += "mov 		$" + instr.getOperand1() + ", %r10 \n";
-		result += "mov 		$" + instr.getOperand2() + ", %edx \n";
-		result += "cltq \n";
-		result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
+		int i = 0;
+		while (i < (Integer)instr.getOperand2()) {
+			result += "mov 		$" + instr.getOperand1() + ", %r10 \n";
+			result += "mov 		$" + i + ", %edx \n";
+			result += "cltq \n";
+			result += "mov 		%r10, " + instr.getResult() + "(, %rdx, 8) \n";
+			i++;
+		}
 	}		
 
 	/* Apila los parametros de tipo float previo a una llamada a un metodo, 
@@ -538,9 +547,9 @@ public class genAssemblyCode {
 	public static void fparamMethod(Instr instr) {
 		Integer numOperand = (Integer)instr.getOperand2();
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
-		if (numOperand < paramRegister.registersFloat.length)  
+		if (instr.getResult() == null) { 
 			result += "movss		" + instr.getOperand1() + "(%rbp), " + paramRegister.registersFloat [numOperand] + "\n";	
-		else {
+		} else {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";			
 			result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";
 		}

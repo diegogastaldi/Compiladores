@@ -1,4 +1,4 @@
-.L0L10: 
+.SL10: 
 		.string "%f" 
 
 .FL9: 
@@ -22,8 +22,8 @@
 .type	potencia, @function 
 potencia: 
 enter   $(8 * 27), $0 
-movss 		%xmm0, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -166,7 +166,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 11), $0 
+enter   $(8 * 9), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -182,7 +182,7 @@ movq 	$2, -40(%rbp)
 movss		-24(%rbp), %xmm0
 
 mov		-40(%rbp), %r10
-mov	 	%r10, %rsi
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	potencia
@@ -191,14 +191,14 @@ mov 	%rax, -48(%rbp)
 mov		-48(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.L0L10, %r10
+mov		$.SL10, %r10
 mov	 	%r10, %rdi
 
-movss		-16(%rbp), %xmm1
+movss		-16(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -80(%rbp) 
+mov 	%rax, -64(%rbp) 
 
 mov 		$0, %rax
 leave

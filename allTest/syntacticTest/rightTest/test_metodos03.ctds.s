@@ -12,7 +12,7 @@
 .type	inc, @function 
 inc: 
 enter   $(8 * 5), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
@@ -29,8 +29,8 @@ ret
 .type	resto, @function 
 resto: 
 enter   $(8 * 14), $0 
-mov 		%rdi, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+movss 		%xmm0, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -110,7 +110,7 @@ mov	%r10, -56(%rbp)
 mov		-40(%rbp), %r10
 mov	 	%r10, %rdi
 
-movss		-56(%rbp), %xmm1
+movss		-56(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	resto

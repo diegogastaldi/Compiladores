@@ -10,8 +10,8 @@
 .type	sumx, @function 
 sumx: 
 enter   $(8 * 14), $0 
-movss 		%xmm0, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -73,7 +73,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 7), $0 
 
 mov	.FL3(%rip), %r10
 mov	%r10, -16(%rbp)
@@ -83,7 +83,7 @@ movq 	$2, -24(%rbp)
 movss		-16(%rbp), %xmm0
 
 mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	sumx
@@ -93,7 +93,7 @@ movss		-32(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -56(%rbp) 
+mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

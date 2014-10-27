@@ -28,7 +28,7 @@
 .type	prueba, @function 
 prueba: 
 enter   $(8 * 28), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -182,7 +182,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
 
 movq 	$6, -16(%rbp)
 
@@ -197,7 +197,7 @@ movss		-24(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave

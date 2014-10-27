@@ -1,7 +1,7 @@
-.L0L5: 
+.SL5: 
 		.string "mcd" 
 
-.L0L4: 
+.SL4: 
 		.string "%d%f" 
 
 .text
@@ -12,8 +12,8 @@
 .type	maxcomdiv, @function 
 maxcomdiv: 
 enter   $(8 * 15), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+mov 		%rsi, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -102,63 +102,63 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 18), $0 
+enter   $(8 * 14), $0 
 
 mov		$0, %r10
 mov		%r10, a(%rip)
 
-movq 	$6, -32(%rbp)
+movq 	$6, -16(%rbp)
 
-movq 	$9, -40(%rbp)
+movq 	$9, -24(%rbp)
 
-mov		-32(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-40(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	maxcomdiv
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -32(%rbp) 
 
-movq 	$3, -72(%rbp)
+movq 	$3, -48(%rbp)
 
 mov 		a(%rip), %r10 
-mov		%r10, -80(%rbp) 
+mov		%r10, -56(%rbp) 
 
-movq 	$7, -88(%rbp)
+movq 	$7, -64(%rbp)
 
-movq 	$6, -96(%rbp)
+movq 	$6, -72(%rbp)
 
-movss		-88(%rbp), %xmm0 
-divss		-96(%rbp), %xmm0 
-movss		%xmm0, -104(%rbp) 
+movss		-64(%rbp), %xmm0 
+divss		-72(%rbp), %xmm0 
+movss		%xmm0, -80(%rbp) 
 
-mov		-104(%rbp), %r10 
-mov		-80(%rbp), %r11 
+mov		-80(%rbp), %r10 
+mov		-56(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -112(%rbp)
+mov		%r11, -88(%rbp)
 
-mov		-72(%rbp), %r10 
-mov		-112(%rbp), %r11 
+mov		-48(%rbp), %r10 
+mov		-88(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -120(%rbp)
+mov		%r10, -96(%rbp)
 
-mov		$.L0L4, %r10
+mov		$.SL4, %r10
 mov	 	%r10, %rdi
 
-mov		$.L0L5, %r10
+mov		$.SL5, %r10
 mov	 	%r10, %rsi
 
-mov		-48(%rbp), %r10
+mov		-32(%rbp), %r10
 mov	 	%r10, %rdx
 
-mov		-120(%rbp), %r10
+mov		-96(%rbp), %r10
 mov	 	%r10, %rcx
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -136(%rbp) 
+mov 	%rax, -104(%rbp) 
 
 mov 		$0, %rax
 leave

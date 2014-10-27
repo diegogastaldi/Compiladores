@@ -13,7 +13,7 @@ Compilacion y ejecucion de codigos:
 
 Nota:
 	A los print siempre hay que ponerles el formato de lo que va a mostrar
-							DOCUMENTACION
 
-probar  metodos en generateAssemblyCode -> Ver donde busco los parametros
+							DOCUMENTACION
 al mostrar float con printf muestra 0.00000000
+Preguntar por los espacios que deja los comentarios en la terminal

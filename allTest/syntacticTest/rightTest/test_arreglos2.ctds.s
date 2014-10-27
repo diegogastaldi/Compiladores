@@ -1,7 +1,7 @@
 .FL8: 
 		.float 2.0 
 
-.L0L7: 
+.SL7: 
 		.string "%f resultado : " 
 
 .FL3: 
@@ -30,8 +30,8 @@
 .type	pruArreglos, @function 
 pruArreglos: 
 enter   $(8 * 14), $0 
-mov 		%rdi, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
+mov 		%rdi, -8(%rbp) 
+movss 		%xmm0, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -79,20 +79,292 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 31), $0 
+enter   $(8 * 29), $0 
 
 mov 		$0, %r10 
-mov 		$5, %edx 
+mov 		$0, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$1, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$2, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$3, %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$4, %edx 
 cltq 
 mov 		%r10, A(, %rdx, 8) 
 
 mov 		$0, %r10 
-mov 		$56, %edx 
+mov 		$0, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$1, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$2, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$3, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$4, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$5, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$6, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$7, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$8, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$9, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$10, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$11, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$12, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$13, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$14, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$15, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$16, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$17, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$18, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$19, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$20, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$21, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$22, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$23, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$24, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$25, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$26, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$27, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$28, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$29, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$30, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$31, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$32, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$33, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$34, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$35, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$36, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$37, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$38, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$39, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$40, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$41, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$42, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$43, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$44, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$45, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$46, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$47, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$48, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$49, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$50, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$51, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$52, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$53, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$54, %edx 
+cltq 
+mov 		%r10, B(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$55, %edx 
 cltq 
 mov 		%r10, B(, %rdx, 8) 
 
 mov 		$0, %r10 
-mov 		$10, %edx 
+mov 		$0, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$1, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$2, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$3, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$4, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$5, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$6, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$7, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$8, %edx 
+cltq 
+mov 		%r10, C(, %rdx, 8) 
+mov 		$0, %r10 
+mov 		$9, %edx 
 cltq 
 mov 		%r10, C(, %rdx, 8) 
 
@@ -212,16 +484,16 @@ cltq
 mov 		%r10, C(, %rdx, 8) 
 
 mov	.FL8(%rip), %r10
-mov	%r10, -224(%rbp)
+mov	%r10, -216(%rbp)
 
-mov		$.L0L7, %r10
+mov		$.SL7, %r10
 mov	 	%r10, %rdi
 
-movss		-224(%rbp), %xmm1
+movss		-216(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -240(%rbp) 
+mov 	%rax, -224(%rbp) 
 
 mov 		$0, %rax
 leave

@@ -1,4 +1,4 @@
-.L0L4: 
+.SL4: 
 		.string "%f resultado : " 
 
 .text
@@ -7,7 +7,7 @@
 .type	breaks, @function 
 breaks: 
 enter   $(8 * 13), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -80,26 +80,26 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
-movq 	$1, -24(%rbp)
+movq 	$1, -16(%rbp)
 
-mov		-24(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	breaks
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-mov		$.L0L4, %r10
+mov		$.SL4, %r10
 mov	 	%r10, %rdi
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -56(%rbp) 
+mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave

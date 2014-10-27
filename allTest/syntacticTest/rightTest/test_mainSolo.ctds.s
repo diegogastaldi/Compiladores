@@ -3,7 +3,7 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
+enter   $(8 * 13), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -66,7 +66,7 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -104(%rbp) 
+mov 	%rax, -96(%rbp) 
 
 mov 		$0, %rax
 leave

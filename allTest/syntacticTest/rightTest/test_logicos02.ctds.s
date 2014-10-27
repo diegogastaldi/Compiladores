@@ -7,7 +7,7 @@
 .FL30: 
 		.float 3.3 
 
-.L0L29: 
+.SL29: 
 		.string "%f resultado : " 
 
 .FL21: 
@@ -43,9 +43,9 @@
 .type	promedio, @function 
 promedio: 
 enter   $(8 * 34), $0 
-movss 		%xmm0, -16(%rbp) 
-movss 		%xmm1, -24(%rbp) 
-movss 		%xmm2, -32(%rbp) 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
+movss 		%xmm2, -24(%rbp) 
 
 movss		-16(%rbp), %xmm0 
 ucomiss		-32(%rbp), %xmm0 
@@ -265,35 +265,35 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 mov	.FL30(%rip), %r10
-mov	%r10, -24(%rbp)
+mov	%r10, -16(%rbp)
 
 mov	.FL31(%rip), %r10
-mov	%r10, -32(%rbp)
+mov	%r10, -24(%rbp)
 
 mov	.FL32(%rip), %r10
-mov	%r10, -40(%rbp)
+mov	%r10, -32(%rbp)
 
-movss		-24(%rbp), %xmm0
+movss		-16(%rbp), %xmm0
 
-movss		-32(%rbp), %xmm1
+movss		-24(%rbp), %xmm1
 
-movss		-40(%rbp), %xmm2
+movss		-32(%rbp), %xmm2
 
 mov 		$0, %rax 
 call 	promedio
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -40(%rbp) 
 
-mov		$.L0L29, %r10
+mov		$.SL29, %r10
 mov	 	%r10, %rdi
 
-movss		-48(%rbp), %xmm1
+movss		-40(%rbp), %xmm0
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -72(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

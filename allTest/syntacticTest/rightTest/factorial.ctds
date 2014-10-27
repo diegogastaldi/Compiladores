@@ -1,6 +1,5 @@
 class Factorial{
 
-void main() {return;}
 
 int met(){
    int a;
@@ -8,6 +7,14 @@ int met(){
    int c;
    c = a-b;
    return c;
+}
+
+void main() {
+	int x;
+	x = met();
+	x = x + 2;
+	externinvk("printf", int, "%d", x);
+	return;
 }
 
 }

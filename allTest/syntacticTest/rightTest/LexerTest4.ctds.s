@@ -1,7 +1,7 @@
-.L0L3: 
+.SL3: 
 		.string "y==%d\n" 
 
-.L0L1: 
+.SL1: 
 		.string "y==1\n" 
 
 .text
@@ -10,7 +10,7 @@
 .type	inc, @function 
 inc: 
 enter   $(8 * 5), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
@@ -26,7 +26,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 16), $0 
+enter   $(8 * 13), $0 
 
 mov 		$0, %rax 
 call 	get_int
@@ -57,18 +57,18 @@ cmp 		-64(%rbp), %r10
 
 jne 		.falseCondL0
 
-mov		$.L0L1, %r10
+mov		$.SL1, %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -88(%rbp) 
+mov 	%rax, -80(%rbp) 
 
 jmp 		.endIfL2
 
 .falseCondL0: 
 
-mov		$.L0L3, %r10
+mov		$.SL3, %r10
 mov	 	%r10, %rdi
 
 mov		-16(%rbp), %r10
@@ -76,7 +76,7 @@ mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -120(%rbp) 
+mov 	%rax, -96(%rbp) 
 
 .endIfL2: 
 

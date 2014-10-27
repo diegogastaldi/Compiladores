@@ -4,7 +4,7 @@
 .type	pruMult, @function 
 pruMult: 
 enter   $(8 * 11), $0 
-mov 		%rdi, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -46,7 +46,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
 
 movq 	$2, -16(%rbp)
 
@@ -62,7 +62,7 @@ mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 call 	printf
-mov 	%rax, -48(%rbp) 
+mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave
