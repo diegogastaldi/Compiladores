@@ -9,12 +9,12 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
-mov		-16(%rbp), %r10 
+mov		0(%rbp), %r10 
 mov		-32(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -40(%rbp)
@@ -26,7 +26,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 10), $0 
 
 mov 		$0, %rax 
 

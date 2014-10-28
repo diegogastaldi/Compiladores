@@ -23,7 +23,6 @@
 potencia: 
 enter   $(8 * 28), $0 
 movss 		%xmm0, -8(%rbp) 
-cvtps2pd	%xmm0, %xmm0 
 mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
@@ -53,7 +52,7 @@ mov		%r10, -48(%rbp)
 
 movq 	$0, -96(%rbp)
 
-mov		-16(%rbp), %rax
+mov		0(%rbp), %rax
 cmp		-96(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
@@ -66,12 +65,12 @@ cmp 		-104(%rbp), %r10
 
 jne 		.falseCondL1
 
-mov		-16(%rbp), %rax 
+mov		0(%rbp), %rax 
 neg		%rax 
 mov		%rax, -120(%rbp) 
 
 mov		-120(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		%r10, 0(%rbp)
 
 cmpq		$0, -40(%rbp) 
 sete		%al 
@@ -86,7 +85,7 @@ mov		%r10, -40(%rbp)
 .beginWhileL3: 
 
 mov		-32(%rbp), %rax
-cmp		-16(%rbp), %rax
+cmp		0(%rbp), %rax
 setle 	%al
 movzb  %al, %rax
 mov		%rax, -136(%rbp)
@@ -99,7 +98,7 @@ cmp 		-136(%rbp), %r10
 jne 		.endWhileL2
 
 movss		-48(%rbp), %xmm0 
-mulss		-24(%rbp), %xmm0 
+mulss		-8(%rbp), %xmm0 
 movss		%xmm0, -152(%rbp) 
 
 mov		-152(%rbp), %r10
@@ -167,7 +166,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -181,7 +180,6 @@ mov		%r10, -24(%rbp)
 movq 	$2, -40(%rbp)
 
 movss		-24(%rbp), %xmm0
-cvtps2pd	%xmm0, %xmm0 
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rdi

@@ -42,22 +42,19 @@
 .globl	promedio
 .type	promedio, @function 
 promedio: 
-enter   $(8 * 34), $0 
+enter   $(8 * 35), $0 
 movss 		%xmm0, -8(%rbp) 
-cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
-cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm2, -24(%rbp) 
-cvtps2pd	%xmm0, %xmm0 
 
-movss		-16(%rbp), %xmm0 
-ucomiss		-32(%rbp), %xmm0 
+movss		0(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -64(%rbp) 
 
-movss		-16(%rbp), %xmm0 
-ucomiss		-24(%rbp), %xmm0 
+movss		0(%rbp), %xmm0 
+ucomiss		-8(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -72(%rbp) 
@@ -80,8 +77,8 @@ cmp 		-80(%rbp), %r10
 
 jne 		.falseCondL2
 
-movss		-32(%rbp), %xmm0 
-addss		-24(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+addss		-8(%rbp), %xmm0 
 movss		%xmm0, -96(%rbp) 
 
 mov	.FL3(%rip), %r10
@@ -97,14 +94,14 @@ ret
 
 .falseCondL2: 
 
-movss		-24(%rbp), %xmm0 
-ucomiss		-32(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -120(%rbp) 
 
-movss		-24(%rbp), %xmm0 
-ucomiss		-16(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
+ucomiss		0(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -128(%rbp) 
@@ -127,8 +124,8 @@ cmp 		-136(%rbp), %r10
 
 jne 		.falseCondL6
 
-movss		-32(%rbp), %xmm0 
-addss		-16(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+addss		0(%rbp), %xmm0 
 movss		%xmm0, -152(%rbp) 
 
 mov	.FL7(%rip), %r10
@@ -144,14 +141,14 @@ ret
 
 .falseCondL6: 
 
-movss		-32(%rbp), %xmm0 
-ucomiss		-24(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+ucomiss		-8(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -176(%rbp) 
 
-movss		-32(%rbp), %xmm0 
-ucomiss		-16(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+ucomiss		0(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -184(%rbp) 
@@ -174,8 +171,8 @@ cmp 		-192(%rbp), %r10
 
 jne 		.falseCondL10
 
-movss		-16(%rbp), %xmm0 
-addss		-24(%rbp), %xmm0 
+movss		0(%rbp), %xmm0 
+addss		-8(%rbp), %xmm0 
 movss		%xmm0, -208(%rbp) 
 
 mov	.FL11(%rip), %r10
@@ -191,11 +188,11 @@ ret
 
 .falseCondL10: 
 
-movss		-32(%rbp), %xmm0 
-ucomiss		-24(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+ucomiss		-8(%rbp), %xmm0 
 jp	.L14 
-movss		-32(%rbp), %xmm0 
-ucomiss		-24(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+ucomiss		-8(%rbp), %xmm0 
 jne	.L14 
 mov		FL12(%rip), %rax 
 jmp	.L15 
@@ -204,11 +201,11 @@ mov	.FL13, %rax
 .L15: 
 mov	%rax, -232(%rbp) 
 
-movss		-32(%rbp), %xmm0 
-ucomiss		-16(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+ucomiss		0(%rbp), %xmm0 
 jp	.L18 
-movss		-32(%rbp), %xmm0 
-ucomiss		-16(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+ucomiss		0(%rbp), %xmm0 
 jne	.L18 
 mov		FL16(%rip), %rax 
 jmp	.L19 
@@ -217,11 +214,11 @@ mov	.FL17, %rax
 .L19: 
 mov	%rax, -240(%rbp) 
 
-movss		-24(%rbp), %xmm0 
-ucomiss		-16(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
+ucomiss		0(%rbp), %xmm0 
 jp	.L22 
-movss		-24(%rbp), %xmm0 
-ucomiss		-16(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
+ucomiss		0(%rbp), %xmm0 
 jne	.L22 
 mov		FL20(%rip), %rax 
 jmp	.L23 
@@ -259,7 +256,7 @@ cmp 		-264(%rbp), %r10
 
 jne 		.falseCondL28
 
-movss		-32(%rbp), %xmm0
+movss		-16(%rbp), %xmm0
 leave
 ret
 
@@ -268,7 +265,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 7), $0 
 
 mov	.FL30(%rip), %r10
 mov	%r10, -16(%rbp)
@@ -280,13 +277,10 @@ mov	.FL32(%rip), %r10
 mov	%r10, -32(%rbp)
 
 movss		-16(%rbp), %xmm0
-cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm1
-cvtps2pd	%xmm0, %xmm0 
 
 movss		-32(%rbp), %xmm2
-cvtps2pd	%xmm0, %xmm0 
 
 mov 		$3, %rax 
 

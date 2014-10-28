@@ -11,12 +11,12 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
-mov		-16(%rbp), %r10 
+mov		0(%rbp), %r10 
 mov		-32(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -40(%rbp)
@@ -28,10 +28,9 @@ ret
 .globl	resto
 .type	resto, @function 
 resto: 
-enter   $(8 * 14), $0 
+enter   $(8 * 15), $0 
 mov 		%rdi, -8(%rbp) 
 movss 		%xmm0, -16(%rbp) 
-cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -45,7 +44,7 @@ mov		-64(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -72(%rbp)
 
-mov		-24(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-72(%rbp), %rax
 setg		%al
 movzb	%al, %rax
@@ -60,7 +59,7 @@ jne 		.falseCondL0
 
 movq 	$3, -96(%rbp)
 
-movss		-24(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
 divss		-96(%rbp), %xmm0 
 movss		%xmm0, -104(%rbp) 
 
@@ -86,7 +85,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 9), $0 
 
 mov		$0, %r10
 mov		%r10, res(%rip)
@@ -113,7 +112,6 @@ mov		-40(%rbp), %r10
 mov	 	%r10, %rdi
 
 movss		-48(%rbp), %xmm0
-cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 
 

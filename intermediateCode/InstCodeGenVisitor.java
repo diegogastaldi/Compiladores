@@ -65,7 +65,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
-    int reserveSpace = (-genLabels.getOffSet()/8)-1;
+    int reserveSpace = (-genLabels.getOffSet()/8);
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
@@ -80,7 +80,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
-    int reserveSpace = (-genLabels.getOffSet()/8)-1;
+    int reserveSpace = (-genLabels.getOffSet()/8);
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
@@ -387,10 +387,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       switch (a.getType()) {
         case FLOAT: 
           if (floatParam < 8) {
-            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            param.add(new Instr(Operator.FPARAM, parameter, false, floatParam));
             floatParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+            param.add(new Instr(Operator.FPARAM, parameter, false, genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
           if (intParam < 6) {
@@ -422,10 +422,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         switch (((ArgInvocExpr) a).getExpression().getType()) {
         case FLOAT: 
           if (floatParam < 8) {
-            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            param.add(new Instr(Operator.FPARAM, parameter, true, floatParam));
             floatParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+            param.add(new Instr(Operator.FPARAM, parameter, true, genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
           if (intParam < 6) {
@@ -465,7 +465,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	  	String label = genLabels.getLabel();
   	  	instructions.add(0, new Instr(Operator.FLOAT, 0, "F"+label, null));
     		posMethodLabel ++;
-        genLabels.getOffSet();
   	  	instructions.add(new Instr(Operator.FUNARYMINUS, operand, "F"+label, result));
         break;
       default: 
@@ -680,17 +679,17 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       switch (a.getType()) {
         case FLOAT: 
           if (floatParam < 8) {
-            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            param.add(new Instr(Operator.FPARAM, parameter, false, floatParam));
             floatParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+            param.add(new Instr(Operator.FPARAM, parameter, false, genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
           if (intParam < 6) {
             param.add(new Instr(Operator.PARAM, parameter, intParam, null));
             intParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+            param.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
           break;
         default: 
           System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
@@ -716,17 +715,17 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         switch (((ArgInvocExpr) a).getExpression().getType()) {
         case FLOAT: 
           if (floatParam < 8) {
-            param.add(new Instr(Operator.FPARAM, parameter, floatParam, null));
+            param.add(new Instr(Operator.FPARAM, parameter, true, floatParam));
             floatParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+            param.add(new Instr(Operator.FPARAM, parameter, true, genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
           if (intParam < 6) {
             param.add(new Instr(Operator.PARAM, parameter, intParam, null));
             intParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, null, genLabels.getOffSet()));
+            param.add(new Instr(Operator.PARAM, parameter, null, genLabels.getOffSet()));
           break;
         default: 
           System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
@@ -783,7 +782,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       /* Si el numero es mayor a cero es porque es un parametro, los cuales
         tiene su lugar reservado al principio del stack */
       if (os >=  0) 
-        return (os + 2) * (-8);
+        return os * (-8);
       else 
         return os;
     } else {

@@ -15,14 +15,14 @@
 .globl	dados
 .type	dados, @function 
 dados: 
-enter   $(8 * 95), $0 
+enter   $(8 * 96), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 mov 		%rdx, -24(%rbp) 
 
 movq 	$6, -64(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-64(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -35,7 +35,7 @@ mov		%rax, -80(%rbp)
 
 movq 	$6, -88(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-88(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -48,7 +48,7 @@ mov		%rax, -104(%rbp)
 
 movq 	$6, -112(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-112(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -99,7 +99,7 @@ ret
 
 movq 	$6, -168(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-168(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -107,7 +107,7 @@ mov		%rax, -176(%rbp)
 
 movq 	$6, -184(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-184(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -120,7 +120,7 @@ mov		%rax, -200(%rbp)
 
 movq 	$6, -208(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-208(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -155,7 +155,7 @@ mov		%r10, -240(%rbp)
 
 movq 	$6, -248(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-248(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -168,7 +168,7 @@ mov		%rax, -264(%rbp)
 
 movq 	$6, -272(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-272(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -176,7 +176,7 @@ mov		%rax, -280(%rbp)
 
 movq 	$6, -288(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-288(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -211,7 +211,7 @@ mov		%r10, -320(%rbp)
 
 movq 	$6, -328(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-328(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -224,7 +224,7 @@ mov		%rax, -344(%rbp)
 
 movq 	$6, -352(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-352(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -237,7 +237,7 @@ mov		%rax, -368(%rbp)
 
 movq 	$6, -376(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-376(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -307,7 +307,7 @@ ret
 
 movq 	$6, -440(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-440(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -315,7 +315,7 @@ mov		%rax, -448(%rbp)
 
 movq 	$6, -456(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-456(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -323,7 +323,7 @@ mov		%rax, -464(%rbp)
 
 movq 	$6, -472(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-472(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -358,7 +358,7 @@ mov		%r10, -504(%rbp)
 
 movq 	$6, -512(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-512(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -366,7 +366,7 @@ mov		%rax, -520(%rbp)
 
 movq 	$6, -528(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-528(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -379,7 +379,7 @@ mov		%rax, -544(%rbp)
 
 movq 	$6, -552(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-552(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -409,7 +409,7 @@ mov		%r10, -576(%rbp)
 
 movq 	$6, -584(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-584(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -422,7 +422,7 @@ mov		%rax, -600(%rbp)
 
 movq 	$6, -608(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-608(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -430,7 +430,7 @@ mov		%rax, -616(%rbp)
 
 movq 	$6, -624(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-624(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -500,7 +500,7 @@ ret
 
 movq 	$6, -688(%rbp)
 
-mov 		-32(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-688(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -508,7 +508,7 @@ mov		%rax, -696(%rbp)
 
 movq 	$6, -704(%rbp)
 
-mov 		-24(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-704(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -516,7 +516,7 @@ mov		%rax, -712(%rbp)
 
 movq 	$6, -720(%rbp)
 
-mov 		-16(%rbp), %rax
+mov 		0(%rbp), %rax
 cmp		-720(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -563,7 +563,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 7), $0 
 
 movq 	$1, -16(%rbp)
 

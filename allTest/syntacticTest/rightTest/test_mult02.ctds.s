@@ -3,7 +3,7 @@
 .globl	pruMult
 .type	pruMult, @function 
 pruMult: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -27,7 +27,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 3), $0 
+enter   $(8 * 4), $0 
 
 mov 		$0, %rax 
 

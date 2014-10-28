@@ -27,7 +27,7 @@ public class Labels {
 
   public Labels() {
     temp = -8;
-    param = 0;
+    param = 1;
     label = 0;
   }
 

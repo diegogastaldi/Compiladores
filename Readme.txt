@@ -15,4 +15,4 @@ Nota:
 	A los print siempre hay que ponerles el formato de lo que va a mostra
 							DOCUMENTACION
 
-flotantes literales negativos -> violacion de segmento
+              diferenciar la apilada de parametros llamadas internas y externas (en externas los float llevan cvtps2pd %xmm0, %xmm0)

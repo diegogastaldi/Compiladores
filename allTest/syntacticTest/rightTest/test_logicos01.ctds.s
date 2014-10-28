@@ -3,7 +3,7 @@
 .globl	pruebaLogica
 .type	pruebaLogica, @function 
 pruebaLogica: 
-enter   $(8 * 12), $0 
+enter   $(8 * 13), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -46,7 +46,7 @@ mov		$0, %r10
 .L4:
 mov		%r10, -80(%rbp)
 
-cmpq		$0, -16(%rbp) 
+cmpq		$0, 0(%rbp) 
 sete		%al 
 movzb	%al, %rax 
 mov		%rax, -88(%rbp) 
@@ -69,7 +69,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 5), $0 
 
 movq 	$0, -16(%rbp)
 

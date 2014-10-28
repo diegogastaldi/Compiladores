@@ -34,12 +34,12 @@ mov		-32(%rbp), %r10
 mov		%r10, B(%rip)
 
 mov 		B(%rip), %r10 
-mov		%r10, -48(%rbp) 
+mov		%r10, -40(%rbp) 
 
 mov		$.SL2, %r10
 mov	 	%r10, %rdi
 
-movss		-48(%rbp), %xmm0
+movss		-40(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 

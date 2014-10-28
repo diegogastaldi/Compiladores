@@ -6,7 +6,7 @@
 .globl	breaks
 .type	breaks, @function 
 breaks: 
-enter   $(8 * 13), $0 
+enter   $(8 * 14), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -46,7 +46,7 @@ mov		%r10, -24(%rbp)
 
 movq 	$0, -88(%rbp)
 
-mov		-16(%rbp), %rax
+mov		0(%rbp), %rax
 cmp		-88(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
@@ -80,7 +80,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 5), $0 
 
 movq 	$1, -16(%rbp)
 

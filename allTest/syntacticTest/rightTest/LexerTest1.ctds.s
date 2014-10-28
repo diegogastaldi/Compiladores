@@ -15,7 +15,7 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(8 * 19), $0 
+enter   $(8 * 20), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -93,7 +93,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 mov 		$0, %r10 
 mov 		$0, %edx 

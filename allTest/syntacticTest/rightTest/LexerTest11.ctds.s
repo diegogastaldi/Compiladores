@@ -9,27 +9,25 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 4), $0 
+enter   $(8 * 5), $0 
 movss 		%xmm0, -8(%rbp) 
-cvtps2pd	%xmm0, %xmm0 
 
 mov	.FL0(%rip), %r10
 mov	%r10, -32(%rbp)
 
 mov		-32(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		%r10, 0(%rbp)
 
-movss		-16(%rbp), %xmm0
+movss		0(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 5), $0 
 
 movss		-16(%rbp), %xmm0
-cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 
 

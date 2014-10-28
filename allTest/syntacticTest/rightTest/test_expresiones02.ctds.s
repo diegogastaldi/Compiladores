@@ -3,7 +3,7 @@
 .globl	prueba
 .type	prueba, @function 
 prueba: 
-enter   $(8 * 21), $0 
+enter   $(8 * 22), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -40,12 +40,12 @@ mov		-88(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 mov		-24(%rbp), %r10 
-mov		-16(%rbp), %r11 
+mov		0(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -96(%rbp)
 
 mov		-96(%rbp), %r10
-mov		%r10, -16(%rbp)
+mov		%r10, 0(%rbp)
 
 movq 	$3, -104(%rbp)
 
@@ -102,7 +102,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 5), $0 
 
 movq 	$6, -16(%rbp)
 
