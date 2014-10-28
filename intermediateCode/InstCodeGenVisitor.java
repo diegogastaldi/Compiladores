@@ -406,8 +406,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     }
     instructions.addAll(param);
     /* Llama al metodo */
-    Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), genLabels.getOffSet(), result));
+    instructions.add(new Instr(Operator.NUMFLOAT, null, null, floatParam));    
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
     return null;
   }	
   
@@ -448,7 +448,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     }
     instructions.addAll(param);
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), genLabels.getOffSet(), result));
+    instructions.add(new Instr(Operator.NUMFLOAT, null, null, floatParam));    
+    instructions.add(new Instr(Operator.CALLMETHOD, stmt.getId(), null, null));
    	return null; 
   }
 
@@ -698,7 +699,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions.addAll(param);
     /* Llama al metodo */
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
+    instructions.add(new Instr(Operator.NUMFLOAT, null, null, floatParam));
+    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), expr.getType()  == Type.FLOAT, result));
     return result;
   } 
   
@@ -739,7 +741,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     }
     instructions.addAll(param);
     Integer result = genLabels.getOffSet();
-    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), genLabels.getOffSet(), result));
+    instructions.add(new Instr(Operator.NUMFLOAT, null, null, floatParam));
+    instructions.add(new Instr(Operator.CALLMETHOD, expr.getId(), expr.getType()  == Type.FLOAT, result));
              
     return result;
   }

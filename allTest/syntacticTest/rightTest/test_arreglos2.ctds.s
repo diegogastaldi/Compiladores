@@ -1,11 +1,5 @@
-.FL8: 
-		.float 2.0 
-
-.SL7: 
+.SL6: 
 		.string "%f resultado : " 
-
-.FL3: 
-		.float 0 
 
 .FL2: 
 		.float 2.6 
@@ -32,6 +26,7 @@ pruArreglos:
 enter   $(8 * 14), $0 
 mov 		%rdi, -8(%rbp) 
 movss 		%xmm0, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -79,7 +74,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 29), $0 
+enter   $(8 * 28), $0 
 
 mov 		$0, %r10 
 mov 		$0, %edx 
@@ -399,101 +394,101 @@ mov 		%r10, A(, %rdx, 8)
 mov	.FL2(%rip), %r10
 mov	%r10, -64(%rbp)
 
-movss		-64(%rbp), %xmm1 
-movss		.FL3(%rip), %xmm0 
-xorps		%xmm1, %xmm0 
-movss		%xmm0, -72(%rbp) 
+movq 	$0, -72(%rbp)
 
-movq 	$0, -80(%rbp)
-
-mov 		-72(%rbp), %r10 
-mov 		-80(%rbp), %edx 
+mov 		-64(%rbp), %r10 
+mov 		-72(%rbp), %edx 
 cltq 
 mov 		%r10, B(, %rdx, 8) 
 
-movq 	$4, -88(%rbp)
+movq 	$4, -80(%rbp)
 
-movq 	$6, -96(%rbp)
+movq 	$6, -88(%rbp)
 
-mov		-88(%rbp), %rax
-cmp		-96(%rbp), %rax
+mov		-80(%rbp), %rax
+cmp		-88(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -104(%rbp)
+mov		%rax, -96(%rbp)
 
-cmpq		$0, -104(%rbp) 
+cmpq		$0, -96(%rbp) 
 sete		%al 
 movzb	%al, %rax 
-mov		%rax, -112(%rbp) 
+mov		%rax, -104(%rbp) 
 
-movq 	$2, -120(%rbp)
+movq 	$2, -112(%rbp)
 
-mov 		-112(%rbp), %r10 
-mov 		-120(%rbp), %edx 
+mov 		-104(%rbp), %r10 
+mov 		-112(%rbp), %edx 
 cltq 
 mov 		%r10, C(, %rdx, 8) 
 
-movq 	$5, -128(%rbp)
+movq 	$5, -120(%rbp)
 
-movq 	$7, -136(%rbp)
+movq 	$7, -128(%rbp)
+
+movq 	$3, -136(%rbp)
 
 movq 	$3, -144(%rbp)
 
-movq 	$3, -152(%rbp)
-
-mov		-144(%rbp), %r10 
-mov		-152(%rbp), %r11 
+mov		-136(%rbp), %r10 
+mov		-144(%rbp), %r11 
 add		%r10, %r11 
+mov		%r11, -152(%rbp)
+
+mov		-152(%rbp), %r10 
+mov		-128(%rbp), %r11 
+sub		%r10, %r11 
 mov		%r11, -160(%rbp)
 
-mov		-160(%rbp), %r10 
-mov		-136(%rbp), %r11 
-sub		%r10, %r11 
-mov		%r11, -168(%rbp)
-
-mov 		-168(%rbp), %edx 
+mov 		-160(%rbp), %edx 
 cltq 
 mov 		A(,%rdx,8) , %r11
-mov 		%r11, -176(%rbp) 
+mov 		%r11, -168(%rbp) 
 
-mov		-128(%rbp), %rax
-cmp		-176(%rbp), %rax
+mov		-120(%rbp), %rax
+cmp		-168(%rbp), %rax
 setge 	%al
 movzb 	%al, %rax
-mov		%rax, -184(%rbp)
+mov		%rax, -176(%rbp)
 
-movq 	$1, -192(%rbp)
+movq 	$1, -184(%rbp)
 
+cmpq		$0, -176(%rbp)
+jne 		.L3
 cmpq		$0, -184(%rbp)
-jne 		.L4
-cmpq		$0, -192(%rbp)
-je 		.L5
-.L4: 
+je 		.L4
+.L3: 
 mov		$1, %r10
-jmp 		.L6
-.L5:
+jmp 		.L5
+.L4:
 mov		$0, %r10
-.L6:
-mov		%r10, -200(%rbp)
+.L5:
+mov		%r10, -192(%rbp)
 
-movq 	$3, -208(%rbp)
+movq 	$3, -200(%rbp)
 
-mov 		-200(%rbp), %r10 
-mov 		-208(%rbp), %edx 
+mov 		-192(%rbp), %r10 
+mov 		-200(%rbp), %edx 
 cltq 
 mov 		%r10, C(, %rdx, 8) 
 
-mov	.FL8(%rip), %r10
-mov	%r10, -216(%rbp)
+movq 	$0, -208(%rbp)
 
-mov		$.SL7, %r10
+mov 		-208(%rbp), %edx 
+cltq 
+mov 		B(,%rdx,8) , %r11
+mov 		%r11, -216(%rbp) 
+
+mov		$.SL6, %r10
 mov	 	%r10, %rdi
 
 movss		-216(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -224(%rbp) 
 
 mov 		$0, %rax
 leave

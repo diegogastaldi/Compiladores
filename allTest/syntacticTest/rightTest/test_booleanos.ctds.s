@@ -66,7 +66,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 18), $0 
+enter   $(8 * 13), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -94,6 +94,7 @@ mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	neg
 mov 	%rax, -72(%rbp) 
 
@@ -107,27 +108,30 @@ mov		-32(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	and
-mov 	%rax, -88(%rbp) 
+mov 	%rax, -80(%rbp) 
 
 mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
-call 	neg
-mov 	%rax, -104(%rbp) 
 
-mov		-88(%rbp), %r10
+call 	neg
+mov 	%rax, -88(%rbp) 
+
+mov		-80(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-104(%rbp), %r10
+mov		-88(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	or
-mov 	%rax, -120(%rbp) 
 
-mov		-120(%rbp), %r10
+call 	or
+mov 	%rax, -96(%rbp) 
+
+mov		-96(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 mov		$.SL5, %r10
@@ -137,8 +141,8 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -136(%rbp) 
 
 mov 		$0, %rax
 leave

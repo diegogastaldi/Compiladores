@@ -81,7 +81,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 21), $0 
+enter   $(8 * 14), $0 
 
 movq 	$4, -16(%rbp)
 
@@ -94,6 +94,7 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	pruAritmetica
 mov 	%rax, -32(%rbp) 
 
@@ -101,54 +102,56 @@ mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -64(%rbp) 
 
-movq 	$4, -80(%rbp)
+movq 	$4, -56(%rbp)
 
-movq 	$4, -88(%rbp)
+movq 	$4, -64(%rbp)
 
-mov		-80(%rbp), %r10
+mov		-56(%rbp), %r10
 mov	 	%r10, %rdi
+
+mov		-64(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+
+call 	pruAritmetica
+mov 	%rax, -72(%rbp) 
+
+mov		-72(%rbp), %r10
+mov	 	%r10, %rdi
+
+mov 		$0, %rax 
+
+call 	printf
+
+movq 	$8, -88(%rbp)
+
+movq 	$5, -96(%rbp)
 
 mov		-88(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-call 	pruAritmetica
-mov 	%rax, -96(%rbp) 
+mov	 	%r10, %rdi
 
 mov		-96(%rbp), %r10
-mov	 	%r10, %rdi
-
-mov 		$0, %rax 
-call 	printf
-mov 	%rax, -112(%rbp) 
-
-movq 	$8, -128(%rbp)
-
-movq 	$5, -136(%rbp)
-
-mov		-128(%rbp), %r10
-mov	 	%r10, %rdi
-
-mov		-136(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
-call 	pruAritmetica
-mov 	%rax, -144(%rbp) 
 
-mov		-144(%rbp), %r10
+call 	pruAritmetica
+mov 	%rax, -104(%rbp) 
+
+mov		-104(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -160(%rbp) 
 
 mov 		$0, %rax
 leave

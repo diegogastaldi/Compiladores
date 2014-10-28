@@ -14,7 +14,9 @@
 method: 
 enter   $(8 * 12), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)

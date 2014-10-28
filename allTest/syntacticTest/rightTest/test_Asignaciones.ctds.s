@@ -17,6 +17,7 @@
 pruAritmetica: 
 enter   $(8 * 15), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -79,25 +80,28 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 mov	.FL3(%rip), %r10
 mov	%r10, -16(%rbp)
 
 movss		-16(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	pruAritmetica
-mov 	%rax, -24(%rbp) 
+movss 	%xmm0, -24(%rbp) 
 
 mov		$.SL2, %r10
 mov	 	%r10, %rdi
 
 movss		-24(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave

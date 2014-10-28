@@ -44,8 +44,11 @@
 promedio: 
 enter   $(8 * 34), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm2, -24(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-16(%rbp), %xmm0 
 ucomiss		-32(%rbp), %xmm0 
@@ -265,7 +268,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
 mov	.FL30(%rip), %r10
 mov	%r10, -16(%rbp)
@@ -277,23 +280,28 @@ mov	.FL32(%rip), %r10
 mov	%r10, -32(%rbp)
 
 movss		-16(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm1
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-32(%rbp), %xmm2
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$3, %rax 
+
 call 	promedio
-mov 	%rax, -40(%rbp) 
+movss 	%xmm0, -40(%rbp) 
 
 mov		$.SL29, %r10
 mov	 	%r10, %rdi
 
 movss		-40(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

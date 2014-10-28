@@ -97,7 +97,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 5), $0 
 
 movq 	$6, -16(%rbp)
 
@@ -110,6 +110,7 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	maxcomdiv
 mov 	%rax, -32(%rbp) 
 
@@ -120,8 +121,8 @@ mov		-32(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

@@ -102,7 +102,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
+enter   $(8 * 12), $0 
 
 mov		$0, %r10
 mov		%r10, a(%rip)
@@ -118,31 +118,32 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	maxcomdiv
 mov 	%rax, -32(%rbp) 
 
-movq 	$3, -48(%rbp)
+movq 	$3, -40(%rbp)
 
 mov 		a(%rip), %r10 
-mov		%r10, -56(%rbp) 
+mov		%r10, -48(%rbp) 
 
-movq 	$7, -64(%rbp)
+movq 	$7, -56(%rbp)
 
-movq 	$6, -72(%rbp)
+movq 	$6, -64(%rbp)
 
-movss		-64(%rbp), %xmm0 
-divss		-72(%rbp), %xmm0 
-movss		%xmm0, -80(%rbp) 
+movss		-56(%rbp), %xmm0 
+divss		-64(%rbp), %xmm0 
+movss		%xmm0, -72(%rbp) 
 
-mov		-80(%rbp), %r10 
-mov		-56(%rbp), %r11 
+mov		-72(%rbp), %r10 
+mov		-48(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -88(%rbp)
+mov		%r11, -80(%rbp)
 
-mov		-48(%rbp), %r10 
-mov		-88(%rbp), %r11 
+mov		-40(%rbp), %r10 
+mov		-80(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -96(%rbp)
+mov		%r10, -88(%rbp)
 
 mov		$.SL4, %r10
 mov	 	%r10, %rdi
@@ -153,12 +154,12 @@ mov	 	%r10, %rsi
 mov		-32(%rbp), %r10
 mov	 	%r10, %rdx
 
-mov		-96(%rbp), %r10
+mov		-88(%rbp), %r10
 mov	 	%r10, %rcx
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -104(%rbp) 
 
 mov 		$0, %rax
 leave

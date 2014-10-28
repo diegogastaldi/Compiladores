@@ -20,10 +20,10 @@ int pruArreglos(int b, float c ){
 void main(){
     y = true;
      A[1] = 58 - (-6) ; 
-     B[0] = -2.6;
+     B[0] = 2.6;
      C[2] = !(4 < 6) ;
      C[3] = ( 5 >= A[ 7 -(3+3) ]) || true ;
-    externinvk("printf", int ,"%f resultado : ", 2.0 ) ;
+    externinvk("printf", int ,"%f resultado : ", B[0]) ;
     
     return ;
     

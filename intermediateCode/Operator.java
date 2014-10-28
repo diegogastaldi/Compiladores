@@ -48,7 +48,8 @@ public enum Operator {
  				  	 Tercer parametro: variable con dicho valor */ 	
  	, CMP /* Primer parametro: valor a comparar (direccion)
  				 	 Segundo parametro: valor a comparar (direccion)*/
- 				 	 
+	, NUMFLOAT
+	 				 	 
  	/* Instrucciones para float */
  	, FPARAM
  	, FRETURN /* Tercer parametro: Variable con valor a retornar */ 	

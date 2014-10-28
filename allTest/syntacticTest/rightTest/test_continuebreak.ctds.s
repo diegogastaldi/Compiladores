@@ -50,7 +50,9 @@
 pruContinue: 
 enter   $(8 * 34), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -221,27 +223,31 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 5), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
 
 movss		-16(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm1
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$2, %rax 
+
 call 	pruContinue
-mov 	%rax, -32(%rbp) 
+movss 	%xmm0, -32(%rbp) 
 
 mov		$.SL22, %r10
 mov	 	%r10, %rdi
 
 movss		-32(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

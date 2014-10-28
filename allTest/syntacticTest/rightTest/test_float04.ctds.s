@@ -47,6 +47,7 @@
 potencia: 
 enter   $(8 * 32), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
@@ -219,7 +220,9 @@ ret
 multRepeat: 
 enter   $(8 * 11), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -254,7 +257,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 17), $0 
+enter   $(8 * 14), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -305,36 +308,42 @@ mov		%r10, -24(%rbp)
 movq 	$2, -80(%rbp)
 
 movss		-24(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 mov		-80(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	potencia
-mov 	%rax, -88(%rbp) 
+movss 	%xmm0, -88(%rbp) 
 
 mov		-88(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov 		res(%rip), %r10 
-mov		%r10, -104(%rbp) 
+mov		%r10, -96(%rbp) 
 
-movss		-104(%rbp), %xmm0
+movss		-96(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-16(%rbp), %xmm1
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$2, %rax 
+
 call 	multRepeat
-mov 	%rax, -112(%rbp) 
+movss 	%xmm0, -104(%rbp) 
 
 mov		$.SL19, %r10
 mov	 	%r10, %rdi
 
-movss		-112(%rbp), %xmm0
+movss		-104(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -128(%rbp) 
 
 mov 		$0, %rax
 leave

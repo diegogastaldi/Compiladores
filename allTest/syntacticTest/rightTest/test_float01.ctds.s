@@ -23,6 +23,7 @@
 potencia: 
 enter   $(8 * 27), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 mov 		%rdi, -16(%rbp) 
 
 movq		$0, %r10
@@ -166,7 +167,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 7), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -180,13 +181,15 @@ mov		%r10, -24(%rbp)
 movq 	$2, -40(%rbp)
 
 movss		-24(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	potencia
-mov 	%rax, -48(%rbp) 
+movss 	%xmm0, -48(%rbp) 
 
 mov		-48(%rbp), %r10
 mov		%r10, -16(%rbp)
@@ -195,10 +198,11 @@ mov		$.SL10, %r10
 mov	 	%r10, %rdi
 
 movss		-16(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -64(%rbp) 
 
 mov 		$0, %rax
 leave

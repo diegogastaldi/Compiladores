@@ -182,7 +182,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 movq 	$6, -16(%rbp)
 
@@ -190,14 +190,16 @@ mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	prueba
-mov 	%rax, -24(%rbp) 
+movss 	%xmm0, -24(%rbp) 
 
 movss		-24(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave

@@ -20,7 +20,9 @@
 div: 
 enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm0 
 divss		-16(%rbp), %xmm0 
@@ -35,7 +37,9 @@ ret
 resta: 
 enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm0 
 subss		-16(%rbp), %xmm0 
@@ -50,7 +54,9 @@ ret
 sum: 
 enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 movss 		%xmm1, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm0 
 addss		-16(%rbp), %xmm0 
@@ -63,7 +69,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 16), $0 
+enter   $(8 * 12), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -95,37 +101,47 @@ mov		-64(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 movss		-32(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-16(%rbp), %xmm1
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$2, %rax 
+
 call 	resta
-mov 	%rax, -72(%rbp) 
+movss 	%xmm0, -72(%rbp) 
 
 movss		-16(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
 movss		-24(%rbp), %xmm1
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$2, %rax 
+
 call 	div
-mov 	%rax, -88(%rbp) 
+movss 	%xmm0, -80(%rbp) 
 
 movss		-72(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-movss		-88(%rbp), %xmm1
+movss		-80(%rbp), %xmm1
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$2, %rax 
+
 call 	sum
-mov 	%rax, -104(%rbp) 
+movss 	%xmm0, -88(%rbp) 
 
 mov		$.SL4, %r10
 mov	 	%r10, %rdi
 
-movss		-104(%rbp), %xmm0
+movss		-88(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -120(%rbp) 
 
 mov 		$0, %rax
 leave

@@ -17,6 +17,7 @@
 sumatoria: 
 enter   $(8 * 19), $0 
 movss 		%xmm0, -8(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -121,7 +122,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -133,10 +134,12 @@ mov		-32(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 movss		-24(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	sumatoria
-mov 	%rax, -40(%rbp) 
+movss 	%xmm0, -40(%rbp) 
 
 mov		-40(%rbp), %r10
 mov		%r10, -16(%rbp)
@@ -145,10 +148,11 @@ mov		$.SL9, %r10
 mov	 	%r10, %rdi
 
 movss		-16(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	printf
-mov 	%rax, -56(%rbp) 
 
 mov 		$0, %rax
 leave

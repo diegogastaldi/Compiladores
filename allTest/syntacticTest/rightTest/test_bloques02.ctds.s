@@ -92,7 +92,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 movq 	$1, -16(%rbp)
 
@@ -100,6 +100,7 @@ mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	breaks
 mov 	%rax, -24(%rbp) 
 
@@ -110,8 +111,8 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -40(%rbp) 
 
 mov 		$0, %rax
 leave

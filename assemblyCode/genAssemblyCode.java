@@ -30,6 +30,9 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+				case NUMFLOAT:
+					numfloatMethod(instr);
+					break;				
 				case INITGLOBALVAR:
 					initglobalvarMethod(instr);
 					break;
@@ -410,12 +413,20 @@ public class genAssemblyCode {
 			result += "mov	 	%r10, " + instr.getResult() + "(%rbp) \n";			
 	}
 
+	/* Indica la cantidad de xmm registros usados en la llamada a procedimiento */
+	public static void numfloatMethod(Instr instr) {
+		result += "mov 		$" + instr.getResult() + ", %rax \n";
+	}
+
 	/* Realiza el llamado a un metodo */
 	public static void callmethodMethod(Instr instr) {
-		result += "mov 		$0, %rax \n";
   	result += "call 	" + instr.getOperand1() + "\n";		
-  	if (instr.getResult() != null)
-  		result += "mov 	%rax, " + instr.getResult() + "(%rbp) \n";		
+  	if (instr.getResult() != null) {
+  		if ((Boolean)instr.getOperand2())
+  			result += "movss 	%xmm0, " + instr.getResult() + "(%rbp) \n";		
+  		else 
+  			result += "mov 	%rax, " + instr.getResult() + "(%rbp) \n";		
+  	}
 	}
 
 	/* Coloca un label para una funcion, reserva la memoria correspondiente para esta
@@ -445,6 +456,7 @@ public class genAssemblyCode {
 				case FLOAT: 
 					if (floatParam < paramRegister.registersFloat.length) {
 						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
+						result += "cvtps2pd	%xmm0, %xmm0 \n";
 						floatParam++;
 					}
 					else {
@@ -549,6 +561,7 @@ public class genAssemblyCode {
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
 		if (instr.getResult() == null) { 
 			result += "movss		" + instr.getOperand1() + "(%rbp), " + paramRegister.registersFloat [numOperand] + "\n";	
+			result += "cvtps2pd	%xmm0, %xmm0 \n";
 		} else {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";			
 			result += "mov		%r10, " + instr.getResult() + "(%rbp)\n";

@@ -28,24 +28,24 @@ ret
 .globl	alo2
 .type	alo2, @function 
 alo2: 
-enter   $(8 * 7), $0 
+enter   $(8 * 5), $0 
 mov 		%rdi, -8(%rbp) 
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
-call 	alo
-mov 	%rax, -32(%rbp) 
 
-movq 	$1, -48(%rbp)
+call 	alo
+
+movq 	$1, -32(%rbp)
 
 mov		-16(%rbp), %r10 
-mov		-48(%rbp), %r11 
+mov		-32(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -56(%rbp)
+mov		%r11, -40(%rbp)
 
-mov		-56(%rbp), %r10
+mov		-40(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov		-16(%rbp), %rax
@@ -55,7 +55,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 mov		$0, %r10
 mov		%r10, c(%rip)
@@ -75,27 +75,29 @@ mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	alo2
 mov 	%rax, -40(%rbp) 
 
 mov		-40(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-movq 	$3, -56(%rbp)
+movq 	$3, -48(%rbp)
 
-mov		-56(%rbp), %r10 
+mov		-48(%rbp), %r10 
 mov		-16(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -64(%rbp)
+mov		%r10, -56(%rbp)
 
-mov		-64(%rbp), %r10
+mov		-56(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
-call 	alo2
-mov 	%rax, -72(%rbp) 
 
-mov		-72(%rbp), %r10
+call 	alo2
+mov 	%rax, -64(%rbp) 
+
+mov		-64(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov 		$0, %rax

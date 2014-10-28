@@ -31,6 +31,7 @@ resto:
 enter   $(8 * 14), $0 
 mov 		%rdi, -8(%rbp) 
 movss 		%xmm0, -16(%rbp) 
+cvtps2pd	%xmm0, %xmm0 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -85,7 +86,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 mov		$0, %r10
 mov		%r10, res(%rip)
@@ -101,25 +102,28 @@ mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	inc
 mov 	%rax, -40(%rbp) 
 
 mov	.FL3(%rip), %r10
-mov	%r10, -56(%rbp)
+mov	%r10, -48(%rbp)
 
 mov		-40(%rbp), %r10
 mov	 	%r10, %rdi
 
-movss		-56(%rbp), %xmm0
+movss		-48(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
 
-mov 		$0, %rax 
+mov 		$1, %rax 
+
 call 	resto
-mov 	%rax, -64(%rbp) 
+movss 	%xmm0, -56(%rbp) 
 
-movq 	$0, -80(%rbp)
+movq 	$0, -64(%rbp)
 
-mov 		-64(%rbp), %r10 
-movl		-80(%rbp), %edx 
+mov 		-56(%rbp), %r10 
+movl		-64(%rbp), %edx 
 cltq 
 mov 		%r10, -16(%rbp, %rdx, 8) 
 

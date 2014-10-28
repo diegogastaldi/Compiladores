@@ -15,7 +15,7 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(8 * 20), $0 
+enter   $(8 * 19), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -68,8 +68,8 @@ mov		-96(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -152(%rbp) 
 
 mov		-136(%rbp), %r10 
 mov		-128(%rbp), %r11 
@@ -93,7 +93,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 5), $0 
 
 mov 		$0, %r10 
 mov 		$0, %edx 
@@ -2709,6 +2709,7 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	pruArreglos
 mov 	%rax, -32(%rbp) 
 
@@ -2719,8 +2720,8 @@ mov		-32(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -48(%rbp) 
 
 mov 		$0, %rax
 leave

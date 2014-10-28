@@ -26,9 +26,10 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 13), $0 
+enter   $(8 * 9), $0 
 
 mov 		$0, %rax 
+
 call 	get_int
 mov 	%rax, -24(%rbp) 
 
@@ -36,24 +37,25 @@ mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
-call 	inc
-mov 	%rax, -40(%rbp) 
 
-mov		-40(%rbp), %r10
+call 	inc
+mov 	%rax, -32(%rbp) 
+
+mov		-32(%rbp), %r10
 mov		%r10, -16(%rbp)
+
+movq 	$1, -40(%rbp)
+
+mov 		-16(%rbp), %rax
+cmp		-40(%rbp), %rax
+sete		%al
+movzb	%al, %rax
+mov		%rax, -48(%rbp)
 
 movq 	$1, -56(%rbp)
 
-mov 		-16(%rbp), %rax
-cmp		-56(%rbp), %rax
-sete		%al
-movzb	%al, %rax
-mov		%rax, -64(%rbp)
-
-movq 	$1, -72(%rbp)
-
-mov		-72(%rbp), %r10
-cmp 		-64(%rbp), %r10
+mov		-56(%rbp), %r10
+cmp 		-48(%rbp), %r10
 
 jne 		.falseCondL0
 
@@ -61,8 +63,8 @@ mov		$.SL1, %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -80(%rbp) 
 
 jmp 		.endIfL2
 
@@ -75,8 +77,8 @@ mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -96(%rbp) 
 
 .endIfL2: 
 

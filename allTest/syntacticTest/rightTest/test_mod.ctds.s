@@ -27,9 +27,10 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 3), $0 
 
 mov 		$0, %rax 
+
 call 	pruAritmetica
 mov 	%rax, -16(%rbp) 
 
@@ -37,8 +38,8 @@ mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	printf
-mov 	%rax, -32(%rbp) 
 
 mov 		$0, %rax
 leave
