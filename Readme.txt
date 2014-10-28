@@ -12,9 +12,7 @@ Compilacion y ejecucion de codigos:
       
 
 Nota:
-	A los print siempre hay que ponerles el formato de lo que va a mostrar
-
+	A los print siempre hay que ponerles el formato de lo que va a mostra
 							DOCUMENTACION
 
-Preguntar por los espacios que deja los comentarios en la terminal
-flotantes negativos -> unaryminus?
+flotantes literales negativos -> violacion de segmento

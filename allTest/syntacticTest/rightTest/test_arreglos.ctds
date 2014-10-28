@@ -1,34 +1,10 @@
 class test_arreglos{
-
-int A[589] ;
-int B [56];
-boolean C [5];
-
-int pruArreglos(int b, int c ){
-  int res[8];
-  int i;   
-	if(b > c){
-		res[0] = 1 - c;
-  }
-  if(b == c){
-	 res[1-1] = b*5;
-  }else{
-		res[b-b] = c;
-  }
-  i= 0;
-  while (i < 589){
-    externinvk("printf", int , "entro al while con %d", i);
-    A[i] = i;
-    i += 1;
-  }
-
-
-	return A[i-1];
-}
-
+float B;
 void main(){
-
-    externinvk("printf", int , "%d", pruArreglos(4,8 ));
+    float a;
+    a = 2.6;
+    B = -a;
+    externinvk("printf", int , "%f", B);
 
 
     return;

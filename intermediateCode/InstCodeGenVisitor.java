@@ -465,6 +465,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	  	String label = genLabels.getLabel();
   	  	instructions.add(0, new Instr(Operator.FLOAT, 0, "F"+label, null));
     		posMethodLabel ++;
+        genLabels.getOffSet();
   	  	instructions.add(new Instr(Operator.FUNARYMINUS, operand, "F"+label, result));
         break;
       default: 

@@ -645,8 +645,10 @@ public class genAssemblyCode {
 
 	public static void funaryminusMethod(Instr instr) {
 		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm1 \n";
+		/* El segundo operando es un cero de tipo float */
 		result += "movss		." + instr.getOperand2() + "(%rip), %xmm0 \n";
-		result += "xorps		%xmm1, %xmm0 \n";
+		/* Cero menos el valor, da el valor negado */
+		result += "subss		%xmm1, %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 

@@ -45,7 +45,7 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 32), $0 
+enter   $(8 * 33), $0 
 movss 		%xmm0, -8(%rbp) 
 cvtps2pd	%xmm0, %xmm0 
 mov 		%rdi, -16(%rbp) 
@@ -208,7 +208,7 @@ mov	%r10, -248(%rbp)
 
 movss		-248(%rbp), %xmm1 
 movss		.FL12(%rip), %xmm0 
-xorps		%xmm1, %xmm0 
+subss		%xmm1, %xmm0 
 movss		%xmm0, -256(%rbp) 
 
 movss		-256(%rbp), %xmm0
@@ -257,7 +257,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
+enter   $(8 * 16), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -276,55 +276,55 @@ mov	%r10, -32(%rbp)
 
 movss		-32(%rbp), %xmm1 
 movss		.FL14(%rip), %xmm0 
-xorps		%xmm1, %xmm0 
+subss		%xmm1, %xmm0 
 movss		%xmm0, -40(%rbp) 
 
 mov		-40(%rbp), %r10
 mov		%r10, res(%rip)
 
 mov	.FL15(%rip), %r10
-mov	%r10, -48(%rbp)
+mov	%r10, -56(%rbp)
 
-mov		-48(%rbp), %r10
+mov		-56(%rbp), %r10
 mov		%r10, w(%rip)
 
 mov	.FL16(%rip), %r10
-mov	%r10, -56(%rbp)
+mov	%r10, -64(%rbp)
 
-movss		-56(%rbp), %xmm1 
+movss		-64(%rbp), %xmm1 
 movss		.FL17(%rip), %xmm0 
-xorps		%xmm1, %xmm0 
-movss		%xmm0, -64(%rbp) 
+subss		%xmm1, %xmm0 
+movss		%xmm0, -72(%rbp) 
 
-mov		-64(%rbp), %r10
+mov		-72(%rbp), %r10
 mov		%r10, m(%rip)
 
 mov	.FL18(%rip), %r10
-mov	%r10, -72(%rbp)
+mov	%r10, -88(%rbp)
 
-mov		-72(%rbp), %r10
+mov		-88(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-movq 	$2, -80(%rbp)
+movq 	$2, -96(%rbp)
 
 movss		-24(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
-mov		-80(%rbp), %r10
+mov		-96(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$1, %rax 
 
 call 	potencia
-movss 	%xmm0, -88(%rbp) 
+movss 	%xmm0, -104(%rbp) 
 
-mov		-88(%rbp), %r10
+mov		-104(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov 		res(%rip), %r10 
-mov		%r10, -96(%rbp) 
+mov		%r10, -112(%rbp) 
 
-movss		-96(%rbp), %xmm0
+movss		-112(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 movss		-16(%rbp), %xmm1
@@ -333,12 +333,12 @@ cvtps2pd	%xmm0, %xmm0
 mov 		$2, %rax 
 
 call 	multRepeat
-movss 	%xmm0, -104(%rbp) 
+movss 	%xmm0, -120(%rbp) 
 
 mov		$.SL19, %r10
 mov	 	%r10, %rdi
 
-movss		-104(%rbp), %xmm0
+movss		-120(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 

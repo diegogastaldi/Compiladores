@@ -21,7 +21,7 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 27), $0 
+enter   $(8 * 28), $0 
 movss 		%xmm0, -8(%rbp) 
 cvtps2pd	%xmm0, %xmm0 
 mov 		%rdi, -16(%rbp) 
@@ -157,7 +157,7 @@ mov	%r10, -208(%rbp)
 
 movss		-208(%rbp), %xmm1 
 movss		.FL8(%rip), %xmm0 
-xorps		%xmm1, %xmm0 
+subss		%xmm1, %xmm0 
 movss		%xmm0, -216(%rbp) 
 
 movss		-216(%rbp), %xmm0
