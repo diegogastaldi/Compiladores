@@ -662,7 +662,7 @@ public class genAssemblyCode {
 		result +=	"movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
 		result +=	"ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
 		result +=	"jne	." + op2.get(0) + " \n";
-		result +=	"mov		" + op1.get(0) + "(%rip), %rax \n";
+		result +=	"mov		." + op1.get(0) + "(%rip), %rax \n";
 		result +=	"jmp	." + op2.get(1) + " \n";
 		result += "." + op2.get(0) + ": \n";
 		result +=	"mov	." + op1.get(1) + ", %rax \n";

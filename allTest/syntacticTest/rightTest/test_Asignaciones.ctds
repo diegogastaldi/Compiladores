@@ -1,13 +1,13 @@
 
 class test_Asignaciones{
 
-float pruAritmetica(float c, float d){
+float pruAritmetica(float c){
 
 		return c;	
 }
 
 void main(){
-    externinvk("printf", int , "%f", pruAritmetica(3.0, 4.0));
+    externinvk("printf", int , "%f", pruAritmetica(3.0));
     return ;
 }
 

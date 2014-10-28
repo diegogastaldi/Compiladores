@@ -15,7 +15,7 @@
 .globl	sumatoria
 .type	sumatoria, @function 
 sumatoria: 
-enter   $(8 * 20), $0 
+enter   $(8 * 21), $0 
 movss 		%xmm0, -8(%rbp) 
 
 movq		$0, %r10
@@ -33,7 +33,7 @@ mov	%r10, -56(%rbp)
 mov		-56(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		0(%rbp), %r10
+mov		-8(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .beginWhileL2: 
@@ -121,7 +121,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

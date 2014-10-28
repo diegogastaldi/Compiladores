@@ -108,7 +108,7 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 33), $0 
+enter   $(8 * 34), $0 
 movss 		%xmm0, -8(%rbp) 
 mov 		%rdi, -16(%rbp) 
 
@@ -139,7 +139,7 @@ mov		%r10, -48(%rbp)
 
 movq 	$0, -96(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-96(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
@@ -152,12 +152,12 @@ cmp 		-104(%rbp), %r10
 
 jne 		.falseCondL1
 
-mov		0(%rbp), %rax 
+mov		-8(%rbp), %rax 
 neg		%rax 
 mov		%rax, -120(%rbp) 
 
 mov		-120(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
 movq 	$1, -128(%rbp)
 
@@ -169,13 +169,13 @@ mov		%r10, -40(%rbp)
 .beginWhileL3: 
 
 mov		-32(%rbp), %rax
-cmp		0(%rbp), %rax
+cmp		-8(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
 mov		%rax, -136(%rbp)
 
 mov 		-32(%rbp), %rax
-cmp		0(%rbp), %rax
+cmp		-8(%rbp), %rax
 sete		%al
 movzb	%al, %rax
 mov		%rax, -144(%rbp)
@@ -202,7 +202,7 @@ jne 		.endWhileL2
 mov	.FL7(%rip), %r10
 mov	%r10, -168(%rbp)
 
-movss		-8(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
 mulss		-168(%rbp), %xmm0 
 movss		%xmm0, -176(%rbp) 
 
@@ -280,7 +280,7 @@ ret
 .globl	multiples
 .type	multiples, @function 
 multiples: 
-enter   $(8 * 82), $0 
+enter   $(8 * 83), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -387,8 +387,8 @@ movq 	$5, -232(%rbp)
 mov		-232(%rbp), %r10
 mov		%r10, -88(%rbp)
 
-movss		0(%rbp), %xmm0 
-ucomiss		-8(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -240(%rbp) 
@@ -413,14 +413,14 @@ cmp 		-256(%rbp), %r10
 
 jne 		.falseCondL20
 
-mov		-8(%rbp), %r10
+mov		-16(%rbp), %r10
 mov		%r10, -72(%rbp)
 
 jmp 		.endIfL21
 
 .falseCondL20: 
 
-mov		0(%rbp), %r10
+mov		-8(%rbp), %r10
 mov		%r10, -72(%rbp)
 
 .endIfL21: 
@@ -555,7 +555,7 @@ jmp 		.beginWhileL28
 .endWhileL27: 
 
 movss		-32(%rbp), %xmm0 
-ucomiss		-8(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -424(%rbp) 
@@ -564,7 +564,7 @@ mov	.FL37(%rip), %r10
 mov	%r10, -432(%rbp)
 
 movss		-432(%rbp), %xmm0 
-ucomiss		-8(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -440(%rbp) 
@@ -648,7 +648,7 @@ jmp 		.beginWhileL26
 
 .endWhileL25: 
 
-movss		-8(%rbp), %xmm1 
+movss		-16(%rbp), %xmm1 
 movss		.FL47(%rip), %xmm0 
 subss		%xmm1, %xmm0 
 movss		%xmm0, -560(%rbp) 
@@ -666,7 +666,7 @@ movss		-576(%rbp), %xmm0
 divss		-584(%rbp), %xmm0 
 movss		%xmm0, -592(%rbp) 
 
-movss		0(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
 addss		-592(%rbp), %xmm0 
 movss		%xmm0, -600(%rbp) 
 
@@ -713,7 +713,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 16), $0 
+enter   $(8 * 17), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

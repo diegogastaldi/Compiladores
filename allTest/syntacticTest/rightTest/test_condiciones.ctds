@@ -20,7 +20,7 @@ float dados (int d1, int d2, int d3){
 }
 
 void main(){
-    externinvk("printf", float , dados(1,6,9 ));
+    externinvk("printf", float , "%f", dados(1,6,9 ));
     return;
 }
 

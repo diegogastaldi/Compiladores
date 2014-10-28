@@ -1,5 +1,5 @@
 .SL5: 
-		.string "%f resultado : " 
+		.string "%d resultado : " 
 
 .FL2: 
 		.float 2.3 
@@ -9,7 +9,7 @@
 .globl	breaks
 .type	breaks, @function 
 breaks: 
-enter   $(8 * 16), $0 
+enter   $(8 * 17), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -58,7 +58,7 @@ mov		%r10, -32(%rbp)
 
 movq 	$0, -104(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-104(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
@@ -92,7 +92,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 movq 	$1, -16(%rbp)
 

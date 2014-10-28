@@ -18,12 +18,12 @@
 .globl	div
 .type	div, @function 
 div: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
-movss		-8(%rbp), %xmm0 
-divss		0(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+divss		-8(%rbp), %xmm0 
 movss		%xmm0, -48(%rbp) 
 
 movss		-48(%rbp), %xmm0
@@ -33,12 +33,12 @@ ret
 .globl	resta
 .type	resta, @function 
 resta: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
-movss		-8(%rbp), %xmm0 
-subss		0(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+subss		-8(%rbp), %xmm0 
 movss		%xmm0, -48(%rbp) 
 
 movss		-48(%rbp), %xmm0
@@ -48,12 +48,12 @@ ret
 .globl	sum
 .type	sum, @function 
 sum: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
-movss		-8(%rbp), %xmm0 
-addss		0(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+addss		-8(%rbp), %xmm0 
 movss		%xmm0, -48(%rbp) 
 
 movss		-48(%rbp), %xmm0
@@ -63,7 +63,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 13), $0 
+enter   $(8 * 14), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

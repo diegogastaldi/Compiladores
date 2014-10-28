@@ -14,7 +14,7 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 
 mov		$0, %r10
 mov		%r10, B(%rip)

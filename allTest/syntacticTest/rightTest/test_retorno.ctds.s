@@ -3,7 +3,7 @@
 .globl	id
 .type	id, @function 
 id: 
-enter   $(8 * 43), $0 
+enter   $(8 * 44), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -28,7 +28,7 @@ movq 	$0, -72(%rbp)
 mov		-72(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-mov		0(%rbp), %r10
+mov		-8(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 .beginWhileL1: 
@@ -46,14 +46,14 @@ cmp 		-80(%rbp), %r10
 
 jne 		.endWhileL0
 
-mov		0(%rbp), %r10
+mov		-8(%rbp), %r10
 mov		%r10, -48(%rbp)
 
 .beginWhileL3: 
 
 movq 	$0, -96(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-96(%rbp), %rax
 setg		%al
 movzb	%al, %rax
@@ -61,7 +61,7 @@ mov		%rax, -104(%rbp)
 
 movq 	$0, -112(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-112(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
@@ -88,7 +88,7 @@ jne 		.endWhileL2
 
 movq 	$0, -144(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-144(%rbp), %rax
 setg		%al
 movzb	%al, %rax
@@ -104,12 +104,12 @@ jne 		.falseCondL7
 movq 	$1, -168(%rbp)
 
 mov		-168(%rbp), %r10 
-mov		0(%rbp), %r11 
+mov		-8(%rbp), %r11 
 sub		%r10, %r11 
 mov		%r11, -176(%rbp)
 
 mov		-176(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
 jmp 		.endIfL8
 
@@ -117,13 +117,13 @@ jmp 		.endIfL8
 
 movq 	$1, -184(%rbp)
 
-mov		0(%rbp), %r10 
+mov		-8(%rbp), %r10 
 mov		-184(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -192(%rbp)
 
 mov		-192(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
 .endIfL8: 
 
@@ -133,13 +133,13 @@ jmp 		.beginWhileL3
 
 .beginWhileL10: 
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-48(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
 mov		%rax, -200(%rbp)
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-48(%rbp), %rax
 setg		%al
 movzb	%al, %rax
@@ -164,7 +164,7 @@ cmp 		-216(%rbp), %r10
 
 jne 		.endWhileL9
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-48(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
@@ -179,20 +179,20 @@ jne 		.falseCondL14
 
 movq 	$1, -248(%rbp)
 
-mov		0(%rbp), %r10 
+mov		-8(%rbp), %r10 
 mov		-248(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -256(%rbp)
 
 mov		-256(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
 jmp 		.endIfL15
 
 .falseCondL14: 
 
-mov 		0(%rbp), %rax
-cmp		0(%rbp), %rax
+mov 		-8(%rbp), %rax
+cmp		-8(%rbp), %rax
 sete		%al
 movzb	%al, %rax
 mov		%rax, -264(%rbp)
@@ -207,12 +207,12 @@ jne 		.falseCondL16
 movq 	$1, -280(%rbp)
 
 mov		-32(%rbp), %r10 
-mov		0(%rbp), %r11 
+mov		-8(%rbp), %r11 
 imul		%r11, %r10 
 mov		%r10, -288(%rbp)
 
 mov		-288(%rbp), %r10 
-mov		0(%rbp), %r11 
+mov		-8(%rbp), %r11 
 sub		%r10, %r11 
 mov		%r11, -296(%rbp)
 
@@ -227,12 +227,12 @@ add		%r10, %r11
 mov		%r11, -312(%rbp)
 
 mov		-312(%rbp), %r10 
-mov		0(%rbp), %r11 
+mov		-8(%rbp), %r11 
 sub		%r10, %r11 
 mov		%r11, -320(%rbp)
 
 mov		-320(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
 .falseCondL16: 
 
@@ -243,7 +243,7 @@ jmp 		.beginWhileL10
 .endWhileL9: 
 
 mov		-40(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
 movq 	$1, -328(%rbp)
 
@@ -259,14 +259,14 @@ jmp 		.beginWhileL1
 
 .endWhileL0: 
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 movq 	$9, -16(%rbp)
 

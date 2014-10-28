@@ -2,10 +2,10 @@
 		.string "%f" 
 
 .FL21: 
-		.float 0 
+		.float 1.0 
 
 .FL20: 
-		.float 1.0 
+		.float 0 
 
 .FL19: 
 		.float 2.0 
@@ -113,7 +113,7 @@ mov		%r10, -32(%rbp)
 mov	.FL6(%rip), %r10
 mov	%r10, -144(%rbp)
 
-movss		-8(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
 ucomiss		-144(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
@@ -150,8 +150,8 @@ cmp 		-176(%rbp), %r10
 
 jne 		.falseCondL14
 
-movss		-8(%rbp), %xmm0 
-mulss		0(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
+mulss		-8(%rbp), %xmm0 
 movss		%xmm0, -192(%rbp) 
 
 movss		-48(%rbp), %xmm0 
@@ -198,30 +198,26 @@ jmp 		.beginWhileL4
 mov	.FL19(%rip), %r10
 mov	%r10, -240(%rbp)
 
-mov	.FL20(%rip), %r10
-mov	%r10, -248(%rbp)
+movss		-240(%rbp), %xmm1 
+movss		.FL20(%rip), %xmm0 
+subss		%xmm1, %xmm0 
+movss		%xmm0, -248(%rbp) 
 
-movss		-48(%rbp), %xmm0 
-addss		-248(%rbp), %xmm0 
-movss		%xmm0, -256(%rbp) 
+mov	.FL21(%rip), %r10
+mov	%r10, -256(%rbp)
 
-movss		-240(%rbp), %xmm0 
-mulss		-256(%rbp), %xmm0 
+movss		-248(%rbp), %xmm0 
+addss		-256(%rbp), %xmm0 
 movss		%xmm0, -264(%rbp) 
 
-movss		-264(%rbp), %xmm1 
-movss		.FL21(%rip), %xmm0 
-subss		%xmm1, %xmm0 
-movss		%xmm0, -272(%rbp) 
-
-movss		-272(%rbp), %xmm0
+movss		-264(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 5), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

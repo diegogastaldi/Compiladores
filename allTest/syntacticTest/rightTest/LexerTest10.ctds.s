@@ -7,7 +7,7 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(8 * 4), $0 
+enter   $(8 * 5), $0 
 mov 		%rdi, -8(%rbp) 
 
 mov 		$0, %rax
@@ -17,7 +17,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 2), $0 
+enter   $(8 * 3), $0 
 
 mov		$0, %r10
 mov		%r10, a(%rip)

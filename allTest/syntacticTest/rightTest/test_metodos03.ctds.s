@@ -11,12 +11,12 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 6), $0 
+enter   $(8 * 7), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
-mov		0(%rbp), %r10 
+mov		-8(%rbp), %r10 
 mov		-32(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -40(%rbp)
@@ -28,7 +28,7 @@ ret
 .globl	resto
 .type	resto, @function 
 resto: 
-enter   $(8 * 15), $0 
+enter   $(8 * 16), $0 
 mov 		%rdi, -8(%rbp) 
 movss 		%xmm0, -16(%rbp) 
 
@@ -44,7 +44,7 @@ mov		-64(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -72(%rbp)
 
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 cmp		-72(%rbp), %rax
 setg		%al
 movzb	%al, %rax
@@ -59,7 +59,7 @@ jne 		.falseCondL0
 
 movq 	$3, -96(%rbp)
 
-movss		-8(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
 divss		-96(%rbp), %xmm0 
 movss		%xmm0, -104(%rbp) 
 
@@ -85,7 +85,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 10), $0 
 
 mov		$0, %r10
 mov		%r10, res(%rip)

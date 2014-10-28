@@ -9,7 +9,7 @@
 .globl	sumx
 .type	sumx, @function 
 sumx: 
-enter   $(8 * 15), $0 
+enter   $(8 * 16), $0 
 movss 		%xmm0, -8(%rbp) 
 mov 		%rdi, -16(%rbp) 
 
@@ -33,7 +33,7 @@ mov		%r10, -40(%rbp)
 .beginWhileL2: 
 
 mov		-40(%rbp), %rax
-cmp		0(%rbp), %rax
+cmp		-8(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
 mov		%rax, -80(%rbp)
@@ -46,7 +46,7 @@ cmp 		-80(%rbp), %r10
 jne 		.endWhileL1
 
 movss		-32(%rbp), %xmm0 
-addss		-8(%rbp), %xmm0 
+addss		-16(%rbp), %xmm0 
 movss		%xmm0, -96(%rbp) 
 
 mov		-96(%rbp), %r10
@@ -73,7 +73,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 7), $0 
 
 mov	.FL3(%rip), %r10
 mov	%r10, -16(%rbp)

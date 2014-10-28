@@ -5,7 +5,7 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 2), $0 
+enter   $(8 * 3), $0 
 
 mov		$0, %r10
 mov		%r10, a(%rip)

@@ -16,7 +16,7 @@ int breaks(int g){
 }
 
 void main(){ 
-   externinvk("printf", float ,"%f resultado : ", breaks( 1) );
+   externinvk("printf", int ,"%d resultado : ", breaks( 1) );
    return ;
 }
 

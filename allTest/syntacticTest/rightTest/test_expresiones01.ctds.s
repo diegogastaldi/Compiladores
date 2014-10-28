@@ -27,7 +27,7 @@
 .globl	prueba
 .type	prueba, @function 
 prueba: 
-enter   $(8 * 29), $0 
+enter   $(8 * 30), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -74,7 +74,7 @@ jp	.L5
 movss		-24(%rbp), %xmm0 
 ucomiss		-96(%rbp), %xmm0 
 jne	.L5 
-mov		FL3(%rip), %rax 
+mov		.FL3(%rip), %rax 
 jmp	.L6 
 .L5: 
 mov	.FL4, %rax 
@@ -182,7 +182,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 movq 	$6, -16(%rbp)
 

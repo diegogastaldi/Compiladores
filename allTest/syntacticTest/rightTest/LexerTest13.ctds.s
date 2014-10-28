@@ -12,15 +12,15 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(8 * 13), $0 
+enter   $(8 * 14), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
 
-movss		0(%rbp), %xmm0 
-ucomiss		-8(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
+ucomiss		-16(%rbp), %xmm0 
 setae		%al 
 movzb		%al, %rax 
 mov 		%rax, -56(%rbp) 
@@ -37,13 +37,13 @@ movq 	$1, -72(%rbp)
 mov	.FL1(%rip), %r10
 mov	%r10, -80(%rbp)
 
-movss		-8(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
 ucomiss		-80(%rbp), %xmm0 
 jp	.L4 
-movss		-8(%rbp), %xmm0 
+movss		-16(%rbp), %xmm0 
 ucomiss		-80(%rbp), %xmm0 
 jne	.L4 
-mov		FL2(%rip), %rax 
+mov		.FL2(%rip), %rax 
 jmp	.L5 
 .L4: 
 mov	.FL3, %rax 
@@ -73,7 +73,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 2), $0 
+enter   $(8 * 3), $0 
 
 mov 		$0, %rax
 leave

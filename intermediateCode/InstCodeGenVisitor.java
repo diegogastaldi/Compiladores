@@ -65,7 +65,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
-    int reserveSpace = (-genLabels.getOffSet()/8);
+    int reserveSpace = (-genLabels.getOffSet()/8)+1;
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
@@ -80,7 +80,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Genera instrucciones assembler */
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
-    int reserveSpace = (-genLabels.getOffSet()/8);
+    int reserveSpace = (-genLabels.getOffSet()/8)+1;
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
@@ -782,7 +782,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       /* Si el numero es mayor a cero es porque es un parametro, los cuales
         tiene su lugar reservado al principio del stack */
       if (os >=  0) 
-        return os * (-8);
+        return (os+1) * (-8);
       else 
         return os;
     } else {

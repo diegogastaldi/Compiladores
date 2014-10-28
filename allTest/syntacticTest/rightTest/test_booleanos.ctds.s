@@ -6,10 +6,10 @@
 .globl	neg
 .type	neg, @function 
 neg: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 mov 		%rdi, -8(%rbp) 
 
-cmpq		$0, 0(%rbp) 
+cmpq		$0, -8(%rbp) 
 sete		%al 
 movzb	%al, %rax 
 mov		%rax, -32(%rbp) 
@@ -21,13 +21,13 @@ ret
 .globl	and
 .type	and, @function 
 and: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
-cmpq		$0, -8(%rbp)
+cmpq		$0, -16(%rbp)
 je 		.L0
-cmpq		$0, 0(%rbp)
+cmpq		$0, -8(%rbp)
 je 		.L0
 mov		$1, %r10
 jmp		.L1
@@ -43,13 +43,13 @@ ret
 .globl	or
 .type	or, @function 
 or: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
-cmpq		$0, -8(%rbp)
+cmpq		$0, -16(%rbp)
 jne 		.L2
-cmpq		$0, 0(%rbp)
+cmpq		$0, -8(%rbp)
 je 		.L3
 .L2: 
 mov		$1, %r10
@@ -66,7 +66,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
+enter   $(8 * 15), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

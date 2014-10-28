@@ -9,23 +9,23 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
 
 mov	.FL0(%rip), %r10
 mov	%r10, -32(%rbp)
 
 mov		-32(%rbp), %r10
-mov		%r10, 0(%rbp)
+mov		%r10, -8(%rbp)
 
-movss		0(%rbp), %xmm0
+movss		-8(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 movss		-16(%rbp), %xmm0
 

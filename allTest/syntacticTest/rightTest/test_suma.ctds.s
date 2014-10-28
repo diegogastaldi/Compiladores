@@ -3,13 +3,13 @@
 .globl	suma
 .type	suma, @function 
 suma: 
-enter   $(8 * 13), $0 
+enter   $(8 * 14), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
 movq 	$0, -48(%rbp)
 
-mov 		-8(%rbp), %rax
+mov 		-16(%rbp), %rax
 cmp		-48(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -22,7 +22,7 @@ cmp 		-56(%rbp), %r10
 
 jne 		.falseCondL0
 
-mov		0(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
@@ -32,7 +32,7 @@ jmp 		.endIfL1
 
 movq 	$0, -72(%rbp)
 
-mov 		0(%rbp), %rax
+mov 		-8(%rbp), %rax
 cmp		-72(%rbp), %rax
 sete		%al
 movzb	%al, %rax
@@ -45,7 +45,7 @@ cmp 		-80(%rbp), %r10
 
 jne 		.falseCondL2
 
-mov		-8(%rbp), %rax
+mov		-16(%rbp), %rax
 leave
 ret
 
@@ -53,8 +53,8 @@ jmp 		.endIfL3
 
 .falseCondL2: 
 
-mov		-8(%rbp), %r10 
-mov		0(%rbp), %r11 
+mov		-16(%rbp), %r10 
+mov		-8(%rbp), %r11 
 add		%r10, %r11 
 mov		%r11, -96(%rbp)
 
@@ -69,7 +69,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 7), $0 
 
 movq 	$4, -16(%rbp)
 
