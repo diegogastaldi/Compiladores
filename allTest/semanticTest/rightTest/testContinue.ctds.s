@@ -3,19 +3,19 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 5), $0 
-mov 		%rdi, -16(%rbp) 
+enter   $(8 * 7), $0 
+mov 		%rdi, -8(%rbp) 
 
 .beginWhileL1: 
 
 movq 	$1, -32(%rbp)
 
 mov		-32(%rbp), %r10
-cmp 		-16(%rbp), %r10
+cmp 		-8(%rbp), %r10
 
 jne 		.endWhileL0
 
-mov		-16(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 
@@ -34,7 +34,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 1), $0 
+enter   $(8 * 3), $0 
 
 mov 		$0, %rax
 leave

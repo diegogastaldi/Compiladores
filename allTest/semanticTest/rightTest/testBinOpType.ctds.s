@@ -1,76 +1,66 @@
+.FL0: 
+		.float 1.0 
+
 .text
 
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 19), $0 
-mov 		%rdi, -16(%rbp) 
-mov 		%rsi, -24(%rbp) 
-mov 		%rdx, -32(%rbp) 
-mov 		%rcx, -40(%rbp) 
-mov 		%r8, -48(%rbp) 
-mov 		%r9, -56(%rbp) 
-mov 		8(%rbp), %r10
-mov 		%r10, -64(%rbp) 
-mov 		16(%rbp), %r10
-mov 		%r10, -72(%rbp) 
+enter   $(8 * 21), $0 
+movss 		%xmm0, -8(%rbp) 
+movss 		%xmm1, -16(%rbp) 
+movss 		%xmm2, -24(%rbp) 
+movss 		%xmm3, -32(%rbp) 
+movss 		%xmm4, -40(%rbp) 
+movss 		%xmm5, -48(%rbp) 
+movss 		%xmm6, -56(%rbp) 
+movss 		%xmm7, -64(%rbp) 
 
-movq 	$1.0, -144(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -144(%rbp)
 
-mov		-72(%rbp), %r10 
-mov		-144(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -152(%rbp)
+movss		-64(%rbp), %xmm0 
+addss		-144(%rbp), %xmm0 
+movss		%xmm0, -152(%rbp) 
 
-mov		-152(%rbp), %rax
+movss		-152(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
-
-movq		$0, %r10
-mov		%r10, -8(%rbp)
+enter   $(8 * 7), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rdi
+movss		-24(%rbp), %xmm0
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+movss		-24(%rbp), %xmm1
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rdx
+movss		-24(%rbp), %xmm2
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rcx
+movss		-24(%rbp), %xmm3
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %r8
+movss		-24(%rbp), %xmm4
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %r9
+movss		-24(%rbp), %xmm5
 
-mov		-24(%rbp), %r10
-mov	 	%r10, -80(%rbp)
+movss		-24(%rbp), %xmm6
 
-mov		-24(%rbp), %r10
-mov	 	%r10, -88(%rbp)
+movss		-24(%rbp), %xmm7
 
-mov 		$0, %rax 
+mov 		$8, %rax 
+
 call 	inc
-mov 	%rax, -96(%rbp) 
+movss 	%xmm0, -32(%rbp) 
 
-mov		-96(%rbp), %r10 
-mov		-16(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -112(%rbp)
+movss		-32(%rbp), %xmm0 
+addss		-16(%rbp), %xmm0 
+movss		%xmm0, -40(%rbp) 
 
-mov		-112(%rbp), %r10
+mov		-40(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 mov 		$0, %rax

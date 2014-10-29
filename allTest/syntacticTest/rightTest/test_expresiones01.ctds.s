@@ -27,7 +27,7 @@
 .globl	prueba
 .type	prueba, @function 
 prueba: 
-enter   $(8 * 30), $0 
+enter   $(8 * 28), $0 
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -182,7 +182,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 movq 	$6, -16(%rbp)
 

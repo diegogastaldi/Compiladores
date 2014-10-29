@@ -6,7 +6,7 @@
 .globl	neg
 .type	neg, @function 
 neg: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 mov 		%rdi, -8(%rbp) 
 
 cmpq		$0, -8(%rbp) 
@@ -21,7 +21,7 @@ ret
 .globl	and
 .type	and, @function 
 and: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -43,7 +43,7 @@ ret
 .globl	or
 .type	or, @function 
 or: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -66,7 +66,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 15), $0 
+enter   $(8 * 14), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

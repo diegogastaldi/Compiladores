@@ -18,7 +18,7 @@
 .globl	div
 .type	div, @function 
 div: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -33,7 +33,7 @@ ret
 .globl	resta
 .type	resta, @function 
 resta: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -48,7 +48,7 @@ ret
 .globl	sum
 .type	sum, @function 
 sum: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -63,7 +63,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
+enter   $(8 * 12), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

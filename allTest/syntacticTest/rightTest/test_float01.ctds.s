@@ -21,7 +21,7 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 29), $0 
+enter   $(8 * 27), $0 
 movss 		%xmm0, -8(%rbp) 
 mov 		%rdi, -16(%rbp) 
 
@@ -166,7 +166,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
+enter   $(8 * 8), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

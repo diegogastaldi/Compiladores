@@ -18,7 +18,7 @@
 .globl	dados
 .type	dados, @function 
 dados: 
-enter   $(8 * 97), $0 
+enter   $(8 * 95), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 mov 		%rdx, -24(%rbp) 
@@ -566,7 +566,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
 movq 	$1, -16(%rbp)
 

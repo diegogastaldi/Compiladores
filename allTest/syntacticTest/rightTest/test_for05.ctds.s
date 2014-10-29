@@ -12,7 +12,7 @@
 .globl	par
 .type	par, @function 
 par: 
-enter   $(8 * 4), $0 
+enter   $(8 * 2), $0 
 
 movq 	$15, -16(%rbp)
 
@@ -23,7 +23,7 @@ ret
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(8 * 19), $0 
+enter   $(8 * 17), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -103,7 +103,7 @@ jle 		.beginForL1
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
 
 mov 		$0, %r10 
 mov 		$0, %edx 

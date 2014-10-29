@@ -42,7 +42,7 @@
 .globl	promedio
 .type	promedio, @function 
 promedio: 
-enter   $(8 * 36), $0 
+enter   $(8 * 34), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 movss 		%xmm2, -24(%rbp) 
@@ -265,7 +265,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
 mov	.FL30(%rip), %r10
 mov	%r10, -16(%rbp)

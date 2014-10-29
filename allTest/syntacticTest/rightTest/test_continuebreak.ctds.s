@@ -48,7 +48,7 @@
 .globl	pruContinue
 .type	pruContinue, @function 
 pruContinue: 
-enter   $(8 * 35), $0 
+enter   $(8 * 33), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -217,7 +217,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

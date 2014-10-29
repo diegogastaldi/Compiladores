@@ -108,7 +108,7 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 34), $0 
+enter   $(8 * 32), $0 
 movss 		%xmm0, -8(%rbp) 
 mov 		%rdi, -16(%rbp) 
 
@@ -280,7 +280,7 @@ ret
 .globl	multiples
 .type	multiples, @function 
 multiples: 
-enter   $(8 * 83), $0 
+enter   $(8 * 81), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -713,7 +713,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 17), $0 
+enter   $(8 * 16), $0 
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

@@ -3,8 +3,8 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 8), $0 
-mov 		%rdi, -16(%rbp) 
+enter   $(8 * 10), $0 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
 
@@ -36,7 +36,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 1), $0 
+enter   $(8 * 3), $0 
 
 mov 		$0, %rax
 leave

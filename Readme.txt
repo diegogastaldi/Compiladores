@@ -13,6 +13,4 @@ Compilacion y ejecucion de codigos:
 
 Nota:
 	A los print siempre hay que ponerles el formato de lo que va a mostra
-							DOCUMENTACION
-
-              test_continuebreak. da error
+	DOCUMENTACION

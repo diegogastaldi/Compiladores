@@ -3,12 +3,12 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 8), $0 
-mov 		%rdi, -16(%rbp) 
+enter   $(8 * 10), $0 
+mov 		%rdi, -8(%rbp) 
 
 movq 	$0, -32(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-32(%rbp), %rax
 setle 	%al
 movzb  %al, %rax
@@ -23,7 +23,7 @@ jne 		.falseCondL0
 
 movq 	$0, -56(%rbp)
 
-mov		-16(%rbp), %rax
+mov		-8(%rbp), %rax
 cmp		-56(%rbp), %rax
 setg		%al
 movzb	%al, %rax
@@ -38,7 +38,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 1), $0 
+enter   $(8 * 3), $0 
 
 mov 		$0, %rax
 leave

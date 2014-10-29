@@ -9,7 +9,7 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(8 * 5), $0 
+enter   $(8 * 3), $0 
 movss 		%xmm0, -8(%rbp) 
 
 movss		-8(%rbp), %xmm0
@@ -19,7 +19,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 mov	.FL1(%rip), %r10
 mov	%r10, -16(%rbp)

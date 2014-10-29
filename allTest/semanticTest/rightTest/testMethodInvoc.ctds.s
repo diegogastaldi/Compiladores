@@ -1,21 +1,28 @@
+.FL1: 
+		.float 2.0 
+
+.FL0: 
+		.float 1.0 
+
 .text
 
 .globl	method1
 .type	method1, @function 
 method1: 
-enter   $(8 * 4), $0 
-mov 		%rdi, -16(%rbp) 
+enter   $(8 * 6), $0 
+mov 		%rdi, -8(%rbp) 
 
-movq 	$1.0, -32(%rbp)
+mov	.FL0(%rip), %r10
+mov	%r10, -32(%rbp)
 
-mov		-32(%rbp), %rax
+movss		-32(%rbp), %xmm0
 leave
 ret
 
 .globl	method2
 .type	method2, @function 
 method2: 
-enter   $(8 * 1), $0 
+enter   $(8 * 3), $0 
 
 mov 		$0, %rax
 leave
@@ -24,50 +31,50 @@ ret
 .globl	method3
 .type	method3, @function 
 method3: 
-enter   $(8 * 3), $0 
+enter   $(8 * 5), $0 
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
 
-movq 	$2.0, -24(%rbp)
+mov	.FL1(%rip), %r10
+mov	%r10, -24(%rbp)
 
 mov		-24(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		-16(%rbp), %rax
+movss		-16(%rbp), %xmm0
 leave
 ret
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 9), $0 
-
-movq		$0, %r10
-mov		%r10, -8(%rbp)
+enter   $(8 * 8), $0 
 
 mov 		$0, %rax 
+
 call 	method3
-mov 	%rax, -24(%rbp) 
+movss 	%xmm0, -24(%rbp) 
 
-movq 	$2, -40(%rbp)
+movq 	$2, -32(%rbp)
 
-mov		-40(%rbp), %r10
+mov		-32(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
+
 call 	method1
-mov 	%rax, -56(%rbp) 
+movss 	%xmm0, -40(%rbp) 
 
-mov		-24(%rbp), %r10 
-mov		-56(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -72(%rbp)
+movss		-24(%rbp), %xmm0 
+addss		-40(%rbp), %xmm0 
+movss		%xmm0, -48(%rbp) 
 
-mov		-72(%rbp), %r10
+mov		-48(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 mov 		$0, %rax 
+
 call 	method2
 
 mov 		$0, %rax

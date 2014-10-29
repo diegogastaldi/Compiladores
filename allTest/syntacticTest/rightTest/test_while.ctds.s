@@ -6,7 +6,7 @@
 .globl	maxcomdiv
 .type	maxcomdiv, @function 
 maxcomdiv: 
-enter   $(8 * 17), $0 
+enter   $(8 * 15), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -78,7 +78,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
 
 movq 	$6, -16(%rbp)
 

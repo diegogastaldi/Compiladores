@@ -6,7 +6,7 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 mov 		%rdi, -8(%rbp) 
 mov 		%rsi, -16(%rbp) 
 
@@ -45,7 +45,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
 
 movq 	$4, -16(%rbp)
 

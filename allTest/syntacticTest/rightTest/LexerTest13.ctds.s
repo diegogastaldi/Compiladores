@@ -12,7 +12,7 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(8 * 14), $0 
+enter   $(8 * 12), $0 
 movss 		%xmm0, -8(%rbp) 
 movss 		%xmm1, -16(%rbp) 
 
@@ -73,7 +73,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 3), $0 
+enter   $(8 * 2), $0 
 
 mov 		$0, %rax
 leave
