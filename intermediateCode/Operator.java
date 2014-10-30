@@ -20,6 +20,7 @@ public enum Operator {
  	CALLMETHOD /*Primer parametro: Nombre del metodo, 
  							 Segundo parametro: Cantidad de parametros, 
  							 Tercer parametro: Variable para resultado */
+ 	, METHODPARAM
  	, VALUEARRAY 							 
  	, NOT /* Primer parametro: operando
  						 					 Tercer parametro: Variable para resultado */
@@ -85,6 +86,8 @@ public enum Operator {
 		switch(this) {
 			case STRING:
 				return "STRING";			
+			case METHODPARAM:
+				return "METHODPARAM";
 			case TEXT:
 				return "TEXT";
 		  case AND:

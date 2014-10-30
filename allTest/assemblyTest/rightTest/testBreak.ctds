@@ -1,0 +1,43 @@
+class testBreak {
+	void break1() {
+	  	int limit;
+  		int i;
+  		i=0;
+  		limit = 15;
+  		while (i<limit){
+  			if (i == 5){
+  				break;
+  		    } else {
+  		    	 i=i+1;
+  			}
+  		}
+  		externinvk("printf", int, "5 = %d\n", i);
+  		return;
+	}
+	void break2() {
+	  	int limit;
+  		int i,j;
+  		i=0;
+  		limit = 15;
+  		while (i<limit){
+  			j=0;
+  			while (j<10000) {
+	  			if (j == 5){
+	  				break;
+	  		    } else {
+	  		    	 j=j+1;
+	  			}
+	  		}
+	  		i=i+1;
+  		}
+  		externinvk("printf", int, "5 = %d\n", j);
+  		externinvk("printf", int, "15 = %d\n", i);
+  		return;
+	}	
+	void main() {
+		break1();
+		break2();
+		return;
+	}
+} 
+ 

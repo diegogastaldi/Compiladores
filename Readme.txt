@@ -14,3 +14,5 @@ Compilacion y ejecucion de codigos:
 Nota:
 	A los print siempre hay que ponerles el formato de lo que va a mostra
 	DOCUMENTACION
+
+problema con mas de 6 parametros

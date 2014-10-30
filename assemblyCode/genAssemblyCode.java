@@ -30,6 +30,9 @@ public class genAssemblyCode {
 		for (Instr instr : interCode) {
 			Operator op = instr.getOperator();
 			switch (op) {
+				case 	METHODPARAM:
+					methodParamMethod(instr);
+					break;
 				case NUMFLOAT:
 					numfloatMethod(instr);
 					break;				
@@ -436,32 +439,35 @@ public class genAssemblyCode {
 		result += ".type	" + instr.getResult() + ", @function \n";			
 		result += instr.getResult() + ": \n";		
 		result += "enter   $(8 * " + instr.getOperand1() + "), $0 \n";
+	}
 
-		Integer floatParam = 0;
-		Integer intParam = 0;
+	public static void methodParamMethod(Instr instr) {
+		Integer floatParam = (Integer)instr.getOperand1() - 1;
+		Integer intParam = (Integer)instr.getOperand2() - 1;
 		Integer i = 0;
 		/* Guarda parametros en memoria reservada del metodo actual */
-		for (absSymbol param : (LinkedList<absSymbol>) instr.getOperand2()) {
+		LinkedList<absSymbol> listParam = (LinkedList<absSymbol>) instr.getResult();
+		absSymbol param;
+		for (int j = listParam.size()-1; j >= 0; j--) {
+			param = listParam.get(j);
 			switch (param.getType()) {
 				case INT : case BOOLEAN:
-					if (intParam < paramRegister.registersInt.length) {
+					if (intParam < paramRegister.registersInt.length) 
 						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
-						intParam++;
-					}
 					else {
 						result += "mov 		" + (((i+1)-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
 						result += "mov 		%r10, " + ((i+1) * (-8)) + "(%rbp) \n";												
 					}
+					intParam--;
 					break;
 				case FLOAT: 
-					if (floatParam < paramRegister.registersFloat.length) {
+					if (floatParam < paramRegister.registersFloat.length) 
 						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
-						floatParam++;
-					}
 					else {
-						result += "mov 		" + (((i+1)-paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		" + (((i+1)-paramRegister.registersFloat.length) * (-8)) + "(%rbp), %r10\n";
 						result += "mov 		%r10, " + ((i+1) * (-8)) + "(%rbp) \n";												
 					}						
+					floatParam--;
 					break;					
 			}
 			i++;
