@@ -1,0 +1,17 @@
+class testWhile {
+	void while1() {
+	  	int limit;
+  		int i;
+  		i=0;
+  		limit = 15;
+  		while (i<limit){
+  		     i=i+1;
+  		}
+  		externinvk("printf", int, "15 = %d", i);
+  		return;
+	}
+	void main() {
+		while1();
+		return;
+	}
+} 

@@ -1,0 +1,40 @@
+class testAsArr {
+float f[10];
+int i[10];
+	void main () {
+		// Arreglos locales
+		int a[10];
+		float d[10];		
+		int b;		
+		float c;		
+		a[2] = 3;
+		externinvk("printf", int, "3 = %d \n", a[2]);
+		b = 3;
+		a[b] = 2;
+		externinvk("printf", int, "2 = %d \n", a[3]);
+		a[0] = b;
+		externinvk("printf", int, "3 = %d \n", a[0]);
+		d[2] = 3.3;
+		externinvk("printf", int, "3.3 = %f \n", d[2]);
+		d[b] = 2.2;
+		externinvk("printf", int, "2.2 = %f \n", d[3]);
+		c = 5.5;
+		d[0] = c;
+		externinvk("printf", int, "5.5 = %f \n", d[0]);		
+		// Arreglos globales
+		i[2] = 3;
+		externinvk("printf", int, "3 = %d \n", i[2]);
+		i[b] = 2;
+		externinvk("printf", int, "2 = %d \n", i[3]);
+		i[0] = b;
+		externinvk("printf", int, "3 = %d \n", i[0]);
+		f[2] = 3.3;
+		externinvk("printf", int, "3.3 = %f \n", f[2]);
+		f[b] = 2.2;
+		externinvk("printf", int, "2.2 = %f \n", f[3]);
+		c = 5.5;
+		f[0] = c;
+		externinvk("printf", int, "5.5 = %f \n", f[0]);				
+		return;
+	}
+} 

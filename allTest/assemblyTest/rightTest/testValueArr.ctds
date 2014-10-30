@@ -1,0 +1,26 @@
+class testValueArr {
+	float f[10];
+	int i[10];
+	
+	void main () {
+		// Arreglos locales
+		int a[10];
+		float d[10];		
+		int b;		
+		float c;		
+		a[2] = 3;
+		b = a[2];
+		externinvk("printf", int, "3 = %d \n", b);
+		b = a[3-1];
+		externinvk("printf", int, "3 = %d \n", b);
+		b = a[b-1];
+		externinvk("printf", int, "3 = %d \n", b);
+		d[2] = 3.3;
+		c = d[2];
+		externinvk("printf", int, "3.3 = %f \n", c);
+		c = d[b-1];
+		externinvk("printf", int, "3.3 = %f \n", c);
+		return;
+	}
+
+} 

@@ -150,12 +150,12 @@ cmp 		-176(%rbp), %r10
 
 jne 		.falseCondL14
 
-movss		-16(%rbp), %xmm0 
-mulss		-8(%rbp), %xmm0 
+movss		-48(%rbp), %xmm0 
+mulss		-16(%rbp), %xmm0 
 movss		%xmm0, -192(%rbp) 
 
-movss		-48(%rbp), %xmm0 
-mulss		-192(%rbp), %xmm0 
+movss		-192(%rbp), %xmm0 
+mulss		-8(%rbp), %xmm0 
 movss		%xmm0, -200(%rbp) 
 
 mov		-200(%rbp), %r10

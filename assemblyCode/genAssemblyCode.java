@@ -260,10 +260,10 @@ public class genAssemblyCode {
 
 	/* Mod del contenido de dos direcciones de memoria */
 	public static void modMethod(Instr instr) {
-		result += "mov		" + instr.getOperand2() + "(%rbp), %rax \n";
+		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
 		result += "cltd\n";
-		result += "idivq	" + instr.getOperand1() + "(%rbp)\n";
-		result += "mov		%rax, " + instr.getResult() + "(%rbp)\n";
+		result += "idivq	" + instr.getOperand2() + "(%rbp)\n";
+		result += "movl		%edx, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	/* Realiza la operacion AND entre el contenido de dos direcciones de memoria */
@@ -594,8 +594,8 @@ public class genAssemblyCode {
 	}
 
 	public static void fminusMethod(Instr instr) {
-		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
-		result += "subss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result +=	"movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "subss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
@@ -606,38 +606,38 @@ public class genAssemblyCode {
 	}
 
 	public static void fdivideMethod(Instr instr) {
-		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
-		result +=	"divss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result +=	"movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result +=	"divss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void fleMethod(Instr instr) {
-		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
-		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "seta			%al \n";
 		result += "movzb		%al, %rax \n";
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void fleqMethod(Instr instr) {
-		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
-		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "setae		%al \n";
 		result += "movzb		%al, %rax \n";
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void fgeMethod(Instr instr) {
-		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
-		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "seta			%al \n";
 		result += "movzb		%al, %rax \n";
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
 	public static void fgeqMethod(Instr instr) {
-		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
-		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "setae		%al \n";
 		result += "movzb		%al, %rax \n";
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
@@ -653,7 +653,6 @@ public class genAssemblyCode {
 	}
 
 	public static void fceqMethod(Instr instr) {
-		LinkedList<String> op1 = (LinkedList<String>) instr.getOperand1();
 		LinkedList<String> op2 = (LinkedList<String>) instr.getOperand2();
 		LinkedList<Integer> op3 = (LinkedList<Integer>) instr.getResult();
 		result +=	"movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
@@ -662,16 +661,15 @@ public class genAssemblyCode {
 		result +=	"movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
 		result +=	"ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
 		result +=	"jne	." + op2.get(0) + " \n";
-		result +=	"mov		." + op1.get(0) + "(%rip), %rax \n";
+		result +=	"movq		$1, %rax \n";
 		result +=	"jmp	." + op2.get(1) + " \n";
 		result += "." + op2.get(0) + ": \n";
-		result +=	"mov	." + op1.get(1) + ", %rax \n";
+		result +=	"movq		$0, %rax \n";
 		result += "." + op2.get(1) + ": \n";
 		result +=	"mov	%rax, " + op3.get(2) + "(%rbp) \n";
 	}
 
 	public static void fneqMethod(Instr instr) {
-		LinkedList<String> op1 = (LinkedList<String>) instr.getOperand1();
 		LinkedList<String> op2 = (LinkedList<String>) instr.getOperand2();
 		LinkedList<Integer> op3 = (LinkedList<Integer>) instr.getResult();
  		result += "	movss		" + op3.get(0) + "(%rbp), %xmm0 \n";
@@ -681,10 +679,10 @@ public class genAssemblyCode {
 		result += "	ucomiss		" + op3.get(1) + "(%rbp), %xmm0 \n";
 		result += "	je	." + op2.get(1) + " \n";
 		result += "." + op2.get(0) + ": \n";
-		result += "	mov		." + op1.get(0) + "(%rip), %rax \n";
+		result += "	movq		$1, %rax \n";
 		result += "	jmp	." + op2.get(2) + " \n";
 		result += "." + op2.get(1) + ": \n";
-		result += "	mov		." + op1.get(0) + "(%rip), %rax \n";
+		result += "	movq		$0, %rax \n";
 		result += "." + op2.get(2) + ": \n";
 		result += "	mov		%rax, " + op3.get(2) + "(%rbp) \n";
 	}

@@ -168,10 +168,7 @@ public class TypeCheckVisitor implements ASTVisitor<Type>{
     if  (leftOperand != rightOperand && leftOperand == Type.BOOLEAN) 
       addError(expr,"Los operando de una expresion aritmetica no peden ser Bool ni distintos");
     switch(operator){
-      case DIVIDE: 
-        expr.setType(Type.FLOAT);
-        return Type.FLOAT;
-      case PLUS: case MINUS: case MULTIPLY: 
+      case PLUS: case MINUS: case MULTIPLY: case DIVIDE: 
         expr.setType(leftOperand);
         return leftOperand;
       case MOD:

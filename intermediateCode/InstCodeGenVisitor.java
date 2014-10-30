@@ -66,7 +66,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
     int reserveSpace = (-genLabels.getOffSet()/8)-1;
-    if (((-genLabels.getOffSet()/8)-1) % 2 == 0) 
+    if (reserveSpace % 2 == 1) 
       /* El espacio a reservar debe ser multiplo de 16 */
       reserveSpace++;
     /* Label de inicio de funcion */
@@ -84,6 +84,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     c.getBlock().accept(this);
     /* Calcula el espacio a reservar */
     int reserveSpace = (-genLabels.getOffSet()/8)-1;
+    if (reserveSpace % 2 == 1) 
+      /* El espacio a reservar debe ser multiplo de 16 */
+      reserveSpace++;    
     /* Label de inicio de funcion */
     instructions.add(posMethodLabel, new Instr(Operator.METHODLABEL, reserveSpace, c.getParameters(), c.getName()));     
   }
@@ -142,7 +145,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	      ArrayLocation a = (ArrayLocation) stmt.getLocation();
 	      /* Realiza el incremento */
 	  		instructions.add(new Instr(plus, expr, a.getOffSet(), result));
-	      instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
+        int index = a.getExpression().accept(this);
+        int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();
+	      instructions.add(new Instr(Operator.ARRAYASSIGN, result, index, endarray));
 	    }
 	  } else {
 	    /* Realiza la asigancion */
@@ -186,8 +191,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       else {
         ArrayLocation a = (ArrayLocation) location;
     		/* Realiza el decremento */
-    		instructions.add(new Instr(minus, expr, a.getOffSet(), result));      	        
-        instructions.add(new Instr(Operator.ARRAYASSIGN, result, a.getExpression().accept(this), a.getOffSet()));
+    		instructions.add(new Instr(minus, expr, a.getOffSet(), result)); 
+        int index = a.getExpression().accept(this);
+        int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();     	        
+        instructions.add(new Instr(Operator.ARRAYASSIGN, result, index, endarray));
       }
     } else {
     	/* Realiza el decremento */
@@ -216,7 +223,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       }
       else {
         ArrayLocation a = (ArrayLocation) stmt.getLocation();
-        instructions.add(new Instr(Operator.ARRAYASSIGN, expr, a.getExpression().accept(this), a.getOffSet()));
+        int index = a.getExpression().accept(this);
+        int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();        
+        instructions.add(new Instr(Operator.ARRAYASSIGN, expr, index, endarray));
       }
     } else {
       /* Realiza la asigancion */
@@ -425,10 +434,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         switch (((ArgInvocExpr) a).getExpression().getType()) {
         case FLOAT: 
           if (floatParam < 8) {
-            param.add(new Instr(Operator.FPARAM, parameter, true, floatParam));
+            param.add(new Instr(Operator.FPARAM, parameter, stmt.getId().equals("printf"), floatParam));
             floatParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, true, genLabels.getOffSet()));
+            param.add(new Instr(Operator.FPARAM, parameter, stmt.getId().equals("printf"), genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
           if (intParam < 6) {
@@ -634,13 +643,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         instructions.add(new Instr(op, leftOperand, rightOperand, result));
         break;
       case FLOAT:
-        /* Operando 1 */
-        String label1 = "F"+genLabels.getLabel(), label2 = "F"+genLabels.getLabel();
-        instructions.add(0, new Instr(Operator.FLOAT, 1, label1, null));
-        instructions.add(0, new Instr(Operator.FLOAT, 0, label2, null));
-        posMethodLabel += 2;
-        LinkedList<String> labelfloat = new LinkedList<String>();
-        labelfloat.add(label1); labelfloat.add(label2);
+        String label1, label2;
         /* Operando 2 */
         label1 = genLabels.getLabel(); label2 = genLabels.getLabel();
         LinkedList<String> labels = new LinkedList<String>();
@@ -658,7 +661,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     				op = Operator.FNEQ;
     				break;
     	  }
-        instructions.add(new Instr(op, labelfloat, labels, operands));
+        instructions.add(new Instr(op, null, labels, operands));
         break;
       default : 
         System.out.println("Los parametros de la expresion de equivalencia no tiene tipo asignado");
@@ -718,10 +721,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         switch (((ArgInvocExpr) a).getExpression().getType()) {
         case FLOAT: 
           if (floatParam < 8) {
-            param.add(new Instr(Operator.FPARAM, parameter, true, floatParam));
+            param.add(new Instr(Operator.FPARAM, parameter, expr.getId().equals("printf"), floatParam));
             floatParam++;
           } else 
-            param.add(new Instr(Operator.FPARAM, parameter, true, genLabels.getOffSet()));
+            param.add(new Instr(Operator.FPARAM, parameter, expr.getId().equals("printf"), genLabels.getOffSet()));
           break;
         case INT: case BOOLEAN:
           if (intParam < 6) {
@@ -800,8 +803,10 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   		solo se llama si se requiere el valor del mismo en algun indice */
     Integer expr = loc.getExpression().accept(this);
     Integer result = genLabels.getOffSet();
-    if (!loc.getIsGlobal()) 
-      instructions.add(new Instr(Operator.VALUEARRAY, loc.getOffSet(), expr, result));
+    if (!loc.getIsGlobal()) {
+      int endarray = (loc.getSize()-1) * (-8) + loc.getOffSet();      
+      instructions.add(new Instr(Operator.VALUEARRAY, endarray, expr, result));
+    }
     else 
       instructions.add(new Instr(Operator.GLOBALVALUEARRAY, loc.getId(), expr, result));
     return result;    

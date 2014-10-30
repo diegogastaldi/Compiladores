@@ -104,6 +104,7 @@ terminal        FloatLiteral           FLOAT;
 terminal        BoolLiteral            BOOLEAN;
 terminal        String                 STRING_LITERAL;
 terminal        AssignStmt             ASSIGN_INC, ASSIGN_DEC, ASSIGN;
+terminal                               UNOT;
 
 non terminal                           program, field_decl, set_field_decl, set_method_decl, set_decl;
 non terminal    LinkedList<ArgInvoc>   arg_invoc;
@@ -122,19 +123,13 @@ non terminal    LinkedList<Statement>  set_statement;
 non terminal    ReturnStmt             stmt_return;
 non terminal    IfStmt                 stmt_if;
 non terminal    Literal                literal;
-non terminal    BinOpExpr              bin_op;
-non terminal    ArithExpr              arith_op;
-non terminal    RelExpr                rel_op;
-non terminal    EqExpr                 eq_op;
-non terminal    CondExpr               cond_op;
 
 precedence left OR;
 precedence left AND;
-precedence left EQ, NOT_EQ;
-precedence left LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN;
+precedence nonassoc LESS_THAN, GREATER_THAN, LESS_EQ_THAN, GREATER_EQ_THAN, EQ, NOT_EQ;
 precedence left PLUS, MINUS;             
 precedence left MULT, DIV, MODULE;
-precedence left NOT;
+precedence right UNOT;
 
 start with program;
 
@@ -218,10 +213,22 @@ block       		::= LLL:l {:table.insertLevel();:}
 expr        		::= location:l {:RESULT = l;:}
                     |   method_call_expr:mc {:RESULT = mc;:}
       			        |   literal:l {:RESULT = l;:}
-			              |   MINUS:m expr:e {:RESULT = new NegativeExpr(e, e.getType(),mleft+1,mright+1);:}
-			              |   NOT:n expr:e {:RESULT = new NegationExpr(e,nleft+1,nright+1);:}
-			              |   LPAR:l expr:e RPAR {:RESULT = new InParentExpr(e, e.getType(),lleft+1,lright+1);:}
-			              |   expr:e1 bin_op:b expr:e2 {:b.setLeftOperand(e1); b.setRightOperand(e2); RESULT = b;:};
+			              |   MINUS:m expr:e {:RESULT = new NegativeExpr(e, e.getType(),mleft+1,mright+1);:} %prec UNOT
+			              |   NOT:n expr:e {:RESULT = new NegationExpr(e,nleft+1,nright+1);:} %prec UNOT
+			              |   LPAR:l expr:e RPAR {:RESULT = new InParentExpr(e, e.getType(),lleft+1,lright+1);:} 
+			              |   expr:e1 PLUS:p expr:e2 {:ArithExpr a=new ArithExpr(BinOpType.PLUS,pleft+1,pright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 MINUS:m expr:e2 {:ArithExpr a=new ArithExpr(BinOpType.MINUS,mleft+1,mright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 MULT:m expr:e2 {:ArithExpr a=new ArithExpr(BinOpType.MULTIPLY,mleft+1,mright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}                        
+                    |   expr:e1 DIV:d expr:e2 {:ArithExpr a=new ArithExpr(BinOpType.DIVIDE,dleft+1,dright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}                        
+                    |   expr:e1 MODULE:m expr:e2 {:ArithExpr a=new ArithExpr(BinOpType.MOD,mleft+1,mright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 LESS_THAN:l expr:e2 {:RelExpr a=new RelExpr(BinOpType.LE,lleft+1,lright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}       
+                    |   expr:e1 GREATER_THAN:g expr:e2 {:RelExpr a=new RelExpr(BinOpType.GE,gleft+1,gright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 LESS_EQ_THAN:l expr:e2 {:RelExpr a=new RelExpr(BinOpType.LEQ,lleft+1,lright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 GREATER_EQ_THAN:g expr:e2 {:RelExpr a=new RelExpr(BinOpType.GEQ,gleft+1,gright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 EQ:e expr:e2 {:EqExpr a=new EqExpr(BinOpType.CEQ,eleft+1,eright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 NOT_EQ:n expr:e2  {:EqExpr a=new EqExpr(BinOpType.NEQ,nleft+1,nright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 AND:and expr:e2  {:CondExpr a=new CondExpr(BinOpType.AND,andleft+1,andright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:}
+                    |   expr:e1 OR:o expr:e2  {:CondExpr a=new CondExpr(BinOpType.OR,oleft+1,oright+1); a.setLeftOperand(e1); a.setRightOperand(e2); RESULT = a;:};                   
 
 method_call_expr::= WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {:RESULT=new ExternInvkExpr(s,a,t,wleft+1,wright+1);:}
 			              |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR{:RESULT=new ExternInvkExpr(s,a,null,wleft+1,wright+1);:}
@@ -234,7 +241,7 @@ externinvk_arg  ::= expr:e {:RESULT = new ArgInvocExpr(e);:}
                     |   STRING_LITERAL:s {:RESULT = new ArgInvocSL(s);:};
 
 location        ::= ID:i {:simpleSymbol a = (simpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT=new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet(), a.getIsGlobal());:}
-                    |   ID:i LC expr:e RC {:arraySymbol a = (arraySymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else RESULT=new ArrayLocation(i,a.getType(),table.getBlockId(),e,ileft+1,iright+1, a.getOffSet(), a.getIsGlobal());:};
+                    |   ID:i LC expr:e RC {:arraySymbol a = (arraySymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else RESULT=new ArrayLocation(i,a.getType(),table.getBlockId(),e,ileft+1,iright+1, a.getOffSet(), a.getIsGlobal(),a.getSize());:};
 
 type        		::= WFLOAT:f {:RESULT = f;:}
                     |   WBOOLEAN:b {:RESULT = b;:}
@@ -244,28 +251,7 @@ assign_op   		::= ASSIGN:a {:RESULT = new SimpleAssign(aleft+1,aright+1);:}
         			      |   ASSIGN_INC:i {:RESULT = new IncrementAssign(ileft+1,iright+1);:}
         			      |   ASSIGN_DEC:d {:RESULT = new DecrementAssign(dleft+1,dright+1);:};
 
-
-bin_op      		::= arith_op:a {:RESULT = a;:}
-                    |   rel_op:r {:RESULT = r;:}
-                    |   eq_op:e {:RESULT = e;:}
-                    |   cond_op:c {:RESULT = c;:};
-
-arith_op    		::= PLUS:p {:ArithExpr a=new ArithExpr(BinOpType.PLUS,pleft+1,pright+1);RESULT=a;:} 
-                    |   MINUS:m {:ArithExpr a=new ArithExpr(BinOpType.MINUS,mleft+1,mright+1);RESULT=a;:} 
-                    |   MULT:m {:ArithExpr a=new ArithExpr(BinOpType.MULTIPLY,mleft+1,mright+1);RESULT=a;:} 
-                    |   DIV:d {:ArithExpr a=new ArithExpr(BinOpType.DIVIDE,dleft+1,dright+1);RESULT=a;:} 
-                    |   MODULE:m {:ArithExpr a=new ArithExpr(BinOpType.MOD,mleft+1,mright+1);RESULT=a;:};
-
-rel_op      		::= LESS_THAN:l {:RelExpr rel=new RelExpr(BinOpType.LE,lleft+1,lright+1);RESULT=rel;:} 
-                    |   GREATER_THAN:g {:RelExpr rel=new RelExpr(BinOpType.GE,gleft+1,gright+1);RESULT=rel;:} 
-                    |   LESS_EQ_THAN:l {:RelExpr rel=new RelExpr(BinOpType.LEQ,lleft+1,lright+1);RESULT=rel;:} 
-                    |   GREATER_EQ_THAN:g {:RelExpr rel=new RelExpr(BinOpType.GEQ,gleft+1,gright+1);RESULT=rel;:} ;
-
-eq_op       		::= EQ:e {:EqExpr eq=new EqExpr(BinOpType.CEQ,eleft+1,eright+1);RESULT = eq;:} 
-                    |   NOT_EQ:n {:EqExpr eq=new EqExpr(BinOpType.NEQ,nleft+1,nright+1);RESULT = eq;:} ;
-
-cond_op     		::= AND:a {:CondExpr c=new CondExpr(BinOpType.AND,aleft+1,aright+1);RESULT=c;:}
-                    |   OR:o {:CondExpr c=new CondExpr(BinOpType.OR,oleft+1,oright+1);RESULT=c;:};
+ 
 
 literal     		::= INT:l {:l.setType(Type.INT); RESULT = l;:}
                     |   FLOAT:l {:l.setType(Type.FLOAT); RESULT = l;:}

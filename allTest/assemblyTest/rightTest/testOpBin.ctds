@@ -1,0 +1,203 @@
+class opArith {
+	float f1;
+	int i1;
+
+	void sum() {
+		float f2;
+		int i2;
+		i1=2;
+		i2=3;
+		i1=i1 + i2;
+		externinvk("printf", int, "2 + 3 = %d \n", i1);
+		f1=2.2;
+		f2=3.8;
+		f1=f1 + f2;		
+		externinvk("printf", float, "2.2 + 3.8 = %f \n", f1);	
+		return;
+	}
+	void minus() {
+		float f2;
+		int i2;
+		i1=2;
+		i2=3;
+		i1=i1 - i2;
+		externinvk("printf", int, "2 - 3 = %d \n", i1);
+		f1=2.2;
+		f2=3.8;
+		f1=f1 - f2;		
+		externinvk("printf", float, "2.2 - 3.8 = %f \n", f1);	
+		return;
+	}
+
+	void multiply() {
+		float f2;
+		int i2;
+		i1=2;
+		i2=3;
+		i1=i1 * i2;
+		externinvk("printf", int, "2 * 3 = %d \n", i1);
+		f1=2.2;
+		f2=3.8;
+		f1=f1 * f2;		
+		externinvk("printf", float, "2.2 * 3.8 = %f \n", f1);	
+		return;
+	}
+	void div() {
+		float f2;
+		int i2;
+		i1=2;
+		i2=3;
+		i1=i1 / i2;
+		externinvk("printf", int, "2 / 3 = %d \n", i1);
+		f1=2.2;
+		f2=3.8;
+		f1=f1 / f2;		
+		externinvk("printf", float, "2.2 / 3.8 = %f \n", f1);	
+		return;
+	}
+	void unaryminus() {
+		i1=2;
+		i1= - i1;
+		externinvk("printf", int, "- 2 = %d \n", i1);
+		f1=2.2;
+		f1=- f1;		
+		externinvk("printf", float, "- 2.2 = %f \n", f1);	
+		return;
+	}
+	void mod() {
+		int i2;
+		i1=2;
+		i2=3;
+		i1=i1 % i2;
+		externinvk("printf", int, "2 % 3 = %d \n", i1);
+		return;
+	}
+	void menor() {
+		float f2;
+		int i2;
+		boolean b;
+		i1=2;
+		i2=3;
+		b =i1 < i2;
+		externinvk("printf", int, "2 < 3 = %d \n", b);
+		f1=2.2;
+		f2=3.8;
+		b=f1 < f2;		
+		externinvk("printf", int, "2.2 < 3.8 = %d \n", b);	
+		return;
+	}
+	void menorigual() {
+		float f2;
+		int i2;
+		boolean b;
+		i1=2;
+		i2=3;
+		b =i1 <= i2;
+		externinvk("printf", int, "2 <= 3 = %d \n", b);
+		f1=2.2;
+		f2=3.8;
+		b=f1 <= f2;		
+		externinvk("printf", int, "2.2 <= 3.8 = %d \n", b);	
+		return;
+	}		
+	void mayorigual() {
+		float f2;
+		int i2;
+		boolean b;
+		i1=2;
+		i2=3;
+		b =i1 >= i2;
+		externinvk("printf", int, "2 >= 3 = %d \n", b);
+		f1=2.2;
+		f2=3.8;
+		b=f1 >= f2;		
+		externinvk("printf", int, "2.2 >= 3.8 = %d \n", b);	
+		return;
+	}
+	void mayor() {
+		float f2;
+		int i2;
+		boolean b;
+		i1=2;
+		i2=3;
+		b =i1 > i2;
+		externinvk("printf", int, "2 > 3 = %d \n", b);
+		f1=2.2;
+		f2=3.8;
+		b=f1 > f2;		
+		externinvk("printf", int, "2.2 > 3.8 = %d \n", b);	
+		return;
+	}
+	void igual() {
+		float f2;
+		int i2;
+		boolean b;
+		i1=2;
+		i2=3;
+		b =i1 == i2;
+		externinvk("printf", int, "2 == 3 = %d \n", b);
+		f1=2.2;
+		f2=3.8;
+		b=f1 == f2;		
+		externinvk("printf", int, "2.2 == 3.8 = %d \n", b);	
+		return;
+	}
+	void distinto() {
+		float f2;
+		int i2;
+		boolean b;
+		i1=2;
+		i2=3;
+		b =i1 != i2;
+		externinvk("printf", int, "2 != 3 = %d \n", b);
+		f1=2.2;
+		f2=3.8;
+		b=f1 != f2;		
+		externinvk("printf", int, "2.2 != 3.8 = %d \n", b);	
+		return;
+	}
+	void and() {
+		boolean b2;
+		boolean b1;
+		b1=true;
+		b2=false;
+		b1 = b1 && b2;
+		externinvk("printf", int, "true & false = %d \n", b1);
+		return;
+	}
+	void or() {
+		boolean b2;
+		boolean b1;
+		b1=true;
+		b2=false;
+		b1 = b1 || b2;
+		externinvk("printf", int, "true | false = %d \n", b1);	
+		return;
+	}
+	void not() {
+		boolean b1;
+		b1=true;
+		b1 = !b1;
+		externinvk("printf", int, "!true = %d \n", b1);	
+		return;
+	}	
+	void main () {
+		sum();
+		minus();
+		unaryminus();
+		multiply();
+		div();
+		mod();
+		menor();
+		menorigual();
+		mayor();
+		mayorigual();
+		igual();
+		distinto();
+		and();
+		or();
+		not();
+		return;
+	}
+
+} 
