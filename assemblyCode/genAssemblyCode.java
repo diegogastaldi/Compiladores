@@ -72,6 +72,9 @@ public class genAssemblyCode {
 			  case VARASSIGN:
 					varassignMethod(instr);
 			   	break;			    	
+			  case JL: 
+			   	jlMethod(instr);
+			   	break;			   	
 			  case JLE: 
 			   	jleMethod(instr);
 			   	break;
@@ -213,6 +216,11 @@ public class genAssemblyCode {
 		result += "jle 		." + instr.getResult() + "\n";
 	}
 
+	/* Salto por menor  */
+	public static void jlMethod(Instr instr) {
+		result += "jl 		." + instr.getResult() + "\n";
+	}
+
 	/* Salto por desigualdad */
 	public static void jneMethod(Instr instr) {
 	  result += "jne 		." + instr.getResult() + "\n";
@@ -266,7 +274,7 @@ public class genAssemblyCode {
 		result += "mov		" + instr.getOperand1() + "(%rbp), %rax \n";
 		result += "cltd\n";
 		result += "idivq	" + instr.getOperand2() + "(%rbp)\n";
-		result += "movl		%edx, " + instr.getResult() + "(%rbp)\n";
+		result += "mov		%rdx, " + instr.getResult() + "(%rbp)\n";
 	}
 
 	/* Realiza la operacion AND entre el contenido de dos direcciones de memoria */
@@ -444,7 +452,7 @@ public class genAssemblyCode {
 	public static void methodParamMethod(Instr instr) {
 		Integer floatParam = (Integer)instr.getOperand1() - 1;
 		Integer intParam = (Integer)instr.getOperand2() - 1;
-		Integer i = 0;
+		Integer i = 1;
 		/* Guarda parametros en memoria reservada del metodo actual */
 		LinkedList<absSymbol> listParam = (LinkedList<absSymbol>) instr.getResult();
 		absSymbol param;
@@ -453,19 +461,19 @@ public class genAssemblyCode {
 			switch (param.getType()) {
 				case INT : case BOOLEAN:
 					if (intParam < paramRegister.registersInt.length) 
-						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
+						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + (((i+1)-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + ((i+1) * (-8)) + "(%rbp) \n";												
+						result += "mov 		" + ((i-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
 					}
 					intParam--;
 					break;
 				case FLOAT: 
 					if (floatParam < paramRegister.registersFloat.length) 
-						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + ((i+1) * (-8)) + "(%rbp) \n";
+						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + (((i+1)-paramRegister.registersFloat.length) * (-8)) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + ((i+1) * (-8)) + "(%rbp) \n";												
+						result += "mov 		" + ((i-paramRegister.registersFloat.length) * (-8)) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
 					}						
 					floatParam--;
 					break;					

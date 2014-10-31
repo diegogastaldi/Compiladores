@@ -20,6 +20,7 @@ public enum Operator {
  	CALLMETHOD /*Primer parametro: Nombre del metodo, 
  							 Segundo parametro: Cantidad de parametros, 
  							 Tercer parametro: Variable para resultado */
+ 	, JL
  	, METHODPARAM
  	, VALUEARRAY 							 
  	, NOT /* Primer parametro: operando
@@ -84,6 +85,8 @@ public enum Operator {
 	@Override
 	public String toString() {
 		switch(this) {
+			case JL:
+				return "JL";
 			case STRING:
 				return "STRING";			
 			case METHODPARAM:

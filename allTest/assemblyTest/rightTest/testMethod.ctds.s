@@ -490,19 +490,19 @@ ret
 method5: 
 enter   $(8 * 28), $0 
 
-mov 		-40(%rbp), %r10
+mov 		24(%rbp), %r10
 mov 		%r10, -8(%rbp) 
-mov 		-32(%rbp), %r10
+mov 		32(%rbp), %r10
 mov 		%r10, -16(%rbp) 
-mov 		-24(%rbp), %r10
+mov 		40(%rbp), %r10
 mov 		%r10, -24(%rbp) 
-mov 		-16(%rbp), %r10
+mov 		48(%rbp), %r10
 mov 		%r10, -32(%rbp) 
-mov 		-8(%rbp), %r10
+mov 		56(%rbp), %r10
 mov 		%r10, -40(%rbp) 
-mov 		0(%rbp), %r10
+mov 		64(%rbp), %r10
 mov 		%r10, -48(%rbp) 
-mov 		8(%rbp), %r10
+mov 		72(%rbp), %r10
 mov 		%r10, -56(%rbp) 
 mov 		%r9, -64(%rbp) 
 mov 		%r8, -72(%rbp) 

@@ -675,7 +675,7 @@ jne 		.endWhileL23
 mov		-24(%rbp), %rax 
 cltd
 idivq	-32(%rbp)
-movl		%edx, -168(%rbp)
+mov		%rdx, -168(%rbp)
 
 movq 	$0, -176(%rbp)
 
@@ -1192,7 +1192,7 @@ movq 	$2, -128(%rbp)
 mov		-8(%rbp), %rax 
 cltd
 idivq	-128(%rbp)
-movl		%edx, -136(%rbp)
+mov		%rdx, -136(%rbp)
 
 mov		-136(%rbp), %r10
 mov		%r10, -40(%rbp)
@@ -1419,7 +1419,7 @@ jne 		.endWhileL44
 mov		-16(%rbp), %rax 
 cltd
 idivq	-32(%rbp)
-movl		%edx, -96(%rbp)
+mov		%rdx, -96(%rbp)
 
 movq 	$0, -104(%rbp)
 
@@ -1432,7 +1432,7 @@ mov		%rax, -112(%rbp)
 mov		-8(%rbp), %rax 
 cltd
 idivq	-32(%rbp)
-movl		%edx, -120(%rbp)
+mov		%rdx, -120(%rbp)
 
 movq 	$0, -128(%rbp)
 

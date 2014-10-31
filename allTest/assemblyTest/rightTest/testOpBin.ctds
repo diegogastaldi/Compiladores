@@ -72,6 +72,16 @@ class opArith {
 		externinvk("printf", int, "2 % 3 = %d \n", i1);
 		return;
 	}
+
+	void mod2() {
+		int i2;
+		i1=2;
+		i2=1;
+		i1=i1 % i2;
+		externinvk("printf", int, "2 % 1 = %d \n", i1);
+		return;
+	}
+
 	void menor() {
 		float f2;
 		int i2;
@@ -136,10 +146,16 @@ class opArith {
 		i2=3;
 		b =i1 == i2;
 		externinvk("printf", int, "2 == 3 = %d \n", b);
-		f1=2.2;
-		f2=3.8;
-		b=f1 == f2;		
-		externinvk("printf", int, "2.2 == 3.8 = %d \n", b);	
+		return;
+	}
+
+	void igual2() {
+		int i2;
+		boolean b;
+		i1=0;
+		i2=0;
+		b =i1 == i2;
+		externinvk("printf", int, "0 == 0 = %d \n", b);
 		return;
 	}
 	void distinto() {
@@ -188,11 +204,13 @@ class opArith {
 		multiply();
 		div();
 		mod();
+		mod2();
 		menor();
 		menorigual();
 		mayor();
 		mayorigual();
 		igual();
+		igual2();		
 		distinto();
 		and();
 		or();

@@ -371,24 +371,26 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer expr1 = stmt.getAssignExpr().accept(this);
   	/* Genera codigo para la segunda expresion */    
 		Integer expr2 = stmt.getCondition().accept(this);
+    /* Decrementa para no saltear primer ciclo */
+    instructions.add(new Instr(Operator.MINUS, expr1, incrementValue, expr1));
     /* Salta a evaluar las condiciones */
     instructions.add(new Instr(Operator.JMP, null, null, labelEndFor));
     /* Pone la etiqueta de inicio del for */
 	  instructions.add(new Instr(Operator.LABEL, null, null, labelBeginFor));
     /* Genera las instrucciones para el bloque */
     Integer block = stmt.getBlock().accept(this);
-    /* Incrementa el contador */
-    instructions.add(new Instr(Operator.PLUS, expr1, incrementValue, expr1));
-
-		instructions.add(new Instr(Operator.VARASSIGN, expr1, null, stmt.getLocation().accept(this)));
-
     /* Pone la etique de fin del for */
     instructions.add(new Instr(Operator.LABEL, null, null, labelEndFor));    
+    /* Incrementa el contador */
+    instructions.add(new Instr(Operator.PLUS, expr1, incrementValue, expr1));
+    instructions.add(new Instr(Operator.VARASSIGN, expr1, null, stmt.getLocation().accept(this)));
     /* Compara las expresiones */
 	  instructions.add(new Instr(Operator.CMP, expr2, expr1, null));
 	  /* Si la primera es menor que la segunda no salta*/
-	  instructions.add(new Instr(Operator.JLE, null, null, labelBeginFor));
-
+	  instructions.add(new Instr(Operator.JL, null, null, labelBeginFor));
+    /* Decrementa para no saltear primer ciclo */
+    instructions.add(new Instr(Operator.MINUS, expr1, incrementValue, expr1));
+    instructions.add(new Instr(Operator.VARASSIGN, expr1, null, stmt.getLocation().accept(this)));
     /* Actualizacion del stack */
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
