@@ -1,12 +1,13 @@
 .SL0: 
-		.string "%d" 
+		.string "%d %d %d %d %d %d %d %d %d %d %d %d  %d %d" 
 
 .text
 
 .globl	met
 .type	met, @function 
 met: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
+
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -32,7 +33,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 14), $0 
+
 
 mov 		$0, %rax 
 
@@ -57,6 +59,45 @@ mov	 	%r10, %rdi
 
 mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rdx
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %rcx
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %r8
+
+mov		-16(%rbp), %r10
+mov	 	%r10, %r9
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -48(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -56(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -64(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -72(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -80(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -88(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -96(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -104(%rbp) 
+
+mov		-16(%rbp), %r10
+mov	 	%r10, -112(%rbp) 
 
 mov 		$0, %rax 
 

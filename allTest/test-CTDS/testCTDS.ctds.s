@@ -241,6 +241,11 @@ movq 	$1, -112(%rbp)
 
 movq 	$1, -120(%rbp)
 
+mov		-112(%rbp), %r10 
+mov		-120(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -120(%rbp)
+
 jmp 		.endForL4
 
 .beginForL5: 
@@ -253,6 +258,8 @@ mov		%r10, -128(%rbp)
 mov		-128(%rbp), %r10
 mov		%r10, -40(%rbp)
 
+.endForL4: 
+
 mov		-120(%rbp), %r10 
 mov		-112(%rbp), %r11 
 add		%r10, %r11 
@@ -261,12 +268,18 @@ mov		%r11, -120(%rbp)
 mov		-120(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-.endForL4: 
-
 mov		-120(%rbp), %r10
 cmp 		-8(%rbp), %r10
 
-jle 		.beginForL5
+jl 		.beginForL5
+
+mov		-112(%rbp), %r10 
+mov		-120(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -120(%rbp)
+
+mov		-120(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 mov		-40(%rbp), %rax
 leave
@@ -1172,7 +1185,7 @@ cmp 		-88(%rbp), %r10
 
 jne 		.endWhileL32
 
-movq 	$1, -104(%rbp)
+movq 	$0, -104(%rbp)
 
 mov		-8(%rbp), %rax
 cmp		-104(%rbp), %rax

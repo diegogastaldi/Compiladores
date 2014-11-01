@@ -413,15 +413,15 @@ public class genAssemblyCode {
 	public static void paramMethod(Instr instr) {
 		/* Guarda el parametro en r10 */
 		if (instr.getOperand1() instanceof String ) 
-			result += "mov		" + instr.getOperand1() + ", %r10\n";
+			result += "mov		" + instr.getOperand1() + ", %rbx\n";
 		else
-			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
+			result += "mov		" + instr.getOperand1() + "(%rbp), %rbx\n";
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
 		if (instr.getResult() == null)  {
 			Integer numOperand = (Integer)instr.getOperand2();			
-			result += "mov	 	%r10, " + paramRegister.registersInt [numOperand] + "\n";
+			result += "mov	 	%rbx, " + paramRegister.registersInt [numOperand] + "\n";
 		}	else 
-			result += "mov	 	%r10, " + instr.getResult() + "(%rbp) \n";			
+			result += "mov	 	%rbx, " + instr.getResult() + "(%rbp) \n";			
 	}
 
 	/* Indica la cantidad de xmm registros usados en la llamada a procedimiento */
@@ -577,8 +577,8 @@ public class genAssemblyCode {
 			if ((Boolean)instr.getOperand2()) 
 				result += "cvtps2pd	" + paramRegister.registersFloat[operand] + ", " + paramRegister.registersFloat[operand] + " \n";
 		} else {
-			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";			
-			result += "mov		%r10, " + operand + "(%rbp)\n";
+			result += "mov		" + instr.getOperand1() + "(%rbp), %rbx\n";			
+			result += "mov		%rbx, " + operand + "(%rbp)\n";
 		}
 	}
 

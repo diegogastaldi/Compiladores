@@ -125,7 +125,7 @@ int int2bin(int d){
    i=0;
 
    while (true){
-      if(d>1){               
+      if(d>0){               
         aux = d % 2;   // toma el ultimo digito
         { int j;
           j=0;   

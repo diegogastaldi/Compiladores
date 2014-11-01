@@ -16,4 +16,3 @@ Nota:
 	DOCUMENTACION
 
 problema con mas de 6 parametros
-testCTD-s -> un metodo tiene codigo que no se alcanza. preguntar.

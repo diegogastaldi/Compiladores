@@ -13,7 +13,7 @@ void main() {
 	int x;
 	x = met();
 	x = x + 2;
-	externinvk("printf", int, "%d", x);
+	externinvk("printf", int, "%d %d %d %d %d %d %d %d %d %d %d %d  %d %d", x, x, x, x, x, x, x, x, x, x, x, x,  x, x);
 	return;
 }
 

@@ -1,6 +1,7 @@
 class testMethod {
 
 	float method1(float a, float b) {
+		externinvk("printf", int, "metodo con dos float como parametros \n");
 		externinvk("printf", int, "3.3 = %f\n", a);
 		externinvk("printf", int, "4.4 = %f\n", b);		
 
@@ -8,6 +9,7 @@ class testMethod {
 	}
 
 	int method2(int a, int b) {
+		externinvk("printf", int, "metodo con dos int como parametros \n");	
 		externinvk("printf", int, "3 = %d\n", a);
 		externinvk("printf", int, "4 = %d\n", b);		
 
@@ -15,6 +17,7 @@ class testMethod {
 	}
 
 	float method3(float a, int b) {
+		externinvk("printf", int, "metodo con un int y un float como parametros \n");	
 		externinvk("printf", int, "3.3 = %f\n", a);
 		externinvk("printf", int, "4 = %d\n", b);		
 
@@ -22,6 +25,7 @@ class testMethod {
 	}
 
 	float method4(float a, float b, float c, float d, float e ,float f, float g, float h, float i, float j, float k, float l, float m) {
+		externinvk("printf", int, "metodo con trece float como parametros \n");	
 		externinvk("printf", int, "3.3 = %f\n", a);
 		externinvk("printf", int, "4.4 = %f\n", b);		
 		externinvk("printf", int, "5.5 = %f\n", c);
@@ -39,6 +43,7 @@ class testMethod {
 	}
 
 	int method5(int a, int b, int c, int d, int e ,int f, int g, int h, int i, int j, int k, int l, int m) {
+		externinvk("printf", int, "metodo con trece int como parametros \n");	
 		externinvk("printf", int, "3 = %d\n", a);
 		externinvk("printf", int, "4 = %d\n", b);		
 		externinvk("printf", int, "5 = %d\n", c);
@@ -56,6 +61,7 @@ class testMethod {
 	}
 
 	float method6(float a, int b, float c, int d, float e ,int f, float g, int h, float i, int j, float k, int l, float m) {
+		externinvk("printf", int, "metodo con trece parametros intercalados entre floats en ints \n");	
 		externinvk("printf", int, "3.3 = %f\n", a);
 		externinvk("printf", int, "4 = %d\n", b);		
 		externinvk("printf", int, "5.5 = %f\n", c);
