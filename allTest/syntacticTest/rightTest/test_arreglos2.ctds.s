@@ -24,8 +24,9 @@
 .type	pruArreglos, @function 
 pruArreglos: 
 enter   $(8 * 14), $0 
-mov 		%rdi, -8(%rbp) 
-movss 		%xmm0, -16(%rbp) 
+
+mov 		%rdi, -16(%rbp) 
+movss 		%xmm0, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -74,6 +75,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 28), $0 
+
 
 mov 		$0, %r10 
 mov 		$0, %edx 

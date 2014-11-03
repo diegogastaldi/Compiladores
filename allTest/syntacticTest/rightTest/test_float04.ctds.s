@@ -46,8 +46,9 @@
 .type	potencia, @function 
 potencia: 
 enter   $(8 * 32), $0 
-movss 		%xmm0, -8(%rbp) 
-mov 		%rdi, -16(%rbp) 
+
+movss 		%xmm0, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -136,14 +137,14 @@ cmp 		-152(%rbp), %r10
 
 jne 		.endWhileL2
 
-mov	.FL7(%rip), %r10
-mov	%r10, -168(%rbp)
-
-movss		-16(%rbp), %xmm0 
-mulss		-168(%rbp), %xmm0 
-movss		%xmm0, -176(%rbp) 
-
 movss		-48(%rbp), %xmm0 
+mulss		-16(%rbp), %xmm0 
+movss		%xmm0, -168(%rbp) 
+
+mov	.FL7(%rip), %r10
+mov	%r10, -176(%rbp)
+
+movss		-168(%rbp), %xmm0 
 mulss		-176(%rbp), %xmm0 
 movss		%xmm0, -184(%rbp) 
 
@@ -184,8 +185,8 @@ jne 		.falseCondL8
 mov	.FL9(%rip), %r10
 mov	%r10, -232(%rbp)
 
-movss		-232(%rbp), %xmm0 
-divss		-48(%rbp), %xmm0 
+movss		-48(%rbp), %xmm0 
+divss		-232(%rbp), %xmm0 
 movss		%xmm0, -240(%rbp) 
 
 movss		-240(%rbp), %xmm0
@@ -217,31 +218,32 @@ ret
 .globl	multRepeat
 .type	multRepeat, @function 
 multRepeat: 
-enter   $(8 * 11), $0 
-movss 		%xmm0, -8(%rbp) 
-movss 		%xmm1, -16(%rbp) 
+enter   $(8 * 12), $0 
+
+movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
 
-movss		-16(%rbp), %xmm0 
+movss		-8(%rbp), %xmm0 
 mulss		-8(%rbp), %xmm0 
 movss		%xmm0, -56(%rbp) 
 
-movss		-16(%rbp), %xmm0 
-mulss		-56(%rbp), %xmm0 
+movss		-56(%rbp), %xmm0 
+mulss		-16(%rbp), %xmm0 
 movss		%xmm0, -64(%rbp) 
 
-movss		-16(%rbp), %xmm0 
-mulss		-64(%rbp), %xmm0 
+movss		-64(%rbp), %xmm0 
+mulss		-16(%rbp), %xmm0 
 movss		%xmm0, -72(%rbp) 
 
-movss		-8(%rbp), %xmm0 
-mulss		-72(%rbp), %xmm0 
+movss		-72(%rbp), %xmm0 
+mulss		-16(%rbp), %xmm0 
 movss		%xmm0, -80(%rbp) 
 
-movss		-8(%rbp), %xmm0 
-mulss		-80(%rbp), %xmm0 
+movss		-80(%rbp), %xmm0 
+mulss		-8(%rbp), %xmm0 
 movss		%xmm0, -88(%rbp) 
 
 mov		-88(%rbp), %r10
@@ -255,6 +257,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 14), $0 
+
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

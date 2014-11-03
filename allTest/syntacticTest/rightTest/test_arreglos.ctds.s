@@ -16,6 +16,7 @@
 main: 
 enter   $(8 * 6), $0 
 
+
 mov		$0, %r10
 mov		%r10, B(%rip)
 

@@ -8,7 +8,8 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(8 * 4), $0 
+enter   $(8 * 2), $0 
+
 
 mov	.FL0(%rip), %r10
 mov	%r10, -16(%rbp)
@@ -20,7 +21,8 @@ ret
 .globl	main2
 .type	main2, @function 
 main2: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
+
 movss 		%xmm0, -8(%rbp) 
 
 mov 		$0, %rax 
@@ -42,7 +44,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 3), $0 
+enter   $(8 * 2), $0 
+
 
 mov		$0, %r10
 mov		%r10, y(%rip)

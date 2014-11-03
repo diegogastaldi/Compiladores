@@ -12,9 +12,10 @@
 .globl	pruArreglos
 .type	pruArreglos, @function 
 pruArreglos: 
-enter   $(8 * 15), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -16(%rbp) 
+enter   $(8 * 16), $0 
+
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -45,6 +46,11 @@ movq 	$5, -96(%rbp)
 
 movq 	$10, -104(%rbp)
 
+mov		-88(%rbp), %r10 
+mov		-96(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -96(%rbp)
+
 jmp 		.endForL0
 
 .beginForL1: 
@@ -61,6 +67,8 @@ mov 		-32(%rbp), %edx
 cltq 
 mov 		%r10, A(, %rdx, 8) 
 
+.endForL0: 
+
 mov		-96(%rbp), %r10 
 mov		-88(%rbp), %r11 
 add		%r10, %r11 
@@ -69,17 +77,24 @@ mov		%r11, -96(%rbp)
 mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-.endForL0: 
-
 mov		-96(%rbp), %r10
 cmp 		-104(%rbp), %r10
 
-jle 		.beginForL1
+jl 		.beginForL1
+
+mov		-88(%rbp), %r10 
+mov		-96(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -96(%rbp)
+
+mov		-96(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
+
 
 mov 		$0, %r10 
 mov 		$0, %edx 

@@ -8,6 +8,7 @@
 while1: 
 enter   $(8 * 10), $0 
 
+
 movq		$0, %r10
 mov		%r10, -8(%rbp)
 
@@ -71,6 +72,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 2), $0 
+
 
 mov 		$0, %rax 
 

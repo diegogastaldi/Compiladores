@@ -1,20 +1,14 @@
-.FL15: 
-		.float 2.0 
-
-.FL14: 
-		.float 1.0 
-
 .FL13: 
 		.float 2.0 
 
-.FL10: 
+.FL12: 
+		.float 1.0 
+
+.FL11: 
+		.float 2.0 
+
+.FL8: 
 		.float 4.0 
-
-.FL4: 
-		.float 0 
-
-.FL3: 
-		.float 1 
 
 .FL2: 
 		.float 4.0 
@@ -28,6 +22,7 @@
 .type	prueba, @function 
 prueba: 
 enter   $(8 * 28), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -70,15 +65,15 @@ mov	%r10, -96(%rbp)
 
 movss		-24(%rbp), %xmm0 
 ucomiss		-96(%rbp), %xmm0 
-jp	.L5 
+jp	.L3 
 movss		-24(%rbp), %xmm0 
 ucomiss		-96(%rbp), %xmm0 
-jne	.L5 
-mov		.FL3(%rip), %rax 
-jmp	.L6 
-.L5: 
-mov	.FL4, %rax 
-.L6: 
+jne	.L3 
+movq		$1, %rax 
+jmp	.L4 
+.L3: 
+movq		$0, %rax 
+.L4: 
 mov	%rax, -104(%rbp) 
 
 movq 	$1, -112(%rbp)
@@ -86,15 +81,15 @@ movq 	$1, -112(%rbp)
 mov		-112(%rbp), %r10
 cmp 		-104(%rbp), %r10
 
-jne 		.falseCondL7
+jne 		.falseCondL5
 
-.beginWhileL9: 
+.beginWhileL7: 
 
-mov	.FL10(%rip), %r10
+mov	.FL8(%rip), %r10
 mov	%r10, -120(%rbp)
 
-movss		-24(%rbp), %xmm0 
-ucomiss		-120(%rbp), %xmm0 
+movss		-120(%rbp), %xmm0 
+ucomiss		-24(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
 mov 		%rax, -128(%rbp) 
@@ -104,9 +99,9 @@ movq 	$1, -136(%rbp)
 mov		-136(%rbp), %r10
 cmp 		-128(%rbp), %r10
 
-jne 		.endWhileL8
+jne 		.endWhileL6
 
-.beginWhileL12: 
+.beginWhileL10: 
 
 movq 	$4, -144(%rbp)
 
@@ -121,7 +116,7 @@ movq 	$1, -160(%rbp)
 mov		-160(%rbp), %r10
 cmp 		-152(%rbp), %r10
 
-jne 		.endWhileL11
+jne 		.endWhileL9
 
 movq 	$1, -168(%rbp)
 
@@ -133,7 +128,7 @@ mov		%r11, -176(%rbp)
 mov		-176(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-mov	.FL13(%rip), %r10
+mov	.FL11(%rip), %r10
 mov	%r10, -184(%rbp)
 
 movss		-24(%rbp), %xmm0 
@@ -143,11 +138,11 @@ movss		%xmm0, -192(%rbp)
 mov		-192(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-jmp 		.beginWhileL12
+jmp 		.beginWhileL10
 
-.endWhileL11: 
+.endWhileL9: 
 
-mov	.FL14(%rip), %r10
+mov	.FL12(%rip), %r10
 mov	%r10, -200(%rbp)
 
 movss		-24(%rbp), %xmm0 
@@ -157,21 +152,21 @@ movss		%xmm0, -208(%rbp)
 mov		-208(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov	.FL15(%rip), %r10
+mov	.FL13(%rip), %r10
 mov	%r10, -216(%rbp)
 
-movss		-32(%rbp), %xmm0 
-divss		-216(%rbp), %xmm0 
+movss		-216(%rbp), %xmm0 
+divss		-32(%rbp), %xmm0 
 movss		%xmm0, -224(%rbp) 
 
 mov		-224(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-jmp 		.beginWhileL9
+jmp 		.beginWhileL7
 
-.endWhileL8: 
+.endWhileL6: 
 
-.falseCondL7: 
+.falseCondL5: 
 
 .falseCondL0: 
 
@@ -183,6 +178,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 4), $0 
+
 
 movq 	$6, -16(%rbp)
 

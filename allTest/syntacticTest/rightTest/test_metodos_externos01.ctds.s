@@ -11,7 +11,8 @@
 .globl	alo
 .type	alo, @function 
 alo: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
@@ -32,6 +33,7 @@ ret
 .type	alo_2, @function 
 alo_2: 
 enter   $(8 * 8), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
@@ -70,7 +72,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
+
 
 mov		$0, %r10
 mov		%r10, c(%rip)
@@ -82,20 +85,20 @@ mov 		$0, %rax
 
 call 	printf
 
-movq 	$5, -24(%rbp)
+movq 	$5, -16(%rbp)
 
-mov		-24(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	alo
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -24(%rbp) 
 
 mov		$.SL1, %r10
 mov	 	%r10, %rdi
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 

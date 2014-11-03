@@ -578,7 +578,7 @@ mov		%r10, -40(%rbp)
 mov		-40(%rbp), %rax 
 cltd
 idivq	-16(%rbp)
-movl		%edx, -48(%rbp)
+mov		%rdx, -48(%rbp)
 
 mov		-48(%rbp), %r10
 mov		%r10, i1(%rip)
@@ -625,7 +625,7 @@ mov		%r10, -40(%rbp)
 mov		-40(%rbp), %rax 
 cltd
 idivq	-16(%rbp)
-movl		%edx, -48(%rbp)
+mov		%rdx, -48(%rbp)
 
 mov		-48(%rbp), %r10
 mov		%r10, i1(%rip)

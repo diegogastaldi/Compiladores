@@ -1,8 +1,5 @@
-.FL3: 
-		.float 10.2 
-
 .FL2: 
-		.float 2.0 
+		.float 10.2 
 
 .text
 
@@ -11,7 +8,8 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
@@ -29,8 +27,9 @@ ret
 .type	resto, @function 
 resto: 
 enter   $(8 * 14), $0 
-mov 		%rdi, -8(%rbp) 
-movss 		%xmm0, -16(%rbp) 
+
+mov 		%rdi, -16(%rbp) 
+movss 		%xmm0, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -59,9 +58,10 @@ jne 		.falseCondL0
 
 movq 	$3, -96(%rbp)
 
-movss		-16(%rbp), %xmm0 
-divss		-96(%rbp), %xmm0 
-movss		%xmm0, -104(%rbp) 
+mov		-16(%rbp), %rax 
+cltd
+idivq	-96(%rbp) 
+mov		%rax, -104(%rbp)
 
 mov		-104(%rbp), %r10
 mov		%r10, -32(%rbp)
@@ -70,15 +70,14 @@ jmp 		.endIfL1
 
 .falseCondL0: 
 
-mov	.FL2(%rip), %r10
-mov	%r10, -112(%rbp)
+movq 	$2, -112(%rbp)
 
 mov		-112(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .endIfL1: 
 
-movss		-32(%rbp), %xmm0
+mov		-32(%rbp), %rax
 leave
 ret
 
@@ -86,6 +85,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 8), $0 
+
 
 mov		$0, %r10
 mov		%r10, res(%rip)
@@ -105,7 +105,7 @@ mov 		$0, %rax
 call 	inc
 mov 	%rax, -40(%rbp) 
 
-mov	.FL3(%rip), %r10
+mov	.FL2(%rip), %r10
 mov	%r10, -48(%rbp)
 
 mov		-40(%rbp), %r10
@@ -116,7 +116,7 @@ movss		-48(%rbp), %xmm0
 mov 		$1, %rax 
 
 call 	resto
-movss 	%xmm0, -56(%rbp) 
+mov 	%rax, -56(%rbp) 
 
 movq 	$0, -64(%rbp)
 

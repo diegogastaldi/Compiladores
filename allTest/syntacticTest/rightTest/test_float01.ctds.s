@@ -21,9 +21,10 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 27), $0 
-movss 		%xmm0, -8(%rbp) 
-mov 		%rdi, -16(%rbp) 
+enter   $(8 * 28), $0 
+
+movss 		%xmm0, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -24(%rbp)
@@ -133,8 +134,8 @@ jne 		.falseCondL4
 mov	.FL5(%rip), %r10
 mov	%r10, -192(%rbp)
 
-movss		-192(%rbp), %xmm0 
-divss		-48(%rbp), %xmm0 
+movss		-48(%rbp), %xmm0 
+divss		-192(%rbp), %xmm0 
 movss		%xmm0, -200(%rbp) 
 
 movss		-200(%rbp), %xmm0
@@ -166,7 +167,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
+
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

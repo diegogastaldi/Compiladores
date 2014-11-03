@@ -3,7 +3,8 @@
 .globl	pruMult
 .type	pruMult, @function 
 pruMult: 
-enter   $(8 * 11), $0 
+enter   $(8 * 12), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -24,18 +25,18 @@ mov		%r10, -32(%rbp)
 
 movq 	$1000, -64(%rbp)
 
-mov		-8(%rbp), %r10 
-mov		-32(%rbp), %r11 
+mov		-24(%rbp), %r10 
+mov		-64(%rbp), %r11 
 imul		%r11, %r10 
 mov		%r10, -72(%rbp)
 
-mov		-64(%rbp), %r10 
-mov		-72(%rbp), %r11 
+mov		-72(%rbp), %r10 
+mov		-8(%rbp), %r11 
 imul		%r11, %r10 
 mov		%r10, -80(%rbp)
 
-mov		-24(%rbp), %r10 
-mov		-80(%rbp), %r11 
+mov		-80(%rbp), %r10 
+mov		-32(%rbp), %r11 
 imul		%r11, %r10 
 mov		%r10, -88(%rbp)
 
@@ -47,6 +48,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 4), $0 
+
 
 movq 	$2, -16(%rbp)
 

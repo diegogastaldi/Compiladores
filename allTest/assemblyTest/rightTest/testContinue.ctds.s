@@ -12,7 +12,8 @@
 .globl	continue1
 .type	continue1, @function 
 continue1: 
-enter   $(8 * 12), $0 
+enter   $(8 * 10), $0 
+
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -83,7 +84,8 @@ ret
 .globl	continue2
 .type	continue2, @function 
 continue2: 
-enter   $(8 * 20), $0 
+enter   $(8 * 18), $0 
+
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -204,6 +206,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 2), $0 
+
 
 mov 		$0, %rax 
 

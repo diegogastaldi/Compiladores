@@ -1007,19 +1007,19 @@ movss		-152(%rbp), %xmm6
 movss		-160(%rbp), %xmm7
 
 mov		-168(%rbp), %rbx
-mov		%rbx, 0(%rbp)
+mov		%rbx, 0(%rsp)
 
 mov		-176(%rbp), %rbx
-mov		%rbx, 8(%rbp)
+mov		%rbx, 8(%rsp)
 
 mov		-184(%rbp), %rbx
-mov		%rbx, 16(%rbp)
+mov		%rbx, 16(%rsp)
 
 mov		-192(%rbp), %rbx
-mov		%rbx, 24(%rbp)
+mov		%rbx, 24(%rsp)
 
 mov		-200(%rbp), %rbx
-mov		%rbx, 32(%rbp)
+mov		%rbx, 32(%rsp)
 
 mov 		$13, %rax 
 

@@ -9,6 +9,7 @@
 main: 
 enter   $(8 * 2), $0 
 
+
 mov		$0, %r10
 mov		%r10, a(%rip)
 

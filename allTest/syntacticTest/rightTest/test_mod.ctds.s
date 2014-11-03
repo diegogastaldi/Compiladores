@@ -3,7 +3,8 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
+
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -15,10 +16,10 @@ mov		%r10, -16(%rbp)
 
 movq 	$7, -32(%rbp)
 
-mov		-32(%rbp), %rax 
+mov		-16(%rbp), %rax 
 cltd
-idivq	-16(%rbp)
-mov		%rax, -40(%rbp)
+idivq	-32(%rbp)
+mov		%rdx, -40(%rbp)
 
 mov		-40(%rbp), %rax
 leave
@@ -27,7 +28,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 2), $0 
+
 
 mov 		$0, %rax 
 

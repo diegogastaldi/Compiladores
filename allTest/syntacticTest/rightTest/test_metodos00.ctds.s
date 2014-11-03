@@ -5,7 +5,8 @@
 .globl	alo
 .type	alo, @function 
 alo: 
-enter   $(8 * 5), $0 
+enter   $(8 * 6), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
@@ -25,7 +26,8 @@ ret
 .globl	alo2
 .type	alo2, @function 
 alo2: 
-enter   $(8 * 7), $0 
+enter   $(8 * 8), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq 	$1, -32(%rbp)
@@ -57,6 +59,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 2), $0 
+
 
 mov		$0, %r10
 mov		%r10, c(%rip)

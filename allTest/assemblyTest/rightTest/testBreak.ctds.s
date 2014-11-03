@@ -12,7 +12,8 @@
 .globl	break1
 .type	break1, @function 
 break1: 
-enter   $(8 * 14), $0 
+enter   $(8 * 12), $0 
+
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -99,7 +100,8 @@ ret
 .globl	break2
 .type	break2, @function 
 break2: 
-enter   $(8 * 22), $0 
+enter   $(8 * 20), $0 
+
 
 movq		$0, %r10
 mov		%r10, -8(%rbp)
@@ -236,6 +238,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 2), $0 
+
 
 mov 		$0, %rax 
 

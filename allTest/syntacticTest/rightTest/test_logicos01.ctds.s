@@ -4,6 +4,7 @@
 .type	pruebaLogica, @function 
 pruebaLogica: 
 enter   $(8 * 12), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -70,6 +71,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 4), $0 
+
 
 movq 	$0, -16(%rbp)
 

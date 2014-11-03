@@ -25,7 +25,8 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 46), $0 
+enter   $(8 * 42), $0 
+
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -201,21 +202,21 @@ mov 		$0, %rax
 
 call 	printf
 
-movq 	$3, -232(%rbp)
+movq 	$3, -224(%rbp)
 
-movq 	$1, -240(%rbp)
+movq 	$1, -232(%rbp)
 
-mov		-240(%rbp), %r10 
-mov		-232(%rbp), %r11 
+mov		-232(%rbp), %r10 
+mov		-224(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -248(%rbp)
+mov		%r11, -240(%rbp)
 
-movl		-248(%rbp), %edx 
+movl		-240(%rbp), %edx 
 cltq 
 mov 		-88(%rbp,%rdx,8) , %r11
-mov 		%r11, -256(%rbp) 
+mov 		%r11, -248(%rbp) 
 
-mov		-256(%rbp), %r10
+mov		-248(%rbp), %r10
 mov		%r10, -176(%rbp)
 
 mov		$.SL1, %r10
@@ -228,19 +229,19 @@ mov 		$0, %rax
 
 call 	printf
 
-movq 	$1, -272(%rbp)
+movq 	$1, -256(%rbp)
 
-mov		-272(%rbp), %r10 
+mov		-256(%rbp), %r10 
 mov		-176(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -280(%rbp)
+mov		%r11, -264(%rbp)
 
-movl		-280(%rbp), %edx 
+movl		-264(%rbp), %edx 
 cltq 
 mov 		-88(%rbp,%rdx,8) , %r11
-mov 		%r11, -288(%rbp) 
+mov 		%r11, -272(%rbp) 
 
-mov		-288(%rbp), %r10
+mov		-272(%rbp), %r10
 mov		%r10, -176(%rbp)
 
 mov		$.SL2, %r10
@@ -254,23 +255,23 @@ mov 		$0, %rax
 call 	printf
 
 mov	.FL3(%rip), %r10
-mov	%r10, -304(%rbp)
+mov	%r10, -280(%rbp)
 
-movq 	$2, -312(%rbp)
+movq 	$2, -288(%rbp)
 
-mov 		-304(%rbp), %r10 
-movl		-312(%rbp), %edx 
+mov 		-280(%rbp), %r10 
+movl		-288(%rbp), %edx 
 cltq 
 mov 		%r10, -168(%rbp, %rdx, 8) 
 
-movq 	$2, -320(%rbp)
+movq 	$2, -296(%rbp)
 
-movl		-320(%rbp), %edx 
+movl		-296(%rbp), %edx 
 cltq 
 mov 		-168(%rbp,%rdx,8) , %r11
-mov 		%r11, -328(%rbp) 
+mov 		%r11, -304(%rbp) 
 
-mov		-328(%rbp), %r10
+mov		-304(%rbp), %r10
 mov		%r10, -184(%rbp)
 
 mov		$.SL4, %r10
@@ -283,19 +284,19 @@ mov 		$1, %rax
 
 call 	printf
 
-movq 	$1, -344(%rbp)
+movq 	$1, -312(%rbp)
 
-mov		-344(%rbp), %r10 
+mov		-312(%rbp), %r10 
 mov		-176(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -352(%rbp)
+mov		%r11, -320(%rbp)
 
-movl		-352(%rbp), %edx 
+movl		-320(%rbp), %edx 
 cltq 
 mov 		-168(%rbp,%rdx,8) , %r11
-mov 		%r11, -360(%rbp) 
+mov 		%r11, -328(%rbp) 
 
-mov		-360(%rbp), %r10
+mov		-328(%rbp), %r10
 mov		%r10, -184(%rbp)
 
 mov		$.SL5, %r10

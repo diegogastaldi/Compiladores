@@ -61,7 +61,8 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 78), $0 
+enter   $(8 * 66), $0 
+
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)
@@ -234,53 +235,53 @@ mov 		$0, %rax
 
 call 	printf
 
-movq 	$3, -232(%rbp)
+movq 	$3, -224(%rbp)
 
-mov		-232(%rbp), %r10
+mov		-224(%rbp), %r10
 mov		%r10, -176(%rbp)
 
-movq 	$2, -240(%rbp)
+movq 	$2, -232(%rbp)
 
-mov 		-240(%rbp), %r10 
+mov 		-232(%rbp), %r10 
 movl		-176(%rbp), %edx 
 cltq 
 mov 		%r10, -88(%rbp, %rdx, 8) 
 
-movq 	$3, -248(%rbp)
+movq 	$3, -240(%rbp)
 
-movl		-248(%rbp), %edx 
+movl		-240(%rbp), %edx 
 cltq 
 mov 		-88(%rbp,%rdx,8) , %r11
-mov 		%r11, -256(%rbp) 
+mov 		%r11, -248(%rbp) 
 
 mov		$.SL1, %r10
 mov	 	%r10, %rdi
 
-mov		-256(%rbp), %r10
+mov		-248(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-movq 	$0, -272(%rbp)
+movq 	$0, -256(%rbp)
 
 mov 		-176(%rbp), %r10 
-movl		-272(%rbp), %edx 
+movl		-256(%rbp), %edx 
 cltq 
 mov 		%r10, -88(%rbp, %rdx, 8) 
 
-movq 	$0, -280(%rbp)
+movq 	$0, -264(%rbp)
 
-movl		-280(%rbp), %edx 
+movl		-264(%rbp), %edx 
 cltq 
 mov 		-88(%rbp,%rdx,8) , %r11
-mov 		%r11, -288(%rbp) 
+mov 		%r11, -272(%rbp) 
 
 mov		$.SL2, %r10
 mov	 	%r10, %rdi
 
-mov		-288(%rbp), %r10
+mov		-272(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
@@ -288,23 +289,48 @@ mov 		$0, %rax
 call 	printf
 
 mov	.FL3(%rip), %r10
-mov	%r10, -304(%rbp)
+mov	%r10, -280(%rbp)
 
-movq 	$2, -312(%rbp)
+movq 	$2, -288(%rbp)
 
-mov 		-304(%rbp), %r10 
-movl		-312(%rbp), %edx 
+mov 		-280(%rbp), %r10 
+movl		-288(%rbp), %edx 
 cltq 
 mov 		%r10, -168(%rbp, %rdx, 8) 
 
-movq 	$2, -320(%rbp)
+movq 	$2, -296(%rbp)
+
+movl		-296(%rbp), %edx 
+cltq 
+mov 		-168(%rbp,%rdx,8) , %r11
+mov 		%r11, -304(%rbp) 
+
+mov		$.SL4, %r10
+mov	 	%r10, %rdi
+
+movss		-304(%rbp), %xmm0
+cvtps2pd	%xmm0, %xmm0 
+
+mov 		$1, %rax 
+
+call 	printf
+
+mov	.FL5(%rip), %r10
+mov	%r10, -312(%rbp)
+
+mov 		-312(%rbp), %r10 
+movl		-176(%rbp), %edx 
+cltq 
+mov 		%r10, -168(%rbp, %rdx, 8) 
+
+movq 	$3, -320(%rbp)
 
 movl		-320(%rbp), %edx 
 cltq 
 mov 		-168(%rbp,%rdx,8) , %r11
 mov 		%r11, -328(%rbp) 
 
-mov		$.SL4, %r10
+mov		$.SL6, %r10
 mov	 	%r10, %rdi
 
 movss		-328(%rbp), %xmm0
@@ -314,22 +340,27 @@ mov 		$1, %rax
 
 call 	printf
 
-mov	.FL5(%rip), %r10
-mov	%r10, -344(%rbp)
+mov	.FL7(%rip), %r10
+mov	%r10, -336(%rbp)
 
-mov 		-344(%rbp), %r10 
-movl		-176(%rbp), %edx 
+mov		-336(%rbp), %r10
+mov		%r10, -184(%rbp)
+
+movq 	$0, -344(%rbp)
+
+mov 		-184(%rbp), %r10 
+movl		-344(%rbp), %edx 
 cltq 
 mov 		%r10, -168(%rbp, %rdx, 8) 
 
-movq 	$3, -352(%rbp)
+movq 	$0, -352(%rbp)
 
 movl		-352(%rbp), %edx 
 cltq 
 mov 		-168(%rbp,%rdx,8) , %r11
 mov 		%r11, -360(%rbp) 
 
-mov		$.SL6, %r10
+mov		$.SL8, %r10
 mov	 	%r10, %rdi
 
 movss		-360(%rbp), %xmm0
@@ -339,53 +370,71 @@ mov 		$1, %rax
 
 call 	printf
 
-mov	.FL7(%rip), %r10
-mov	%r10, -376(%rbp)
+movq 	$3, -368(%rbp)
 
-mov		-376(%rbp), %r10
-mov		%r10, -184(%rbp)
+movq 	$2, -376(%rbp)
 
-movq 	$0, -384(%rbp)
-
-mov 		-184(%rbp), %r10 
-movl		-384(%rbp), %edx 
+mov 		-368(%rbp), %r10 
+mov 		-376(%rbp), %edx 
 cltq 
-mov 		%r10, -168(%rbp, %rdx, 8) 
+mov 		%r10, i(, %rdx, 8) 
 
-movq 	$0, -392(%rbp)
+movq 	$2, -384(%rbp)
 
-movl		-392(%rbp), %edx 
+mov 		-384(%rbp), %edx 
 cltq 
-mov 		-168(%rbp,%rdx,8) , %r11
-mov 		%r11, -400(%rbp) 
+mov 		i(,%rdx,8) , %r11
+mov 		%r11, -392(%rbp) 
 
-mov		$.SL8, %r10
+mov		$.SL9, %r10
 mov	 	%r10, %rdi
 
-movss		-400(%rbp), %xmm0
-cvtps2pd	%xmm0, %xmm0 
+mov		-392(%rbp), %r10
+mov	 	%r10, %rsi
 
-mov 		$1, %rax 
+mov 		$0, %rax 
 
 call 	printf
 
-movq 	$3, -416(%rbp)
+movq 	$2, -400(%rbp)
 
-movq 	$2, -424(%rbp)
+mov 		-400(%rbp), %r10 
+mov 		-176(%rbp), %edx 
+cltq 
+mov 		%r10, i(, %rdx, 8) 
 
-mov 		-416(%rbp), %r10 
+movq 	$3, -408(%rbp)
+
+mov 		-408(%rbp), %edx 
+cltq 
+mov 		i(,%rdx,8) , %r11
+mov 		%r11, -416(%rbp) 
+
+mov		$.SL10, %r10
+mov	 	%r10, %rdi
+
+mov		-416(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+movq 	$0, -424(%rbp)
+
+mov 		-176(%rbp), %r10 
 mov 		-424(%rbp), %edx 
 cltq 
 mov 		%r10, i(, %rdx, 8) 
 
-movq 	$2, -432(%rbp)
+movq 	$0, -432(%rbp)
 
 mov 		-432(%rbp), %edx 
 cltq 
 mov 		i(,%rdx,8) , %r11
 mov 		%r11, -440(%rbp) 
 
-mov		$.SL9, %r10
+mov		$.SL11, %r10
 mov	 	%r10, %rdi
 
 mov		-440(%rbp), %r10
@@ -395,75 +444,27 @@ mov 		$0, %rax
 
 call 	printf
 
+mov	.FL12(%rip), %r10
+mov	%r10, -448(%rbp)
+
 movq 	$2, -456(%rbp)
 
-mov 		-456(%rbp), %r10 
-mov 		-176(%rbp), %edx 
-cltq 
-mov 		%r10, i(, %rdx, 8) 
-
-movq 	$3, -464(%rbp)
-
-mov 		-464(%rbp), %edx 
-cltq 
-mov 		i(,%rdx,8) , %r11
-mov 		%r11, -472(%rbp) 
-
-mov		$.SL10, %r10
-mov	 	%r10, %rdi
-
-mov		-472(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-movq 	$0, -488(%rbp)
-
-mov 		-176(%rbp), %r10 
-mov 		-488(%rbp), %edx 
-cltq 
-mov 		%r10, i(, %rdx, 8) 
-
-movq 	$0, -496(%rbp)
-
-mov 		-496(%rbp), %edx 
-cltq 
-mov 		i(,%rdx,8) , %r11
-mov 		%r11, -504(%rbp) 
-
-mov		$.SL11, %r10
-mov	 	%r10, %rdi
-
-mov		-504(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov	.FL12(%rip), %r10
-mov	%r10, -520(%rbp)
-
-movq 	$2, -528(%rbp)
-
-mov 		-520(%rbp), %r10 
-mov 		-528(%rbp), %edx 
+mov 		-448(%rbp), %r10 
+mov 		-456(%rbp), %edx 
 cltq 
 mov 		%r10, f(, %rdx, 8) 
 
-movq 	$2, -536(%rbp)
+movq 	$2, -464(%rbp)
 
-mov 		-536(%rbp), %edx 
+mov 		-464(%rbp), %edx 
 cltq 
 mov 		f(,%rdx,8) , %r11
-mov 		%r11, -544(%rbp) 
+mov 		%r11, -472(%rbp) 
 
 mov		$.SL13, %r10
 mov	 	%r10, %rdi
 
-movss		-544(%rbp), %xmm0
+movss		-472(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 
@@ -471,24 +472,24 @@ mov 		$1, %rax
 call 	printf
 
 mov	.FL14(%rip), %r10
-mov	%r10, -560(%rbp)
+mov	%r10, -480(%rbp)
 
-mov 		-560(%rbp), %r10 
+mov 		-480(%rbp), %r10 
 mov 		-176(%rbp), %edx 
 cltq 
 mov 		%r10, f(, %rdx, 8) 
 
-movq 	$3, -568(%rbp)
+movq 	$3, -488(%rbp)
 
-mov 		-568(%rbp), %edx 
+mov 		-488(%rbp), %edx 
 cltq 
 mov 		f(,%rdx,8) , %r11
-mov 		%r11, -576(%rbp) 
+mov 		%r11, -496(%rbp) 
 
 mov		$.SL15, %r10
 mov	 	%r10, %rdi
 
-movss		-576(%rbp), %xmm0
+movss		-496(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 
@@ -496,29 +497,29 @@ mov 		$1, %rax
 call 	printf
 
 mov	.FL16(%rip), %r10
-mov	%r10, -592(%rbp)
+mov	%r10, -504(%rbp)
 
-mov		-592(%rbp), %r10
+mov		-504(%rbp), %r10
 mov		%r10, -184(%rbp)
 
-movq 	$0, -600(%rbp)
+movq 	$0, -512(%rbp)
 
 mov 		-184(%rbp), %r10 
-mov 		-600(%rbp), %edx 
+mov 		-512(%rbp), %edx 
 cltq 
 mov 		%r10, f(, %rdx, 8) 
 
-movq 	$0, -608(%rbp)
+movq 	$0, -520(%rbp)
 
-mov 		-608(%rbp), %edx 
+mov 		-520(%rbp), %edx 
 cltq 
 mov 		f(,%rdx,8) , %r11
-mov 		%r11, -616(%rbp) 
+mov 		%r11, -528(%rbp) 
 
 mov		$.SL17, %r10
 mov	 	%r10, %rdi
 
-movss		-616(%rbp), %xmm0
+movss		-528(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 

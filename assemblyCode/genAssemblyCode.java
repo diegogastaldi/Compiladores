@@ -576,7 +576,7 @@ public class genAssemblyCode {
 				result += "cvtps2pd	" + paramRegister.registersFloat[operand] + ", " + paramRegister.registersFloat[operand] + " \n";
 		} else {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %rbx\n";			
-			result += "mov		%rbx, " + ((operand - paramRegister.registersFloat.length) * 8) + "(%rbp)\n";
+			result += "mov		%rbx, " + ((operand - paramRegister.registersFloat.length) * 8) + "(%rsp)\n";
 		}
 	}
 

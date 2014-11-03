@@ -6,15 +6,16 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 21), $0 
-movss 		%xmm0, -8(%rbp) 
-movss 		%xmm1, -16(%rbp) 
-movss 		%xmm2, -24(%rbp) 
-movss 		%xmm3, -32(%rbp) 
-movss 		%xmm4, -40(%rbp) 
-movss 		%xmm5, -48(%rbp) 
-movss 		%xmm6, -56(%rbp) 
-movss 		%xmm7, -64(%rbp) 
+enter   $(8 * 20), $0 
+
+movss 		%xmm0, -64(%rbp) 
+movss 		%xmm1, -56(%rbp) 
+movss 		%xmm2, -48(%rbp) 
+movss 		%xmm3, -40(%rbp) 
+movss 		%xmm4, -32(%rbp) 
+movss 		%xmm5, -24(%rbp) 
+movss 		%xmm6, -16(%rbp) 
+movss 		%xmm7, -8(%rbp) 
 
 mov	.FL0(%rip), %r10
 mov	%r10, -144(%rbp)
@@ -30,7 +31,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 7), $0 
+enter   $(8 * 6), $0 
+
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

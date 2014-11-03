@@ -7,6 +7,7 @@
 .type	neg, @function 
 neg: 
 enter   $(8 * 4), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 cmpq		$0, -8(%rbp) 
@@ -22,8 +23,9 @@ ret
 .type	and, @function 
 and: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -16(%rbp) 
+
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -8(%rbp) 
 
 cmpq		$0, -16(%rbp)
 je 		.L0
@@ -44,8 +46,9 @@ ret
 .type	or, @function 
 or: 
 enter   $(8 * 6), $0 
-mov 		%rdi, -8(%rbp) 
-mov 		%rsi, -16(%rbp) 
+
+mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -8(%rbp) 
 
 cmpq		$0, -16(%rbp)
 jne 		.L2
@@ -66,7 +69,8 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 14), $0 
+enter   $(8 * 12), $0 
+
 
 movq		$0, %r10
 mov		%r10, -16(%rbp)

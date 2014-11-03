@@ -4,6 +4,7 @@
 .type	id, @function 
 id: 
 enter   $(8 * 42), $0 
+
 mov 		%rdi, -8(%rbp) 
 
 movq		$0, %r10
@@ -206,29 +207,29 @@ jne 		.falseCondL16
 
 movq 	$1, -280(%rbp)
 
+mov		-280(%rbp), %r10 
+mov		-8(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -288(%rbp)
+
 mov		-32(%rbp), %r10 
 mov		-8(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -288(%rbp)
-
-mov		-288(%rbp), %r10 
-mov		-8(%rbp), %r11 
-sub		%r10, %r11 
-mov		%r11, -296(%rbp)
+mov		%r10, -296(%rbp)
 
 mov		-32(%rbp), %r10 
-mov		-296(%rbp), %r11 
+mov		-8(%rbp), %r11 
 imul		%r11, %r10 
 mov		%r10, -304(%rbp)
 
-mov		-280(%rbp), %r10 
-mov		-304(%rbp), %r11 
-add		%r10, %r11 
+mov		-304(%rbp), %r10 
+mov		-296(%rbp), %r11 
+sub		%r10, %r11 
 mov		%r11, -312(%rbp)
 
-mov		-312(%rbp), %r10 
-mov		-8(%rbp), %r11 
-sub		%r10, %r11 
+mov		-288(%rbp), %r10 
+mov		-312(%rbp), %r11 
+add		%r10, %r11 
 mov		%r11, -320(%rbp)
 
 mov		-320(%rbp), %r10
@@ -267,6 +268,7 @@ ret
 .type	main, @function 
 main: 
 enter   $(8 * 4), $0 
+
 
 movq 	$9, -16(%rbp)
 

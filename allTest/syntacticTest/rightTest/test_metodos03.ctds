@@ -6,20 +6,20 @@ class Test_metodos {
 	int inc (int x) {
 		return x+1;
 	}
-	float resto(int x, float y) {
+	int resto(int x, float y) {
 		
-		float res;
+		int res;
 		
 		if (x > 3*2) {
 			res = x / 3;
 		}
 		else {
-			res = 2.0;
+			res = 2;
 		}
 		return res;
 	}
 	void main() {
-                float A[1];
+                int A[1];
                 res = false;
 		A[0] = resto(inc(5),10.2);
 		return ;

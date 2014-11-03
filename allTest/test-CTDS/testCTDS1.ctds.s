@@ -52,10 +52,10 @@ mov 		%rdx, -48(%rbp)
 mov 		%rcx, -40(%rbp) 
 mov 		%r8, -32(%rbp) 
 mov 		%r9, -24(%rbp) 
-mov 		24(%rsp), %r10
-mov 		%r10, -8(%rbp) 
-mov 		32(%rsp), %r10
+mov 		16(%rbp), %r10
 mov 		%r10, -16(%rbp) 
+mov 		24(%rbp), %r10
+mov 		%r10, -8(%rbp) 
 
 movq		$0, %r10
 mov		%r10, -72(%rbp)
@@ -111,8 +111,8 @@ movq 	$1000, -224(%rbp)
 mov		-224(%rbp), %r10
 mov		%r10, global(%rip)
 
-mov		-80(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-80(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -246,8 +246,8 @@ movq 	$10000, -224(%rbp)
 mov		-224(%rbp), %r10
 mov		%r10, global(%rip)
 
-mov		-80(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-80(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -266,7 +266,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 118), $0 
+enter   $(8 * 116), $0 
 
 
 movq		$0, %r10
@@ -332,8 +332,8 @@ mov		%r10, -168(%rbp)
 mov		$0, %r10
 mov		%r10, global(%rip)
 
-mov		$.SL0, %rbx
-mov	 	%rbx, %rdi
+mov		$.SL0, %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -472,8 +472,8 @@ mov		%r11, -216(%rbp)
 mov		-216(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-mov		-48(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-48(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -634,22 +634,22 @@ mov		%r11, -304(%rbp)
 mov		-304(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-mov		-56(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-56(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	print_int
 
-mov		-72(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-72(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	print_int
 
-mov		-64(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-64(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -947,22 +947,22 @@ jmp 		.beginWhileL20
 
 .endWhileL19: 
 
-mov		-128(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-128(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	print_int
 
-mov		-144(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-144(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	print_int
 
-mov		-136(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-136(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -972,22 +972,22 @@ jmp 		.beginWhileL14
 
 .endWhileL13: 
 
-mov		-80(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-80(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	print_int
 
-mov		-96(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-96(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	print_int
 
-mov		-88(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-88(%rbp), %r10
+mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
@@ -1009,117 +1009,117 @@ movq 	$7, -792(%rbp)
 
 movq 	$8, -800(%rbp)
 
-mov		-744(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-744(%rbp), %r10
+mov	 	%r10, %rdi
 
-mov		-752(%rbp), %rbx
-mov	 	%rbx, %rsi
+mov		-752(%rbp), %r10
+mov	 	%r10, %rsi
 
-mov		-760(%rbp), %rbx
-mov	 	%rbx, %rdx
+mov		-760(%rbp), %r10
+mov	 	%r10, %rdx
 
-mov		-768(%rbp), %rbx
-mov	 	%rbx, %rcx
+mov		-768(%rbp), %r10
+mov	 	%r10, %rcx
 
-mov		-776(%rbp), %rbx
-mov	 	%rbx, %r8
+mov		-776(%rbp), %r10
+mov	 	%r10, %r8
 
-mov		-784(%rbp), %rbx
-mov	 	%rbx, %r9
+mov		-784(%rbp), %r10
+mov	 	%r10, %r9
 
-mov		-792(%rbp), %rbx
-mov	 	%rbx, -808(%rbp) 
+mov		-792(%rbp), %r10
+mov	 	%r10, 0(%rsp) 
 
-mov		-800(%rbp), %rbx
-mov	 	%rbx, -816(%rbp) 
+mov		-800(%rbp), %r10
+mov	 	%r10, 8(%rsp) 
 
 mov 		$0, %rax 
 
 call 	ochoparametrosInt
 
 mov	.FL25(%rip), %r10
-mov	%r10, -824(%rbp)
+mov	%r10, -808(%rbp)
 
 mov	.FL26(%rip), %r10
-mov	%r10, -832(%rbp)
+mov	%r10, -816(%rbp)
 
 mov	.FL27(%rip), %r10
-mov	%r10, -840(%rbp)
+mov	%r10, -824(%rbp)
 
 mov	.FL28(%rip), %r10
-mov	%r10, -848(%rbp)
+mov	%r10, -832(%rbp)
 
 mov	.FL29(%rip), %r10
-mov	%r10, -856(%rbp)
+mov	%r10, -840(%rbp)
 
 mov	.FL30(%rip), %r10
-mov	%r10, -864(%rbp)
+mov	%r10, -848(%rbp)
 
 mov	.FL31(%rip), %r10
-mov	%r10, -872(%rbp)
+mov	%r10, -856(%rbp)
 
 mov	.FL32(%rip), %r10
-mov	%r10, -880(%rbp)
+mov	%r10, -864(%rbp)
 
-movss		-824(%rbp), %xmm0
+movss		-808(%rbp), %xmm0
 
-movss		-832(%rbp), %xmm1
+movss		-816(%rbp), %xmm1
 
-movss		-840(%rbp), %xmm2
+movss		-824(%rbp), %xmm2
 
-movss		-848(%rbp), %xmm3
+movss		-832(%rbp), %xmm3
 
-movss		-856(%rbp), %xmm4
+movss		-840(%rbp), %xmm4
 
-movss		-864(%rbp), %xmm5
+movss		-848(%rbp), %xmm5
 
-movss		-872(%rbp), %xmm6
+movss		-856(%rbp), %xmm6
 
-movss		-880(%rbp), %xmm7
+movss		-864(%rbp), %xmm7
 
 mov 		$8, %rax 
 
 call 	ochoparametrosFloat
 
-movq 	$10, -888(%rbp)
+movq 	$10, -872(%rbp)
 
 mov	.FL33(%rip), %r10
-mov	%r10, -896(%rbp)
+mov	%r10, -880(%rbp)
 
-movq 	$20, -904(%rbp)
+movq 	$20, -888(%rbp)
 
 mov	.FL34(%rip), %r10
-mov	%r10, -912(%rbp)
+mov	%r10, -896(%rbp)
 
-movq 	$30, -920(%rbp)
+movq 	$30, -904(%rbp)
 
 mov	.FL35(%rip), %r10
-mov	%r10, -928(%rbp)
+mov	%r10, -912(%rbp)
 
-movq 	$40, -936(%rbp)
+movq 	$40, -920(%rbp)
 
 mov	.FL36(%rip), %r10
-mov	%r10, -944(%rbp)
+mov	%r10, -928(%rbp)
 
-mov		-888(%rbp), %rbx
-mov	 	%rbx, %rdi
+mov		-872(%rbp), %r10
+mov	 	%r10, %rdi
 
-movss		-896(%rbp), %xmm0
+movss		-880(%rbp), %xmm0
 
-mov		-904(%rbp), %rbx
-mov	 	%rbx, %rsi
+mov		-888(%rbp), %r10
+mov	 	%r10, %rsi
 
-movss		-912(%rbp), %xmm1
+movss		-896(%rbp), %xmm1
 
-mov		-920(%rbp), %rbx
-mov	 	%rbx, %rdx
+mov		-904(%rbp), %r10
+mov	 	%r10, %rdx
 
-movss		-928(%rbp), %xmm2
+movss		-912(%rbp), %xmm2
 
-mov		-936(%rbp), %rbx
-mov	 	%rbx, %rcx
+mov		-920(%rbp), %r10
+mov	 	%r10, %rcx
 
-movss		-944(%rbp), %xmm3
+movss		-928(%rbp), %xmm3
 
 mov 		$4, %rax 
 
