@@ -15,4 +15,4 @@ Nota:
 	A los print siempre hay que ponerles el formato de lo que va a mostra
 	DOCUMENTACION
 
-problema con mas de 6 parametros
+problema con mas de 6 parametros: en testMethod si le dejo un solo metodo anda, pero todos juntos no.

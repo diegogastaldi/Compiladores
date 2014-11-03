@@ -425,18 +425,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       a = stmt.getParameters().get(i);
       switch (a.getType()) {
         case FLOAT: 
-          if (floatParam < 8) {
-            instructions.add(new Instr(Operator.FPARAM, p.get(i), false, floatParam));
-            floatParam++;
-          } else 
-            instructions.add(new Instr(Operator.FPARAM, p.get(i), false, genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.FPARAM, p.get(i), false, floatParam));
+          floatParam++;
+
           break;
         case INT: case BOOLEAN:
-          if (intParam < 6) {
-            instructions.add(new Instr(Operator.PARAM, p.get(i), intParam, null));
-            intParam++;
-          } else 
-            instructions.add(new Instr(Operator.PARAM, p.get(i), null, genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.PARAM, p.get(i), intParam, null));
+          intParam++;
+          
           break;
         default: 
           System.out.println("stmt: El parametro de la llamada interna no tiene tipo asignado");
@@ -466,18 +462,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (!(a instanceof ArgInvocSL)) {
         switch (((ArgInvocExpr) a).getExpression().getType()) {
         case FLOAT: 
-          if (floatParam < 8) {
-            instructions.add(new Instr(Operator.FPARAM, p.get(j), stmt.getId().equals("printf"), floatParam));
-            floatParam++;
-          } else 
-            instructions.add(new Instr(Operator.FPARAM, p.get(j), stmt.getId().equals("printf"), genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.FPARAM, p.get(j), stmt.getId().equals("printf"), floatParam));
+          floatParam++;
+          
           break;
         case INT: case BOOLEAN:
-          if (intParam < 6) {
-            instructions.add(new Instr(Operator.PARAM, p.get(j), intParam, null));
-            intParam++;
-          } else 
-            instructions.add(new Instr(Operator.PARAM, p.get(j), null, genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.PARAM, p.get(j), intParam, null));
+          intParam++;
+        
           break;
         default: 
           System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
@@ -721,18 +713,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       a = expr.getParameters().get(i);
       switch (a.getType()) {
         case FLOAT: 
-          if (floatParam < 8) {
-            instructions.add(new Instr(Operator.FPARAM, p.get(i), false, floatParam));
-            floatParam++;
-          } else 
-            instructions.add(new Instr(Operator.FPARAM, p.get(i), false, genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.FPARAM, p.get(i), false, floatParam));
+          floatParam++;
+        
           break;
         case INT: case BOOLEAN:
-          if (intParam < 6) {
-            instructions.add(new Instr(Operator.PARAM, p.get(i), intParam, null));
-            intParam++;
-          } else 
-            instructions.add(new Instr(Operator.PARAM, p.get(i), null, genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.PARAM, p.get(i), intParam, null));
+          intParam++;
+          
           break;
         default: 
           System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");
@@ -763,18 +751,14 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       if (!(a instanceof ArgInvocSL)) {
         switch (((ArgInvocExpr) a).getExpression().getType()) {
         case FLOAT: 
-          if (floatParam < 8) {
-            instructions.add(new Instr(Operator.FPARAM, p.get(j), expr.getId().equals("printf"), floatParam));
-            floatParam++;
-          } else 
-            instructions.add(new Instr(Operator.FPARAM, p.get(j), expr.getId().equals("printf"), genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.FPARAM, p.get(j), expr.getId().equals("printf"), floatParam));
+          floatParam++;
+          
           break;
         case INT: case BOOLEAN:
-          if (intParam < 6) {
-            instructions.add(new Instr(Operator.PARAM, p.get(j), intParam, null));
-            intParam++;
-          } else 
-            instructions.add(new Instr(Operator.PARAM, p.get(j), null, genLabels.getOffSet()));
+          instructions.add(new Instr(Operator.PARAM, p.get(j), intParam, null));
+          intParam++;
+
           break;
         default: 
           System.out.println("expr: El parametro de la llamada interna no tiene tipo asignado");

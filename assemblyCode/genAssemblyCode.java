@@ -413,15 +413,15 @@ public class genAssemblyCode {
 	public static void paramMethod(Instr instr) {
 		/* Guarda el parametro en r10 */
 		if (instr.getOperand1() instanceof String ) 
-			result += "mov		" + instr.getOperand1() + ", %rbx\n";
+			result += "mov		" + instr.getOperand1() + ", %r10\n";
 		else
-			result += "mov		" + instr.getOperand1() + "(%rbp), %rbx\n";
+			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
-		if (instr.getResult() == null)  {
-			Integer numOperand = (Integer)instr.getOperand2();			
-			result += "mov	 	%rbx, " + paramRegister.registersInt [numOperand] + "\n";
+		Integer numOperand = (Integer)instr.getOperand2();			
+		if (numOperand < paramRegister.registersInt.length)  {
+			result += "mov	 	%r10, " + paramRegister.registersInt [numOperand] + "\n";
 		}	else 
-			result += "mov	 	%rbx, " + instr.getResult() + "(%rbp) \n";			
+			result += "mov	 	%r10, " + ((numOperand - paramRegister.registersInt.length) * 8) + "(%rsp) \n";			
 	}
 
 	/* Indica la cantidad de xmm registros usados en la llamada a procedimiento */
@@ -461,8 +461,8 @@ public class genAssemblyCode {
 					if (intParam < paramRegister.registersInt.length) 
 						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + ((intParam + floatParam + 3 - paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + ((paramRegister.registersInt.length - intParam - floatParam - 1) * 8) + "(%rbp) \n";												
+						result += "mov 		" + ((intParam + floatParam + 2 - paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
 					}
 					intParam++;
 					break;
@@ -470,8 +470,8 @@ public class genAssemblyCode {
 					if (floatParam < paramRegister.registersFloat.length) 
 						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + ((intParam + floatParam + 3 - paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + ((paramRegister.registersFloat.length - intParam - floatParam - 1) * 8) + "(%rbp) \n";												
+						result += "mov 		" + ((intParam + floatParam + 2 - paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
 					}						
 					floatParam++;
 					break;					
@@ -570,13 +570,13 @@ public class genAssemblyCode {
 	public static void fparamMethod(Instr instr) {
 		Integer operand = (Integer)instr.getResult();
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
-		if (operand >= 0) {
+		if (operand < paramRegister.registersFloat.length) {
 		  result += "movss		" + instr.getOperand1() + "(%rbp), " + paramRegister.registersFloat [operand] + "\n";	
 			if ((Boolean)instr.getOperand2()) 
 				result += "cvtps2pd	" + paramRegister.registersFloat[operand] + ", " + paramRegister.registersFloat[operand] + " \n";
 		} else {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %rbx\n";			
-			result += "mov		%rbx, " + operand + "(%rbp)\n";
+			result += "mov		%rbx, " + ((operand - paramRegister.registersFloat.length) * 8) + "(%rbp)\n";
 		}
 	}
 
