@@ -245,18 +245,18 @@
 method1: 
 enter   $(8 * 6), $0 
 
-movss 		%xmm1, -8(%rbp) 
 movss 		%xmm0, -16(%rbp) 
+movss 		%xmm1, -8(%rbp) 
 
-mov		$.SL0, %r10
-mov	 	%r10, %rdi
+mov		$.SL0, %rbx
+mov	 	%rbx, %rdi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL1, %r10
-mov	 	%r10, %rdi
+mov		$.SL1, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -265,8 +265,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL2, %r10
-mov	 	%r10, %rdi
+mov		$.SL2, %rbx
+mov	 	%rbx, %rdi
 
 movss		-8(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -288,31 +288,31 @@ ret
 method2: 
 enter   $(8 * 6), $0 
 
-mov 		%rsi, -8(%rbp) 
 mov 		%rdi, -16(%rbp) 
+mov 		%rsi, -8(%rbp) 
 
-mov		$.SL3, %r10
-mov	 	%r10, %rdi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL4, %r10
-mov	 	%r10, %rdi
-
-mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
+mov		$.SL3, %rbx
+mov	 	%rbx, %rdi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL5, %r10
-mov	 	%r10, %rdi
+mov		$.SL4, %rbx
+mov	 	%rbx, %rdi
 
-mov		-8(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-16(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL5, %rbx
+mov	 	%rbx, %rdi
+
+mov		-8(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
@@ -332,18 +332,18 @@ ret
 method3: 
 enter   $(8 * 6), $0 
 
-mov 		%rdi, -8(%rbp) 
 movss 		%xmm0, -16(%rbp) 
+mov 		%rdi, -8(%rbp) 
 
-mov		$.SL6, %r10
-mov	 	%r10, %rdi
+mov		$.SL6, %rbx
+mov	 	%rbx, %rdi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL7, %r10
-mov	 	%r10, %rdi
+mov		$.SL7, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -352,11 +352,11 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL8, %r10
-mov	 	%r10, %rdi
+mov		$.SL8, %rbx
+mov	 	%rbx, %rdi
 
-mov		-8(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-8(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
@@ -371,34 +371,34 @@ ret
 method4: 
 enter   $(8 * 28), $0 
 
-mov 		56(%rbp), %r10
-mov 		%r10, -8(%rbp) 
-mov 		48(%rbp), %r10
-mov 		%r10, -16(%rbp) 
-mov 		40(%rbp), %r10
-mov 		%r10, -24(%rbp) 
-mov 		32(%rbp), %r10
-mov 		%r10, -32(%rbp) 
-mov 		24(%rbp), %r10
-mov 		%r10, -40(%rbp) 
-movss 		%xmm7, -48(%rbp) 
-movss 		%xmm6, -56(%rbp) 
-movss 		%xmm5, -64(%rbp) 
-movss 		%xmm4, -72(%rbp) 
-movss 		%xmm3, -80(%rbp) 
-movss 		%xmm2, -88(%rbp) 
-movss 		%xmm1, -96(%rbp) 
 movss 		%xmm0, -104(%rbp) 
+movss 		%xmm1, -96(%rbp) 
+movss 		%xmm2, -88(%rbp) 
+movss 		%xmm3, -80(%rbp) 
+movss 		%xmm4, -72(%rbp) 
+movss 		%xmm5, -64(%rbp) 
+movss 		%xmm6, -56(%rbp) 
+movss 		%xmm7, -48(%rbp) 
+mov 		24(%rsp), %r10
+mov 		%r10, -8(%rbp) 
+mov 		32(%rsp), %r10
+mov 		%r10, -16(%rbp) 
+mov 		40(%rsp), %r10
+mov 		%r10, -24(%rbp) 
+mov 		48(%rsp), %r10
+mov 		%r10, -32(%rbp) 
+mov 		56(%rsp), %r10
+mov 		%r10, -40(%rbp) 
 
-mov		$.SL9, %r10
-mov	 	%r10, %rdi
+mov		$.SL9, %rbx
+mov	 	%rbx, %rdi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL10, %r10
-mov	 	%r10, %rdi
+mov		$.SL10, %rbx
+mov	 	%rbx, %rdi
 
 movss		-104(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -407,8 +407,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL11, %r10
-mov	 	%r10, %rdi
+mov		$.SL11, %rbx
+mov	 	%rbx, %rdi
 
 movss		-96(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -417,8 +417,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL12, %r10
-mov	 	%r10, %rdi
+mov		$.SL12, %rbx
+mov	 	%rbx, %rdi
 
 movss		-88(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -427,8 +427,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL13, %r10
-mov	 	%r10, %rdi
+mov		$.SL13, %rbx
+mov	 	%rbx, %rdi
 
 movss		-80(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -437,8 +437,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL14, %r10
-mov	 	%r10, %rdi
+mov		$.SL14, %rbx
+mov	 	%rbx, %rdi
 
 movss		-72(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -447,8 +447,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL15, %r10
-mov	 	%r10, %rdi
+mov		$.SL15, %rbx
+mov	 	%rbx, %rdi
 
 movss		-64(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -457,8 +457,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL16, %r10
-mov	 	%r10, %rdi
+mov		$.SL16, %rbx
+mov	 	%rbx, %rdi
 
 movss		-56(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -467,8 +467,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL17, %r10
-mov	 	%r10, %rdi
+mov		$.SL17, %rbx
+mov	 	%rbx, %rdi
 
 movss		-48(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -477,8 +477,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL18, %r10
-mov	 	%r10, %rdi
+mov		$.SL18, %rbx
+mov	 	%rbx, %rdi
 
 movss		-40(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -487,8 +487,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL19, %r10
-mov	 	%r10, %rdi
+mov		$.SL19, %rbx
+mov	 	%rbx, %rdi
 
 movss		-32(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -497,8 +497,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL20, %r10
-mov	 	%r10, %rdi
+mov		$.SL20, %rbx
+mov	 	%rbx, %rdi
 
 movss		-24(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -507,8 +507,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL21, %r10
-mov	 	%r10, %rdi
+mov		$.SL21, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -517,8 +517,8 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL22, %r10
-mov	 	%r10, %rdi
+mov		$.SL22, %rbx
+mov	 	%rbx, %rdi
 
 movss		-8(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -536,152 +536,159 @@ ret
 method5: 
 enter   $(8 * 28), $0 
 
-popq 		-8(%rbp) 
-popq 		-16(%rbp) 
-popq 		-24(%rbp) 
-popq 		-32(%rbp) 
-popq 		-40(%rbp) 
-popq 		-48(%rbp) 
-popq 		-56(%rbp) 
-mov 		%r9, -64(%rbp) 
-mov 		%r8, -72(%rbp) 
-mov 		%rcx, -80(%rbp) 
-mov 		%rdx, -88(%rbp) 
-mov 		%rsi, -96(%rbp) 
 mov 		%rdi, -104(%rbp) 
+mov 		%rsi, -96(%rbp) 
+mov 		%rdx, -88(%rbp) 
+mov 		%rcx, -80(%rbp) 
+mov 		%r8, -72(%rbp) 
+mov 		%r9, -64(%rbp) 
+mov 		24(%rsp), %r10
+mov 		%r10, -8(%rbp) 
+mov 		32(%rsp), %r10
+mov 		%r10, -16(%rbp) 
+mov 		40(%rsp), %r10
+mov 		%r10, -24(%rbp) 
+mov 		48(%rsp), %r10
+mov 		%r10, -32(%rbp) 
+mov 		56(%rsp), %r10
+mov 		%r10, -40(%rbp) 
+mov 		64(%rsp), %r10
+mov 		%r10, -48(%rbp) 
+mov 		72(%rsp), %r10
+mov 		%r10, -56(%rbp) 
 
-mov		$.SL23, %r10
-mov	 	%r10, %rdi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL24, %r10
-mov	 	%r10, %rdi
-
-mov		-104(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL25, %r10
-mov	 	%r10, %rdi
-
-mov		-96(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL26, %r10
-mov	 	%r10, %rdi
-
-mov		-88(%rbp), %r10
-mov	 	%r10, %rsi
+mov		$.SL23, %rbx
+mov	 	%rbx, %rdi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL27, %r10
-mov	 	%r10, %rdi
+mov		$.SL24, %rbx
+mov	 	%rbx, %rdi
 
-mov		-80(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL28, %r10
-mov	 	%r10, %rdi
-
-mov		-72(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-104(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL29, %r10
-mov	 	%r10, %rdi
+mov		$.SL25, %rbx
+mov	 	%rbx, %rdi
 
-mov		-64(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL30, %r10
-mov	 	%r10, %rdi
-
-mov		-56(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-96(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL31, %r10
-mov	 	%r10, %rdi
+mov		$.SL26, %rbx
+mov	 	%rbx, %rdi
 
-mov		-48(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL32, %r10
-mov	 	%r10, %rdi
-
-mov		-40(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-88(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL33, %r10
-mov	 	%r10, %rdi
+mov		$.SL27, %rbx
+mov	 	%rbx, %rdi
 
-mov		-32(%rbp), %r10
-mov	 	%r10, %rsi
-
-mov 		$0, %rax 
-
-call 	printf
-
-mov		$.SL34, %r10
-mov	 	%r10, %rdi
-
-mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-80(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL35, %r10
-mov	 	%r10, %rdi
+mov		$.SL28, %rbx
+mov	 	%rbx, %rdi
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-72(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL36, %r10
-mov	 	%r10, %rdi
+mov		$.SL29, %rbx
+mov	 	%rbx, %rdi
 
-mov		-8(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-64(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL30, %rbx
+mov	 	%rbx, %rdi
+
+mov		-56(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL31, %rbx
+mov	 	%rbx, %rdi
+
+mov		-48(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL32, %rbx
+mov	 	%rbx, %rdi
+
+mov		-40(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL33, %rbx
+mov	 	%rbx, %rdi
+
+mov		-32(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL34, %rbx
+mov	 	%rbx, %rdi
+
+mov		-24(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL35, %rbx
+mov	 	%rbx, %rdi
+
+mov		-16(%rbp), %rbx
+mov	 	%rbx, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
+mov		$.SL36, %rbx
+mov	 	%rbx, %rdi
+
+mov		-8(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
@@ -696,29 +703,29 @@ ret
 method6: 
 enter   $(8 * 28), $0 
 
-movss 		%xmm6, -8(%rbp) 
-mov 		%r9, -16(%rbp) 
-movss 		%xmm5, -24(%rbp) 
-mov 		%r8, -32(%rbp) 
-movss 		%xmm4, -40(%rbp) 
-mov 		%rcx, -48(%rbp) 
-movss 		%xmm3, -56(%rbp) 
-mov 		%rdx, -64(%rbp) 
-movss 		%xmm2, -72(%rbp) 
-mov 		%rsi, -80(%rbp) 
-movss 		%xmm1, -88(%rbp) 
-mov 		%rdi, -96(%rbp) 
 movss 		%xmm0, -104(%rbp) 
+mov 		%rdi, -96(%rbp) 
+movss 		%xmm1, -88(%rbp) 
+mov 		%rsi, -80(%rbp) 
+movss 		%xmm2, -72(%rbp) 
+mov 		%rdx, -64(%rbp) 
+movss 		%xmm3, -56(%rbp) 
+mov 		%rcx, -48(%rbp) 
+movss 		%xmm4, -40(%rbp) 
+mov 		%r8, -32(%rbp) 
+movss 		%xmm5, -24(%rbp) 
+mov 		%r9, -16(%rbp) 
+movss 		%xmm6, -8(%rbp) 
 
-mov		$.SL37, %r10
-mov	 	%r10, %rdi
+mov		$.SL37, %rbx
+mov	 	%rbx, %rdi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL38, %r10
-mov	 	%r10, %rdi
+mov		$.SL38, %rbx
+mov	 	%rbx, %rdi
 
 movss		-104(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -727,18 +734,18 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL39, %r10
-mov	 	%r10, %rdi
+mov		$.SL39, %rbx
+mov	 	%rbx, %rdi
 
-mov		-96(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-96(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL40, %r10
-mov	 	%r10, %rdi
+mov		$.SL40, %rbx
+mov	 	%rbx, %rdi
 
 movss		-88(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -747,18 +754,18 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL41, %r10
-mov	 	%r10, %rdi
+mov		$.SL41, %rbx
+mov	 	%rbx, %rdi
 
-mov		-80(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-80(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL42, %r10
-mov	 	%r10, %rdi
+mov		$.SL42, %rbx
+mov	 	%rbx, %rdi
 
 movss		-72(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -767,18 +774,18 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL43, %r10
-mov	 	%r10, %rdi
+mov		$.SL43, %rbx
+mov	 	%rbx, %rdi
 
-mov		-64(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-64(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL44, %r10
-mov	 	%r10, %rdi
+mov		$.SL44, %rbx
+mov	 	%rbx, %rdi
 
 movss		-56(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -787,18 +794,18 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL45, %r10
-mov	 	%r10, %rdi
+mov		$.SL45, %rbx
+mov	 	%rbx, %rdi
 
-mov		-48(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-48(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL46, %r10
-mov	 	%r10, %rdi
+mov		$.SL46, %rbx
+mov	 	%rbx, %rdi
 
 movss		-40(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -807,18 +814,18 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL47, %r10
-mov	 	%r10, %rdi
+mov		$.SL47, %rbx
+mov	 	%rbx, %rdi
 
-mov		-32(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-32(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL48, %r10
-mov	 	%r10, %rdi
+mov		$.SL48, %rbx
+mov	 	%rbx, %rdi
 
 movss		-24(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -827,18 +834,18 @@ mov 		$1, %rax
 
 call 	printf
 
-mov		$.SL49, %r10
-mov	 	%r10, %rdi
+mov		$.SL49, %rbx
+mov	 	%rbx, %rdi
 
-mov		-16(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-16(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
 call 	printf
 
-mov		$.SL50, %r10
-mov	 	%r10, %rdi
+mov		$.SL50, %rbx
+mov	 	%rbx, %rdi
 
 movss		-8(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -878,8 +885,8 @@ movss 	%xmm0, -48(%rbp)
 mov		-48(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.SL53, %r10
-mov	 	%r10, %rdi
+mov		$.SL53, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -892,11 +899,11 @@ movq 	$3, -56(%rbp)
 
 movq 	$4, -64(%rbp)
 
-mov		-56(%rbp), %r10
-mov	 	%r10, %rdi
+mov		-56(%rbp), %rbx
+mov	 	%rbx, %rdi
 
-mov		-64(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-64(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
@@ -906,11 +913,11 @@ mov 	%rax, -72(%rbp)
 mov		-72(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		$.SL54, %r10
-mov	 	%r10, %rdi
+mov		$.SL54, %rbx
+mov	 	%rbx, %rdi
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-24(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
@@ -923,8 +930,8 @@ movq 	$4, -88(%rbp)
 
 movss		-80(%rbp), %xmm0
 
-mov		-88(%rbp), %r10
-mov	 	%r10, %rdi
+mov		-88(%rbp), %rbx
+mov	 	%rbx, %rdi
 
 mov 		$1, %rax 
 
@@ -934,8 +941,8 @@ movss 	%xmm0, -96(%rbp)
 mov		-96(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.SL56, %r10
-mov	 	%r10, %rdi
+mov		$.SL56, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -999,20 +1006,20 @@ movss		-152(%rbp), %xmm6
 
 movss		-160(%rbp), %xmm7
 
-mov		-168(%rbp), %r10
-mov		%r10, -208(%rbp)
+mov		-168(%rbp), %rbx
+mov		%rbx, -208(%rbp)
 
-mov		-176(%rbp), %r10
-mov		%r10, -216(%rbp)
+mov		-176(%rbp), %rbx
+mov		%rbx, -216(%rbp)
 
-mov		-184(%rbp), %r10
-mov		%r10, -224(%rbp)
+mov		-184(%rbp), %rbx
+mov		%rbx, -224(%rbp)
 
-mov		-192(%rbp), %r10
-mov		%r10, -232(%rbp)
+mov		-192(%rbp), %rbx
+mov		%rbx, -232(%rbp)
 
-mov		-200(%rbp), %r10
-mov		%r10, -240(%rbp)
+mov		-200(%rbp), %rbx
+mov		%rbx, -240(%rbp)
 
 mov 		$8, %rax 
 
@@ -1022,8 +1029,8 @@ movss 	%xmm0, -248(%rbp)
 mov		-248(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.SL70, %r10
-mov	 	%r10, %rdi
+mov		$.SL70, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
@@ -1058,52 +1065,58 @@ movq 	$15, -344(%rbp)
 
 movq 	$16, -352(%rbp)
 
-mov		-256(%rbp), %r10
-mov	 	%r10, %rdi
+mov		-256(%rbp), %rbx
+mov	 	%rbx, %rdi
 
-mov		-264(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-264(%rbp), %rbx
+mov	 	%rbx, %rsi
 
-mov		-272(%rbp), %r10
-mov	 	%r10, %rdx
+mov		-272(%rbp), %rbx
+mov	 	%rbx, %rdx
 
-mov		-280(%rbp), %r10
-mov	 	%r10, %rcx
+mov		-280(%rbp), %rbx
+mov	 	%rbx, %rcx
 
-mov		-288(%rbp), %r10
-mov	 	%r10, %r8
+mov		-288(%rbp), %rbx
+mov	 	%rbx, %r8
 
-mov		-296(%rbp), %r10
-mov	 	%r10, %r9
+mov		-296(%rbp), %rbx
+mov	 	%rbx, %r9
 
-pushq   -360(%rbp) 
+mov		-304(%rbp), %rbx
+mov	 	%rbx, -360(%rbp) 
 
-pushq 	-368(%rbp) 
+mov		-312(%rbp), %rbx
+mov	 	%rbx, -368(%rbp) 
 
-pushq 	-376(%rbp) 
+mov		-320(%rbp), %rbx
+mov	 	%rbx, -376(%rbp) 
 
-pushq	 -384(%rbp) 
+mov		-328(%rbp), %rbx
+mov	 	%rbx, -384(%rbp) 
 
-pushq	 -392(%rbp) 
+mov		-336(%rbp), %rbx
+mov	 	%rbx, -392(%rbp) 
 
-pushq	 -400(%rbp) 
+mov		-344(%rbp), %rbx
+mov	 	%rbx, -400(%rbp) 
 
-pushq	 -408(%rbp) 
+mov		-352(%rbp), %rbx
+mov	 	%rbx, -408(%rbp) 
 
 mov 		$0, %rax 
 
 call 	method5
-addq 	$56, %rsp
 mov 	%rax, -416(%rbp) 
 
 mov		-416(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		$.SL71, %r10
-mov	 	%r10, %rdi
+mov		$.SL71, %rbx
+mov	 	%rbx, %rdi
 
-mov		-24(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-24(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 mov 		$0, %rax 
 
@@ -1144,33 +1157,33 @@ mov	%r10, -520(%rbp)
 
 movss		-424(%rbp), %xmm0
 
-mov		-432(%rbp), %r10
-mov	 	%r10, %rdi
+mov		-432(%rbp), %rbx
+mov	 	%rbx, %rdi
 
 movss		-440(%rbp), %xmm1
 
-mov		-448(%rbp), %r10
-mov	 	%r10, %rsi
+mov		-448(%rbp), %rbx
+mov	 	%rbx, %rsi
 
 movss		-456(%rbp), %xmm2
 
-mov		-464(%rbp), %r10
-mov	 	%r10, %rdx
+mov		-464(%rbp), %rbx
+mov	 	%rbx, %rdx
 
 movss		-472(%rbp), %xmm3
 
-mov		-480(%rbp), %r10
-mov	 	%r10, %rcx
+mov		-480(%rbp), %rbx
+mov	 	%rbx, %rcx
 
 movss		-488(%rbp), %xmm4
 
-mov		-496(%rbp), %r10
-mov	 	%r10, %r8
+mov		-496(%rbp), %rbx
+mov	 	%rbx, %r8
 
 movss		-504(%rbp), %xmm5
 
-mov		-512(%rbp), %r10
-mov	 	%r10, %r9
+mov		-512(%rbp), %rbx
+mov	 	%rbx, %r9
 
 movss		-520(%rbp), %xmm6
 
@@ -1182,8 +1195,8 @@ movss 	%xmm0, -528(%rbp)
 mov		-528(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.SL79, %r10
-mov	 	%r10, %rdi
+mov		$.SL79, %rbx
+mov	 	%rbx, %rdi
 
 movss		-16(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 

@@ -450,35 +450,33 @@ public class genAssemblyCode {
 	}
 
 	public static void methodParamMethod(Instr instr) {
-		Integer floatParam = (Integer)instr.getOperand1() - 1;
-		Integer intParam = (Integer)instr.getOperand2() - 1;
-		Integer i = 1;
+		Integer floatParam = 0;
+		Integer intParam = 0;
+		Integer i = (Integer)instr.getOperand1() + (Integer)instr.getOperand2();
 		/* Guarda parametros en memoria reservada del metodo actual */
 		LinkedList<absSymbol> listParam = (LinkedList<absSymbol>) instr.getResult();
-		absSymbol param;
-		for (int j = listParam.size()-1; j >= 0; j--) {
-			param = listParam.get(j);
+		for (absSymbol param : listParam) {
 			switch (param.getType()) {
 				case INT : case BOOLEAN:
 					if (intParam < paramRegister.registersInt.length) 
 						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + ((i-paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
+						result += "mov 		" + ((intParam + floatParam + 3 - paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + ((paramRegister.registersInt.length - intParam - floatParam - 1) * 8) + "(%rbp) \n";												
 					}
-					intParam--;
+					intParam++;
 					break;
 				case FLOAT: 
 					if (floatParam < paramRegister.registersFloat.length) 
 						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + ((i-paramRegister.registersFloat.length) * (-8)) + "(%rbp), %r10\n";
-						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
+						result += "mov 		" + ((intParam + floatParam + 3 - paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		%r10, " + ((paramRegister.registersFloat.length - intParam - floatParam - 1) * 8) + "(%rbp) \n";												
 					}						
-					floatParam--;
+					floatParam++;
 					break;					
 			}
-			i++;
+			i--;
 		}
 	}
 
