@@ -48,8 +48,11 @@ public class MainWithOp {
       if (!hasErrors) {
         /* Optimization */
         ConstValue cv = new ConstValue();
+        DeadCode dc = new DeadCode();
+        List<completeFunction> op1 = cv.optimize(par.getAST());
+        List<completeFunction> op2 = dc.optimize(op1);
         /* Genera codigo intermedio */
-        List<Instr> ic = instCodeGen(cv.optimize(par.getAST()), par.getGlobals());
+        List<Instr> ic = instCodeGen(op2, par.getGlobals());
 
         String assembly = genAssemblyCode.gACode(ic);
 		    /* Archivo donde se guarda el codigo assembler */

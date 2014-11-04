@@ -9,11 +9,12 @@
   *************************************
   
   Esta clase implementa el patron visitor, 
-  la cual realiza el chequeo de tipos, tanto
-  en asignaciones, como en operaciones y en
-  sentencias del programa (como condiciones
-  de if por ejemplo)
-  
+	el cual elimina operacion que se vayan a hacer 
+	en assembler, siendo que pueden resolverse 
+	con anterioridad. Ademas si, a partir de los
+	resultados de estas pueden eliminarse sentencias 
+	(como por ejemplo si la condicion de una sentencia 
+	while es falsa, se elimina el bloque de esta).
 */
 package optimization;
 
@@ -58,16 +59,17 @@ public class ConstValue implements ASTVisitor<Expression>{
   
   public Expression visit(IfStmt stmt)  {
     Expression cond = stmt.getCondition().accept(this);
+    stmt.setCondition(cond);
     if (cond instanceof BoolLiteral) {
       if (((BoolLiteral)cond).getValue()) {
         stmt.getIfBlock().accept(this);
-        stmt.setIfBlock(new Block());
-      }
-      else {
-        if (stmt.getElseBlock() != null) {
-          stmt.setElseBlock(null);
+        /* Remueve el bloque */
+        stmt.setElseBlock(null);
+      } else {
+      	/* Remueve el bloque  creando uno vacio*/
+      	stmt.setIfBlock(new Block());
+        if (stmt.getElseBlock() != null) 
           stmt.getElseBlock().accept(this);  
-        }
       }
     } else {
       stmt.getIfBlock().accept(this);
@@ -81,7 +83,8 @@ public class ConstValue implements ASTVisitor<Expression>{
     Expression cond = stmt.getCondition().accept(this);
     stmt.setCondition(cond);
     if ((cond instanceof BoolLiteral) && (!(((BoolLiteral)cond).getValue())))  
-        stmt.setBlock(new Block());
+    	/* Remueve el bloque creando uno vacio */
+      stmt.setBlock(new Block());
     else
       stmt.getBlock().accept(this);
     return null;

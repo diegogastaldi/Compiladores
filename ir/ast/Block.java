@@ -36,7 +36,11 @@ public class Block extends Statement {
 	public List<Statement> getStatements() {
 		return this.statements;
 	} 
-		
+
+	public void setStatements(List<Statement> s) {
+		this.statements = s;
+	} 		
+
 	public int getBlockId() {
 		return blockId;
 	}
