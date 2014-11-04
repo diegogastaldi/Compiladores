@@ -1,15 +1,19 @@
 package ir.ast;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import ir.ASTVisitor;
 
 public class Block extends Statement {
 	private List<Statement> statements;
 	private int blockId;
+
+	public Block() {
+		statements = new LinkedList<Statement>();
+	}
 	
 	public Block(int bId) {
-		statements = new ArrayList<Statement>();
+		statements = new LinkedList<Statement>();
 		blockId = bId;
 	}
 	

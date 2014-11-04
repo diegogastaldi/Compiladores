@@ -12,6 +12,10 @@ public class ArgInvocExpr extends ArgInvoc {
         return expr;
     }
     
+    public void setExpression(Expression e) {
+        expr = e;
+    }
+
     @Override
     public String toString() {
         return expr.toString();

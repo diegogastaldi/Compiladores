@@ -1,78 +1,28 @@
-/* Taller de Diseño de software 2014
+package ir.semcheck;
 
-   Proyecto: Compilador
-   
-  - Integrantes:
-    - Coria, Gaston
-    - Gastaldi, Diego
-    
-  *************************************
-  
-  Esta clase prueba lo desarrollado hasta 
-  el momento. Cargando un programa en ctds,
-  y lo analiza tanto lexica, sintantica como
-  semanticamente.
-  
-*/
-
-package compiler2014;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.util.*;
-import ir.semcheck.*;
-import java_cup.runtime.*;
-import ir.ast.Block;
-import ir.ast.Type;
-import error.Error;
-import intermediateCode.*;
+import java.util.List;
+import java.util.LinkedList;
 import semanticAnalyzer.*;
-import syntaxAnalyzer.*;
-import lexAnalyzer.*;
-import assemblyCode.genAssemblyCode;
+import ir.ast.Block;
+import error.Error;
+import ir.ast.Type;
 
-public class Main {
+public class SemanticCheck {
   private static Boolean hasErrors = false;
 
-  public static void main(String[] args){
-    try {
-      /* Loading the file*/
-      FileInputStream file = new FileInputStream(args[0]);/**/
-      /* Create lexer analizer with file*/
-      yylex lex = new yylex(file);
-      /* Create parser analyzer with lex*/  
-      parser par = new parser(lex);
-      /* Analize file */
-      par.setScanner(lex);
-      
-      /* Chequeos lexicos y semanticos */
-      par.parse();
-      /* Chequeos semanticos */
-      typeCheck(par.getAST());
-      returnCheck(par.getAST());
-      breakContinueCheck(par.getAST());
-      methodInvocCheck(par.getAST());
-      methodMainCheck(par.getAST());
-      /* Genera el codigo intermedio solo si el coddigo fuente no tiene errores */
-      if (!hasErrors) {
-        List<Instr> ic = instCodeGen(par.getAST(), par.getGlobals());
-  //    System.out.println("Intermedite Code : " + ic.toString());
-        String assembly = genAssemblyCode.gACode(ic);
-  //      System.out.println("Assembly code: " + assembly.toString());
-		    /* Archivo donde se guarda el codigo assembler */
-    		FileWriter fw=new FileWriter(args[0]+".s");
-        fw.write(assembly);
-        fw.close();
-    	}
-              
-    }catch(Exception x){
-      x.printStackTrace();
-      System.out.println("Error fatal.\n"); 
-    }
-  }
-    
-  /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
+	public static Boolean runCheck (List<completeFunction> tree) {
+		typeCheck(tree);
+    returnCheck(tree);
+    breakContinueCheck(tree);
+    methodInvocCheck(tree);
+    methodMainCheck(tree);
+
+    return hasErrors;
+	}
+
+	/* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de tipos, si es que hay este tipo de errores */
-  private static void typeCheck(LinkedList<completeFunction> ast) {
+  private static void typeCheck(List<completeFunction> ast) {
     TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
 
     for (completeFunction c: ast) {
@@ -88,11 +38,11 @@ public class Main {
   /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de retorno, tanto si no hay un return en cierto camino del programa, como si el tipo
   retornado es erroneo, si es que hay este tipo de errores */
-  private static void returnCheck(LinkedList<completeFunction> ast) {
+  private static void returnCheck(List<completeFunction> ast) {
     ReturnTypeCheckVisitor returnTypeCheckVisitor = new ReturnTypeCheckVisitor();
     Block currentBlock;
     Boolean ret;
-    LinkedList<Error> err = new LinkedList<Error>();
+    List<Error> err = new LinkedList<Error>();
     for (completeFunction c: ast) {
       currentBlock = c.getBlock();
       returnTypeCheckVisitor = new ReturnTypeCheckVisitor(c.getType());
@@ -116,7 +66,7 @@ public class Main {
     
   /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de ubicacion de las sentencias break y continue, si es que hay este tipo de errores */    
-  private static void breakContinueCheck(LinkedList<completeFunction> ast) {
+  private static void breakContinueCheck(List<completeFunction> ast) {
     BreakContCheckVisitor bcv = new BreakContCheckVisitor();
     for (completeFunction c: ast) {
       c.getBlock().accept(bcv);
@@ -160,19 +110,4 @@ public class Main {
     }    
   }
 
-  /* A partir del arbol sintactico genera el codigo intermedio y lo retorna */
-  public static List<Instr> instCodeGen(List<completeFunction> ast, List<absSymbol> globals) {
-    InstCodeGenVisitor icg = new InstCodeGenVisitor();
-
-    icg.globalVar(globals);
-
-    for (completeFunction c : ast) {
-      if (c.getName().equals("main"))
-        /* Si la funcion es main, inicializa las vars globales */
-        icg.blockCode(c, globals);
-      else
-        icg.blockCode(c);
-    }
-    return icg.getInst();
-  }
 }

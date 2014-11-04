@@ -20,7 +20,19 @@ public class ArrayLocation extends Location {
 		isGlobal = ig;
 
 	}
+
+	public int getSize() {
+		return size;
+	}	
 	
+	public Expression getExpression() {
+	  return exp;
+	}
+
+	public void setExpression(Expression exp) {
+		this.exp = exp;
+	}
+
 	public int getBlockId() {
 		return blockId;
 	}
@@ -37,17 +49,5 @@ public class ArrayLocation extends Location {
 	@Override
 	public <T> T accept(ASTVisitor<T> v) {
 		return v.visit(this);
-	}
-
-	public Expression getExpression() {
-	  return exp;
-	}
-
-	public void setExp(Expression exp) {
-		this.exp = exp;
-	}
-
-	public int getSize() {
-		return size;
 	}
 }

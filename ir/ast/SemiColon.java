@@ -5,8 +5,8 @@ import ir.ASTVisitor;
 public class SemiColon extends Statement {
 	private int blockId;
 	
-	public SemiColon(int bId) {
-		blockId = bId;
+	public SemiColon() {
+
 	}	
 	
 	public SemiColon(int bId, int line, int col) {
