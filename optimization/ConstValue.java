@@ -147,8 +147,14 @@ public class ConstValue implements ASTVisitor<Expression>{
       IntLiteral literal = (IntLiteral)operand;
       literal.setValue(- literal.getValue());
       return literal;
-    } else 
-      return operand;
+    } else {
+      if (operand instanceof FloatLiteral) {
+        FloatLiteral literal = (FloatLiteral)operand;
+        literal.setValue(- literal.getValue());
+        return literal;
+      } else 
+        return operand;
+    }
   }
 
   public Expression visit (NegationExpr expr)   {
@@ -270,7 +276,7 @@ public class ConstValue implements ASTVisitor<Expression>{
           default : return null;              
         }
       } else {
-        BoolLiteral right = (BoolLiteral)leftOperand;
+        BoolLiteral right = (BoolLiteral)rightOperand;
         switch (operator) {
           case AND:
             return new BoolLiteral(left.getValue() && right.getValue());
@@ -281,7 +287,7 @@ public class ConstValue implements ASTVisitor<Expression>{
       }
     } else {
       if (rightOperand instanceof BoolLiteral) {
-        BoolLiteral right = (BoolLiteral)leftOperand;
+        BoolLiteral right = (BoolLiteral)rightOperand;
         switch (operator) {
           case AND:
             if (right.getValue()) {

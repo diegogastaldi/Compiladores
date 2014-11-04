@@ -1,0 +1,18 @@
+class testFor {
+	void for1() {
+  		int i;
+        int limit;
+        i=0;
+        limit = 15;
+        for i = 5 , 1 {
+            limit = 10000;
+        }  		  
+  		externinvk("printf", int, "15 = %d", limit);
+  		return;
+	}
+	void main() {
+		for1();
+		return;
+	}
+} 
+ 

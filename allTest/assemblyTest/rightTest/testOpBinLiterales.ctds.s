@@ -227,10 +227,10 @@
 		.string "2.2 / 3.8 = %f \n" 
 
 .FL14: 
-		.float 2.2 
+		.float 3.8 
 
 .FL13: 
-		.float 3.8 
+		.float 2.2 
 
 .SL12: 
 		.string "2 / 3 = %d \n" 
@@ -251,10 +251,10 @@
 		.string "2.2 - 3.8 = %f \n" 
 
 .FL6: 
-		.float 2.2 
+		.float 3.8 
 
 .FL5: 
-		.float 3.8 
+		.float 2.2 
 
 .SL4: 
 		.string "2 - 3 = %d \n" 
@@ -375,8 +375,8 @@ mov	%r10, -48(%rbp)
 mov	.FL6(%rip), %r10
 mov	%r10, -56(%rbp)
 
-movss		-56(%rbp), %xmm0 
-subss		-48(%rbp), %xmm0 
+movss		-48(%rbp), %xmm0 
+subss		-56(%rbp), %xmm0 
 movss		%xmm0, -64(%rbp) 
 
 mov		-64(%rbp), %r10
@@ -497,8 +497,8 @@ mov	%r10, -48(%rbp)
 mov	.FL14(%rip), %r10
 mov	%r10, -56(%rbp)
 
-movss		-56(%rbp), %xmm0 
-divss		-48(%rbp), %xmm0 
+movss		-48(%rbp), %xmm0 
+divss		-56(%rbp), %xmm0 
 movss		%xmm0, -64(%rbp) 
 
 mov		-64(%rbp), %r10
@@ -1231,8 +1231,8 @@ mov		%r10, -64(%rbp)
 mov	.FL64(%rip), %r10
 mov	%r10, -72(%rbp)
 
-movss		-72(%rbp), %xmm0 
-subss		-64(%rbp), %xmm0 
+movss		-64(%rbp), %xmm0 
+subss		-72(%rbp), %xmm0 
 movss		%xmm0, -80(%rbp) 
 
 mov		-80(%rbp), %r10
@@ -1377,8 +1377,8 @@ mov		%r10, -64(%rbp)
 mov	.FL72(%rip), %r10
 mov	%r10, -72(%rbp)
 
-movss		-72(%rbp), %xmm0 
-divss		-64(%rbp), %xmm0 
+movss		-64(%rbp), %xmm0 
+divss		-72(%rbp), %xmm0 
 movss		%xmm0, -80(%rbp) 
 
 mov		-80(%rbp), %r10

@@ -606,8 +606,8 @@ public class genAssemblyCode {
 	}
 
 	public static void fminusMethod(Instr instr) {
-		result +=	"movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
-		result += "subss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result += "subss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
@@ -618,8 +618,8 @@ public class genAssemblyCode {
 	}
 
 	public static void fdivideMethod(Instr instr) {
-		result +=	"movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
-		result +=	"divss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
+		result +=	"divss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
