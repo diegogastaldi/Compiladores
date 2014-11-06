@@ -113,6 +113,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   	}
   }
 
+  /* Cuenta la cantidad de variables de tipo int y bool en la lista */
   private int amountInt (List<absSymbol> param) {
     int amount = 0;
     for (absSymbol a : param) {
@@ -122,6 +123,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     return amount;
   }
 
+  /* Cuenta la cantidad de variables de tipo float en */
   private int amountFloat (List<absSymbol> param) {
     int amount = 0;
     for (absSymbol a : param) {
@@ -198,7 +200,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 			minus = Operator.MINUS;
 		else 
  			minus = Operator.FMINUS;
-
     if (!location.getIsGlobal()) {
       /* Realiza la asigancion */
       if (stmt.getLocation() instanceof VarLocation) {
@@ -215,6 +216,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         int index = a.getExpression().accept(this);
         int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();     	        
         instructions.add(new Instr(Operator.ARRAYASSIGN, result, index, endarray));
+        genLabels.liberate(index);
       }
     } else {
     	/* Realiza el decremento */
@@ -246,6 +248,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         int index = a.getExpression().accept(this);
         int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();        
         instructions.add(new Instr(Operator.ARRAYASSIGN, expr, index, endarray));
+        genLabels.liberate(index);
       }
     } else {
       /* Realiza la asigancion */
@@ -289,6 +292,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     Integer vtrue = genLabels.getOffSet();
     instructions.add(new Instr(Operator.CONST, "1", null, vtrue));
     instructions.add(new Instr(Operator.CMP, cond, vtrue/*true*/, null));
+    genLabels.liberate(vtrue);
 	  /* Si la condicion es verdadera no salta */
 	  instructions.add(new Instr(Operator.JNE, null, null, labelElse));
 	  /* Crea las instruccions del bloque if */
@@ -310,6 +314,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     		la condidion del mismo es falsa */
 	    instructions.add(new Instr(Operator.LABEL, null, null, labelElse));
      
+    genLabels.liberate(vtrue);
   	return null;
   }
   
@@ -330,6 +335,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     instructions.add(new Instr(Operator.CONST, "1", null, vtrue));
     instructions.add(new Instr(Operator.CMP, cond, vtrue /*True*/, null));
 	  instructions.add(new Instr(Operator.JNE, null, null, labelEndWhile));
+	  genLabels.liberate(vtrue);
 	  /* Crea las instruccions del bloque */
 	  Integer block = stmt.getBlock().accept(this);
     /* Vuelve al inicio del ciclo */
@@ -394,7 +400,8 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Actualizacion del stack */
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
-     
+
+    genLabels.liberate(incrementValue);
   	return null;
   }
   
@@ -417,7 +424,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     for (Expression a : stmt.getParameters()) {
       p.add(a.accept(this));
     }
-
     Integer floatParam = 0;
     Integer intParam = 0;
     Expression a;

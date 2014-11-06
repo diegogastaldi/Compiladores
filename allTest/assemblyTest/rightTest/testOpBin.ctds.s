@@ -291,8 +291,8 @@ mov		%r10, -16(%rbp)
 mov 		f1(%rip), %r10 
 mov		%r10, -88(%rbp) 
 
-movss		-16(%rbp), %xmm0 
-subss		-88(%rbp), %xmm0 
+movss		-88(%rbp), %xmm0 
+subss		-16(%rbp), %xmm0 
 movss		%xmm0, -96(%rbp) 
 
 mov		-96(%rbp), %r10
@@ -461,8 +461,8 @@ mov		%r10, -16(%rbp)
 mov 		f1(%rip), %r10 
 mov		%r10, -88(%rbp) 
 
-movss		-16(%rbp), %xmm0 
-divss		-88(%rbp), %xmm0 
+movss		-88(%rbp), %xmm0 
+divss		-16(%rbp), %xmm0 
 movss		%xmm0, -96(%rbp) 
 
 mov		-96(%rbp), %r10

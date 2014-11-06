@@ -449,6 +449,7 @@ public class genAssemblyCode {
 		result += "enter   $(8 * " + instr.getOperand1() + "), $0 \n";
 	}
 
+	/* Recupera los parametros desde la pila */
 	public static void methodParamMethod(Instr instr) {
 		Integer floatParam = 0;
 		Integer intParam = 0;
@@ -580,10 +581,10 @@ public class genAssemblyCode {
 		}
 	}
 
+	/* Mueve un valor constante de tipo float a una direccion de memoria */
 	public static void assignfloatMethod(Instr instr) {
 		result += "mov	." + instr.getOperand1() + "(%rip), %r10\n";
 		result += "mov	%r10, " + instr.getResult() + "(%rbp)\n";
-
 	}
 
 	/* Genera las instrucciones para el retorno de un metodo con tipo float */
@@ -599,30 +600,35 @@ public class genAssemblyCode {
 		result += "		.float " + instr.getOperand1() + " \n";
 	}
 
+	/* suma dos numero de tipo float */
 	public static void fplusMethod(Instr instr) {
 		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "addss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* resta dos numero de tipo float */
 	public static void fminusMethod(Instr instr) {
 		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "subss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* multiplica dos numero de tipo float */
 	public static void fmultiplyMethod(Instr instr) {
 		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result +=	"mulss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* divide dos numero de tipo float */
 	public static void fdivideMethod(Instr instr) {
 		result +=	"movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result +=	"divss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* compara dos float y salta por menor */
 	public static void fleMethod(Instr instr) {
 		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
@@ -631,6 +637,7 @@ public class genAssemblyCode {
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* compara dos float y salta por menor o igual */
 	public static void fleqMethod(Instr instr) {
 		result += "movss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
 		result += "ucomiss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
@@ -639,6 +646,7 @@ public class genAssemblyCode {
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* compara dos float y salta por mayor */
 	public static void fgeMethod(Instr instr) {
 		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
@@ -647,6 +655,7 @@ public class genAssemblyCode {
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* compara dos float y salta por mayor o igual */
 	public static void fgeqMethod(Instr instr) {
 		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm0 \n";
 		result += "ucomiss		" + instr.getOperand2() + "(%rbp), %xmm0 \n";
@@ -655,6 +664,7 @@ public class genAssemblyCode {
 		result += "mov 		%rax, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* niega un numero de tipo float */
 	public static void funaryminusMethod(Instr instr) {
 		result += "movss		" + instr.getOperand1() + "(%rbp), %xmm1 \n";
 		/* El segundo operando es un cero de tipo float */
@@ -664,6 +674,7 @@ public class genAssemblyCode {
 		result += "movss		%xmm0, " + instr.getResult() + "(%rbp) \n";
 	}
 
+	/* operaccion de igualdad entre dos float */
 	public static void fceqMethod(Instr instr) {
 		LinkedList<String> op2 = (LinkedList<String>) instr.getOperand2();
 		LinkedList<Integer> op3 = (LinkedList<Integer>) instr.getResult();
@@ -681,6 +692,7 @@ public class genAssemblyCode {
 		result +=	"mov	%rax, " + op3.get(2) + "(%rbp) \n";
 	}
 
+	/* operacion de distinto entre dos float */
 	public static void fneqMethod(Instr instr) {
 		LinkedList<String> op2 = (LinkedList<String>) instr.getOperand2();
 		LinkedList<Integer> op3 = (LinkedList<Integer>) instr.getResult();

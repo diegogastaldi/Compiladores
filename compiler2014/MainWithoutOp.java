@@ -46,7 +46,7 @@ public class MainWithoutOp {
       /* Genera el codigo intermedio solo si el coddigo fuente no tiene errores */
       if (!hasErrors) {
         List<Instr> ic = instCodeGen(par.getAST(), par.getGlobals());
-
+        /* Genera el codigo assembler a partid del de tres direcciones */
         String assembly = genAssemblyCode.gACode(ic);
 		    /* Archivo donde se guarda el codigo assembler */
     		FileWriter fw=new FileWriter(args[0]+".s");

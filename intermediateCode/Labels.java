@@ -15,6 +15,9 @@
 */
 
 package intermediateCode;
+
+import java.util.LinkedList;
+
 public class Labels {
 	/* Modificador para label */
 	private int label;
@@ -24,11 +27,14 @@ public class Labels {
   public int globalParam;
   /* Indica si ya se cargaron las variables globales */
   private int param;
+  /* Lista de direcciones libres */
+  private LinkedList<Integer> freeAdresses;
 
   public Labels() {
     temp = -8;
     param = 1;
     label = 0;
+    freeAdresses = new LinkedList<Integer>();
   }
 
 	public String getLabel() {
@@ -36,10 +42,14 @@ public class Labels {
 	}
 
   public int getOffSet() {
-    temp -= 8;
-    return temp;
+    if (freeAdresses.size() == 0) {
+      temp -= 8;
+      return temp;
+    } else
+      return freeAdresses.removeFirst();
   }  
 
+  /* Reserva el espacio neserio para la cantidad de variables pasadas como parametros */
   public int getOffSet(int space) {
     int result = temp - 8;
     temp -= (8 * space);
@@ -51,6 +61,7 @@ public class Labels {
     return param++;
   }  
 
+  /* Reinicializa a partir de "value" */
   public void restart(int value) {
     temp = (-8) * (value + 1);
     param = 0;    
@@ -59,6 +70,10 @@ public class Labels {
   public void restart() {
     temp = -8;
     param = 0;
+  }
+
+  public void liberate(int a) {
+    freeAdresses.add(a);
   }
 
 } 

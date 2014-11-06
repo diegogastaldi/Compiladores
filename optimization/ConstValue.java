@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import ir.ast.*;
 import ir.ASTVisitor;
 import semanticAnalyzer.completeFunction;
+
 public class ConstValue implements ASTVisitor<Expression>{
 
   public List<completeFunction> optimize(List<completeFunction> ast) {

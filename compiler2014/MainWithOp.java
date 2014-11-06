@@ -53,7 +53,7 @@ public class MainWithOp {
         List<completeFunction> op2 = dc.optimize(op1);
         /* Genera codigo intermedio */
         List<Instr> ic = instCodeGen(op2, par.getGlobals());
-
+        /* Genera el codigo assembler de acuerdo al de tres direcciones */
         String assembly = genAssemblyCode.gACode(ic);
 		    /* Archivo donde se guarda el codigo assembler */
     		FileWriter fw=new FileWriter(args[0]+".s");
