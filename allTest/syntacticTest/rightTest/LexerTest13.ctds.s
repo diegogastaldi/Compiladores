@@ -6,7 +6,7 @@
 .globl	method
 .type	method, @function 
 method: 
-enter   $(8 * 12), $0 
+enter   $(8 * 8), $0 
 
 movss 		%xmm0, -16(%rbp) 
 movss 		%xmm1, -8(%rbp) 
@@ -27,36 +27,23 @@ cmp 		-56(%rbp), %r10
 
 jne 		.falseCondL0
 
-movq 	$1, -72(%rbp)
-
 mov	.FL1(%rip), %r10
-mov	%r10, -80(%rbp)
+mov	%r10, -64(%rbp)
 
 movss		-16(%rbp), %xmm0 
-ucomiss		-80(%rbp), %xmm0 
+ucomiss		-64(%rbp), %xmm0 
 jp	.L2 
 movss		-16(%rbp), %xmm0 
-ucomiss		-80(%rbp), %xmm0 
+ucomiss		-64(%rbp), %xmm0 
 jne	.L2 
 movq		$1, %rax 
 jmp	.L3 
 .L2: 
 movq		$0, %rax 
 .L3: 
-mov	%rax, -88(%rbp) 
+mov	%rax, -72(%rbp) 
 
-cmpq		$0, -72(%rbp)
-je 		.L4
-cmpq		$0, -88(%rbp)
-je 		.L4
-mov		$1, %r10
-jmp		.L5
-.L4:
-mov		$0, %r10
-.L5:
-mov		%r10, -96(%rbp)
-
-mov		-96(%rbp), %r10
+mov		-72(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .falseCondL0: 

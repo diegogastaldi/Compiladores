@@ -1,16 +1,16 @@
 class testIf {
-	void if1() {
-		if (4 - 3 * 2 > 0 * 4 -10) {
-			externinvk("printf", int, "Parte if");	
-		}
-		else {
-			externinvk("printf", int, "Parte else");	
-		}
-		return ;
-	}
-
-	void main() {
-		if1();
-		return;
-	}
-} 
+  void if1() {
+   int a; 
+   if (4 - 3 * 2 > 0 * 4 -10) {
+      externinvk("printf", int, "Parte if");	
+   } else {
+      externinvk("printf", int, "Parte else");	
+   }
+   return ;
+   a = a + 2;
+}
+void main() {
+  if1();
+  return;
+}
+}

@@ -26,7 +26,7 @@ ret
 .globl	resto
 .type	resto, @function 
 resto: 
-enter   $(8 * 14), $0 
+enter   $(8 * 8), $0 
 
 mov 		%rdi, -16(%rbp) 
 movss 		%xmm0, -8(%rbp) 
@@ -34,45 +34,38 @@ movss 		%xmm0, -8(%rbp)
 movq		$0, %r10
 mov		%r10, -24(%rbp)
 
-movq 	$3, -56(%rbp)
-
-movq 	$2, -64(%rbp)
-
-mov		-56(%rbp), %r10 
-mov		-64(%rbp), %r11 
-imul		%r11, %r10 
-mov		%r10, -72(%rbp)
+movq 	$6, -56(%rbp)
 
 mov		-16(%rbp), %rax
-cmp		-72(%rbp), %rax
+cmp		-56(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -80(%rbp)
+mov		%rax, -64(%rbp)
 
-movq 	$1, -88(%rbp)
+movq 	$1, -72(%rbp)
 
-mov		-88(%rbp), %r10
-cmp 		-80(%rbp), %r10
+mov		-72(%rbp), %r10
+cmp 		-64(%rbp), %r10
 
 jne 		.falseCondL0
 
-movq 	$3, -96(%rbp)
+movq 	$3, -72(%rbp)
 
 mov		-16(%rbp), %rax 
 cltd
-idivq	-96(%rbp) 
-mov		%rax, -104(%rbp)
+idivq	-72(%rbp) 
+mov		%rax, -80(%rbp)
 
-mov		-104(%rbp), %r10
+mov		-80(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.endIfL1
 
 .falseCondL0: 
 
-movq 	$2, -112(%rbp)
+movq 	$2, -88(%rbp)
 
-mov		-112(%rbp), %r10
+mov		-88(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .endIfL1: 

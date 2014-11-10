@@ -8,7 +8,7 @@
 .globl	alo
 .type	alo, @function 
 alo: 
-enter   $(8 * 10), $0 
+enter   $(8 * 6), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -20,28 +20,28 @@ cmp 		-16(%rbp), %r10
 
 jne 		.falseCondL0
 
-movq 	$1, -56(%rbp)
+movq 	$1, -48(%rbp)
 
 mov		-8(%rbp), %r10 
-mov		-56(%rbp), %r11 
+mov		-48(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -64(%rbp)
+mov		%r11, -56(%rbp)
 
-mov		-64(%rbp), %r10
+mov		-56(%rbp), %r10
 mov		%r10, -8(%rbp)
 
 jmp 		.endIfL1
 
 .falseCondL0: 
 
-movq 	$1, -72(%rbp)
+movq 	$1, -64(%rbp)
 
-mov		-72(%rbp), %r10 
+mov		-64(%rbp), %r10 
 mov		-8(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -80(%rbp)
+mov		%r11, -72(%rbp)
 
-mov		-80(%rbp), %r10
+mov		-72(%rbp), %r10
 mov		%r10, -8(%rbp)
 
 .endIfL1: 

@@ -9,7 +9,7 @@
 .globl	breaks
 .type	breaks, @function 
 breaks: 
-enter   $(8 * 16), $0 
+enter   $(8 * 14), $0 
 
 mov 		%rdi, -8(%rbp) 
 
@@ -41,34 +41,34 @@ cmp 		-64(%rbp), %r10
 
 jne 		.endWhileL0
 
-movq 	$1, -80(%rbp)
+movq 	$1, -72(%rbp)
 
 mov		-24(%rbp), %r10 
-mov		-80(%rbp), %r11 
+mov		-72(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -88(%rbp)
+mov		%r11, -80(%rbp)
 
-mov		-88(%rbp), %r10
+mov		-80(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 mov	.FL2(%rip), %r10
-mov	%r10, -96(%rbp)
+mov	%r10, -88(%rbp)
 
-mov		-96(%rbp), %r10
+mov		-88(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$0, -104(%rbp)
+movq 	$0, -96(%rbp)
 
 mov		-8(%rbp), %rax
-cmp		-104(%rbp), %rax
+cmp		-96(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -112(%rbp)
+mov		%rax, -104(%rbp)
 
-movq 	$1, -120(%rbp)
+movq 	$1, -112(%rbp)
 
-mov		-120(%rbp), %r10
-cmp 		-112(%rbp), %r10
+mov		-112(%rbp), %r10
+cmp 		-104(%rbp), %r10
 
 jne 		.falseCondL3
 
@@ -93,23 +93,23 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 2), $0 
 
 
-movq 	$1, -16(%rbp)
+movq 	$1, -112(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-112(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	breaks
-mov 	%rax, -24(%rbp) 
+mov 	%rax, -16(%rbp) 
 
 mov		$.SL5, %r10
 mov	 	%r10, %rdi
 
-mov		-24(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 

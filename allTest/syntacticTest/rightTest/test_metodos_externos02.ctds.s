@@ -11,7 +11,7 @@
 .globl	maxcomdiv
 .type	maxcomdiv, @function 
 maxcomdiv: 
-enter   $(8 * 16), $0 
+enter   $(8 * 12), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -56,34 +56,34 @@ mov		%r10, -48(%rbp)
 
 .endIfL1: 
 
-movq 	$1, -88(%rbp)
+movq 	$1, -80(%rbp)
 
-mov		-88(%rbp), %r10
+mov		-80(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 .beginWhileL3: 
 
-movq 	$0, -96(%rbp)
+movq 	$0, -80(%rbp)
 
 mov		-40(%rbp), %rax
-cmp		-96(%rbp), %rax
+cmp		-80(%rbp), %rax
 setne 	%al
 movzb 	%al, %rax
-mov		%rax, -104(%rbp)
+mov		%rax, -88(%rbp)
 
-movq 	$1, -112(%rbp)
+movq 	$1, -96(%rbp)
 
-mov		-112(%rbp), %r10
-cmp 		-104(%rbp), %r10
+mov		-96(%rbp), %r10
+cmp 		-88(%rbp), %r10
 
 jne 		.endWhileL2
 
 mov		-32(%rbp), %rax 
 cltd
 idivq	-48(%rbp)
-mov		%rdx, -120(%rbp)
+mov		%rdx, -96(%rbp)
 
-mov		-120(%rbp), %r10
+mov		-96(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 mov		-48(%rbp), %r10
@@ -103,7 +103,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 12), $0 
+enter   $(8 * 10), $0 
 
 
 mov		$0, %r10
@@ -134,19 +134,12 @@ mov		-48(%rbp), %r11
 imul		%r11, %r10 
 mov		%r10, -56(%rbp)
 
-movq 	$7, -64(%rbp)
+movq 	$1, -64(%rbp)
 
-movq 	$6, -72(%rbp)
-
-mov		-64(%rbp), %rax 
-cltd
-idivq	-72(%rbp) 
-mov		%rax, -80(%rbp)
-
-mov		-80(%rbp), %r10 
+mov		-64(%rbp), %r10 
 mov		-56(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -88(%rbp)
+mov		%r11, -72(%rbp)
 
 mov		$.SL4, %r10
 mov	 	%r10, %rdi
@@ -157,7 +150,7 @@ mov	 	%r10, %rsi
 mov		-32(%rbp), %r10
 mov	 	%r10, %rdx
 
-mov		-88(%rbp), %r10
+mov		-72(%rbp), %r10
 mov	 	%r10, %rcx
 
 mov 		$0, %rax 

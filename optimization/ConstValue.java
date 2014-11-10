@@ -28,51 +28,62 @@ public class ConstValue implements ASTVisitor<Expression>{
 
   public List<completeFunction> optimize(List<completeFunction> ast) {
     for (completeFunction c : ast) {
+    	/* Optimiza cada bloque */
       c.getBlock().accept(this);
     }
     return ast;
   }
 
   public Expression visit(IncrementAssign stmt)   {
+  	/* Optimiza el location (solo la expresion si fuese un arraylocation) */
     stmt.setLocation((Location)stmt.getLocation().accept(this));
+    /* Optimiza la expresion */
     stmt.setExpression(stmt.getExpression().accept(this));
     return null;
   }
   
   public Expression visit(DecrementAssign stmt)   {
+  	/* Optimiza el location (solo la expresion si fuese un arraylocation) */
     stmt.setLocation((Location)stmt.getLocation().accept(this));    
+    /* Optimiza la expresion */
     stmt.setExpression(stmt.getExpression().accept(this));
     return null;
   }
   
   public Expression visit(SimpleAssign stmt)   {
+  	/* Optimiza el location (solo la expresion si fuese un arraylocation) */
     stmt.setLocation((Location)stmt.getLocation().accept(this));
+    /* Optimiza la expresion */    
     stmt.setExpression(stmt.getExpression().accept(this));
     return null;
   }
   
   public Expression visit(ReturnStmt stmt) {
-    if (stmt.getExpression() != null) {
-        stmt.setExpression(stmt.getExpression().accept(this));
-    }
+    if (stmt.getExpression() != null)
+    	/* Optimaza la expresion de retorno */
+      stmt.setExpression(stmt.getExpression().accept(this));
   	return null;
   }
   
   public Expression visit(IfStmt stmt)  {
     Expression cond = stmt.getCondition().accept(this);
+    /* Optimiza la condicion */
     stmt.setCondition(cond);
     if (cond instanceof BoolLiteral) {
       if (((BoolLiteral)cond).getValue()) {
+      	/* Optmiza bloque if */
         stmt.getIfBlock().accept(this);
-        /* Remueve el bloque */
+        /* Remueve el bloque else si nunca se va a usar */
         stmt.setElseBlock(null);
       } else {
-      	/* Remueve el bloque  creando uno vacio*/
+      	/* Remueve el bloque  if creando uno vacio si nunca se va a usar */
       	stmt.setIfBlock(new Block());
         if (stmt.getElseBlock() != null) 
+        	/* Optimiza el bloque else */
           stmt.getElseBlock().accept(this);  
       }
     } else {
+    	/* Optimiza ambos blques */
       stmt.getIfBlock().accept(this);
       if (stmt.getElseBlock() != null) 
       	stmt.getElseBlock().accept(this);
@@ -82,17 +93,20 @@ public class ConstValue implements ASTVisitor<Expression>{
   
   public Expression visit(WhileStmt stmt)  {
     Expression cond = stmt.getCondition().accept(this);
+    /* Optimiza la condicon */
     stmt.setCondition(cond);
     if ((cond instanceof BoolLiteral) && (!(((BoolLiteral)cond).getValue())))  
-    	/* Remueve el bloque creando uno vacio */
+    	/* Remueve el bloque creando uno vacio si nunca va a usar su codigo */
       stmt.setBlock(new Block());
     else
+    	/* Optimiza el bloque */
       stmt.getBlock().accept(this);
     return null;
   }
   	
   public Expression visit(Block stmt){
     for (Statement s : stmt.getStatements()) {
+    	/* Optimiza cada sentencia del bloque */
       s.accept(this);
     }
   	return null;
@@ -107,15 +121,18 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
     
   public Expression visit(ForStmt stmt)  {
+  	/* Optmiza las expresiones del for */
     Expression expr1 = stmt.getAssignExpr().accept(this);
     Expression expr2 = stmt.getCondition().accept(this);
     if ((expr1 instanceof IntLiteral) && (expr2 instanceof IntLiteral) && (((IntLiteral)expr1).getValue() >= ((IntLiteral)expr2).getValue()))
+    	/* Remueve el bloque si nunca usara su codigo */
       stmt.setBlock(new Block());
-    else {
+    else 
+    	/* Optmiza el bloque */
       stmt.getBlock().accept(this);
-      stmt.setCondition(expr2);
-      stmt.setAssignExpr(expr1);
-    }
+  	
+    stmt.setCondition(expr2);
+    stmt.setAssignExpr(expr1);
     return null;
   }
   
@@ -126,6 +143,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   public Expression visit(InternInvkStmt stmt){
     List<Expression> newParameters = new LinkedList<Expression>();
     for (Expression e : stmt.getParameters()) {
+    	/* Optimiza cada expresion pasada como parametro */
       newParameters.add(e.accept(this));
     }
     stmt.setParameters(newParameters);
@@ -135,17 +153,19 @@ public class ConstValue implements ASTVisitor<Expression>{
   public Expression visit(ExternInvkStmt stmt){
     List<ArgInvoc> newParameters = new LinkedList<ArgInvoc>();
     for (ArgInvoc a : stmt.getParameters()) {
-        if (!(a instanceof ArgInvocSL)) {
-          ((ArgInvocExpr)a).setExpression(((ArgInvocExpr)a).getExpression().accept(this));
-          newParameters.add(a);
-        } else
-          newParameters.add(a);
+    	/* Optimiza cada expresion pasada como parametro */
+      if (!(a instanceof ArgInvocSL)) {
+        ((ArgInvocExpr)a).setExpression(((ArgInvocExpr)a).getExpression().accept(this));
+        newParameters.add(a);
+      } else
+        newParameters.add(a);
     }
     stmt.setParameters(newParameters);
     return null;
   }
 
   public Expression visit (NegativeExpr expr)   {
+  	/* Optimiza la expreion */
     Expression operand = expr.getExpression().accept(this);
     if (operand instanceof IntLiteral) {
       IntLiteral literal = (IntLiteral)operand;
@@ -162,6 +182,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit (NegationExpr expr)   {
+  	/* Optimiza la expreion */
     Expression operand = expr.getExpression().accept(this);
     if (operand instanceof BoolLiteral) {
       BoolLiteral literal = (BoolLiteral)operand;
@@ -172,6 +193,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit (RelExpr expr)   {
+  	/* Optimiza las expresiones */
     Expression leftOperand = expr.getLeftOperand().accept(this);
     Expression rightOperand = expr.getRightOperand().accept(this);
     if ((leftOperand instanceof IntLiteral) && (rightOperand instanceof IntLiteral)) {
@@ -214,6 +236,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit (ArithExpr expr)   {
+  	/* Optimiza las expresiones */
     Expression leftOperand = expr.getLeftOperand().accept(this);
     Expression rightOperand = expr.getRightOperand().accept(this);
     if ((leftOperand instanceof IntLiteral) && (rightOperand instanceof IntLiteral)) {
@@ -260,6 +283,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit (CondExpr expr)   {
+  	/* Optimiza las expresiones */
     Expression leftOperand = expr.getLeftOperand().accept(this);
     Expression rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();
@@ -314,6 +338,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit (EqExpr expr)   {
+		/* Optimiza las expresiones */
     Expression leftOperand = expr.getLeftOperand().accept(this);
     Expression rightOperand = expr.getRightOperand().accept(this);
     BinOpType operator = expr.getOperator();  
@@ -359,13 +384,15 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit (InParentExpr expr){
+  	/* Optimiza la expresion */
     return expr.getExpression().accept(this);
   }
 
   public Expression visit (InternInvkExpr expr){
     List<Expression> newParameters = new LinkedList<Expression>();
     for (Expression e : expr.getParameters()) {
-        newParameters.add(e.accept(this));
+    	/* Optimiza cada expresion pasada como parametro */
+      newParameters.add(e.accept(this));
     }
     expr.setParameters(newParameters);
     return expr;
@@ -374,11 +401,12 @@ public class ConstValue implements ASTVisitor<Expression>{
   public Expression visit (ExternInvkExpr expr){
     List<ArgInvoc> newParameters = new LinkedList<ArgInvoc>();
     for (ArgInvoc a : expr.getParameters()) {
-        if (!(a instanceof ArgInvocSL)) {
-          ((ArgInvocExpr)a).setExpression(((ArgInvocExpr)a).getExpression().accept(this));
-          newParameters.add(a);
-        } else
-          newParameters.add(a);
+    	/* Optimiza cada expresion pasada como parametro */
+      if (!(a instanceof ArgInvocSL)) {
+        ((ArgInvocExpr)a).setExpression(((ArgInvocExpr)a).getExpression().accept(this));
+        newParameters.add(a);
+      } else
+        newParameters.add(a);
     }
     expr.setParameters(newParameters);
     return expr;
@@ -403,6 +431,7 @@ public class ConstValue implements ASTVisitor<Expression>{
   }
 
   public Expression visit(ArrayLocation loc)  {
+  	/* Optimiza la expresion */
     loc.setExpression(loc.getExpression().accept(this));
     
     return loc;

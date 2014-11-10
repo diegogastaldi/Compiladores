@@ -3,7 +3,7 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
 mov 		%rdi, -8(%rbp) 
 
@@ -22,15 +22,15 @@ cmp 		-40(%rbp), %r10
 
 jne 		.falseCondL0
 
-movq 	$0, -56(%rbp)
+movq 	$0, -48(%rbp)
 
 mov		-8(%rbp), %rax
-cmp		-56(%rbp), %rax
+cmp		-48(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -64(%rbp)
+mov		%rax, -56(%rbp)
 
-mov		-64(%rbp), %rax
+mov		-56(%rbp), %rax
 leave
 ret
 

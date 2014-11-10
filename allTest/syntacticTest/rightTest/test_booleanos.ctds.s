@@ -10,12 +10,7 @@ enter   $(8 * 4), $0
 
 mov 		%rdi, -8(%rbp) 
 
-cmpq		$0, -8(%rbp) 
-sete		%al 
-movzb	%al, %rax 
-mov		%rax, -32(%rbp) 
-
-mov		-32(%rbp), %rax
+mov		-8(%rbp), %rax
 leave
 ret
 

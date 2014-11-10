@@ -48,19 +48,19 @@ jne 		.endWhileL1
 
 movss		-32(%rbp), %xmm0 
 addss		-16(%rbp), %xmm0 
-movss		%xmm0, -96(%rbp) 
+movss		%xmm0, -88(%rbp) 
 
-mov		-96(%rbp), %r10
+mov		-88(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$1, -104(%rbp)
+movq 	$1, -96(%rbp)
 
 mov		-40(%rbp), %r10 
-mov		-104(%rbp), %r11 
+mov		-96(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -112(%rbp)
+mov		%r11, -104(%rbp)
 
-mov		-112(%rbp), %r10
+mov		-104(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 jmp 		.beginWhileL2

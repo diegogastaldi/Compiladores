@@ -11,6 +11,7 @@
   Elimina tanto el codigo muerto o sentencias 
   inalcazables como tambien sentencias
   redundates (por ejemplo: if true). 
+
 */
 package optimization;
 
@@ -24,6 +25,7 @@ public class DeadCode implements ASTVisitor<Statement>{
 
   public List<completeFunction> optimize(List<completeFunction> ast) {
     for (completeFunction c : ast) {
+    	/* Optimiza todos los bloques */
       c.setBlock((Block)c.getBlock().accept(this));
     }
     return ast;
@@ -46,6 +48,8 @@ public class DeadCode implements ASTVisitor<Statement>{
   }
   
   public Statement visit(IfStmt stmt)  {
+  	/* Si la condicion determina que bloque se va a ejecutar
+  		se reemplaza la sentencia if por dicho bloque */
     Expression cond = stmt.getCondition();
     if (cond instanceof BoolLiteral) {
       if (((BoolLiteral)cond).getValue()) 
@@ -67,6 +71,7 @@ public class DeadCode implements ASTVisitor<Statement>{
   public Statement visit(WhileStmt stmt)  {
     Expression cond = stmt.getCondition();
     if ((cond instanceof BoolLiteral) && (!(((BoolLiteral)cond).getValue())))  
+    	/* Si la condicion determina que el bloque no se va a ejecutar se elimina la sentencia while */
     	return new SemiColon();
     else{
 			stmt.setBlock((Block)stmt.getBlock().accept(this));
@@ -81,6 +86,7 @@ public class DeadCode implements ASTVisitor<Statement>{
 	    current = s.accept(this);
 	    newBlock.add(current);
       if ((current instanceof BreakStmt) || (current instanceof ContinueStmt) || (current instanceof ReturnStmt))
+      	/* Si en una bloque se alcanza una de estas sentencias, las siguientes no se ejecutaran por lo que se borran */
       	break;
     }
     stmt.setStatements(newBlock);
@@ -96,9 +102,11 @@ public class DeadCode implements ASTVisitor<Statement>{
   }
     
   public Statement visit(ForStmt stmt)  {
+  	/* Optimiza cada expresion */
     Expression expr1 = stmt.getAssignExpr();
     Expression expr2 = stmt.getCondition();
     if ((expr1 instanceof IntLiteral) && (expr2 instanceof IntLiteral) && (((IntLiteral)expr1).getValue() >= ((IntLiteral)expr2).getValue()))
+    	/* Si nunca entra al bloque, se elimna la sentencia for */
       return new SemiColon();
     else {
     	stmt.setBlock((Block)stmt.getBlock().accept(this));

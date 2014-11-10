@@ -9,6 +9,9 @@ if1:
 enter   $(8 * 2), $0 
 
 
+movq		$0, %r10
+mov		%r10, -8(%rbp)
+
 mov		$.SL0, %r10
 mov	 	%r10, %rdi
 

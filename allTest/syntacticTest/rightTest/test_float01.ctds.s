@@ -1,14 +1,11 @@
-.SL10: 
+.SL9: 
 		.string "%f" 
 
-.FL9: 
+.FL8: 
 		.float 8.0 
 
-.FL8: 
-		.float 0 
-
 .FL7: 
-		.float 100.1 
+		.float -100.1 
 
 .FL5: 
 		.float 1.0 
@@ -21,7 +18,7 @@
 .globl	potencia
 .type	potencia, @function 
 potencia: 
-enter   $(8 * 28), $0 
+enter   $(8 * 18), $0 
 
 movss 		%xmm0, -16(%rbp) 
 mov 		%rdi, -8(%rbp) 
@@ -66,19 +63,10 @@ cmp 		-104(%rbp), %r10
 
 jne 		.falseCondL1
 
-mov		-8(%rbp), %rax 
-neg		%rax 
-mov		%rax, -120(%rbp) 
-
-mov		-120(%rbp), %r10
+mov		-8(%rbp), %r10
 mov		%r10, -8(%rbp)
 
-cmpq		$0, -40(%rbp) 
-sete		%al 
-movzb	%al, %rax 
-mov		%rax, -128(%rbp) 
-
-mov		-128(%rbp), %r10
+mov		-40(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 .falseCondL1: 
@@ -89,56 +77,51 @@ mov		-32(%rbp), %rax
 cmp		-8(%rbp), %rax
 setle 	%al
 movzb  %al, %rax
-mov		%rax, -136(%rbp)
+mov		%rax, -112(%rbp)
 
-movq 	$1, -144(%rbp)
+movq 	$1, -112(%rbp)
 
-mov		-144(%rbp), %r10
-cmp 		-136(%rbp), %r10
+mov		-112(%rbp), %r10
+cmp 		-112(%rbp), %r10
 
 jne 		.endWhileL2
 
 movss		-48(%rbp), %xmm0 
 mulss		-16(%rbp), %xmm0 
-movss		%xmm0, -152(%rbp) 
+movss		%xmm0, -112(%rbp) 
 
-mov		-152(%rbp), %r10
+mov		-112(%rbp), %r10
 mov		%r10, -48(%rbp)
 
-movq 	$1, -160(%rbp)
+movq 	$1, -120(%rbp)
 
 mov		-32(%rbp), %r10 
-mov		-160(%rbp), %r11 
+mov		-120(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -168(%rbp)
+mov		%r11, -128(%rbp)
 
-mov		-168(%rbp), %r10
+mov		-128(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL3
 
 .endWhileL2: 
 
-cmpq		$0, -40(%rbp) 
-sete		%al 
-movzb	%al, %rax 
-mov		%rax, -176(%rbp) 
+movq 	$1, -136(%rbp)
 
-movq 	$1, -184(%rbp)
-
-mov		-184(%rbp), %r10
-cmp 		-176(%rbp), %r10
+mov		-136(%rbp), %r10
+cmp 		-40(%rbp), %r10
 
 jne 		.falseCondL4
 
 mov	.FL5(%rip), %r10
-mov	%r10, -192(%rbp)
+mov	%r10, -136(%rbp)
 
-movss		-48(%rbp), %xmm0 
-divss		-192(%rbp), %xmm0 
-movss		%xmm0, -200(%rbp) 
+movss		-136(%rbp), %xmm0 
+divss		-48(%rbp), %xmm0 
+movss		%xmm0, -144(%rbp) 
 
-movss		-200(%rbp), %xmm0
+movss		-144(%rbp), %xmm0
 leave
 ret
 
@@ -153,14 +136,9 @@ ret
 .endIfL6: 
 
 mov	.FL7(%rip), %r10
-mov	%r10, -208(%rbp)
+mov	%r10, -136(%rbp)
 
-movss		-208(%rbp), %xmm1 
-movss		.FL8(%rip), %xmm0 
-subss		%xmm1, %xmm0 
-movss		%xmm0, -216(%rbp) 
-
-movss		-216(%rbp), %xmm0
+movss		-136(%rbp), %xmm0
 leave
 ret
 
@@ -173,7 +151,7 @@ enter   $(8 * 6), $0
 movq		$0, %r10
 mov		%r10, -16(%rbp)
 
-mov	.FL9(%rip), %r10
+mov	.FL8(%rip), %r10
 mov	%r10, -32(%rbp)
 
 mov		-32(%rbp), %r10
@@ -194,7 +172,7 @@ movss 	%xmm0, -48(%rbp)
 mov		-48(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-mov		$.SL10, %r10
+mov		$.SL9, %r10
 mov	 	%r10, %rdi
 
 movss		-16(%rbp), %xmm0

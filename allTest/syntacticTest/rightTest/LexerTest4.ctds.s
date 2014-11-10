@@ -27,7 +27,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 8), $0 
+enter   $(8 * 6), $0 
 
 
 mov 		$0, %rax 

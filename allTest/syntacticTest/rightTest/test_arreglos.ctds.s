@@ -1,8 +1,5 @@
-.SL2: 
+.SL1: 
 		.string "%f" 
-
-.FL1: 
-		.float 0 
 
 .FL0: 
 		.float 2.6 
@@ -14,7 +11,7 @@
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 
 mov		$0, %r10
@@ -26,21 +23,16 @@ mov	%r10, -24(%rbp)
 mov		-24(%rbp), %r10
 mov		%r10, -16(%rbp)
 
-movss		-16(%rbp), %xmm1 
-movss		.FL1(%rip), %xmm0 
-subss		%xmm1, %xmm0 
-movss		%xmm0, -32(%rbp) 
-
-mov		-32(%rbp), %r10
+mov		-16(%rbp), %r10
 mov		%r10, B(%rip)
 
 mov 		B(%rip), %r10 
-mov		%r10, -40(%rbp) 
+mov		%r10, -32(%rbp) 
 
-mov		$.SL2, %r10
+mov		$.SL1, %r10
 mov	 	%r10, %rdi
 
-movss		-40(%rbp), %xmm0
+movss		-32(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 

@@ -15,7 +15,7 @@
 .globl	sumatoria
 .type	sumatoria, @function 
 sumatoria: 
-enter   $(8 * 20), $0 
+enter   $(8 * 16), $0 
 
 movss 		%xmm0, -8(%rbp) 
 
@@ -74,38 +74,38 @@ cmp 		-96(%rbp), %r10
 
 jne 		.endWhileL1
 
-movq 	$0, -112(%rbp)
+movq 	$0, -104(%rbp)
 
 movss		-32(%rbp), %xmm0 
-ucomiss		-112(%rbp), %xmm0 
+ucomiss		-104(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
-mov 		%rax, -120(%rbp) 
+mov 		%rax, -112(%rbp) 
 
-movq 	$1, -128(%rbp)
+movq 	$1, -120(%rbp)
 
-mov		-128(%rbp), %r10
-cmp 		-120(%rbp), %r10
+mov		-120(%rbp), %r10
+cmp 		-112(%rbp), %r10
 
 jne 		.falseCondL6
 
 movss		-24(%rbp), %xmm0 
 addss		-32(%rbp), %xmm0 
-movss		%xmm0, -136(%rbp) 
+movss		%xmm0, -120(%rbp) 
 
-mov		-136(%rbp), %r10
+mov		-120(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 .falseCondL6: 
 
 mov	.FL7(%rip), %r10
-mov	%r10, -144(%rbp)
+mov	%r10, -120(%rbp)
 
-movss		-32(%rbp), %xmm0 
-subss		-144(%rbp), %xmm0 
-movss		%xmm0, -152(%rbp) 
+movss		-120(%rbp), %xmm0 
+subss		-32(%rbp), %xmm0 
+movss		%xmm0, -128(%rbp) 
 
-mov		-152(%rbp), %r10
+mov		-128(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL2

@@ -3,7 +3,7 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(8 * 14), $0 
+enter   $(8 * 8), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -27,9 +27,9 @@ jne 		.falseCondL0
 mov		-8(%rbp), %r10 
 mov		-16(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -72(%rbp)
+mov		%r11, -64(%rbp)
 
-mov		-72(%rbp), %r10
+mov		-64(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .falseCondL0: 
@@ -38,23 +38,23 @@ mov 		-16(%rbp), %rax
 cmp		-8(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -80(%rbp)
+mov		%rax, -64(%rbp)
 
-movq 	$1, -88(%rbp)
+movq 	$1, -72(%rbp)
 
-mov		-88(%rbp), %r10
-cmp 		-80(%rbp), %r10
+mov		-72(%rbp), %r10
+cmp 		-64(%rbp), %r10
 
 jne 		.falseCondL1
 
-movq 	$5, -96(%rbp)
+movq 	$5, -72(%rbp)
 
 mov		-16(%rbp), %r10 
-mov		-96(%rbp), %r11 
+mov		-72(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -104(%rbp)
+mov		%r10, -80(%rbp)
 
-mov		-104(%rbp), %r10
+mov		-80(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.endIfL2
@@ -64,9 +64,9 @@ jmp 		.endIfL2
 mov		-16(%rbp), %r10 
 mov		-8(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -112(%rbp)
+mov		%r11, -88(%rbp)
 
-mov		-112(%rbp), %r10
+mov		-88(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .endIfL2: 

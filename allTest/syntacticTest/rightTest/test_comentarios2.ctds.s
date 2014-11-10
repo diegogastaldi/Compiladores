@@ -49,25 +49,25 @@ main:
 enter   $(8 * 4), $0 
 
 
-movq 	$4, -16(%rbp)
+movq 	$4, -64(%rbp)
 
-movq 	$8, -24(%rbp)
+movq 	$8, -16(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-64(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-24(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 
 call 	pruAritmetica
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -24(%rbp) 
 
 mov		$.SL2, %r10
 mov	 	%r10, %rdi
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 

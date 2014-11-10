@@ -3,7 +3,7 @@
 .globl	inc
 .type	inc, @function 
 inc: 
-enter   $(8 * 6), $0 
+enter   $(8 * 4), $0 
 
 mov 		%rdi, -8(%rbp) 
 
@@ -20,15 +20,13 @@ mov		-8(%rbp), %rax
 leave
 ret
 
-jmp 		.endWhileL0
-
 jmp 		.beginWhileL1
 
 .endWhileL0: 
 
-movq 	$1, -40(%rbp)
+movq 	$1, -32(%rbp)
 
-mov		-40(%rbp), %rax
+mov		-32(%rbp), %rax
 leave
 ret
 

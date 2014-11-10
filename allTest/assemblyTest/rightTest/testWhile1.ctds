@@ -1,0 +1,31 @@
+class testWhile1 {
+// Calcula el factorial de 0 a 14 y retorna el factorial de v
+int factorialArray (int v){
+  int limit;
+  limit = 15;
+  
+  { int i;
+    int arr_fact[15];
+    i=0;
+    while (i<limit){
+       int c, fact;
+       c = 0;
+       fact = 1;
+       while (c<i){
+          c = c+1;
+          fact = fact*c;
+       }
+       arr_fact[i]=fact;  
+       i=i+1;
+    }
+    if ( v > limit-1) {return -1;} 
+    else {return arr_fact[v];}
+  }
+}
+ 
+void main() {
+      externinvk("printf",void, "%d", factorialArray(1));             
+	return;
+}
+
+}

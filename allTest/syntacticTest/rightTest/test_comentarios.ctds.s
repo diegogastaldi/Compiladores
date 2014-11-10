@@ -6,7 +6,7 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -27,14 +27,14 @@ cmp 		-56(%rbp), %r10
 
 jne 		.falseCondL0
 
-movq 	$5, -72(%rbp)
+movq 	$5, -64(%rbp)
 
 mov		-16(%rbp), %r10 
-mov		-72(%rbp), %r11 
+mov		-64(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -80(%rbp)
+mov		%r11, -72(%rbp)
 
-mov		-80(%rbp), %r10
+mov		-72(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.endIfL1

@@ -3,7 +3,7 @@
 .globl	prueba
 .type	prueba, @function 
 prueba: 
-enter   $(8 * 22), $0 
+enter   $(8 * 18), $0 
 
 mov 		%rdi, -8(%rbp) 
 
@@ -83,9 +83,9 @@ cmp 		-144(%rbp), %r10
 
 jne 		.falseCondL0
 
-movq 	$1, -160(%rbp)
+movq 	$1, -152(%rbp)
 
-mov		-160(%rbp), %rax
+mov		-152(%rbp), %rax
 leave
 ret
 
@@ -93,9 +93,9 @@ jmp 		.endIfL1
 
 .falseCondL0: 
 
-movq 	$0, -168(%rbp)
+movq 	$0, -160(%rbp)
 
-mov		-168(%rbp), %rax
+mov		-160(%rbp), %rax
 leave
 ret
 

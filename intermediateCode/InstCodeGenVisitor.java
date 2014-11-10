@@ -138,7 +138,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     return instructions;
   }
 
-  /*-----------------------------------------------------------------------------------------------------------------------------------*/
+  /*---------------------------------------- Implementacion del patron Visitor ------------------------------------------*/
 
   public Integer visit(IncrementAssign stmt)   {
     /* Genera instrucciones para la expresion*/
@@ -841,7 +841,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       instructions.add(new Instr(Operator.VALUEARRAY, endarray, expr, result));
     }
     else 
-      instructions.add(new Instr(Operator.GLOBALVALUEARRAY, loc.getId(), expr, result));
+      instructions.add(new Instr(Operator.GLOBALVALUEARRAY, loc.getId(), expr, result))	;
     return result;    
   }
 }

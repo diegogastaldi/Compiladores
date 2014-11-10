@@ -23,31 +23,31 @@ public class Instr {
 	public Instr() {
 	}
     
-    public Instr(Operator o, Object o1, Object o2, Object r) {
-    	operator = o;
-    	operand1 = o1;
-    	operand2 = o2;
-    	result = r;
-    }
+  public Instr(Operator o, Object o1, Object o2, Object r) {
+  	operator = o;
+  	operand1 = o1;
+  	operand2 = o2;
+  	result = r;
+  }
 
-    public Operator getOperator() {
-    	return operator;
-    }
+  public Operator getOperator() {
+  	return operator;
+  }
 
-    public Object getOperand1(){
-    	return operand1;
-    } 
+  public Object getOperand1(){
+  	return operand1;
+  } 
 
-    public Object getOperand2(){
-    	return operand2;
-    }     
+  public Object getOperand2(){
+  	return operand2;
+  }     
 
-    public Object getResult() {
-    	return result;
-    }
+  public Object getResult() {
+  	return result;
+  }
 
-    public String toString() {
-        return operator.toString() + " " + operand1 + " " + operand2 + " " + result + "\n";
-    }
+  public String toString() {
+      return operator.toString() + " " + operand1 + " " + operand2 + " " + result + "\n";
+  }
 }
     

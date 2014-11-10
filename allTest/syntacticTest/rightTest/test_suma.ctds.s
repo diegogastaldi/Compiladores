@@ -3,7 +3,7 @@
 .globl	suma
 .type	suma, @function 
 suma: 
-enter   $(8 * 12), $0 
+enter   $(8 * 10), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -31,18 +31,18 @@ jmp 		.endIfL1
 
 .falseCondL0: 
 
-movq 	$0, -72(%rbp)
+movq 	$0, -64(%rbp)
 
 mov 		-8(%rbp), %rax
-cmp		-72(%rbp), %rax
+cmp		-64(%rbp), %rax
 sete		%al
 movzb	%al, %rax
-mov		%rax, -80(%rbp)
+mov		%rax, -72(%rbp)
 
-movq 	$1, -88(%rbp)
+movq 	$1, -80(%rbp)
 
-mov		-88(%rbp), %r10
-cmp 		-80(%rbp), %r10
+mov		-80(%rbp), %r10
+cmp 		-72(%rbp), %r10
 
 jne 		.falseCondL2
 
@@ -57,9 +57,9 @@ jmp 		.endIfL3
 mov		-16(%rbp), %r10 
 mov		-8(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -96(%rbp)
+mov		%r11, -80(%rbp)
 
-mov		-96(%rbp), %rax
+mov		-80(%rbp), %rax
 leave
 ret
 
@@ -73,22 +73,22 @@ main:
 enter   $(8 * 4), $0 
 
 
-movq 	$4, -16(%rbp)
+movq 	$4, -64(%rbp)
 
-movq 	$9, -24(%rbp)
+movq 	$9, -16(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-64(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-24(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
 
 call 	suma
-mov 	%rax, -32(%rbp) 
+mov 	%rax, -24(%rbp) 
 
-mov		-32(%rbp), %r10
+mov		-24(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 

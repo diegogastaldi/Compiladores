@@ -56,23 +56,23 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 4), $0 
+enter   $(8 * 2), $0 
 
 
-movq 	$1, -16(%rbp)
+movq 	$1, -80(%rbp)
 
-mov		-16(%rbp), %r10
+mov		-80(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	breaks
-mov 	%rax, -24(%rbp) 
+mov 	%rax, -16(%rbp) 
 
 mov		$.SL2, %r10
 mov	 	%r10, %rdi
 
-mov		-24(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rsi
 
 mov 		$0, %rax 
