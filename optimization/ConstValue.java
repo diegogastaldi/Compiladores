@@ -177,7 +177,7 @@ public class ConstValue implements ASTVisitor<Expression>{
         literal.setValue(- literal.getValue());
         return literal;
       } else 
-        return operand;
+        return expr;
     }
   }
 
@@ -189,7 +189,7 @@ public class ConstValue implements ASTVisitor<Expression>{
       literal.setValue(! literal.getValue());
       return literal;
     } else 
-      return operand;  
+      return expr;  
   }
 
   public Expression visit (RelExpr expr)   {

@@ -9,9 +9,11 @@ int factorialArray (int v){
     i=0;
     while (i<limit){
        int c, fact;
+       externinvk("printf",void, "Entro en el primer while con %d : ", i);             
        c = 0;
        fact = 1;
        while (c<i){
+       externinvk("printf",void, "Entro en el segundo while con %d \n", c);             
           c = c+1;
           fact = fact*c;
        }

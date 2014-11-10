@@ -1,0 +1,18 @@
+class testWhile2 {
+
+int nthprime (int n) {
+      boolean divides;
+      divides = false;
+      if ( !divides)
+        { 
+        n = n - 1;       
+        }
+    
+    return n;
+}
+
+void main() {
+  externinvk("printf",void, "1-1 = %d", nthprime(1));            
+  return;
+}
+}

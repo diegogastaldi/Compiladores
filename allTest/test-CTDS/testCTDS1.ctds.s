@@ -266,7 +266,7 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 116), $0 
+enter   $(8 * 104), $0 
 
 
 movq		$0, %r10
@@ -479,42 +479,42 @@ mov 		$0, %rax
 
 call 	print_int
 
-movq 	$0, -272(%rbp)
+movq 	$0, -240(%rbp)
 
-mov		-272(%rbp), %r10
+mov		-240(%rbp), %r10
 mov		%r10, -56(%rbp)
 
-movq 	$0, -280(%rbp)
+movq 	$0, -224(%rbp)
 
-mov		-280(%rbp), %r10
+mov		-224(%rbp), %r10
 mov		%r10, -72(%rbp)
 
-movq 	$0, -288(%rbp)
+movq 	$0, -208(%rbp)
 
-mov		-288(%rbp), %r10
+mov		-208(%rbp), %r10
 mov		%r10, -64(%rbp)
 
-movq 	$1, -296(%rbp)
+movq 	$1, -272(%rbp)
 
-movq 	$1, -304(%rbp)
+movq 	$1, -280(%rbp)
 
-mov		-296(%rbp), %r10 
-mov		-304(%rbp), %r11 
+mov		-272(%rbp), %r10 
+mov		-280(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -304(%rbp)
+mov		%r11, -280(%rbp)
 
 jmp 		.endForL7
 
 .beginForL8: 
 
-movq 	$1, -312(%rbp)
+movq 	$1, -288(%rbp)
 
-movq 	$1, -320(%rbp)
+movq 	$1, -296(%rbp)
 
-mov		-312(%rbp), %r10 
-mov		-320(%rbp), %r11 
+mov		-288(%rbp), %r10 
+mov		-296(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -320(%rbp)
+mov		%r11, -296(%rbp)
 
 jmp 		.endForL9
 
@@ -522,116 +522,116 @@ jmp 		.endForL9
 
 jmp 		.endForL9
 
-movq 	$1, -328(%rbp)
+movq 	$1, -304(%rbp)
 
-movq 	$1, -336(%rbp)
+movq 	$1, -312(%rbp)
 
-mov		-328(%rbp), %r10 
-mov		-336(%rbp), %r11 
+mov		-304(%rbp), %r10 
+mov		-312(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -336(%rbp)
+mov		%r11, -312(%rbp)
 
 jmp 		.endForL11
 
 .beginForL12: 
 
-movq 	$1, -344(%rbp)
+movq 	$1, -320(%rbp)
 
 mov		-64(%rbp), %r10 
-mov		-344(%rbp), %r11 
+mov		-320(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -352(%rbp)
+mov		%r11, -328(%rbp)
 
-mov		-352(%rbp), %r10
+mov		-328(%rbp), %r10
 mov		%r10, -64(%rbp)
 
 .endForL11: 
 
-mov		-336(%rbp), %r10 
-mov		-328(%rbp), %r11 
+mov		-312(%rbp), %r10 
+mov		-304(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -336(%rbp)
+mov		%r11, -312(%rbp)
 
-mov		-336(%rbp), %r10
+mov		-312(%rbp), %r10
 mov		%r10, -24(%rbp)
 
-mov		-336(%rbp), %r10
+mov		-312(%rbp), %r10
 cmp 		-16(%rbp), %r10
 
 jl 		.beginForL12
 
-mov		-328(%rbp), %r10 
-mov		-336(%rbp), %r11 
+mov		-304(%rbp), %r10 
+mov		-312(%rbp), %r11 
 sub		%r10, %r11 
+mov		%r11, -312(%rbp)
+
+mov		-312(%rbp), %r10
+mov		%r10, -24(%rbp)
+
+movq 	$1, -304(%rbp)
+
+mov		-72(%rbp), %r10 
+mov		-304(%rbp), %r11 
+add		%r10, %r11 
 mov		%r11, -336(%rbp)
 
 mov		-336(%rbp), %r10
-mov		%r10, -24(%rbp)
-
-movq 	$1, -360(%rbp)
-
-mov		-72(%rbp), %r10 
-mov		-360(%rbp), %r11 
-add		%r10, %r11 
-mov		%r11, -368(%rbp)
-
-mov		-368(%rbp), %r10
 mov		%r10, -72(%rbp)
 
 .endForL9: 
 
-mov		-320(%rbp), %r10 
-mov		-312(%rbp), %r11 
+mov		-296(%rbp), %r10 
+mov		-288(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -320(%rbp)
+mov		%r11, -296(%rbp)
 
-mov		-320(%rbp), %r10
+mov		-296(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-mov		-320(%rbp), %r10
+mov		-296(%rbp), %r10
 cmp 		-16(%rbp), %r10
 
 jl 		.beginForL10
 
-mov		-312(%rbp), %r10 
-mov		-320(%rbp), %r11 
+mov		-288(%rbp), %r10 
+mov		-296(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -320(%rbp)
+mov		%r11, -296(%rbp)
 
-mov		-320(%rbp), %r10
+mov		-296(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-movq 	$1, -376(%rbp)
+movq 	$1, -288(%rbp)
 
 mov		-56(%rbp), %r10 
-mov		-376(%rbp), %r11 
+mov		-288(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -384(%rbp)
+mov		%r11, -344(%rbp)
 
-mov		-384(%rbp), %r10
+mov		-344(%rbp), %r10
 mov		%r10, -56(%rbp)
 
 .endForL7: 
 
-mov		-304(%rbp), %r10 
-mov		-296(%rbp), %r11 
+mov		-280(%rbp), %r10 
+mov		-272(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -304(%rbp)
+mov		%r11, -280(%rbp)
 
-mov		-304(%rbp), %r10
+mov		-280(%rbp), %r10
 mov		%r10, -40(%rbp)
 
-mov		-304(%rbp), %r10
+mov		-280(%rbp), %r10
 cmp 		-16(%rbp), %r10
 
 jl 		.beginForL8
 
-mov		-296(%rbp), %r10 
-mov		-304(%rbp), %r11 
+mov		-272(%rbp), %r10 
+mov		-280(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -304(%rbp)
+mov		%r11, -280(%rbp)
 
-mov		-304(%rbp), %r10
+mov		-280(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 mov		-56(%rbp), %r10
@@ -655,19 +655,19 @@ mov 		$0, %rax
 
 call 	print_int
 
-movq 	$1, -392(%rbp)
+movq 	$1, -272(%rbp)
 
-mov		-392(%rbp), %r10
+mov		-272(%rbp), %r10
 mov		%r10, -80(%rbp)
 
-movq 	$1, -400(%rbp)
+movq 	$1, -352(%rbp)
 
-mov		-400(%rbp), %r10
+mov		-352(%rbp), %r10
 mov		%r10, -96(%rbp)
 
-movq 	$1, -408(%rbp)
+movq 	$1, -360(%rbp)
 
-mov		-408(%rbp), %r10
+mov		-360(%rbp), %r10
 mov		%r10, -88(%rbp)
 
 mov		-80(%rbp), %r10
@@ -679,9 +679,9 @@ mov		%r10, -120(%rbp)
 mov		-88(%rbp), %r10
 mov		%r10, -112(%rbp)
 
-movq 	$10, -416(%rbp)
+movq 	$10, -368(%rbp)
 
-mov		-416(%rbp), %r10
+mov		-368(%rbp), %r10
 mov		%r10, -16(%rbp)
 
 .beginWhileL14: 
@@ -690,12 +690,12 @@ mov		-104(%rbp), %rax
 cmp		-16(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -424(%rbp)
+mov		%rax, -376(%rbp)
 
-movq 	$1, -432(%rbp)
+movq 	$1, -384(%rbp)
 
-mov		-432(%rbp), %r10
-cmp 		-424(%rbp), %r10
+mov		-384(%rbp), %r10
+cmp 		-376(%rbp), %r10
 
 jne 		.endWhileL13
 
@@ -705,12 +705,12 @@ mov		-120(%rbp), %rax
 cmp		-16(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -440(%rbp)
+mov		%rax, -384(%rbp)
 
-movq 	$1, -448(%rbp)
+movq 	$1, -392(%rbp)
 
-mov		-448(%rbp), %r10
-cmp 		-440(%rbp), %r10
+mov		-392(%rbp), %r10
+cmp 		-384(%rbp), %r10
 
 jne 		.endWhileL15
 
@@ -720,96 +720,96 @@ mov		-112(%rbp), %rax
 cmp		-16(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -456(%rbp)
+mov		%rax, -392(%rbp)
 
-movq 	$1, -464(%rbp)
+movq 	$1, -400(%rbp)
 
-mov		-464(%rbp), %r10
-cmp 		-456(%rbp), %r10
+mov		-400(%rbp), %r10
+cmp 		-392(%rbp), %r10
 
 jne 		.endWhileL17
 
-movq 	$1, -472(%rbp)
+movq 	$1, -400(%rbp)
 
 mov		-88(%rbp), %r10 
-mov		-472(%rbp), %r11 
+mov		-400(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -480(%rbp)
+mov		%r11, -408(%rbp)
 
-mov		-480(%rbp), %r10
+mov		-408(%rbp), %r10
 mov		%r10, -88(%rbp)
 
-movq 	$1, -488(%rbp)
+movq 	$1, -416(%rbp)
 
 mov		-112(%rbp), %r10 
-mov		-488(%rbp), %r11 
+mov		-416(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -496(%rbp)
+mov		%r11, -424(%rbp)
 
-mov		-496(%rbp), %r10
+mov		-424(%rbp), %r10
 mov		%r10, -112(%rbp)
 
 jmp 		.beginWhileL18
 
 .endWhileL17: 
 
-movq 	$1, -504(%rbp)
+movq 	$1, -432(%rbp)
 
 mov		-96(%rbp), %r10 
-mov		-504(%rbp), %r11 
+mov		-432(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -512(%rbp)
+mov		%r11, -440(%rbp)
 
-mov		-512(%rbp), %r10
+mov		-440(%rbp), %r10
 mov		%r10, -96(%rbp)
 
-movq 	$1, -520(%rbp)
+movq 	$1, -448(%rbp)
 
 mov		-120(%rbp), %r10 
-mov		-520(%rbp), %r11 
+mov		-448(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -528(%rbp)
+mov		%r11, -456(%rbp)
 
-mov		-528(%rbp), %r10
+mov		-456(%rbp), %r10
 mov		%r10, -120(%rbp)
 
 jmp 		.beginWhileL16
 
 .endWhileL15: 
 
-movq 	$1, -536(%rbp)
+movq 	$1, -464(%rbp)
 
 mov		-80(%rbp), %r10 
-mov		-536(%rbp), %r11 
+mov		-464(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -544(%rbp)
+mov		%r11, -472(%rbp)
 
-mov		-544(%rbp), %r10
+mov		-472(%rbp), %r10
 mov		%r10, -80(%rbp)
 
-movq 	$1, -552(%rbp)
+movq 	$1, -480(%rbp)
 
 mov		-104(%rbp), %r10 
-mov		-552(%rbp), %r11 
+mov		-480(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -560(%rbp)
+mov		%r11, -488(%rbp)
 
-mov		-560(%rbp), %r10
+mov		-488(%rbp), %r10
 mov		%r10, -104(%rbp)
 
-movq 	$100, -568(%rbp)
+movq 	$100, -496(%rbp)
 
-mov		-568(%rbp), %r10
+mov		-496(%rbp), %r10
 mov		%r10, -128(%rbp)
 
-movq 	$100, -576(%rbp)
+movq 	$100, -504(%rbp)
 
-mov		-576(%rbp), %r10
+mov		-504(%rbp), %r10
 mov		%r10, -144(%rbp)
 
-movq 	$100, -584(%rbp)
+movq 	$100, -512(%rbp)
 
-mov		-584(%rbp), %r10
+mov		-512(%rbp), %r10
 mov		%r10, -136(%rbp)
 
 mov		-128(%rbp), %r10
@@ -821,9 +821,9 @@ mov		%r10, -168(%rbp)
 mov		-136(%rbp), %r10
 mov		%r10, -160(%rbp)
 
-movq 	$1000, -592(%rbp)
+movq 	$1000, -520(%rbp)
 
-mov		-592(%rbp), %r10
+mov		-520(%rbp), %r10
 mov		%r10, -176(%rbp)
 
 .beginWhileL20: 
@@ -832,12 +832,12 @@ mov		-152(%rbp), %rax
 cmp		-176(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -600(%rbp)
+mov		%rax, -528(%rbp)
 
-movq 	$1, -608(%rbp)
+movq 	$1, -536(%rbp)
 
-mov		-608(%rbp), %r10
-cmp 		-600(%rbp), %r10
+mov		-536(%rbp), %r10
+cmp 		-528(%rbp), %r10
 
 jne 		.endWhileL19
 
@@ -847,12 +847,12 @@ mov		-168(%rbp), %rax
 cmp		-176(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -616(%rbp)
+mov		%rax, -536(%rbp)
 
-movq 	$1, -624(%rbp)
+movq 	$1, -544(%rbp)
 
-mov		-624(%rbp), %r10
-cmp 		-616(%rbp), %r10
+mov		-544(%rbp), %r10
+cmp 		-536(%rbp), %r10
 
 jne 		.endWhileL21
 
@@ -864,81 +864,81 @@ mov		-160(%rbp), %rax
 cmp		-176(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -632(%rbp)
+mov		%rax, -544(%rbp)
 
-movq 	$1, -640(%rbp)
+movq 	$1, -552(%rbp)
 
-mov		-640(%rbp), %r10
-cmp 		-632(%rbp), %r10
+mov		-552(%rbp), %r10
+cmp 		-544(%rbp), %r10
 
 jne 		.endWhileL23
 
-movq 	$1, -648(%rbp)
+movq 	$1, -552(%rbp)
 
 mov		-136(%rbp), %r10 
-mov		-648(%rbp), %r11 
+mov		-552(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -656(%rbp)
+mov		%r11, -560(%rbp)
 
-mov		-656(%rbp), %r10
+mov		-560(%rbp), %r10
 mov		%r10, -136(%rbp)
 
-movq 	$1, -664(%rbp)
+movq 	$1, -568(%rbp)
 
 mov		-160(%rbp), %r10 
-mov		-664(%rbp), %r11 
+mov		-568(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -672(%rbp)
+mov		%r11, -576(%rbp)
 
-mov		-672(%rbp), %r10
+mov		-576(%rbp), %r10
 mov		%r10, -160(%rbp)
 
 jmp 		.beginWhileL24
 
 .endWhileL23: 
 
-movq 	$1, -680(%rbp)
+movq 	$1, -584(%rbp)
 
 mov		-144(%rbp), %r10 
-mov		-680(%rbp), %r11 
+mov		-584(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -688(%rbp)
+mov		%r11, -592(%rbp)
 
-mov		-688(%rbp), %r10
+mov		-592(%rbp), %r10
 mov		%r10, -144(%rbp)
 
-movq 	$1, -696(%rbp)
+movq 	$1, -600(%rbp)
 
 mov		-168(%rbp), %r10 
-mov		-696(%rbp), %r11 
+mov		-600(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -704(%rbp)
+mov		%r11, -608(%rbp)
 
-mov		-704(%rbp), %r10
+mov		-608(%rbp), %r10
 mov		%r10, -168(%rbp)
 
 jmp 		.beginWhileL22
 
 .endWhileL21: 
 
-movq 	$100, -712(%rbp)
+movq 	$100, -616(%rbp)
 
 mov		-128(%rbp), %r10 
-mov		-712(%rbp), %r11 
+mov		-616(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -720(%rbp)
+mov		%r11, -624(%rbp)
 
-mov		-720(%rbp), %r10
+mov		-624(%rbp), %r10
 mov		%r10, -128(%rbp)
 
-movq 	$100, -728(%rbp)
+movq 	$100, -632(%rbp)
 
 mov		-152(%rbp), %r10 
-mov		-728(%rbp), %r11 
+mov		-632(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -736(%rbp)
+mov		%r11, -640(%rbp)
 
-mov		-736(%rbp), %r10
+mov		-640(%rbp), %r10
 mov		%r10, -152(%rbp)
 
 jmp 		.beginWhileL20
@@ -993,44 +993,44 @@ mov 		$0, %rax
 
 call 	print_int
 
-movq 	$1, -744(%rbp)
+movq 	$1, -648(%rbp)
 
-movq 	$2, -752(%rbp)
+movq 	$2, -656(%rbp)
 
-movq 	$3, -760(%rbp)
+movq 	$3, -664(%rbp)
 
-movq 	$4, -768(%rbp)
+movq 	$4, -672(%rbp)
 
-movq 	$5, -776(%rbp)
+movq 	$5, -680(%rbp)
 
-movq 	$6, -784(%rbp)
+movq 	$6, -688(%rbp)
 
-movq 	$7, -792(%rbp)
+movq 	$7, -696(%rbp)
 
-movq 	$8, -800(%rbp)
+movq 	$8, -704(%rbp)
 
-mov		-744(%rbp), %r10
+mov		-648(%rbp), %r10
 mov	 	%r10, %rdi
 
-mov		-752(%rbp), %r10
+mov		-656(%rbp), %r10
 mov	 	%r10, %rsi
 
-mov		-760(%rbp), %r10
+mov		-664(%rbp), %r10
 mov	 	%r10, %rdx
 
-mov		-768(%rbp), %r10
+mov		-672(%rbp), %r10
 mov	 	%r10, %rcx
 
-mov		-776(%rbp), %r10
+mov		-680(%rbp), %r10
 mov	 	%r10, %r8
 
-mov		-784(%rbp), %r10
+mov		-688(%rbp), %r10
 mov	 	%r10, %r9
 
-mov		-792(%rbp), %r10
+mov		-696(%rbp), %r10
 mov	 	%r10, 0(%rsp) 
 
-mov		-800(%rbp), %r10
+mov		-704(%rbp), %r10
 mov	 	%r10, 8(%rsp) 
 
 mov 		$0, %rax 
@@ -1038,88 +1038,88 @@ mov 		$0, %rax
 call 	ochoparametrosInt
 
 mov	.FL25(%rip), %r10
-mov	%r10, -808(%rbp)
+mov	%r10, -712(%rbp)
 
 mov	.FL26(%rip), %r10
-mov	%r10, -816(%rbp)
+mov	%r10, -720(%rbp)
 
 mov	.FL27(%rip), %r10
-mov	%r10, -824(%rbp)
+mov	%r10, -728(%rbp)
 
 mov	.FL28(%rip), %r10
-mov	%r10, -832(%rbp)
+mov	%r10, -736(%rbp)
 
 mov	.FL29(%rip), %r10
-mov	%r10, -840(%rbp)
+mov	%r10, -744(%rbp)
 
 mov	.FL30(%rip), %r10
-mov	%r10, -848(%rbp)
+mov	%r10, -752(%rbp)
 
 mov	.FL31(%rip), %r10
-mov	%r10, -856(%rbp)
+mov	%r10, -760(%rbp)
 
 mov	.FL32(%rip), %r10
-mov	%r10, -864(%rbp)
+mov	%r10, -768(%rbp)
 
-movss		-808(%rbp), %xmm0
+movss		-712(%rbp), %xmm0
 
-movss		-816(%rbp), %xmm1
+movss		-720(%rbp), %xmm1
 
-movss		-824(%rbp), %xmm2
+movss		-728(%rbp), %xmm2
 
-movss		-832(%rbp), %xmm3
+movss		-736(%rbp), %xmm3
 
-movss		-840(%rbp), %xmm4
+movss		-744(%rbp), %xmm4
 
-movss		-848(%rbp), %xmm5
+movss		-752(%rbp), %xmm5
 
-movss		-856(%rbp), %xmm6
+movss		-760(%rbp), %xmm6
 
-movss		-864(%rbp), %xmm7
+movss		-768(%rbp), %xmm7
 
 mov 		$8, %rax 
 
 call 	ochoparametrosFloat
 
-movq 	$10, -872(%rbp)
+movq 	$10, -776(%rbp)
 
 mov	.FL33(%rip), %r10
-mov	%r10, -880(%rbp)
+mov	%r10, -784(%rbp)
 
-movq 	$20, -888(%rbp)
+movq 	$20, -792(%rbp)
 
 mov	.FL34(%rip), %r10
-mov	%r10, -896(%rbp)
+mov	%r10, -800(%rbp)
 
-movq 	$30, -904(%rbp)
+movq 	$30, -808(%rbp)
 
 mov	.FL35(%rip), %r10
-mov	%r10, -912(%rbp)
+mov	%r10, -816(%rbp)
 
-movq 	$40, -920(%rbp)
+movq 	$40, -824(%rbp)
 
 mov	.FL36(%rip), %r10
-mov	%r10, -928(%rbp)
+mov	%r10, -832(%rbp)
 
-mov		-872(%rbp), %r10
+mov		-776(%rbp), %r10
 mov	 	%r10, %rdi
 
-movss		-880(%rbp), %xmm0
+movss		-784(%rbp), %xmm0
 
-mov		-888(%rbp), %r10
+mov		-792(%rbp), %r10
 mov	 	%r10, %rsi
 
-movss		-896(%rbp), %xmm1
+movss		-800(%rbp), %xmm1
 
-mov		-904(%rbp), %r10
+mov		-808(%rbp), %r10
 mov	 	%r10, %rdx
 
-movss		-912(%rbp), %xmm2
+movss		-816(%rbp), %xmm2
 
-mov		-920(%rbp), %r10
+mov		-824(%rbp), %r10
 mov	 	%r10, %rcx
 
-movss		-928(%rbp), %xmm3
+movss		-832(%rbp), %xmm3
 
 mov 		$4, %rax 
 

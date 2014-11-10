@@ -185,6 +185,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	      instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
 	    }      
 	  }
+    genLabels.liberate(result);
     return null;
   }
   
@@ -216,7 +217,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         int index = a.getExpression().accept(this);
         int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();     	        
         instructions.add(new Instr(Operator.ARRAYASSIGN, result, index, endarray));
-        genLabels.liberate(index);
       }
     } else {
     	/* Realiza el decremento */
@@ -229,6 +229,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         instructions.add(new Instr(Operator.ARRAYASSIGNGLOBAL, result, (Integer)a.getExpression().accept(this), location.getId()));
       }
     }
+    genLabels.liberate(result);
     return null;
   }
   
@@ -248,7 +249,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         int index = a.getExpression().accept(this);
         int endarray = ((a.getSize()-1) * (-8)) + a.getOffSet();        
         instructions.add(new Instr(Operator.ARRAYASSIGN, expr, index, endarray));
-        genLabels.liberate(index);
       }
     } else {
       /* Realiza la asigancion */
@@ -296,7 +296,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	  /* Si la condicion es verdadera no salta */
 	  instructions.add(new Instr(Operator.JNE, null, null, labelElse));
 	  /* Crea las instruccions del bloque if */
-	  Integer blockIf = stmt.getIfBlock().accept(this);
+	  stmt.getIfBlock().accept(this);
     
     if (stmt.getElseBlock() != null) {    
 	    String labelEndIf = "endIf"+genLabels.getLabel();
@@ -306,15 +306,13 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	    /* Pone Label else */
 	    instructions.add(new Instr(Operator.LABEL, null, null, labelElse));
 	    /* Crea las instrucciones del bloque else */
-	   	Integer blockElse = stmt.getElseBlock().accept(this);
+	   	stmt.getElseBlock().accept(this);
 	   	/* Pone Label end if*/
 	    instructions.add(new Instr(Operator.LABEL, null, null, labelEndIf));
     } else 
     	/* Pone label al que se saltara si este if no tiene un bloque else y 
     		la condidion del mismo es falsa */
 	    instructions.add(new Instr(Operator.LABEL, null, null, labelElse));
-     
-    genLabels.liberate(vtrue);
   	return null;
   }
   
@@ -337,7 +335,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 	  instructions.add(new Instr(Operator.JNE, null, null, labelEndWhile));
 	  genLabels.liberate(vtrue);
 	  /* Crea las instruccions del bloque */
-	  Integer block = stmt.getBlock().accept(this);
+	  stmt.getBlock().accept(this);
     /* Vuelve al inicio del ciclo */
     instructions.add(new Instr(Operator.JMP, null, null, labelBeginWhile));	
     /* Pone el label de fin de ciclo */
@@ -346,7 +344,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Actualizacion del stack */
     labelsStack.remove(labelsStack.size() -1);
     labelsStack.remove(labelsStack.size() -1);
-
+    
   	return null;
   }
   
@@ -384,7 +382,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     /* Pone la etiqueta de inicio del for */
 	  instructions.add(new Instr(Operator.LABEL, null, null, labelBeginFor));
     /* Genera las instrucciones para el bloque */
-    Integer block = stmt.getBlock().accept(this);
+    stmt.getBlock().accept(this);
     /* Pone la etique de fin del for */
     instructions.add(new Instr(Operator.LABEL, null, null, labelEndFor));    
     /* Incrementa el contador */
@@ -512,7 +510,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
       default: 
         System.out.println("La expresion Negativa no tiene tipo asignado");
         break;
-
 	  }
     return result;
   }
@@ -622,7 +619,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
 		}  	
     Integer result = genLabels.getOffSet();
   	instructions.add(new Instr(op, leftOperand, rightOperand, result));
-     
     return result;
   }
 
@@ -697,7 +693,6 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
         System.out.println("Los parametros de la expresion de equivalencia no tiene tipo asignado");
         break;      
   	}
-     
     return result;
   }
 
@@ -842,6 +837,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
     }
     else 
       instructions.add(new Instr(Operator.GLOBALVALUEARRAY, loc.getId(), expr, result))	;
+
     return result;    
   }
 }

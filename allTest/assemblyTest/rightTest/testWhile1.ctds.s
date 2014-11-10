@@ -1,12 +1,18 @@
-.SL6: 
+.SL8: 
 		.string "%d" 
+
+.SL5: 
+		.string "Entro en el segundo while con %d \n" 
+
+.SL2: 
+		.string "Entro en el primer while con %d : " 
 
 .text
 
 .globl	factorialArray
 .type	factorialArray, @function 
 factorialArray: 
-enter   $(8 * 36), $0 
+enter   $(8 * 38), $0 
 
 mov 		%rdi, -8(%rbp) 
 
@@ -92,6 +98,16 @@ cmp 		-200(%rbp), %r10
 
 jne 		.endWhileL0
 
+mov		$.SL2, %r10
+mov	 	%r10, %rdi
+
+mov		-32(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
+
 movq 	$0, -208(%rbp)
 
 mov		-208(%rbp), %r10
@@ -102,7 +118,7 @@ movq 	$1, -216(%rbp)
 mov		-216(%rbp), %r10
 mov		%r10, -168(%rbp)
 
-.beginWhileL3: 
+.beginWhileL4: 
 
 mov		-160(%rbp), %rax
 cmp		-32(%rbp), %rax
@@ -115,7 +131,17 @@ movq 	$1, -232(%rbp)
 mov		-232(%rbp), %r10
 cmp 		-224(%rbp), %r10
 
-jne 		.endWhileL2
+jne 		.endWhileL3
+
+mov		$.SL5, %r10
+mov	 	%r10, %rdi
+
+mov		-160(%rbp), %r10
+mov	 	%r10, %rsi
+
+mov 		$0, %rax 
+
+call 	printf
 
 movq 	$1, -232(%rbp)
 
@@ -135,62 +161,58 @@ mov		%r10, -248(%rbp)
 mov		-248(%rbp), %r10
 mov		%r10, -168(%rbp)
 
-jmp 		.beginWhileL3
+jmp 		.beginWhileL4
 
-.endWhileL2: 
+.endWhileL3: 
 
 mov 		-168(%rbp), %r10 
 movl		-32(%rbp), %edx 
 cltq 
 mov 		%r10, -152(%rbp, %rdx, 8) 
 
-movq 	$1, -32(%rbp)
+movq 	$1, -256(%rbp)
 
 mov		-32(%rbp), %r10 
-mov		-32(%rbp), %r11 
+mov		-256(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -256(%rbp)
+mov		%r11, -264(%rbp)
 
-mov		-256(%rbp), %r10
+mov		-264(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL1
 
 .endWhileL0: 
 
-movq 	$1, -264(%rbp)
+movq 	$1, -272(%rbp)
 
-mov		-264(%rbp), %r10 
+mov		-272(%rbp), %r10 
 mov		-24(%rbp), %r11 
 sub		%r10, %r11 
-mov		%r11, -272(%rbp)
+mov		%r11, -280(%rbp)
 
 mov		-8(%rbp), %rax
-cmp		-272(%rbp), %rax
+cmp		-280(%rbp), %rax
 setg		%al
 movzb	%al, %rax
-mov		%rax, -280(%rbp)
+mov		%rax, -288(%rbp)
 
-movq 	$1, -288(%rbp)
+movq 	$1, -296(%rbp)
 
-mov		-288(%rbp), %r10
-cmp 		-280(%rbp), %r10
+mov		-296(%rbp), %r10
+cmp 		-288(%rbp), %r10
 
-jne 		.falseCondL4
+jne 		.falseCondL6
 
-movq 	$1, -288(%rbp)
-
-mov		-288(%rbp), %rax 
-neg		%rax 
-mov		%rax, -296(%rbp) 
+movq 	$-1, -296(%rbp)
 
 mov		-296(%rbp), %rax
 leave
 ret
 
-jmp 		.endIfL5
+jmp 		.endIfL7
 
-.falseCondL4: 
+.falseCondL6: 
 
 movl		-8(%rbp), %edx 
 cltq 
@@ -201,7 +223,7 @@ mov		-304(%rbp), %rax
 leave
 ret
 
-.endIfL5: 
+.endIfL7: 
 
 .globl	main
 .type	main, @function 
@@ -219,7 +241,7 @@ mov 		$0, %rax
 call 	factorialArray
 mov 	%rax, -24(%rbp) 
 
-mov		$.SL6, %r10
+mov		$.SL8, %r10
 mov	 	%r10, %rdi
 
 mov		-24(%rbp), %r10
