@@ -10,11 +10,11 @@ Compilacion:
   - Desde la clase principal compilar todos los paquetes.
 
 Ejecucion de test:
-   - sh AllTest/syntacticTest/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador sintactco y lexico. 
-   - sh AllTest/semanticTest/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador semantico
-   - sh AllTest/assembyTest/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador semantico
-   - sh AllTest/optimizationTest/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador semantico
-   - sh AllTest/test-CTDS/runTests.sh compiler2014/main  parados en la carpeta principal de git -- Testear Analizador semantico
+   - sh AllTest/syntacticTest/runTests.sh compiler2014/main  parados en la carpeta principal del proyecto -- Testear Analizador sintactco y lexico. 
+   - sh AllTest/semanticTest/runTests.sh compiler2014/main  parados en la carpeta principal del proyecto -- Testear Analizador semantico
+   - sh AllTest/assembyTest/runTests.sh compiler2014/main  parados en la carpeta principal del proyecto -- Testear Analizador semantico
+   - sh AllTest/optimizationTest/runTests.sh compiler2014/main  parados en la carpeta principal del proyecto -- Testear Analizador semantico
+   - sh AllTest/test-CTDS/runTests.sh compiler2014/main  parados en la carpeta principal del proyecto -- Testear Analizador semantico
 
 Compilar un programa:
 	 - ./ctdsWOpt programName -- Para generar assembler con Optimizaciones
