@@ -14,7 +14,7 @@
 
 package assemblyCode;
 
-public class paramRegister {
+public class ParamRegister {
 	public static String[] registersInt = {"%rdi", "%rsi", "%rdx", "%rcx", "%r8", "%r9"};
 	public static String[] registersFloat = {"%xmm0","%xmm1","%xmm2","%xmm3","%xmm4","%xmm5","%xmm6","%xmm7"};
 }

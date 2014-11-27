@@ -8,7 +8,7 @@
 .globl	alo
 .type	alo, @function 
 alo: 
-enter   $(8 * 6), $0 
+enter   $(8 * 10), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 

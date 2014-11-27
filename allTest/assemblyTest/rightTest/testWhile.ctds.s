@@ -6,7 +6,7 @@
 .globl	while1
 .type	while1, @function 
 while1: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 
 movq		$0, %r10
@@ -40,14 +40,14 @@ cmp 		-48(%rbp), %r10
 
 jne 		.endWhileL0
 
-movq 	$1, -64(%rbp)
+movq 	$1, -56(%rbp)
 
 mov		-24(%rbp), %r10 
-mov		-64(%rbp), %r11 
+mov		-56(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -72(%rbp)
+mov		%r11, -64(%rbp)
 
-mov		-72(%rbp), %r10
+mov		-64(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 jmp 		.beginWhileL1

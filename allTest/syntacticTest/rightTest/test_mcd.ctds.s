@@ -6,7 +6,7 @@
 .globl	maxcomdiv
 .type	maxcomdiv, @function 
 maxcomdiv: 
-enter   $(8 * 12), $0 
+enter   $(8 * 14), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -58,27 +58,27 @@ mov		%r10, -40(%rbp)
 
 .beginWhileL3: 
 
-movq 	$0, -80(%rbp)
+movq 	$0, -88(%rbp)
 
 mov		-40(%rbp), %rax
-cmp		-80(%rbp), %rax
+cmp		-88(%rbp), %rax
 setne 	%al
 movzb 	%al, %rax
-mov		%rax, -88(%rbp)
+mov		%rax, -96(%rbp)
 
-movq 	$1, -96(%rbp)
+movq 	$1, -104(%rbp)
 
-mov		-96(%rbp), %r10
-cmp 		-88(%rbp), %r10
+mov		-104(%rbp), %r10
+cmp 		-96(%rbp), %r10
 
 jne 		.endWhileL2
 
 mov		-32(%rbp), %rax 
 cltd
 idivq	-48(%rbp)
-mov		%rdx, -96(%rbp)
+mov		%rdx, -104(%rbp)
 
-mov		-96(%rbp), %r10
+mov		-104(%rbp), %r10
 mov		%r10, -40(%rbp)
 
 mov		-48(%rbp), %r10

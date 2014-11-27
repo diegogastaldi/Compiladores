@@ -18,17 +18,17 @@ package semanticAnalyzer;
 import ir.ast.Block;
 import ir.ast.Type;
 import java.util.LinkedList;
-public class completeFunction extends functionSymbol {
+public class CompleteFunction extends FunctionSymbol {
   private Block block;
   /* Cantidad de variables locales de la funcion */
   private Integer localVars;
 
-  public completeFunction(String name, Type type, LinkedList<absSymbol> parameters, Block b, int localVars){
+  public CompleteFunction(String name, Type type, LinkedList<AbsSymbol> parameters, Block b, int localVars){
   	super(name, type, parameters);
     block = b;
     this.localVars = localVars;
 	}
-  public completeFunction(functionSymbol f, Block b, int localVars){
+  public CompleteFunction(FunctionSymbol f, Block b, int localVars){
     super(f.getName(), f.getType(), f.getParameters());
     block = b;
     this.localVars = localVars;

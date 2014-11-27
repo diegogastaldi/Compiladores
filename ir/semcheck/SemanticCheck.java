@@ -10,7 +10,7 @@ import ir.ast.Type;
 public class SemanticCheck {
   private static Boolean hasErrors = false;
 
-	public static Boolean runCheck (List<completeFunction> tree) {
+	public static Boolean runCheck (List<CompleteFunction> tree) {
 		typeCheck(tree);
     returnCheck(tree);
     breakContinueCheck(tree);
@@ -22,10 +22,10 @@ public class SemanticCheck {
 
 	/* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de tipos, si es que hay este tipo de errores */
-  private static void typeCheck(List<completeFunction> ast) {
+  private static void typeCheck(List<CompleteFunction> ast) {
     TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
 
-    for (completeFunction c: ast) {
+    for (CompleteFunction c: ast) {
       c.getBlock().accept(typeCheckVisitor);
     }
     if (typeCheckVisitor.getErrors().size() > 0) {
@@ -38,12 +38,12 @@ public class SemanticCheck {
   /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de retorno, tanto si no hay un return en cierto camino del programa, como si el tipo
   retornado es erroneo, si es que hay este tipo de errores */
-  private static void returnCheck(List<completeFunction> ast) {
+  private static void returnCheck(List<CompleteFunction> ast) {
     ReturnTypeCheckVisitor returnTypeCheckVisitor = new ReturnTypeCheckVisitor();
     Block currentBlock;
     Boolean ret;
     List<Error> err = new LinkedList<Error>();
-    for (completeFunction c: ast) {
+    for (CompleteFunction c: ast) {
       currentBlock = c.getBlock();
       returnTypeCheckVisitor = new ReturnTypeCheckVisitor(c.getType());
       ret = currentBlock.accept(returnTypeCheckVisitor);
@@ -66,9 +66,9 @@ public class SemanticCheck {
     
   /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de ubicacion de las sentencias break y continue, si es que hay este tipo de errores */    
-  private static void breakContinueCheck(List<completeFunction> ast) {
+  private static void breakContinueCheck(List<CompleteFunction> ast) {
     BreakContCheckVisitor bcv = new BreakContCheckVisitor();
-    for (completeFunction c: ast) {
+    for (CompleteFunction c: ast) {
       c.getBlock().accept(bcv);
     }        
     if (bcv.getErrors().size() > 0) {
@@ -81,9 +81,9 @@ public class SemanticCheck {
   /* Toma el arbol de analisis sintatico y muestra por pantalla las lineas de los errores
   de invocacion a metodos que pueden tanto los tipos como la cantidad de los parametros en
   la invocacion, si es que hay este tipo de errores */    
-  private static void methodInvocCheck(List<completeFunction> ast) {    
+  private static void methodInvocCheck(List<CompleteFunction> ast) {    
     MethodInvocCheckVisitor bcv = new MethodInvocCheckVisitor(ast);
-    for (completeFunction c: ast) {
+    for (CompleteFunction c: ast) {
       c.getBlock().accept(bcv);
     }        
     if (bcv.getErrors().size() > 0) {
@@ -95,9 +95,9 @@ public class SemanticCheck {
     
   /* Toma el arbol de analisis sintatico y corrobora si hay un metodo que cumpla con las 
   caracteristicas del metodo principal para iniciar la ejecucion del programa */
-  public static void methodMainCheck(List<completeFunction> ast) {
+  public static void methodMainCheck(List<CompleteFunction> ast) {
     Boolean find = false;
-    for (completeFunction c : ast) {
+    for (CompleteFunction c : ast) {
       if (c.getName().equals("main") && (c.getParameters().size()==0) && (c.getType() == Type.VOID)) {
       	find = true;
       	break;

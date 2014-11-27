@@ -22,15 +22,15 @@ import java.util.LinkedList;
 import ir.ast.*;
 import error.Error;
 import ir.ASTVisitor;
-import semanticAnalyzer.absSymbol;
-import semanticAnalyzer.functionSymbol;
-import semanticAnalyzer.completeFunction;
+import semanticAnalyzer.AbsSymbol;
+import semanticAnalyzer.FunctionSymbol;
+import semanticAnalyzer.CompleteFunction;
 
 public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   private List<Error> errors; 
-  private List<completeFunction> cf;
+  private List<CompleteFunction> cf;
   //Constructor
-  public MethodInvocCheckVisitor(List<completeFunction> cf){
+  public MethodInvocCheckVisitor(List<CompleteFunction> cf){
     errors = new LinkedList<Error>();
     this.cf = cf;
   }
@@ -91,10 +91,10 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   }
     
   public Boolean visit(InternInvkStmt stmt){
-    completeFunction f = searchBlock(stmt.getId());
+    CompleteFunction f = searchBlock(stmt.getId());
     if (f != null) {
         if (f.getParameters().size() == stmt.getParameters().size()) {
-            absSymbol p; 
+            AbsSymbol p; 
             Expression e;
             for (int i = 0; i < stmt.getParameters().size(); i++) {
               p = f.getParameters().get(i);
@@ -165,11 +165,11 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   }
 
   public Boolean visit (InternInvkExpr expr){
-    completeFunction f = searchBlock(expr.getId());
+    CompleteFunction f = searchBlock(expr.getId());
     if (f != null) {
         if (f.getParameters().size() == expr.getParameters().size()) {
             if (f.getType() != Type.VOID) {
-                absSymbol p; 
+                AbsSymbol p; 
                 Expression e;
                 for (int i = 0; i < expr.getParameters().size(); i++) {
                   p = f.getParameters().get(i); 
@@ -236,8 +236,8 @@ public class MethodInvocCheckVisitor implements ASTVisitor<Boolean>{
   }
 
   /* Retorna el bloque con nombre "name" */
-  private completeFunction searchBlock(String name) {
-    for (completeFunction c : cf) {
+  private CompleteFunction searchBlock(String name) {
+    for (CompleteFunction c : cf) {
         if (c.getName().equals(name)) 
             return c;
     }

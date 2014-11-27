@@ -13,11 +13,11 @@
 
 package semanticAnalyzer;
 import ir.ast.Type;
-public abstract class absSymbol {
+public abstract class AbsSymbol {
 	private String name;
 	private Type type;
 
-	public absSymbol(String name, Type type) {
+	public AbsSymbol(String name, Type type) {
 		this.name = name;
 		this.type = type;
 	}

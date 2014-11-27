@@ -25,7 +25,7 @@ import intermediateCode.*;
 import semanticAnalyzer.*;
 import syntaxAnalyzer.*;
 import lexAnalyzer.*;
-import assemblyCode.genAssemblyCode;
+import assemblyCode.GenAssemblyCode;
 import optimization.*;
 
 public class MainWithOp {
@@ -49,12 +49,12 @@ public class MainWithOp {
         /* Optimization */
         ConstValue cv = new ConstValue();
         DeadCode dc = new DeadCode();
-        List<completeFunction> op1 = cv.optimize(par.getAST());
-        List<completeFunction> op2 = dc.optimize(op1);
+        List<CompleteFunction> op1 = cv.optimize(par.getAST());
+        List<CompleteFunction> op2 = dc.optimize(op1);
         /* Genera codigo intermedio */
         List<Instr> ic = instCodeGen(op2, par.getGlobals());
         /* Genera el codigo assembler de acuerdo al de tres direcciones */
-        String assembly = genAssemblyCode.gACode(ic);
+        String assembly = GenAssemblyCode.gACode(ic);
 		    /* Archivo donde se guarda el codigo assembler */
     		FileWriter fw=new FileWriter(args[0]+".s");
         fw.write(assembly);
@@ -67,12 +67,12 @@ public class MainWithOp {
   }
     
   /* A partir del arbol sintactico genera el codigo intermedio y lo retorna */
-  public static List<Instr> instCodeGen(List<completeFunction> ast, List<absSymbol> globals) {
+  public static List<Instr> instCodeGen(List<CompleteFunction> ast, List<AbsSymbol> globals) {
     InstCodeGenVisitor icg = new InstCodeGenVisitor();
 
     icg.globalVar(globals);
 
-    for (completeFunction c : ast) {
+    for (CompleteFunction c : ast) {
       if (c.getName().equals("main"))
         /* Si la funcion es main, inicializa las vars globales */
         icg.blockCode(c, globals);

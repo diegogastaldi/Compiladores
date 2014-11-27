@@ -16,7 +16,7 @@
 package semanticAnalyzer;
 import ir.ast.Type;
 
-public class simpleSymbol extends absSymbol{
+public class SimpleSymbol extends AbsSymbol{
   /*Almacena el valor de la variable*/
 	private Object value;
 	/* Posicion en la memoria con respecto al registro rbp de donde fue declarado */
@@ -24,7 +24,7 @@ public class simpleSymbol extends absSymbol{
   /* Indica si el simbolo es global */
   private Boolean isGlobal;
   
-	public simpleSymbol(String name, Object value, Type type, Integer offset, Boolean isGlobal){
+	public SimpleSymbol(String name, Object value, Type type, Integer offset, Boolean isGlobal){
 	  super(name, type);
   	this.value = value;
     this.offset = offset;      

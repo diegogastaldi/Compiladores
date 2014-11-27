@@ -1,4 +1,4 @@
-.SL0: 
+.SL2: 
 		.string "%d resultado : " 
 
 .text
@@ -39,6 +39,61 @@ mov 		%r11, -80(%rbp)
 mov		-80(%rbp), %rax
 leave
 ret
+
+movq 	$1, -88(%rbp)
+
+movq 	$5, -96(%rbp)
+
+movq 	$10, -104(%rbp)
+
+mov		-32(%rbp), %r10 
+mov		-104(%rbp), %r11 
+imul		%r11, %r10 
+mov		%r10, -112(%rbp)
+
+mov		-88(%rbp), %r10 
+mov		-96(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -96(%rbp)
+
+jmp 		.endForL0
+
+.beginForL1: 
+
+movq 	$2, -120(%rbp)
+
+mov		-32(%rbp), %r10 
+mov		-120(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -128(%rbp)
+
+mov 		-128(%rbp), %r10 
+mov 		-32(%rbp), %edx 
+cltq 
+mov 		%r10, A(, %rdx, 8) 
+
+.endForL0: 
+
+mov		-96(%rbp), %r10 
+mov		-88(%rbp), %r11 
+add		%r10, %r11 
+mov		%r11, -96(%rbp)
+
+mov		-96(%rbp), %r10
+mov		%r10, -32(%rbp)
+
+mov		-96(%rbp), %r10
+cmp 		-112(%rbp), %r10
+
+jl 		.beginForL1
+
+mov		-88(%rbp), %r10 
+mov		-96(%rbp), %r11 
+sub		%r10, %r11 
+mov		%r11, -96(%rbp)
+
+mov		-96(%rbp), %r10
+mov		%r10, -32(%rbp)
 
 .globl	main
 .type	main, @function 
@@ -348,7 +403,7 @@ mov 		$0, %rax
 call 	pruArreglos
 mov 	%rax, -32(%rbp) 
 
-mov		$.SL0, %r10
+mov		$.SL2, %r10
 mov	 	%r10, %rdi
 
 mov		-32(%rbp), %r10

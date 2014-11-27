@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.LinkedList;
 import ir.ast.*;
 import ir.ASTVisitor;
-import semanticAnalyzer.completeFunction;
+import semanticAnalyzer.CompleteFunction;
 
 public class DeadCode implements ASTVisitor<Statement>{
 
-  public List<completeFunction> optimize(List<completeFunction> ast) {
-    for (completeFunction c : ast) {
+  public List<CompleteFunction> optimize(List<CompleteFunction> ast) {
+    for (CompleteFunction c : ast) {
     	/* Optimiza todos los bloques */
       c.setBlock((Block)c.getBlock().accept(this));
     }

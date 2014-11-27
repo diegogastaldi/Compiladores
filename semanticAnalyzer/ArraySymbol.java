@@ -15,7 +15,7 @@
 package semanticAnalyzer;
 import java.util.LinkedList;
 import ir.ast.Type;
-public class arraySymbol extends absSymbol {
+public class ArraySymbol extends AbsSymbol {
 	/*Tamaño del arreglo*/
 	private Integer size;
 	/*Valores de las distintas posiciones del arreglo*/
@@ -25,7 +25,7 @@ public class arraySymbol extends absSymbol {
 	/* Indica si el simbolo es global */
 	private Boolean isGlobal;
 
-	public arraySymbol(String name, Type type, Integer size, LinkedList<Object> values, Integer offset, Boolean isGlobal){
+	public ArraySymbol(String name, Type type, Integer size, LinkedList<Object> values, Integer offset, Boolean isGlobal){
 		super(name, type);
 		this.size = size;
 		this.values = values;

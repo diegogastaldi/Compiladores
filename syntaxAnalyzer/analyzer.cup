@@ -27,7 +27,7 @@ parser code {:
   public static void main(String[] args){
     try {
       /* Loading the file*/
-      FileInputStream file = new FileInputStream(args[0]);/**/
+      FileInputStream file = new FileInputStream(args[0]);
       /* Create lexer analizer with file*/
       yylex lex = new yylex(file);
       /* Create parser analyzer with lex*/  
@@ -63,12 +63,12 @@ parser code {:
     System.exit(1);
   }
 	/* Retorna el arbol sintactico */  
-  public LinkedList<completeFunction> getAST() {
+  public LinkedList<CompleteFunction> getAST() {
     return CUP$parser$actions.setAst;
   }
 
   /* Retorna variables Globales */
-  public LinkedList<absSymbol> getGlobals() {
+  public LinkedList<AbsSymbol> getGlobals() {
     return CUP$parser$actions.globals;
   }
 :}
@@ -77,15 +77,15 @@ action code {:
 	/* Variable para comprobar si los simbolos son globales */
   static boolean isGlobal = true;
   /* Tabla de simbolos */
-  static symbolTable table = new symbolTable();
+  static SymbolTable table = new SymbolTable();
   /* Lista que almacena lista globales */
-  public static LinkedList<absSymbol> globals = new LinkedList<absSymbol>();
+  public static LinkedList<AbsSymbol> globals = new LinkedList<AbsSymbol>();
   /* Arbol sintactico */
-  public static LinkedList<completeFunction> setAst = new LinkedList<completeFunction>();  
+  public static LinkedList<CompleteFunction> setAst = new LinkedList<CompleteFunction>();  
   /* Genera labels y direcciones de memoria */
   private Labels offset;
   /* Cambia el tipo de una lista de simbolos */
-  private LinkedList<absSymbol> setType(LinkedList<absSymbol> symbolList, Type type) {
+  private LinkedList<AbsSymbol> setType(LinkedList<AbsSymbol> symbolList, Type type) {
     for (int i = 0 ; i < symbolList.size() ; i++) {
         symbolList.get(i).setType(type);
     }
@@ -114,7 +114,7 @@ non terminal    MethodCallStmt         method_call_stmt;
 non terminal    Location               location;                        
 non terminal    LinkedList<Expression> expr_parameters, expr_parameters_;
 non terminal    Block                  block;
-non terminal    LinkedList<absSymbol>  set_complete_id, parameters, set_type_id;
+non terminal    LinkedList<AbsSymbol>  set_complete_id, parameters, set_type_id;
 non terminal    Type                   type;
 non terminal    Expression             expr;
 non terminal    AssignStmt             assign_op;
@@ -134,7 +134,7 @@ precedence right UNOT;
 start with program;
 
 program     	  ::= WCLASS {:table.insertLevel();:} 
-                    ID:i {:if (table.insertSymbol(new simpleSymbol(i, null, Type.UNDEFINED, 0, false)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
+                    ID:i {:if (table.insertSymbol(new SimpleSymbol(i, null, Type.UNDEFINED, 0, false)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
                     LLL {:offset = new Labels();:}set_decl {:table.deleteLevel();:} 
                     RLL;
 
@@ -142,44 +142,44 @@ set_decl			  ::= field_decl SEMICOLON set_decl
                     |   set_method_decl ;
 
 
-field_decl		  ::= type:t ID:i LC INT:il RC {: arraySymbol s = new arraySymbol(i, t, il.getValue(), null, offset.getOffSet(il.getValue()), isGlobal);
+field_decl		  ::= type:t ID:i LC INT:il RC {: ArraySymbol s = new ArraySymbol(i, t, il.getValue(), null, offset.getOffSet(il.getValue()), isGlobal);
                                               if (table.insertSymbol(s) == null) parser.report_fatal_error("ID ya difinido: ",i);if (isGlobal) globals.add(s); :}     
                         set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:}
-                    |   type:t ID:i {:simpleSymbol s = new simpleSymbol(i, null, t, offset.getOffSet(), isGlobal);
+                    |   type:t ID:i {:SimpleSymbol s = new SimpleSymbol(i, null, t, offset.getOffSet(), isGlobal);
                                       if (table.insertSymbol(s) == null) parser.report_fatal_error("ID ya difinido: ",i);if (isGlobal) globals.add(s);:} 
                         set_complete_id:s {:if (table.insertSymbolList(setType(s, t)) == null) parser.report_fatal_error("ID ya difinido: ",i);:};
                                                         
 set_field_decl	::= field_decl SEMICOLON set_field_decl
                     |   /*LAMBDA*/;                                                        
              
-set_method_decl	::= type:t ID:i {:isGlobal = false; functionSymbol f = new functionSymbol(i, t, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();offset.restart();:} 
-                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:}
-                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b, (-offset.getOffSet()/8)-2));table.deleteLevel();:} 
+set_method_decl	::= type:t ID:i {:isGlobal = false; FunctionSymbol f = new FunctionSymbol(i, t, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();offset.restart();:} 
+                        LPAR parameters:p RPAR {:if (p != null) ((FunctionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:}
+                        block:b {:setAst.add(new CompleteFunction((FunctionSymbol)table.search(i), b, (-offset.getOffSet()/8)-2));table.deleteLevel();:} 
                         set_method_decl
-                    |   WVOID:v ID:i {:isGlobal = false; functionSymbol f = new functionSymbol(i, v, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();offset.restart();:} 
-                        LPAR parameters:p RPAR {:if (p != null) ((functionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:} 
-                        block:b {:setAst.add(new completeFunction((functionSymbol)table.search(i), b, (-offset.getOffSet()/8)-2)); table.deleteLevel();:} 
+                    |   WVOID:v ID:i {:isGlobal = false; FunctionSymbol f = new FunctionSymbol(i, v, null); if (table.insertSymbol(f) == null) parser.report_fatal_error("ID ya difinido: ",i); table.insertLevel();offset.restart();:} 
+                        LPAR parameters:p RPAR {:if (p != null) ((FunctionSymbol)table.search(i)).setParameters(p); if (table.insertSymbolList(p)==null) parser.report_fatal_error("ID ya difinido: ",p.toString());:} 
+                        block:b {:setAst.add(new CompleteFunction((FunctionSymbol)table.search(i), b, (-offset.getOffSet()/8)-2)); table.deleteLevel();:} 
                         set_method_decl
                     |   /*Lambda*/;
     
-set_complete_id ::= COMMA ID:i set_complete_id:s {:simpleSymbol ss = new simpleSymbol(i, null, Type.UNDEFINED, offset.getOffSet(), isGlobal);
+set_complete_id ::= COMMA ID:i set_complete_id:s {:SimpleSymbol ss = new SimpleSymbol(i, null, Type.UNDEFINED, offset.getOffSet(), isGlobal);
                                                     s.add(ss); if (isGlobal) globals.add(ss); RESULT = s;:} 
-                    |   COMMA ID:i LC INT:il RC set_complete_id:s {:arraySymbol ss = new arraySymbol(i,Type.UNDEFINED,il.getValue(), null, offset.getOffSet(il.getValue()), isGlobal);
+                    |   COMMA ID:i LC INT:il RC set_complete_id:s {:ArraySymbol ss = new ArraySymbol(i,Type.UNDEFINED,il.getValue(), null, offset.getOffSet(il.getValue()), isGlobal);
                                                                     s.add(ss);if (isGlobal) globals.add(ss); RESULT = s;:} 
-                    |   /* LAMBDA */ {:RESULT = new LinkedList<absSymbol>();:};
+                    |   /* LAMBDA */ {:RESULT = new LinkedList<AbsSymbol>();:};
 
-parameters 		  ::= type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getNumParam(), isGlobal)); RESULT = s;:} 
-                    |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
+parameters 		  ::= type:t ID:i set_type_id:s {:s.add(0, new SimpleSymbol(i, null, t,  offset.getNumParam(), isGlobal)); RESULT = s;:} 
+                    |   /*LAMBDA*/ {:RESULT = new LinkedList<AbsSymbol>();:};
 
-set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(0, new simpleSymbol(i, null, t,  offset.getNumParam(), isGlobal)); RESULT = s;:} 
-                    |   /*LAMBDA*/ {:RESULT = new LinkedList<absSymbol>();:};
+set_type_id 		::= COMMA type:t ID:i set_type_id:s {:s.add(0, new SimpleSymbol(i, null, t,  offset.getNumParam(), isGlobal)); RESULT = s;:} 
+                    |   /*LAMBDA*/ {:RESULT = new LinkedList<AbsSymbol>();:};
 
 
 statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.setExpression(e); RESULT = a;:}
 			              |   method_call_stmt:mc SEMICOLON {:RESULT = mc;:}
     			          |   stmt_if:i {:RESULT = i;:}
 	    		          |   WFOR:w ID:i
-                        ASSIGN expr:e1 COMMA expr:e2 block:b {:simpleSymbol a = (simpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT = new ForStmt(new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet(), a.getIsGlobal()), e2, e1, b,wleft+1,wright+1);:}
+                        ASSIGN expr:e1 COMMA expr:e2 block:b {:SimpleSymbol a = (SimpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT = new ForStmt(new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet(), a.getIsGlobal()), e2, e1, b,wleft+1,wright+1);:}
 	    		          |   WWHILE:w expr:e block:b {:RESULT = new WhileStmt(e, b,wleft+1,wright+1);:}
 	    		          |   stmt_return:r SEMICOLON {:RESULT = r;:}
 	    		          |   WBREAK:w SEMICOLON {:RESULT = new BreakStmt(wleft+1,wright+1);:}
@@ -189,7 +189,7 @@ statement   		::= location:l assign_op:a expr:e SEMICOLON {:a.setLocation(l); a.
 
 method_call_stmt::=     WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,wleft+1,wright+1);:}
 			              |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR {:RESULT=new ExternInvkStmt(s,a,wleft+1,wright+1);:}
-			              |		ID:i LPAR expr_parameters:p RPAR {:absSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof functionSymbol) RESULT=new InternInvkStmt(i,p,ileft+1,iright+1); else parser.report_fatal_error("ID "+i+"no es una funcion",i); }:};
+			              |		ID:i LPAR expr_parameters:p RPAR {:AbsSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof FunctionSymbol) RESULT=new InternInvkStmt(i,p,ileft+1,iright+1); else parser.report_fatal_error("ID "+i+"no es una funcion",i); }:};
                       
 stmt_return 		::= WRETURN:w expr:e {:RESULT = new ReturnStmt(e,wleft+1,wright+1);:} 
                     |   WRETURN:w {:RESULT = new ReturnStmt(wleft+1,wright+1);:} ;
@@ -232,7 +232,7 @@ expr        		::= location:l {:RESULT = l;:}
 
 method_call_expr::= WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA type:t arg_invoc:a RPAR {:RESULT=new ExternInvkExpr(s,a,t,wleft+1,wright+1);:}
 			              |   WEXTERNINVK:w LPAR STRING_LITERAL:s COMMA WVOID arg_invoc:a RPAR{:RESULT=new ExternInvkExpr(s,a,null,wleft+1,wright+1);:}
-                    |   ID:i LPAR expr_parameters:p RPAR {:absSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof functionSymbol) RESULT=new InternInvkExpr(i,p,((functionSymbol)a).getType(),ileft+1,iright+1); else parser.report_fatal_error("ID "+i+"no es una funcion",i); }:};
+                    |   ID:i LPAR expr_parameters:p RPAR {:AbsSymbol a = table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else { if (a instanceof FunctionSymbol) RESULT=new InternInvkExpr(i,p,((FunctionSymbol)a).getType(),ileft+1,iright+1); else parser.report_fatal_error("ID "+i+"no es una funcion",i); }:};
 			       
 arg_invoc 		  ::= COMMA externinvk_arg:ea arg_invoc:ai {:ai.add(0, ea); RESULT=ai;:} 
                     |   /* LAMBDA */ {:RESULT = new LinkedList<ArgInvoc>();:};  
@@ -240,8 +240,8 @@ arg_invoc 		  ::= COMMA externinvk_arg:ea arg_invoc:ai {:ai.add(0, ea); RESULT=a
 externinvk_arg  ::= expr:e {:RESULT = new ArgInvocExpr(e);:}
                     |   STRING_LITERAL:s {:RESULT = new ArgInvocSL(s);:};
 
-location        ::= ID:i {:simpleSymbol a = (simpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT=new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet(), a.getIsGlobal());:}
-                    |   ID:i LC expr:e RC {:arraySymbol a = (arraySymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else RESULT=new ArrayLocation(i,a.getType(),table.getBlockId(),e,ileft+1,iright+1, a.getOffSet(), a.getIsGlobal(),a.getSize());:};
+location        ::= ID:i {:SimpleSymbol a = (SimpleSymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido."+i,i); else RESULT=new VarLocation(i,a.getType(), table.getBlockId(),ileft+1,iright+1, a.getOffSet(), a.getIsGlobal());:}
+                    |   ID:i LC expr:e RC {:ArraySymbol a = (ArraySymbol)table.search(i); if (a == null) parser.report_fatal_error("ID desconocido.",i); else RESULT=new ArrayLocation(i,a.getType(),table.getBlockId(),e,ileft+1,iright+1, a.getOffSet(), a.getIsGlobal(),a.getSize());:};
 
 type        		::= WFLOAT:f {:RESULT = f;:}
                     |   WBOOLEAN:b {:RESULT = b;:}

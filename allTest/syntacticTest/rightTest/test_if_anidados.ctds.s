@@ -3,7 +3,7 @@
 .globl	pruAritmetica
 .type	pruAritmetica, @function 
 pruAritmetica: 
-enter   $(8 * 8), $0 
+enter   $(8 * 12), $0 
 
 mov 		%rdi, -16(%rbp) 
 mov 		%rsi, -8(%rbp) 
@@ -63,14 +63,14 @@ jmp 		.endIfL3
 
 .falseCondL0: 
 
-movq 	$5, -72(%rbp)
+movq 	$5, -88(%rbp)
 
 mov		-16(%rbp), %r10 
-mov		-72(%rbp), %r11 
+mov		-88(%rbp), %r11 
 imul		%r11, %r10 
-mov		%r10, -88(%rbp)
+mov		%r10, -96(%rbp)
 
-mov		-88(%rbp), %r10
+mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .endIfL3: 

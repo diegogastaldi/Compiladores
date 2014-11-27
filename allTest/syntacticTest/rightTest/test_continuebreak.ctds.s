@@ -1,33 +1,48 @@
-.SL15: 
+.SL20: 
 		.string "%f" 
 
-.FL14: 
-		.float -1.0 
-
-.FL13: 
-		.float 5751.7656 
-
-.FL7: 
-		.float 0.0 
-
-.FL5: 
-		.float 2.0 
-
-.FL4: 
+.FL19: 
 		.float 1.0 
 
-.FL1: 
+.FL18: 
+		.float 0 
+
+.FL17: 
+		.float 2.0 
+
+.FL16: 
+		.float 6752.0 
+
+.FL15: 
+		.float 0 
+
+.FL14: 
+		.float 1000.2343 
+
+.FL8: 
+		.float 0.0 
+
+.FL6: 
+		.float 2.0 
+
+.FL5: 
+		.float 1.0 
+
+.FL2: 
 		.float 23.0 
 
+.FL1: 
+		.float 0 
+
 .FL0: 
-		.float -1.0 
+		.float 1.0 
 
 .text
 
 .globl	pruContinue
 .type	pruContinue, @function 
 pruContinue: 
-enter   $(8 * 22), $0 
+enter   $(8 * 30), $0 
 
 movss 		%xmm0, -16(%rbp) 
 movss 		%xmm1, -8(%rbp) 
@@ -44,124 +59,153 @@ mov		%r10, -40(%rbp)
 mov	.FL0(%rip), %r10
 mov	%r10, -72(%rbp)
 
-mov		-72(%rbp), %r10
-mov		%r10, -48(%rbp)
-
-movq 	$23, -80(%rbp)
+movss		-72(%rbp), %xmm1 
+movss		.FL1(%rip), %xmm0 
+subss		%xmm1, %xmm0 
+movss		%xmm0, -80(%rbp) 
 
 mov		-80(%rbp), %r10
-mov		%r10, -40(%rbp)
+mov		%r10, -48(%rbp)
 
-mov	.FL1(%rip), %r10
-mov	%r10, -88(%rbp)
+movq 	$23, -88(%rbp)
 
 mov		-88(%rbp), %r10
+mov		%r10, -40(%rbp)
+
+mov	.FL2(%rip), %r10
+mov	%r10, -96(%rbp)
+
+mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
 
-.beginWhileL3: 
+.beginWhileL4: 
 
-movq 	$0, -96(%rbp)
+movq 	$0, -104(%rbp)
 
 movss		-32(%rbp), %xmm0 
-ucomiss		-96(%rbp), %xmm0 
+ucomiss		-104(%rbp), %xmm0 
 setae		%al 
 movzb		%al, %rax 
-mov 		%rax, -104(%rbp) 
+mov 		%rax, -112(%rbp) 
 
-movq 	$1, -112(%rbp)
-
-mov		-112(%rbp), %r10
-cmp 		-104(%rbp), %r10
-
-jne 		.endWhileL2
-
-mov	.FL4(%rip), %r10
-mov	%r10, -112(%rbp)
-
-movss		-32(%rbp), %xmm0 
-subss		-112(%rbp), %xmm0 
-movss		%xmm0, -120(%rbp) 
+movq 	$1, -120(%rbp)
 
 mov		-120(%rbp), %r10
-mov		%r10, -32(%rbp)
+cmp 		-112(%rbp), %r10
+
+jne 		.endWhileL3
 
 mov	.FL5(%rip), %r10
-mov	%r10, -128(%rbp)
+mov	%r10, -120(%rbp)
 
-movss		-128(%rbp), %xmm0 
+movss		-32(%rbp), %xmm0 
+subss		-120(%rbp), %xmm0 
+movss		%xmm0, -128(%rbp) 
+
+mov		-128(%rbp), %r10
+mov		%r10, -32(%rbp)
+
+mov	.FL6(%rip), %r10
+mov	%r10, -136(%rbp)
+
+movss		-136(%rbp), %xmm0 
 ucomiss		-16(%rbp), %xmm0 
 seta			%al 
 movzb		%al, %rax 
-mov 		%rax, -136(%rbp) 
+mov 		%rax, -144(%rbp) 
 
-movq 	$1, -144(%rbp)
+movq 	$1, -152(%rbp)
 
-mov		-144(%rbp), %r10
-cmp 		-136(%rbp), %r10
+mov		-152(%rbp), %r10
+cmp 		-144(%rbp), %r10
 
-jne 		.falseCondL6
+jne 		.falseCondL7
 
-mov	.FL7(%rip), %r10
-mov	%r10, -144(%rbp)
+mov	.FL8(%rip), %r10
+mov	%r10, -152(%rbp)
 
 	movss		-32(%rbp), %xmm0 
-	ucomiss		-144(%rbp), %xmm0 
-	jp	.L8 
+	ucomiss		-152(%rbp), %xmm0 
+	jp	.L9 
 	movss		-32(%rbp), %xmm0 
-	ucomiss		-144(%rbp), %xmm0 
-	je	.L9 
-.L8: 
-	movq		$1, %rax 
-	jmp	.L10 
+	ucomiss		-152(%rbp), %xmm0 
+	je	.L10 
 .L9: 
-	movq		$0, %rax 
+	movq		$1, %rax 
+	jmp	.L11 
 .L10: 
-	mov		%rax, -152(%rbp) 
+	movq		$0, %rax 
+.L11: 
+	mov		%rax, -160(%rbp) 
 
-movq 	$1, -160(%rbp)
+movq 	$1, -168(%rbp)
 
-mov		-160(%rbp), %r10
-cmp 		-152(%rbp), %r10
+mov		-168(%rbp), %r10
+cmp 		-160(%rbp), %r10
 
-jne 		.falseCondL11
+jne 		.falseCondL12
 
 movss		-48(%rbp), %xmm0 
 mulss		-16(%rbp), %xmm0 
-movss		%xmm0, -160(%rbp) 
-
-movss		-160(%rbp), %xmm0 
-mulss		-8(%rbp), %xmm0 
 movss		%xmm0, -168(%rbp) 
 
-mov		-168(%rbp), %r10
+movss		-168(%rbp), %xmm0 
+mulss		-8(%rbp), %xmm0 
+movss		%xmm0, -176(%rbp) 
+
+mov		-176(%rbp), %r10
 mov		%r10, -48(%rbp)
 
-.falseCondL11: 
+.falseCondL12: 
 
-jmp 		.beginWhileL3
+jmp 		.beginWhileL4
 
-jmp 		.endIfL12
+jmp 		.endIfL13
 
-.falseCondL6: 
-
-mov	.FL13(%rip), %r10
-mov	%r10, -160(%rbp)
-
-mov		-160(%rbp), %r10
-mov		%r10, -48(%rbp)
-
-jmp 		.endWhileL2
-
-.endIfL12: 
-
-jmp 		.beginWhileL3
-
-.endWhileL2: 
+.falseCondL7: 
 
 mov	.FL14(%rip), %r10
-mov	%r10, -144(%rbp)
+mov	%r10, -184(%rbp)
 
-movss		-144(%rbp), %xmm0
+movss		-184(%rbp), %xmm1 
+movss		.FL15(%rip), %xmm0 
+subss		%xmm1, %xmm0 
+movss		%xmm0, -192(%rbp) 
+
+mov	.FL16(%rip), %r10
+mov	%r10, -200(%rbp)
+
+movss		-192(%rbp), %xmm0 
+addss		-200(%rbp), %xmm0 
+movss		%xmm0, -208(%rbp) 
+
+mov		-208(%rbp), %r10
+mov		%r10, -48(%rbp)
+
+jmp 		.endWhileL3
+
+.endIfL13: 
+
+jmp 		.beginWhileL4
+
+.endWhileL3: 
+
+mov	.FL17(%rip), %r10
+mov	%r10, -216(%rbp)
+
+movss		-216(%rbp), %xmm1 
+movss		.FL18(%rip), %xmm0 
+subss		%xmm1, %xmm0 
+movss		%xmm0, -224(%rbp) 
+
+mov	.FL19(%rip), %r10
+mov	%r10, -232(%rbp)
+
+movss		-224(%rbp), %xmm0 
+addss		-232(%rbp), %xmm0 
+movss		%xmm0, -240(%rbp) 
+
+movss		-240(%rbp), %xmm0
 leave
 ret
 
@@ -183,7 +227,7 @@ mov 		$2, %rax
 call 	pruContinue
 movss 	%xmm0, -32(%rbp) 
 
-mov		$.SL15, %r10
+mov		$.SL20, %r10
 mov	 	%r10, %rdi
 
 movss		-32(%rbp), %xmm0

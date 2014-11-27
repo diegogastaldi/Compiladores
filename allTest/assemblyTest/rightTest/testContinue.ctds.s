@@ -12,7 +12,7 @@
 .globl	continue1
 .type	continue1, @function 
 continue1: 
-enter   $(8 * 10), $0 
+enter   $(8 * 8), $0 
 
 
 movq		$0, %r10
@@ -46,22 +46,17 @@ cmp 		-48(%rbp), %r10
 
 jne 		.endWhileL0
 
-movq 	$1, -64(%rbp)
+movq 	$1, -56(%rbp)
 
 mov		-24(%rbp), %r10 
-mov		-64(%rbp), %r11 
+mov		-56(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -72(%rbp)
+mov		%r11, -64(%rbp)
 
-mov		-72(%rbp), %r10
+mov		-64(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 jmp 		.beginWhileL1
-
-movq 	$111111, -80(%rbp)
-
-mov		-80(%rbp), %r10
-mov		%r10, -24(%rbp)
 
 jmp 		.beginWhileL1
 
@@ -84,7 +79,7 @@ ret
 .globl	continue2
 .type	continue2, @function 
 continue2: 
-enter   $(8 * 18), $0 
+enter   $(8 * 14), $0 
 
 
 movq		$0, %r10
@@ -121,57 +116,52 @@ cmp 		-56(%rbp), %r10
 
 jne 		.endWhileL3
 
-movq 	$0, -72(%rbp)
+movq 	$0, -64(%rbp)
 
-mov		-72(%rbp), %r10
+mov		-64(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 .beginWhileL6: 
 
-movq 	$10, -80(%rbp)
+movq 	$10, -72(%rbp)
 
 mov		-32(%rbp), %rax
-cmp		-80(%rbp), %rax
+cmp		-72(%rbp), %rax
 setl		%al
 movzb 	%al, %rax
-mov		%rax, -88(%rbp)
+mov		%rax, -80(%rbp)
 
-movq 	$1, -96(%rbp)
+movq 	$1, -88(%rbp)
 
-mov		-96(%rbp), %r10
-cmp 		-88(%rbp), %r10
+mov		-88(%rbp), %r10
+cmp 		-80(%rbp), %r10
 
 jne 		.endWhileL5
 
-movq 	$1, -104(%rbp)
+movq 	$1, -88(%rbp)
 
 mov		-32(%rbp), %r10 
-mov		-104(%rbp), %r11 
+mov		-88(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -112(%rbp)
+mov		%r11, -96(%rbp)
 
-mov		-112(%rbp), %r10
+mov		-96(%rbp), %r10
 mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL6
-
-movq 	$12, -120(%rbp)
-
-mov		-120(%rbp), %r10
-mov		%r10, -32(%rbp)
 
 jmp 		.beginWhileL6
 
 .endWhileL5: 
 
-movq 	$1, -128(%rbp)
+movq 	$1, -104(%rbp)
 
 mov		-24(%rbp), %r10 
-mov		-128(%rbp), %r11 
+mov		-104(%rbp), %r11 
 add		%r10, %r11 
-mov		%r11, -136(%rbp)
+mov		%r11, -112(%rbp)
 
-mov		-136(%rbp), %r10
+mov		-112(%rbp), %r10
 mov		%r10, -24(%rbp)
 
 jmp 		.beginWhileL4

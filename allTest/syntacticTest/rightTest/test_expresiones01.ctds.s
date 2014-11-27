@@ -21,7 +21,7 @@
 .globl	prueba
 .type	prueba, @function 
 prueba: 
-enter   $(8 * 12), $0 
+enter   $(8 * 24), $0 
 
 mov 		%rdi, -8(%rbp) 
 
@@ -177,20 +177,20 @@ ret
 .globl	main
 .type	main, @function 
 main: 
-enter   $(8 * 2), $0 
+enter   $(8 * 4), $0 
 
 
-movq 	$6, -80(%rbp)
+movq 	$6, -16(%rbp)
 
-mov		-80(%rbp), %r10
+mov		-16(%rbp), %r10
 mov	 	%r10, %rdi
 
 mov 		$0, %rax 
 
 call 	prueba
-movss 	%xmm0, -16(%rbp) 
+movss 	%xmm0, -24(%rbp) 
 
-movss		-16(%rbp), %xmm0
+movss		-24(%rbp), %xmm0
 cvtps2pd	%xmm0, %xmm0 
 
 mov 		$1, %rax 

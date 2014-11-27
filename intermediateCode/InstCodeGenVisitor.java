@@ -44,17 +44,17 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   /* Crea las instrucciones para las variables globales */
-  public void globalVar(List<absSymbol> globals) {
-    for (absSymbol g : globals) {
-      if (g instanceof arraySymbol)
-        instructions.add(new Instr(Operator.GLOBAL, g.getName(), ((arraySymbol)g).getSize()*8, null));
+  public void globalVar(List<AbsSymbol> globals) {
+    for (AbsSymbol g : globals) {
+      if (g instanceof ArraySymbol)
+        instructions.add(new Instr(Operator.GLOBAL, g.getName(), ((ArraySymbol)g).getSize()*8, null));
       else 
         instructions.add(new Instr(Operator.GLOBAL, g.getName(), 8, null));
     }
   }
 
   /* Crea las instrucciones para el metodo main */ 
-  public void blockCode(completeFunction c, List<absSymbol> globals) {
+  public void blockCode(CompleteFunction c, List<AbsSymbol> globals) {
     posMethodLabel = instructions.size();
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size()+ c.getLocalVars());
@@ -75,7 +75,7 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   /* Crea instrucciones para todas las funciones distintas del main */
-  public void blockCode(completeFunction c) {
+  public void blockCode(CompleteFunction c) {
     posMethodLabel = instructions.size();
     /* Reinicia labels */
     genLabels.restart(c.getParameters().size()+ c.getLocalVars());
@@ -104,19 +104,19 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   /* Crea las instrucciones para la inicializacion de las variables globales */
-  private void initGlobalVar(List<absSymbol> globals) {
-  	for (absSymbol abs : globals) {
-  		if (abs instanceof simpleSymbol)
+  private void initGlobalVar(List<AbsSymbol> globals) {
+  	for (AbsSymbol abs : globals) {
+  		if (abs instanceof SimpleSymbol)
   			instructions.add(new Instr(Operator.INITGLOBALVAR, "0", null, abs.getName()));
   		else
-  			instructions.add(new Instr(Operator.INITGLOBALARRAY, "0", ((arraySymbol)abs).getSize(), abs.getName()));
+  			instructions.add(new Instr(Operator.INITGLOBALARRAY, "0", ((ArraySymbol)abs).getSize(), abs.getName()));
   	}
   }
 
   /* Cuenta la cantidad de variables de tipo int y bool en la lista */
-  private int amountInt (List<absSymbol> param) {
+  private int amountInt (List<AbsSymbol> param) {
     int amount = 0;
-    for (absSymbol a : param) {
+    for (AbsSymbol a : param) {
       if (a.getType() != Type.FLOAT)
         amount++;
     }
@@ -124,9 +124,9 @@ public class InstCodeGenVisitor implements ASTVisitor<Integer>{
   }
 
   /* Cuenta la cantidad de variables de tipo float en */
-  private int amountFloat (List<absSymbol> param) {
+  private int amountFloat (List<AbsSymbol> param) {
     int amount = 0;
-    for (absSymbol a : param) {
+    for (AbsSymbol a : param) {
       if (a.getType() == Type.FLOAT)
         amount++;
     }

@@ -20,8 +20,8 @@ package assemblyCode;
 import java.util.List;
 import java.util.LinkedList;
 import intermediateCode.*;
-import semanticAnalyzer.absSymbol;
-public class genAssemblyCode {
+import semanticAnalyzer.AbsSymbol;
+public class GenAssemblyCode {
 	/* Guarda codigo generado */
 	private static String result;
 	
@@ -418,10 +418,10 @@ public class genAssemblyCode {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %r10\n";
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
 		Integer numOperand = (Integer)instr.getOperand2();			
-		if (numOperand < paramRegister.registersInt.length)  {
-			result += "mov	 	%r10, " + paramRegister.registersInt [numOperand] + "\n";
+		if (numOperand < ParamRegister.registersInt.length)  {
+			result += "mov	 	%r10, " + ParamRegister.registersInt [numOperand] + "\n";
 		}	else 
-			result += "mov	 	%r10, " + ((numOperand - paramRegister.registersInt.length) * 8) + "(%rsp) \n";			
+			result += "mov	 	%r10, " + ((numOperand - ParamRegister.registersInt.length) * 8) + "(%rsp) \n";			
 	}
 
 	/* Indica la cantidad de xmm registros usados en la llamada a procedimiento */
@@ -455,23 +455,23 @@ public class genAssemblyCode {
 		Integer intParam = 0;
 		Integer i = (Integer)instr.getOperand1() + (Integer)instr.getOperand2();
 		/* Guarda parametros en memoria reservada del metodo actual */
-		LinkedList<absSymbol> listParam = (LinkedList<absSymbol>) instr.getResult();
-		for (absSymbol param : listParam) {
+		LinkedList<AbsSymbol> listParam = (LinkedList<AbsSymbol>) instr.getResult();
+		for (AbsSymbol param : listParam) {
 			switch (param.getType()) {
 				case INT : case BOOLEAN:
-					if (intParam < paramRegister.registersInt.length) 
-						result += "mov 		" + paramRegister.registersInt[intParam] + ", " + (i * (-8)) + "(%rbp) \n";
+					if (intParam < ParamRegister.registersInt.length) 
+						result += "mov 		" + ParamRegister.registersInt[intParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + ((intParam + floatParam + 2 - paramRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		" + ((intParam + floatParam + 2 - ParamRegister.registersInt.length) * 8) + "(%rbp), %r10\n";
 						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
 					}
 					intParam++;
 					break;
 				case FLOAT: 
-					if (floatParam < paramRegister.registersFloat.length) 
-						result += "movss 		" + paramRegister.registersFloat[floatParam] + ", " + (i * (-8)) + "(%rbp) \n";
+					if (floatParam < ParamRegister.registersFloat.length) 
+						result += "movss 		" + ParamRegister.registersFloat[floatParam] + ", " + (i * (-8)) + "(%rbp) \n";
 					else {
-						result += "mov 		" + ((intParam + floatParam + 2 - paramRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
+						result += "mov 		" + ((intParam + floatParam + 2 - ParamRegister.registersFloat.length) * 8) + "(%rbp), %r10\n";
 						result += "mov 		%r10, " + (i * (-8)) + "(%rbp) \n";												
 					}						
 					floatParam++;
@@ -571,13 +571,13 @@ public class genAssemblyCode {
 	public static void fparamMethod(Instr instr) {
 		Integer operand = (Integer)instr.getResult();
 		/* El parametro es guardado en el registro o lugar de memoria que corresponde */
-		if (operand < paramRegister.registersFloat.length) {
-		  result += "movss		" + instr.getOperand1() + "(%rbp), " + paramRegister.registersFloat [operand] + "\n";	
+		if (operand < ParamRegister.registersFloat.length) {
+		  result += "movss		" + instr.getOperand1() + "(%rbp), " + ParamRegister.registersFloat [operand] + "\n";	
 			if ((Boolean)instr.getOperand2()) 
-				result += "cvtps2pd	" + paramRegister.registersFloat[operand] + ", " + paramRegister.registersFloat[operand] + " \n";
+				result += "cvtps2pd	" + ParamRegister.registersFloat[operand] + ", " + ParamRegister.registersFloat[operand] + " \n";
 		} else {
 			result += "mov		" + instr.getOperand1() + "(%rbp), %rbx\n";			
-			result += "mov		%rbx, " + ((operand - paramRegister.registersFloat.length) * 8) + "(%rsp)\n";
+			result += "mov		%rbx, " + ((operand - ParamRegister.registersFloat.length) * 8) + "(%rsp)\n";
 		}
 	}
 
